@@ -29,6 +29,7 @@ public class PageControllerTest {
         this.mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("//body/script/@src").string(equalTo("built/bundle.js")));
+                .andExpect(xpath("//body/script[1]/@src").string(equalTo("built/commons.js")))
+                .andExpect(xpath("//body/script[2]/@src").string(equalTo("built/index.js")));
     }
 }

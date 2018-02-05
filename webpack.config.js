@@ -1,11 +1,15 @@
 var path = require('path');
+var webpack = require("webpack");
 
 module.exports = {
-    entry: '@basedir@/src/main/js/app.js',
+    entry: {
+        index: '@basedir@/src/main/js/index.js',
+        pages: '@basedir@/src/main/js/pages.js'
+    },
     devtool: 'source-map',
     output: {
-        path: '@basedir@',
-        filename: './resources/built/bundle.js'
+        path: '@basedir@/resources/built',
+        filename: '[name].js'
     },
     module: {
         rules: [
@@ -14,15 +18,21 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                  presets: [
-                    'babel-preset-es2015',
-                    'babel-preset-react'
-                  ].map(require.resolve)
+                    presets: [
+                        'babel-preset-es2015',
+                        'babel-preset-react'
+                    ].map(require.resolve)
                 }
             }
         ]
     },
     resolve: {
         modules: [path.join(__dirname, 'node_modules')]
-    }
+    },
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "commons",
+            filename: "commons.js"
+        })
+    ]
 };
