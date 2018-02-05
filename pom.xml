@@ -17,6 +17,7 @@
 	<description>An CMS with ReactJS in the frontend and Spring Data REST in the backend</description>
 
 	<properties>
+		<java.version>1.8</java.version>
 		<outdir>${user.home}/.${project.artifactId}</outdir>
 	</properties>
 
