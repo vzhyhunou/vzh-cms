@@ -46,8 +46,7 @@ public class PageControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        TestContextManager testContextManager = new TestContextManager(getClass());
-        testContextManager.prepareTestInstance(this);
+        new TestContextManager(getClass()).prepareTestInstance(this);
     }
 
     @Test
