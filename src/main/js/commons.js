@@ -1,12 +1,17 @@
 'use strict';
 
 import React, {Component} from 'react'
+import {Helmet} from "react-helmet"
 
-export default class Title extends Component {
+export default class Header extends Component {
 
     render() {
         return (
-            <div>{this.props.text}</div>
+            <nav>
+                <Helmet>
+                    <title>{this.props.title}</title>
+                </Helmet>
+            </nav>
         )
     }
 }
