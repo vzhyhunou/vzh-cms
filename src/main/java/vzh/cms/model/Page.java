@@ -15,4 +15,5 @@ public class Page {
     @Id
     private String path;
     private String title;
+    private String content;
 }

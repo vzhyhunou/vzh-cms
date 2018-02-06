@@ -24,7 +24,8 @@ public class InitConfiguration {
 
             Page page = new Page();
             page.setPath("index");
-            page.setTitle("Index");
+            page.setTitle("Home");
+            page.setContent("Hello");
             pageRepository.save(page);
 
             LOG.info("Initialization end");
