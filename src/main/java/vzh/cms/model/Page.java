@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class Page {
 
     @Id
-    private String path;
+    private String id;
     private String title;
     private String content;
 }

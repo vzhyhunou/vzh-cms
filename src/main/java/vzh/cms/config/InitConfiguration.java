@@ -23,7 +23,7 @@ public class InitConfiguration {
             LOG.info("Initialization start");
 
             Page page = new Page();
-            page.setPath("index");
+            page.setId("index");
             page.setTitle("Home");
             page.setContent("Hello");
             pageRepository.save(page);
