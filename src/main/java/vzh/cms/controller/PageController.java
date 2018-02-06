@@ -17,7 +17,7 @@ public class PageController {
         return page(model, "index");
     }
 
-    @GetMapping("/{page}")
+    @GetMapping("/{page:^(?!api).*}")
     public String page(Map<String, Object> model, @PathVariable String page) {
         model.put("page", page);
         return "index";
