@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
     <div id="react"></div>
-    <script th:src="'built/commons.js'"></script>
-    <script th:src="'built/' + ${id} + '.js'"></script>
+    <script src="/built/commons.js"></script>
+    <script th:src="'/built/' + ${page} + '.js'"></script>
 </body>
 </html>

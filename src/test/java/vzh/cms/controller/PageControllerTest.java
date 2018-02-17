@@ -39,8 +39,8 @@ public class PageControllerTest {
     @Parameters
     public static Collection<Object[]> data() {
         Collection<Object[]> params = new ArrayList<>();
-        params.add(new Object[]{"/", "built/index.js"});
-        params.add(new Object[]{"/pages", "built/pages.js"});
+        params.add(new Object[]{"/", "/built/index.js"});
+        params.add(new Object[]{"/pages", "/built/pages.js"});
         return params;
     }
 
@@ -55,7 +55,7 @@ public class PageControllerTest {
         this.mockMvc.perform(get(page))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("//body/script[1]/@src").string(equalTo("built/commons.js")))
+                .andExpect(xpath("//body/script[1]/@src").string(equalTo("/built/commons.js")))
                 .andExpect(xpath("//body/script[2]/@src").string(equalTo(expected)));
     }
 }
