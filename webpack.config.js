@@ -3,7 +3,7 @@ var webpack = require("webpack");
 
 module.exports = {
     entry: {
-        index: '@basedir@/src/main/js/index.js',
+        page: '@basedir@/src/main/js/page.js',
         pages: '@basedir@/src/main/js/pages.js'
     },
     devtool: 'source-map',

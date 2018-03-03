@@ -8,7 +8,7 @@ class App extends Component {
 
     render() {
         return (
-            <Header title="Index"/>
+            <Header title="Page"/>
         )
     }
 }
