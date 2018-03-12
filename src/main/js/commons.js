@@ -1,7 +1,7 @@
 'use strict';
 
-import React, {Component} from 'react'
-import {Helmet} from "react-helmet"
+import React, {Component} from 'react';
+import {Helmet} from 'react-helmet';
 
 export default class Header extends Component {
 

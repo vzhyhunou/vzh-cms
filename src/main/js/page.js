@@ -1,8 +1,8 @@
 'use strict';
 
-import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
-import Header from './commons'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import Header from './commons';
 
 class App extends Component {
 
