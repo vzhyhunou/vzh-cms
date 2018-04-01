@@ -5,18 +5,38 @@ import ReactDOM from 'react-dom';
 import {Header} from './commons';
 
 const client = require('./client');
+const follow = require('./follow');
 
-class App extends Component {
+const root = '/api';
+
+class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {pages: []};
+        this.state = {pages: [], attributes: [], links: {}};
+    }
+
+    loadFromServer() {
+        follow(client, root, ['pages']).then(collection => {
+            return client({
+                method: 'GET',
+                path: collection.entity._links.profile.href,
+                headers: {'Accept': 'application/schema+json'}
+            }).then(schema => {
+                this.schema = schema.entity;
+                return collection;
+            });
+        }).then(collection => {
+            this.setState({
+                pages: collection.entity._embedded.pages,
+                attributes: Object.keys(this.schema.properties),
+                links: collection.entity._links
+            });
+        });
     }
 
     componentDidMount() {
-        client({method: 'GET', path: '/api/pages'}).then(response => {
-            this.setState({pages: response.entity._embedded.pages});
-        });
+        this.loadFromServer();
     }
 
     render() {

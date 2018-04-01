@@ -3,6 +3,7 @@
 var rest = require('rest');
 var defaultRequest = require('rest/interceptor/defaultRequest');
 var mime = require('rest/interceptor/mime');
+var template = require('rest/interceptor/template');
 var errorCode = require('rest/interceptor/errorCode');
 var baseRegistry = require('rest/mime/registry');
 
@@ -12,5 +13,6 @@ registry.register('application/hal+json', require('rest/mime/type/application/ha
 
 module.exports = rest
     .wrap(mime, {registry: registry})
+    .wrap(template)
     .wrap(errorCode)
     .wrap(defaultRequest, {headers: {'Accept': 'application/hal+json'}});
