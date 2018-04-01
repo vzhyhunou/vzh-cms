@@ -32,13 +32,13 @@ class App extends Component {
 class PageList extends Component {
     render() {
         const pages = this.props.pages.map(page =>
-            <Page key={page._links.self.href} page={page}/>
+            <Page key={page.id} page={page}/>
         );
         return (
             <table>
                 <tbody>
                 <tr>
-                    <th>Key</th>
+                    <th>Id</th>
                     <th>Title</th>
                 </tr>
                 {pages}
@@ -52,7 +52,7 @@ class Page extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.page._links.self.href}</td>
+                <td>{this.props.page.id}</td>
                 <td>{this.props.page.title}</td>
                 {/*<td>{this.props.page.content}</td>
                 <td dangerouslySetInnerHTML={{__html: this.props.page.content}}/>*/}
