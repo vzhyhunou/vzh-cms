@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Header from './commons';
+import {Header} from './commons';
 
 const client = require('./client');
 
