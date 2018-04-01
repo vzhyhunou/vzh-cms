@@ -18,6 +18,8 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<jaxb.version>2.2.11</jaxb.version>
+
 		<outdir>${user.home}/.vzh_cms</outdir>
 	</properties>
 
@@ -47,6 +49,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
 		</dependency>
 	</dependencies>
 
