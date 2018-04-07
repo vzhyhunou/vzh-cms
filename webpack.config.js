@@ -1,5 +1,4 @@
 var path = require('path');
-var webpack = require("webpack");
 
 module.exports = {
     entry: {
@@ -19,7 +18,7 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     presets: [
-                        'babel-preset-es2015',
+                        'babel-preset-env',
                         'babel-preset-react'
                     ].map(require.resolve)
                 }
@@ -29,10 +28,10 @@ module.exports = {
     resolve: {
         modules: [path.join(__dirname, 'node_modules')]
     },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
+    optimization: {
+        splitChunks: {
             name: "commons",
-            filename: "commons.js"
-        })
-    ]
+            chunks: "initial"
+        }
+    }
 };

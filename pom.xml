@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.10.RELEASE</version>
+		<version>1.5.11.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -18,8 +18,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<jaxb.version>2.2.11</jaxb.version>
-
+		<jaxb.version>2.3.0</jaxb.version>
 		<outdir>${user.home}/.vzh_cms</outdir>
 	</properties>
 
@@ -106,7 +105,7 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.2</version>
+				<version>1.6</version>
 				<configuration>
 					<installDirectory>${outdir}/target</installDirectory>
 					<workingDirectory>${outdir}</workingDirectory>
@@ -118,7 +117,7 @@
 							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
-							<nodeVersion>v8.1.0</nodeVersion>
+							<nodeVersion>v9.11.1</nodeVersion>
 						</configuration>
 					</execution>
 					<execution>
