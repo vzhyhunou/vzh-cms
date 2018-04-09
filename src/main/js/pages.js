@@ -14,6 +14,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {pages: [], attributes: [], links: {}};
+        this.onNavigate = this.onNavigate.bind(this);
     }
 
     loadFromServer() {
@@ -35,6 +36,16 @@ class App extends React.Component {
         });
     }
 
+    onNavigate(navUri) {
+        client({method: 'GET', path: navUri}).then(collection => {
+            this.setState({
+                pages: collection.entity._embedded.pages,
+                attributes: this.state.attributes,
+                links: collection.entity._links
+            });
+        });
+    }
+
     componentDidMount() {
         this.loadFromServer();
     }
@@ -43,18 +54,31 @@ class App extends React.Component {
         return (
             <div>
                 <Header title="Pages"/>
-                <PageList pages={this.state.pages}/>
+                <PageList pages={this.state.pages}
+                          links={this.state.links}
+                          onNavigate={this.onNavigate}/>
             </div>
         )
     }
 }
 
 class PageList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.handleNavNext = this.handleNavNext.bind(this);
+    }
+
+    handleNavNext() {
+        this.props.onNavigate(this.props.links.next.href);
+    }
+
     render() {
         const pages = this.props.pages.map(page =>
             <Page key={page.id} page={page}/>
         );
         return (
+            <div>
             <table>
                 <tbody>
                 <tr>
@@ -64,11 +88,14 @@ class PageList extends Component {
                 {pages}
                 </tbody>
             </table>
+            <button key="next" onClick={this.handleNavNext}>&gt;</button>
+            </div>
         )
     }
 }
 
 class Page extends Component {
+
     render() {
         return (
             <tr>
