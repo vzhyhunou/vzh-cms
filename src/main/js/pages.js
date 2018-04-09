@@ -13,8 +13,8 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {pages: [], attributes: [], links: {}};
-        this.onNavigate = this.onNavigate.bind(this);
+        this.state = {pages: [], attributes: [], links: {}, requestSent: false};
+        this.handleOnScroll = this.handleOnScroll.bind(this);
     }
 
     loadFromServer() {
@@ -33,30 +33,44 @@ class App extends React.Component {
                 attributes: Object.keys(this.schema.properties),
                 links: collection.entity._links
             });
+            this.handleOnScroll();
         });
     }
 
     onNavigate(navUri) {
         client({method: 'GET', path: navUri}).then(collection => {
             this.setState({
-                pages: collection.entity._embedded.pages,
+                pages: this.state.pages.concat(collection.entity._embedded.pages),
                 attributes: this.state.attributes,
-                links: collection.entity._links
+                links: collection.entity._links,
+                requestSent: false
             });
         });
     }
 
     componentDidMount() {
+        window.addEventListener('scroll', this.handleOnScroll);
         this.loadFromServer();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleOnScroll);
+    }
+
+    handleOnScroll() {
+        if (this.state.requestSent || window.innerHeight + window.scrollY < document.body.offsetHeight)
+            return;
+        this.setState({
+            requestSent: true
+        });
+        this.onNavigate(this.state.links.next.href);
     }
 
     render() {
         return (
             <div>
                 <Header title="Pages"/>
-                <PageList pages={this.state.pages}
-                          links={this.state.links}
-                          onNavigate={this.onNavigate}/>
+                <PageList pages={this.state.pages}/>
             </div>
         )
     }
@@ -64,21 +78,11 @@ class App extends React.Component {
 
 class PageList extends Component {
 
-    constructor(props) {
-        super(props);
-        this.handleNavNext = this.handleNavNext.bind(this);
-    }
-
-    handleNavNext() {
-        this.props.onNavigate(this.props.links.next.href);
-    }
-
     render() {
         const pages = this.props.pages.map(page =>
             <Page key={page.id} page={page}/>
         );
         return (
-            <div>
             <table>
                 <tbody>
                 <tr>
@@ -88,8 +92,6 @@ class PageList extends Component {
                 {pages}
                 </tbody>
             </table>
-            <button key="next" onClick={this.handleNavNext}>&gt;</button>
-            </div>
         )
     }
 }
