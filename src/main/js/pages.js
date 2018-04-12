@@ -13,7 +13,7 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {pages: [], attributes: [], links: {}, requestSent: false};
+        this.state = {items: [], attributes: [], links: {}, requestSent: false};
         this.handleOnScroll = this.handleOnScroll.bind(this);
     }
 
@@ -29,7 +29,7 @@ class App extends React.Component {
             });
         }).then(collection => {
             this.setState({
-                pages: collection.entity._embedded.pages,
+                items: collection.entity._embedded.pages,
                 attributes: Object.keys(this.schema.properties),
                 links: collection.entity._links
             });
@@ -40,8 +40,7 @@ class App extends React.Component {
     onNavigate(navUri) {
         client({method: 'GET', path: navUri}).then(collection => {
             this.setState({
-                pages: this.state.pages.concat(collection.entity._embedded.pages),
-                attributes: this.state.attributes,
+                items: this.state.items.concat(collection.entity._embedded.pages),
                 links: collection.entity._links,
                 requestSent: false
             });
@@ -70,16 +69,16 @@ class App extends React.Component {
         return (
             <div>
                 <Header title="Pages"/>
-                <PageList pages={this.state.pages}/>
+                <ItemList items={this.state.items}/>
                 {(() => {
                     if (this.state.requestSent) {
-                        return(
+                        return (
                             <div className="text-center">
                                 <i className="fa fa-refresh fa-spin"></i>
                             </div>
                         );
                     } else {
-                        return(
+                        return (
                             <div className="text-center"></div>
                         );
                     }
@@ -89,11 +88,11 @@ class App extends React.Component {
     }
 }
 
-class PageList extends Component {
+class ItemList extends Component {
 
     render() {
-        const pages = this.props.pages.map(page =>
-            <Page key={page.id} page={page}/>
+        const items = this.props.items.map(item =>
+            <Item key={item.id} item={item}/>
         );
         return (
             <table>
@@ -102,22 +101,22 @@ class PageList extends Component {
                     <th>Id</th>
                     <th>Title</th>
                 </tr>
-                {pages}
+                {items}
                 </tbody>
             </table>
         )
     }
 }
 
-class Page extends Component {
+class Item extends Component {
 
     render() {
         return (
             <tr>
-                <td>{this.props.page.id}</td>
-                <td>{this.props.page.title}</td>
-                {/*<td>{this.props.page.content}</td>
-                <td dangerouslySetInnerHTML={{__html: this.props.page.content}}/>*/}
+                <td>{this.props.item.id}</td>
+                <td>{this.props.item.title}</td>
+                {/*<td>{this.props.item.content}</td>
+                <td dangerouslySetInnerHTML={{__html: this.props.item.content}}/>*/}
             </tr>
         )
     }
