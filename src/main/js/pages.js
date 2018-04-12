@@ -5,9 +5,8 @@ import ReactDOM from 'react-dom';
 import {Header} from './commons';
 
 const client = require('./client');
-const follow = require('./follow');
 
-const root = '/api';
+const root = '/api/';
 
 class App extends React.Component {
 
@@ -18,7 +17,10 @@ class App extends React.Component {
     }
 
     loadFromServer() {
-        follow(client, root, ['pages']).then(collection => {
+        client({
+            method: 'GET',
+            path: root + this.props.rel
+        }).then(collection => {
             return client({
                 method: 'GET',
                 path: collection.entity._links.profile.href,
@@ -29,7 +31,7 @@ class App extends React.Component {
             });
         }).then(collection => {
             this.setState({
-                items: collection.entity._embedded.pages,
+                items: collection.entity._embedded[this.props.rel],
                 attributes: Object.keys(this.schema.properties),
                 links: collection.entity._links
             });
@@ -38,12 +40,16 @@ class App extends React.Component {
     }
 
     onNavigate(navUri) {
-        client({method: 'GET', path: navUri}).then(collection => {
+        client({
+            method: 'GET',
+            path: navUri
+        }).then(collection => {
             this.setState({
-                items: this.state.items.concat(collection.entity._embedded.pages),
+                items: this.state.items.concat(collection.entity._embedded[this.props.rel]),
                 links: collection.entity._links,
                 requestSent: false
             });
+            this.handleOnScroll();
         });
     }
 
@@ -68,7 +74,6 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header title="Pages"/>
                 <ItemList items={this.state.items}/>
                 {(() => {
                     if (this.state.requestSent) {
@@ -76,10 +81,6 @@ class App extends React.Component {
                             <div className="text-center">
                                 <i className="fa fa-refresh fa-spin"></i>
                             </div>
-                        );
-                    } else {
-                        return (
-                            <div className="text-center"></div>
                         );
                     }
                 })()}
@@ -123,6 +124,9 @@ class Item extends Component {
 }
 
 ReactDOM.render(
-    <App/>,
+    <div>
+        <Header title="Pages"/>
+        <App rel={'pages'}/>
+    </div>,
     document.getElementById('react')
 );
