@@ -58,7 +58,7 @@ class App extends React.Component {
     }
 
     handleOnScroll() {
-        if (this.state.requestSent || window.innerHeight + window.scrollY < document.body.offsetHeight)
+        if (this.state.requestSent || window.innerHeight + window.scrollY < document.body.offsetHeight || !('next' in this.state.links))
             return;
         this.setState({
             requestSent: true
@@ -71,6 +71,19 @@ class App extends React.Component {
             <div>
                 <Header title="Pages"/>
                 <PageList pages={this.state.pages}/>
+                {(() => {
+                    if (this.state.requestSent) {
+                        return(
+                            <div className="text-center">
+                                <i className="fa fa-refresh fa-spin"></i>
+                            </div>
+                        );
+                    } else {
+                        return(
+                            <div className="text-center"></div>
+                        );
+                    }
+                })()}
             </div>
         )
     }
