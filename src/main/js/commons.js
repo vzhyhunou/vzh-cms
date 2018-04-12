@@ -14,7 +14,7 @@ export class Header extends Component {
             <Helmet>
                 <title>{this.props.title}</title>
             </Helmet>
-        </nav>
+        </nav>;
     }
 }
 
@@ -92,6 +92,6 @@ export class Loader extends Component {
                     </div>;
                 }
             })()}
-        </div>
+        </div>;
     }
 }

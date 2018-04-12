@@ -4,6 +4,18 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Header, Loader} from './commons';
 
+class App extends Component {
+
+    render() {
+        return <div>
+            <Header title="Pages"/>
+            <Loader rel={'pages'} List={({items}) => {
+                return <PageList pages={items}/>;
+            }}/>
+        </div>;
+    }
+}
+
 class PageList extends Component {
 
     render() {
@@ -19,7 +31,7 @@ class PageList extends Component {
                 );
             })()}
             </tbody>
-        </table>
+        </table>;
     }
 }
 
@@ -31,16 +43,11 @@ class Page extends Component {
             <td>{this.props.page.title}</td>
             {/*<td>{this.props.page.content}</td>
                 <td dangerouslySetInnerHTML={{__html: this.props.page.content}}/>*/}
-        </tr>
+        </tr>;
     }
 }
 
 ReactDOM.render(
-    <div>
-        <Header title="Pages"/>
-        <Loader rel={'pages'} List={({items}) => {
-            return <PageList pages={items}/>;
-        }}/>
-    </div>,
+    <App/>,
     document.getElementById('react')
 );
