@@ -7,7 +7,7 @@ import {Header} from './commons';
 class App extends Component {
 
     render() {
-        return <Header title="Pages"/>;
+        return <Header title="Page"/>;
     }
 }
 

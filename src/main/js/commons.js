@@ -82,9 +82,9 @@ export class Loader extends Component {
     }
 
     render() {
-        const {List} = this.props;
+        const {Table} = this.props;
         return <div>
-            <List items={this.state.items}/>
+            <Table items={this.state.items}/>
             {(() => {
                 if (this.state.requestSent) {
                     return <div className="text-center">

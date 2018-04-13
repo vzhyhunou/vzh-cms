@@ -3,47 +3,33 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Header, Loader} from './commons';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 class App extends Component {
 
     render() {
         return <div>
             <Header title="Pages"/>
-            <Loader rel={'pages'} List={({items}) => {
-                return <PageList pages={items}/>;
+            <Loader rel={'pages'} Table={({items}) => {
+                return <PageTable pages={items}/>;
             }}/>
         </div>;
     }
 }
 
-class PageList extends Component {
+class PageTable extends Component {
 
     render() {
-        return <table>
-            <tbody>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-            </tr>
-            {(() => {
-                return this.props.pages.map(page =>
-                    <Page key={page.id} page={page}/>
-                );
-            })()}
-            </tbody>
-        </table>;
-    }
-}
 
-class Page extends Component {
+        const columns = [{
+            dataField: 'id',
+            text: 'Id'
+        }, {
+            dataField: 'title',
+            text: 'Title'
+        }];
 
-    render() {
-        return <tr>
-            <td>{this.props.page.id}</td>
-            <td>{this.props.page.title}</td>
-            {/*<td>{this.props.page.content}</td>
-                <td dangerouslySetInnerHTML={{__html: this.props.page.content}}/>*/}
-        </tr>;
+        return <BootstrapTable keyField='id' data={this.props.pages} columns={columns} striped hover condensed/>;
     }
 }
 
