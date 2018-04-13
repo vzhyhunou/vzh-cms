@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Header, Loader} from './commons';
+import {Header, Data} from './commons';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const columns = [{
@@ -22,7 +22,7 @@ class App extends Component {
     render() {
         return <div>
             <Header title="Pages"/>
-            <Loader rel={'pages'} Table={PageTable}/>
+            <Data rel={'pages'} Table={PageTable}/>
         </div>;
     }
 }

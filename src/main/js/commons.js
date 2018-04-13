@@ -17,7 +17,7 @@ export class Header extends Component {
     }
 }
 
-export class Loader extends Component {
+export class Data extends Component {
 
     constructor(props) {
         super(props);
