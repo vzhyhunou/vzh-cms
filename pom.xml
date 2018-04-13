@@ -107,7 +107,7 @@
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>1.6</version>
 				<configuration>
-					<installDirectory>${outdir}/target</installDirectory>
+					<installDirectory>${outdir}</installDirectory>
 					<workingDirectory>${outdir}</workingDirectory>
 				</configuration>
 				<executions>

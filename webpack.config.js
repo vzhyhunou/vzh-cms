@@ -1,6 +1,7 @@
 var path = require('path');
 
 module.exports = {
+    mode: 'none',
     entry: {
         page: '@basedir@/src/main/js/page.js',
         pages: '@basedir@/src/main/js/pages.js'
@@ -17,9 +18,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets: [
-                        'babel-preset-react'
-                    ].map(require.resolve)
+                    presets: ['babel-preset-react'].map(require.resolve)
                 }
             }
         ]
