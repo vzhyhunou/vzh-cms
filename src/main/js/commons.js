@@ -72,7 +72,9 @@ export class Loader extends Component {
     }
 
     handleOnScroll() {
-        if (this.state.requestSent || window.innerHeight + window.scrollY < document.body.offsetHeight || !('next' in this.state.links))
+        if (this.state.requestSent
+            || window.innerHeight + window.scrollY < document.body.offsetHeight
+            || !('next' in this.state.links))
             return;
         this.setState({
             requestSent: true
@@ -87,7 +89,7 @@ export class Loader extends Component {
             {(() => {
                 if (this.state.requestSent) {
                     return <div className="text-center">
-                        <i className="fa fa-refresh fa-spin"></i>
+                        <i className="fa fa-refresh fa-spin"/>
                     </div>;
                 }
             })()}

@@ -13,22 +13,17 @@ const columns = [{
     text: 'Title'
 }];
 
+const PageTable = ({items}) => {
+    return <BootstrapTable keyField='id' data={items} columns={columns} striped hover condensed/>;
+};
+
 class App extends Component {
 
     render() {
         return <div>
             <Header title="Pages"/>
-            <Loader rel={'pages'} Table={({items}) => {
-                return <PageTable pages={items}/>;
-            }}/>
+            <Loader rel={'pages'} Table={PageTable}/>
         </div>;
-    }
-}
-
-class PageTable extends Component {
-
-    render() {
-        return <BootstrapTable keyField='id' data={this.props.pages} columns={columns} striped hover condensed/>;
     }
 }
 
