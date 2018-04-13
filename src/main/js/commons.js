@@ -2,8 +2,7 @@
 
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-
-const client = require('./client');
+import client from './client';
 
 const root = '/api/';
 

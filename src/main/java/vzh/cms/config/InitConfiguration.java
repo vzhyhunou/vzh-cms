@@ -36,7 +36,7 @@ public class InitConfiguration {
             int count = properties.getPage().getSample().getCount();
             IntStream.range(0, count).forEach(i -> {
                 Page sample = new Page();
-                sample.setId(String.format("sample%d", i));
+                sample.setId(String.format("sample%03d", i));
                 sample.setTitle(String.format("Sample %d", i));
                 sample.setContent(String.format("Sample Page %d", i));
                 pageRepository.save(sample);

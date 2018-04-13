@@ -5,6 +5,14 @@ import ReactDOM from 'react-dom';
 import {Header, Loader} from './commons';
 import BootstrapTable from 'react-bootstrap-table-next';
 
+const columns = [{
+    dataField: 'id',
+    text: 'Id'
+}, {
+    dataField: 'title',
+    text: 'Title'
+}];
+
 class App extends Component {
 
     render() {
@@ -20,15 +28,6 @@ class App extends Component {
 class PageTable extends Component {
 
     render() {
-
-        const columns = [{
-            dataField: 'id',
-            text: 'Id'
-        }, {
-            dataField: 'title',
-            text: 'Title'
-        }];
-
         return <BootstrapTable keyField='id' data={this.props.pages} columns={columns} striped hover condensed/>;
     }
 }
