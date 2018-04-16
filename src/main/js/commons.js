@@ -1,21 +1,17 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Helmet} from 'react-helmet';
 import client from './client';
 
 const root = '/api/';
 
-export class Header extends Component {
-
-    render() {
-        return <nav>
-            <Helmet>
-                <title>{this.props.title}</title>
-            </Helmet>
-        </nav>;
-    }
-}
+export const Layout = ({Main}) => (
+    <div>
+        <nav>
+        </nav>
+        <Main/>
+    </div>
+);
 
 export class Data extends Component {
 
