@@ -3,27 +3,13 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Helmet} from 'react-helmet';
-import {Layout, Data} from './commons';
-import BootstrapTable from 'react-bootstrap-table-next';
-
-const columns = [{
-    dataField: 'id',
-    text: 'Id'
-}, {
-    dataField: 'title',
-    text: 'Title'
-}];
-
-const Table = ({items}) => (
-    <BootstrapTable keyField='id' data={items} columns={columns} striped hover condensed/>
-);
+import {Layout} from './commons';
 
 const Main = () => (
-    <main role="main" className="container-fluid">
+    <main role="main" className="container">
         <Helmet>
-            <title>Pages</title>
+            <title>Page</title>
         </Helmet>
-        <Data rel={'pages'} Table={Table}/>
     </main>
 );
 
