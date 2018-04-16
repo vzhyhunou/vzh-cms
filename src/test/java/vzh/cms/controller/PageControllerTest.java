@@ -31,7 +31,7 @@ public class PageControllerTest {
         mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", equalTo("page/home")));
+                .andExpect(header().string("Location", equalTo("pages/home")));
     }
 
     @Test
