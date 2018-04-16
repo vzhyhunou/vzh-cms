@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
 import client from './client';
 
 const root = '/api/';
@@ -13,12 +14,13 @@ export const Layout = ({Main}) => (
     </div>
 );
 
-export class Data extends Component {
+export class Table extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {items: [], attributes: [], links: {}, requestSent: false};
+        this.state = {data: [], attributes: [], links: {}, requestSent: false};
         this.handleOnScroll = this.handleOnScroll.bind(this);
+        this.handleTableChange = this.handleTableChange.bind(this);
     }
 
     loadFromServer() {
@@ -36,7 +38,7 @@ export class Data extends Component {
             });
         }).then(collection => {
             this.setState({
-                items: collection.entity._embedded[this.props.rel],
+                data: collection.entity._embedded[this.props.rel],
                 attributes: Object.keys(this.schema.properties),
                 links: collection.entity._links
             });
@@ -50,7 +52,7 @@ export class Data extends Component {
             path: navUri
         }).then(collection => {
             this.setState({
-                items: this.state.items.concat(collection.entity._embedded[this.props.rel]),
+                data: this.state.data.concat(collection.entity._embedded[this.props.rel]),
                 links: collection.entity._links,
                 requestSent: false
             });
@@ -78,10 +80,23 @@ export class Data extends Component {
         this.onNavigate(this.state.links.next.href);
     }
 
+    handleTableChange(type, {sortField, sortOrder}) {
+        client({
+            method: 'GET',
+            path: root + this.props.rel + '?' + type + '=' + sortField + ',' + sortOrder
+        }).then(collection => {
+            this.setState({
+                data: collection.entity._embedded[this.props.rel],
+                links: collection.entity._links
+            });
+            this.handleOnScroll();
+        });
+    }
+
     render() {
-        const {Table} = this.props;
         return <div>
-            <Table items={this.state.items}/>
+            <BootstrapTable remote={{sort: true}} keyField='id' data={this.state.data} columns={this.props.columns}
+                            onTableChange={this.handleTableChange} striped hover condensed/>
             {(() => {
                 if (this.state.requestSent) {
                     return <div className="text-center">
