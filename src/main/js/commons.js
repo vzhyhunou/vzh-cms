@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import filterFactory from 'react-bootstrap-table2-filter';
 import client from './client';
 
 const root = '/api/';
@@ -80,10 +81,12 @@ export class Table extends Component {
         this.onNavigate(this.state.links.next.href);
     }
 
-    handleTableChange(type, {sortField, sortOrder}) {
+    handleTableChange(type, {sortField, sortOrder, filters}) {
+        const f = Object.keys(filters).map(k => k + '=' + filters[k].filterVal).join('&');
+        const s = sortField ? 'sort=' + sortField + ',' + sortOrder : '';
         client({
             method: 'GET',
-            path: root + this.props.rel + '?' + type + '=' + sortField + ',' + sortOrder
+            path: root + this.props.rel + (f ? '/search/filter?' + f + (s ? '&' + s : '') : '?' + s)
         }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],
@@ -95,8 +98,9 @@ export class Table extends Component {
 
     render() {
         return <div>
-            <BootstrapTable remote={{sort: true}} keyField='id' data={this.state.data} columns={this.props.columns}
-                            onTableChange={this.handleTableChange} striped hover condensed/>
+            <BootstrapTable remote={{sort: true, filter: true}} keyField='id' data={this.state.data}
+                            columns={this.props.columns} filter={filterFactory()} onTableChange={this.handleTableChange}
+                            striped hover condensed/>
             {(() => {
                 if (this.state.requestSent) {
                     return <div className="text-center">

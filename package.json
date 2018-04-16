@@ -13,7 +13,8 @@
     "react-dom": "^16.3.1",
     "rest": "^2.0.0",
     "react-helmet": "^5.2.0",
-    "react-bootstrap-table-next": "^0.1.7"
+    "react-bootstrap-table-next": "^0.1.7",
+    "react-bootstrap-table2-filter": "^0.1.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
