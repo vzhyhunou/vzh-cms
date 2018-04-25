@@ -1,5 +1,6 @@
 package vzh.cms.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -10,7 +11,11 @@ import vzh.cms.config.property.ApplicationProperties;
 import vzh.cms.model.Page;
 import vzh.cms.repository.PageRepository;
 
-import java.util.stream.IntStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * @author Viktar Zhyhunou
@@ -27,20 +32,13 @@ public class InitConfiguration {
 
             LOG.info("Initialization start");
 
-            Page home = new Page();
-            home.setId("home");
-            home.setTitle("Home");
-            home.setContent("Home Page");
-            pageRepository.save(home);
-
-            int count = properties.getPage().getSample().getCount();
-            IntStream.range(0, count).forEach(i -> {
-                Page sample = new Page();
-                sample.setId(String.format("sample%03d", i));
-                sample.setTitle(String.format("Sample %d", i));
-                sample.setContent(String.format("Sample Page %d", i));
-                pageRepository.save(sample);
-            });
+            Path path = Paths.get(properties.getPage().getInit().getPath());
+            ObjectMapper mapper = new ObjectMapper();
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+                for (Path p : directoryStream) {
+                    pageRepository.save(Arrays.asList(mapper.readValue(p.toFile(), Page[].class)));
+                }
+            }
 
             LOG.info("Initialization end");
         };

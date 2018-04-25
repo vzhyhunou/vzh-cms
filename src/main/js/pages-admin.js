@@ -12,7 +12,7 @@ const columns = [{
     sort: true,
     filter: textFilter()
 }, {
-    dataField: 'title',
+    dataField: 'properties.en.title',
     text: 'Title'
 }];
 

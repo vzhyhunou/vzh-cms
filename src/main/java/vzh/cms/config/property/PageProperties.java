@@ -10,5 +10,5 @@ public class PageProperties {
 
     private HomeProperties home;
 
-    private SampleProperties sample;
+    private InitProperties init;
 }

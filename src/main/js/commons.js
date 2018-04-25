@@ -27,11 +27,11 @@ export class Table extends Component {
     loadFromServer() {
         client({
             method: 'GET',
-            path: root + this.props.rel
+            path: root + this.props.rel + '/search/filter?locale=en'
         }).then(collection => {
             return client({
                 method: 'GET',
-                path: collection.entity._links.profile.href,
+                path: root + 'profile/' + this.props.rel,
                 headers: {'Accept': 'application/schema+json'}
             }).then(schema => {
                 this.schema = schema.entity;
@@ -86,7 +86,7 @@ export class Table extends Component {
         const s = sortField ? 'sort=' + sortField + ',' + sortOrder : '';
         client({
             method: 'GET',
-            path: root + this.props.rel + (f ? '/search/filter?' + f + (s ? '&' + s : '') : '?' + s)
+            path: root + this.props.rel + '/search/filter?locale=en' + (f ? '&' + f : '') + (s ? '&' + s : '')
         }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],

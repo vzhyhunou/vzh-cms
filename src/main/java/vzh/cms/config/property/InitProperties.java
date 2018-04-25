@@ -6,7 +6,7 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class SampleProperties {
+public class InitProperties {
 
-    private int count;
+    private String path;
 }
