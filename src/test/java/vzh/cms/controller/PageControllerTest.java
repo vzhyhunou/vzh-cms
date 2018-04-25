@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Viktar Zhyhunou
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(PageController.class)
+@WebMvcTest(ApplicationController.class)
 @EnableConfigurationProperties(ApplicationProperties.class)
 public class PageControllerTest {
 

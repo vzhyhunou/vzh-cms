@@ -11,11 +11,11 @@ import java.util.Map;
  * @author Viktar Zhyhunou
  */
 @Controller
-public class PageController {
+public class ApplicationController {
 
     private final ApplicationProperties properties;
 
-    public PageController(ApplicationProperties properties) {
+    public ApplicationController(ApplicationProperties properties) {
         this.properties = properties;
     }
 
