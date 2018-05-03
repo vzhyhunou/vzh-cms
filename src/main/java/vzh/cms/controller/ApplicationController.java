@@ -24,7 +24,7 @@ public class ApplicationController {
         return properties.getPage().getHome().getResponse();
     }
 
-    @GetMapping("/{page:^(?!api|built).*}/**")
+    @GetMapping("/{page:^(?!api|static).*}/**")
     public String page(Map<String, Object> model, @PathVariable String page) {
         model.put("page", page);
         return "index";

@@ -40,8 +40,8 @@ public class PageControllerTest {
         mockMvc.perform(get("/page/home"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("//body/script[1]/@src").string(equalTo("/built/commons.js")))
-                .andExpect(xpath("//body/script[2]/@src").string(equalTo("/built/page.js")));
+                .andExpect(xpath("//body/script[1]/@src").string(equalTo("static/built/commons.js")))
+                .andExpect(xpath("//body/script[2]/@src").string(equalTo("static/built/page.js")));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PageControllerTest {
         mockMvc.perform(get("/pages"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("//body/script[1]/@src").string(equalTo("/built/commons.js")))
-                .andExpect(xpath("//body/script[2]/@src").string(equalTo("/built/pages.js")));
+                .andExpect(xpath("//body/script[1]/@src").string(equalTo("static/built/commons.js")))
+                .andExpect(xpath("//body/script[2]/@src").string(equalTo("static/built/pages.js")));
     }
 }
