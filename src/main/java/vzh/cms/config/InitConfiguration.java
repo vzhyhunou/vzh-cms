@@ -41,7 +41,7 @@ public class InitConfiguration {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
                 for (Path p : directoryStream) {
                     File file = p.toFile();
-                    Class<?> c = Class.forName("vzh.cms.model." + file.getName().split("\\.")[0]);
+                    Class<?> c = Class.forName(file.getName());
                     CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, c);
                     Iterable values = mapper.readValue(file, type);
                     CrudRepository repository = (CrudRepository) repositories.getRepositoryFor(c);
