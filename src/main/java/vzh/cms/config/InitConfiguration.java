@@ -2,6 +2,7 @@ package vzh.cms.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -41,7 +42,7 @@ public class InitConfiguration {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
                 for (Path p : directoryStream) {
                     File file = p.toFile();
-                    Class<?> c = Class.forName(file.getName());
+                    Class<?> c = Class.forName(FilenameUtils.removeExtension(file.getName()));
                     CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, c);
                     Iterable values = mapper.readValue(file, type);
                     CrudRepository repository = (CrudRepository) repositories.getRepositoryFor(c);
