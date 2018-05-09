@@ -3,17 +3,75 @@
 import React, {Component} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory from 'react-bootstrap-table2-filter';
+import cookie from 'react-cookies';
 import client from './client';
+import locales from './locales';
 
 const root = '/api/';
 
-export const Layout = ({Main}) => (
-    <div>
-        <nav>
-        </nav>
-        <Main/>
-    </div>
-);
+export class Layout extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {messages: {}};
+        this.handleLocaleChange = this.handleLocaleChange.bind(this);
+    }
+
+    loadMessages(locale) {
+        client({
+            method: 'GET',
+            path: '/static/assets/' + locale + '.json'
+        }).then(m => {
+            this.setState({
+                locale: locale,
+                messages: m.entity
+            });
+        });
+    }
+
+    componentWillMount() {
+        this.loadMessages(cookie.load('locale') || 'en');
+    }
+
+    handleLocaleChange(locale) {
+        this.loadMessages(locale);
+        cookie.save('locale', locale, {path: '/'});
+    }
+
+    render() {
+        const {Main} = this.props;
+        return <div>
+            <nav className="navbar navbar-inverse navbar-fixed-top">
+                <div className="navbar-header">
+                    <button type="button" data-target="#navbar" data-toggle="collapse" className="navbar-toggle">
+                        <span className="icon-bar"></span>
+                        <span className="icon-bar"></span>
+                        <span className="icon-bar"></span>
+                    </button>
+                    <a href="#" className="navbar-brand"><span className="fa fa-home" aria-hidden="true"></span> Project</a>
+                </div>
+                <div id="navbar" className="collapse navbar-collapse">
+                    <ul className="nav navbar-nav navbar-right">
+                        <li className="dropdown">
+                            <a data-toggle="dropdown" className="dropdown-toggle" href="#">{this.state.messages.locale}
+                                <b className="caret"></b></a>
+                            <ul className="dropdown-menu">
+                                {(() => {
+                                    return locales.filter(l => l.val !== this.state.locale).map(l =>
+                                        <li key={l.val}>
+                                            <a href="#" onClick={() => this.handleLocaleChange(l.val)}>{l.name}</a>
+                                        </li>
+                                    );
+                                })()}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <Main/>
+        </div>;
+    }
+}
 
 export class Table extends Component {
 
