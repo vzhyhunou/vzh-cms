@@ -34,7 +34,7 @@ export class Layout extends Component {
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                     </button>
-                    <a href="#" className="navbar-brand"><span className="fa fa-home" aria-hidden="true"></span> Project</a>
+                    <a href="/" className="navbar-brand" title={this.state.messages.homePage}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
                     <Locale locale={this.state.locale} messages={this.state.messages} updateLocale={this.updateLocale}/>
