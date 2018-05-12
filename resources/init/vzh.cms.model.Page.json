@@ -3,12 +3,12 @@
     "id": "home",
     "properties": {
       "ru": {
-        "title": "Домашняя",
-        "content": "Домашняя страница"
+        "title": "Домашняя страница",
+        "content": "<main role=\"main\" class=\"container\"><div class=\"starter\"><h1>Домашняя страница</h1><p class=\"lead\">Используйте этот документ для создания нового проекта.</p></div></main>"
       },
       "en": {
-        "title": "Home",
-        "content": "Home page"
+        "title": "Home page",
+        "content": "<main role=\"main\" class=\"container\"><div class=\"starter\"><h1>Home page</h1><p class=\"lead\">Use this document as a way to start new project.</p></div></main>"
       }
     }
   },

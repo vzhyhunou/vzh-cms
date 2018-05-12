@@ -30,4 +30,14 @@ public class PageServiceTest {
         assertThat(content).extracting(Page::getId).doesNotContain("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
     }
+
+    @Test
+    public void one() {
+
+        Page result = service.one("home", "en");
+
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo("home");
+        assertThat(result.getProperties().keySet()).containsOnly("en");
+    }
 }

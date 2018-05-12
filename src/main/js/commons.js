@@ -62,7 +62,8 @@ class Locale extends Component {
         this.handleLocaleChange = this.handleLocaleChange.bind(this);
     }
 
-    handleLocaleChange(locale) {
+    handleLocaleChange(e, locale) {
+        e.preventDefault();
         cookie.save('locale', locale, {path: '/'});
         this.props.loadMessages(locale);
     }
@@ -75,7 +76,7 @@ class Locale extends Component {
                     {(() => {
                         return locales.filter(l => l.val !== this.props.locale).map(l =>
                             <li key={l.val}>
-                                <a href="#" onClick={() => this.handleLocaleChange(l.val)}>{l.name}</a>
+                                <a href="#" onClick={(e) => this.handleLocaleChange(e, l.val)}>{l.name}</a>
                             </li>
                         );
                     })()}
@@ -151,9 +152,12 @@ export class Table extends Component {
         });
     }
 
+    componentWillMount() {
+        this.loadData(this.props.locale);
+    }
+
     componentDidMount() {
         window.addEventListener('scroll', this.handleOnScroll);
-        this.loadData(this.props.locale);
     }
 
     componentWillUnmount() {

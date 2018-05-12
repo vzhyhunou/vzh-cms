@@ -30,4 +30,13 @@ public class PageService {
             return b.and(predicateId, predicateLocale);
         }, pageable);
     }
+
+    public Page one(String id, String locale) {
+
+        return repository.findOne((root, q, b) -> {
+            Predicate predicateId = b.equal(root.get("id"), id);
+            Predicate predicateLocale = b.equal(((MapJoin) root.fetch("properties")).key(), locale);
+            return b.and(predicateId, predicateLocale);
+        });
+    }
 }
