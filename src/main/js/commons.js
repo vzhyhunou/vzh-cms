@@ -94,7 +94,7 @@ export class Table extends Component {
         this.handleTableChange = this.handleTableChange.bind(this);
     }
 
-    loadFromServer(locale) {
+    loadData(locale) {
         client({
             method: 'GET',
             path: root + this.props.rel + '/search/filter?locale=' + locale
@@ -117,10 +117,23 @@ export class Table extends Component {
         });
     }
 
+    updateData(locale) {
+        client({
+            method: 'GET',
+            path: root + this.props.rel + '/search/filter?locale=' + locale
+        }).then(collection => {
+            this.setState({
+                data: collection.entity._embedded[this.props.rel],
+                links: collection.entity._links
+            });
+            this.handleOnScroll();
+        });
+    }
+
     shouldComponentUpdate(nextProps) {
         if (this.props.locale === nextProps.locale)
             return true;
-        this.loadFromServer(nextProps.locale);
+        this.updateData(nextProps.locale);
         return false;
     }
 
@@ -140,7 +153,7 @@ export class Table extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleOnScroll);
-        this.loadFromServer(this.props.locale);
+        this.loadData(this.props.locale);
     }
 
     componentWillUnmount() {
