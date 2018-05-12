@@ -6,22 +6,24 @@ import {Helmet} from 'react-helmet';
 import {textFilter} from 'react-bootstrap-table2-filter';
 import {Layout, Table} from './commons';
 
-const columns = [{
-    dataField: 'id',
-    text: 'Id',
-    sort: true,
-    filter: textFilter()
-}, {
-    dataField: 'properties.en.title',
-    text: 'Title'
-}];
-
-const Main = () => (
+const Main = (props) => (
     <main role="main" className="container-fluid">
         <Helmet>
             <title>Pages</title>
         </Helmet>
-        <Table rel={'pages'} columns={columns}/>
+        <Table
+            rel={'pages'}
+            columns={[{
+                dataField: 'id',
+                text: 'Id',
+                sort: true,
+                filter: textFilter()
+            }, {
+                dataField: 'properties.' + props.locale + '.title',
+                text: 'Title'
+            }]}
+            locale={props.locale}
+        />
     </main>
 );
 

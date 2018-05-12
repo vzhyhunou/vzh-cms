@@ -13,18 +13,28 @@ export class Layout extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {messages: {}};
-        this.updateLocale = this.updateLocale.bind(this);
+        this.loadMessages = this.loadMessages.bind(this);
     }
 
-    updateLocale(locale, messages) {
-        this.setState({
-            locale: locale,
-            messages: messages
+    loadMessages(locale) {
+        client({
+            method: 'GET',
+            path: '/static/assets/' + locale + '.json'
+        }).then(m => {
+            this.setState({
+                locale: locale,
+                messages: m.entity
+            });
         });
     }
 
+    componentWillMount() {
+        this.loadMessages(cookie.load('locale') || 'en');
+    }
+
     render() {
+        if (!this.state)
+            return <div/>;
         const {Main} = this.props;
         return <div>
             <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -37,10 +47,10 @@ export class Layout extends Component {
                     <a href="/" className="navbar-brand" title={this.state.messages.homePage}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
-                    <Locale locale={this.state.locale} messages={this.state.messages} updateLocale={this.updateLocale}/>
+                    <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
                 </div>
             </nav>
-            <Main/>
+            <Main locale={this.state.locale}/>
         </div>;
     }
 }
@@ -52,22 +62,9 @@ class Locale extends Component {
         this.handleLocaleChange = this.handleLocaleChange.bind(this);
     }
 
-    loadMessages(locale) {
-        client({
-            method: 'GET',
-            path: '/static/assets/' + locale + '.json'
-        }).then(m => {
-            this.props.updateLocale(locale, m.entity);
-        });
-    }
-
-    componentWillMount() {
-        this.loadMessages(cookie.load('locale') || 'en');
-    }
-
     handleLocaleChange(locale) {
         cookie.save('locale', locale, {path: '/'});
-        this.loadMessages(locale);
+        this.props.loadMessages(locale);
     }
 
     render() {
@@ -97,10 +94,10 @@ export class Table extends Component {
         this.handleTableChange = this.handleTableChange.bind(this);
     }
 
-    loadFromServer() {
+    loadFromServer(locale) {
         client({
             method: 'GET',
-            path: root + this.props.rel + '/search/filter?locale=en'
+            path: root + this.props.rel + '/search/filter?locale=' + locale
         }).then(collection => {
             return client({
                 method: 'GET',
@@ -120,6 +117,13 @@ export class Table extends Component {
         });
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (this.props.locale === nextProps.locale)
+            return true;
+        this.loadFromServer(nextProps.locale);
+        return false;
+    }
+
     onNavigate(navUri) {
         client({
             method: 'GET',
@@ -136,7 +140,7 @@ export class Table extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleOnScroll);
-        this.loadFromServer();
+        this.loadFromServer(this.props.locale);
     }
 
     componentWillUnmount() {
@@ -159,7 +163,7 @@ export class Table extends Component {
         const s = sortField ? 'sort=' + sortField + ',' + sortOrder : '';
         client({
             method: 'GET',
-            path: root + this.props.rel + '/search/filter?locale=en' + (f ? '&' + f : '') + (s ? '&' + s : '')
+            path: root + this.props.rel + '/search/filter?locale=' + this.props.locale + (f ? '&' + f : '') + (s ? '&' + s : '')
         }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],
