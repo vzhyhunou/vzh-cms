@@ -47,6 +47,9 @@ export class Layout extends Component {
                     <a href="/" className="navbar-brand" title={this.state.messages.homePage}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
+                    <div className="navbar-form navbar-right">
+                        <a className="btn btn-primary" href="/pages-manager" title={this.state.messages.manager}><span className="fa fa-list" aria-hidden="true"></span></a>
+                    </div>
                     <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
                 </div>
             </nav>

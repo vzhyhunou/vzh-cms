@@ -6,6 +6,10 @@ body {
     padding-right: 15px;
 }
 
+.navbar .btn {
+    margin-right: 10px;
+}
+
 .starter {
     padding: 3rem 1.5rem;
     text-align: center;
