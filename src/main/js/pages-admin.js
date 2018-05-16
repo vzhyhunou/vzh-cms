@@ -17,7 +17,8 @@ const Main = (props) => (
                 dataField: 'id',
                 text: 'Id',
                 sort: true,
-                filter: textFilter()
+                filter: textFilter(),
+                formatter: (cell) => <a href={'pages/' + cell}>{cell}</a>
             }, {
                 dataField: 'properties.' + props.locale + '.title',
                 text: 'Title'
