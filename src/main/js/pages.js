@@ -10,14 +10,12 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        const url = window.location.pathname;
-        this.name = url.substring(url.lastIndexOf('/') + 1);
     }
 
     loadData(locale) {
         client({
             method: 'GET',
-            path: '/api/pages/search/one/' + this.name + '?locale=' + locale
+            path: '/api/pages/search/one/' + this.props.path + '?locale=' + locale
         }).then(item => {
             this.setState({
                 page: item.entity

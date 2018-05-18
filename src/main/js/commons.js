@@ -13,6 +13,8 @@ export class Layout extends Component {
 
     constructor(props) {
         super(props);
+        const url = window.location.pathname;
+        this.path = url.split('/').slice(1);
         this.loadMessages = this.loadMessages.bind(this);
     }
 
@@ -48,12 +50,18 @@ export class Layout extends Component {
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
                     <div className="navbar-form navbar-right">
-                        <a className="btn btn-primary" href="/pages-manager" title={this.state.messages.manager}><span className="fa fa-list" aria-hidden="true"></span></a>
+                        {(() => {
+                            if (this.path[0] !== 'pages-manager') {
+                                return <a className="btn btn-primary" href="/pages-manager" title={this.state.messages.manager}>
+                                    <span className="fa fa-list" aria-hidden="true"></span>
+                                </a>;
+                            }
+                        })()}
                     </div>
                     <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
                 </div>
             </nav>
-            <Main locale={this.state.locale}/>
+            <Main locale={this.state.locale} path={this.path.slice(1)}/>
         </div>;
     }
 }
