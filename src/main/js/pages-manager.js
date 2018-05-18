@@ -24,6 +24,7 @@ const Main = (props) => (
                 text: 'Title'
             }]}
             locale={props.locale}
+            messages={props.messages}
         />
     </main>
 );

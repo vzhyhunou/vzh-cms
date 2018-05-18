@@ -61,7 +61,7 @@ export class Layout extends Component {
                     <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
                 </div>
             </nav>
-            <Main locale={this.state.locale} path={this.path.slice(1)}/>
+            <Main locale={this.state.locale} messages={this.state.messages} path={this.path.slice(1)}/>
         </div>;
     }
 }
@@ -205,7 +205,9 @@ export class Table extends Component {
         return <div>
             <BootstrapTable remote={{sort: true, filter: true}} keyField='id' data={this.state.data}
                             columns={this.props.columns} filter={filterFactory()} onTableChange={this.handleTableChange}
-                            striped hover condensed/>
+                            striped hover condensed
+                            caption={<h4><span className="fa fa-list" aria-hidden="true"></span> {this.props.messages.manager}</h4>}
+            />
             {(() => {
                 if (this.state.requestSent) {
                     return <div className="text-center">
