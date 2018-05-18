@@ -26,7 +26,7 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content.size()).isEqualTo(200);
+        assertThat(content.size()).isEqualTo(100);
         assertThat(content).extracting(Page::getId).doesNotContain("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
     }
