@@ -4,7 +4,7 @@ module.exports = {
     mode: 'none',
     entry: {
         "pages": '@basedir@/src/main/js/pages.js',
-        "pages-manager": '@basedir@/src/main/js/pages-manager.js'
+        "pages-manage": '@basedir@/src/main/js/pages-manage.js'
     },
     devtool: 'source-map',
     output: {

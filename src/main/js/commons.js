@@ -51,8 +51,8 @@ export class Layout extends Component {
                 <div id="navbar" className="collapse navbar-collapse">
                     <div className="navbar-form navbar-right">
                         {(() => {
-                            if (this.path[0] !== 'pages-manager') {
-                                return <a className="btn btn-primary" href="/pages-manager" title={this.state.messages.manager}>
+                            if (this.path[0] !== 'pages-manage') {
+                                return <a className="btn btn-primary" href="/pages-manage" title={this.state.messages.manager}>
                                     <span className="fa fa-list" aria-hidden="true"></span>
                                 </a>;
                             }
