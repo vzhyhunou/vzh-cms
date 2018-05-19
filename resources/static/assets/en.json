@@ -1,5 +1,7 @@
 {
   "locale": "Eng",
-  "homePage": "Home Page",
-  "manager": "Pages Manager"
+  "pages": {
+    "home": "Home Page",
+    "manager": "Pages Manager"
+  }
 }

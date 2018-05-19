@@ -10,7 +10,7 @@ import {Table} from './table';
 const Main = (props) => (
     <main role="main" className="container-fluid">
         <Helmet>
-            <title>Pages</title>
+            <title>{props.messages.pages.manager}</title>
         </Helmet>
         <Table
             rel={'pages'}

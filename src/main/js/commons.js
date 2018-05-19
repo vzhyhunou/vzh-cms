@@ -42,13 +42,13 @@ export class Layout extends Component {
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                     </button>
-                    <a href="/" className="navbar-brand" title={this.state.messages.homePage}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
+                    <a href="/" className="navbar-brand" title={this.state.messages.pages.home}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
                     <div className="navbar-form navbar-right">
                         {(() => {
                             if (this.path[0] !== 'pages-manage') {
-                                return <a className="btn btn-primary" href="/pages-manage" title={this.state.messages.manager}>
+                                return <a className="btn btn-primary" href="/pages-manage" title={this.state.messages.pages.manager}>
                                     <span className="fa fa-list" aria-hidden="true"></span>
                                 </a>;
                             }
