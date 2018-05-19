@@ -12,6 +12,7 @@ const Main = (props) => (
         <Helmet>
             <title>{props.messages.pages.manager}</title>
         </Helmet>
+        <h4><span className="fa fa-list" aria-hidden="true"></span> {props.messages.pages.manager}</h4>
         <Table
             rel={'pages'}
             columns={[{

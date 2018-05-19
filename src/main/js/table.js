@@ -116,7 +116,6 @@ export class Table extends Component {
             <BootstrapTable remote={{sort: true, filter: true}} keyField='id' data={this.state.data}
                             columns={this.props.columns} filter={filterFactory()} onTableChange={this.handleTableChange}
                             striped hover condensed
-                            caption={<h4><span className="fa fa-list" aria-hidden="true"></span> {this.props.messages.pages.manager}</h4>}
             />
             {(() => {
                 if (this.state.requestSent) {
