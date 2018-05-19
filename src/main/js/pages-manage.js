@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Helmet} from 'react-helmet';
 import {textFilter} from 'react-bootstrap-table2-filter';
-import {Layout, Table} from './commons';
+import {Layout} from './commons';
+import {Table} from './table';
 
 const Main = (props) => (
     <main role="main" className="container-fluid">
