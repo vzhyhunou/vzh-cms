@@ -23,7 +23,7 @@ const Main = (props) => (
                 formatter: (cell) => <a href={'pages/' + cell}>{cell}</a>
             }, {
                 dataField: 'properties.' + props.locale + '.title',
-                text: (() => props.messages.pages.title)()
+                text: (() => props.messages.pages.model.title)()
             }]}
             locale={props.locale}
             messages={props.messages}

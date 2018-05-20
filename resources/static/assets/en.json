@@ -1,8 +1,12 @@
 {
   "locale": "Eng",
   "pages": {
-    "title": "Title",
+    "model": {
+      "title": "Title",
+      "content": "Content"
+    },
     "home": "Home Page",
-    "manager": "Pages Manager"
+    "manager": "Pages Manager",
+    "editor": "Page Editor"
   }
 }
