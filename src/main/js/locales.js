@@ -1,12 +1,6 @@
 'use strict';
 
-module.exports = [
-    {
-        "name": "English",
-        "val": "en"
-    },
-    {
-        "name": "Русский",
-        "val": "ru"
-    }
-];
+module.exports = {
+    "en": "English",
+    "ru": "Русский"
+};

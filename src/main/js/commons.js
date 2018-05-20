@@ -80,9 +80,9 @@ class Locale extends Component {
             <li className="dropdown">
                 <a data-toggle="dropdown" className="dropdown-toggle" href="#">{this.props.messages.locale} <b className="caret"></b></a>
                 <ul className="dropdown-menu">
-                    {locales.filter(l => l.val !== this.props.locale).map(l =>
-                        <li key={l.val}>
-                            <a href="#" onClick={(e) => this.handleLocaleChange(e, l.val)}>{l.name}</a>
+                    {Object.keys(locales).filter(l => l !== this.props.locale).map(l =>
+                        <li key={l}>
+                            <a href="#" onClick={(e) => this.handleLocaleChange(e, l)}>{locales[l]}</a>
                         </li>
                     )}
                 </ul>
