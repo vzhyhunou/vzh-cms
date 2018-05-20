@@ -1,6 +1,7 @@
 {
   "locale": "Eng",
   "pages": {
+    "title": "Title",
     "home": "Home Page",
     "manager": "Pages Manager"
   }

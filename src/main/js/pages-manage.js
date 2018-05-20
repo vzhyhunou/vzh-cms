@@ -17,13 +17,13 @@ const Main = (props) => (
             rel={'pages'}
             columns={[{
                 dataField: 'id',
-                text: 'Id',
+                text: 'ID',
                 sort: true,
                 filter: textFilter(),
                 formatter: (cell) => <a href={'pages/' + cell}>{cell}</a>
             }, {
                 dataField: 'properties.' + props.locale + '.title',
-                text: 'Title'
+                text: (() => props.messages.pages.title)()
             }]}
             locale={props.locale}
             messages={props.messages}
