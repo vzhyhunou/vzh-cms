@@ -53,6 +53,13 @@ export class Layout extends Component {
                                 </a>;
                             }
                         })()}
+                        {(() => {
+                            if (this.path[0] === 'pages') {
+                                return <a className="btn btn-primary" href={'/pages-edit/' + this.path[1]} title={this.state.messages.pages.editor}>
+                                    <span className="fa fa-edit" aria-hidden="true"></span>
+                                </a>;
+                            }
+                        })()}
                     </div>
                     <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
                 </div>
