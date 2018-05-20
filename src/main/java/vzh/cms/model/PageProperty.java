@@ -2,6 +2,7 @@ package vzh.cms.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -13,5 +14,6 @@ public class PageProperty {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 }
