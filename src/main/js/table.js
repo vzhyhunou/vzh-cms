@@ -11,7 +11,7 @@ export class Table extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: [], attributes: [], links: {}, requestSent: false};
+        this.state = {data: [], links: {}, requestSent: false};
         this.handleOnScroll = this.handleOnScroll.bind(this);
         this.handleTableChange = this.handleTableChange.bind(this);
     }
@@ -21,18 +21,8 @@ export class Table extends Component {
             method: 'GET',
             path: root + this.props.rel + '/search/filter?sort=id&locale=' + locale
         }).then(collection => {
-            return client({
-                method: 'GET',
-                path: root + 'profile/' + this.props.rel,
-                headers: {'Accept': 'application/schema+json'}
-            }).then(schema => {
-                this.schema = schema.entity;
-                return collection;
-            });
-        }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],
-                attributes: Object.keys(this.schema.properties),
                 links: collection.entity._links
             });
             this.handleOnScroll();
