@@ -19,7 +19,7 @@ export class Table extends Component {
     loadData(locale) {
         client({
             method: 'GET',
-            path: root + this.props.rel + '/search/filter?locale=' + locale
+            path: root + this.props.rel + '/search/filter?sort=id&locale=' + locale
         }).then(collection => {
             return client({
                 method: 'GET',
@@ -42,7 +42,7 @@ export class Table extends Component {
     updateData(locale) {
         client({
             method: 'GET',
-            path: root + this.props.rel + '/search/filter?locale=' + locale
+            path: root + this.props.rel + '/search/filter?sort=id&locale=' + locale
         }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],
@@ -101,7 +101,7 @@ export class Table extends Component {
         const s = sortField ? 'sort=' + sortField + ',' + sortOrder : '';
         client({
             method: 'GET',
-            path: root + this.props.rel + '/search/filter?locale=' + this.props.locale + (f ? '&' + f : '') + (s ? '&' + s : '')
+            path: root + this.props.rel + '/search/filter?sort=id&locale=' + this.props.locale + (f ? '&' + f : '') + (s ? '&' + s : '')
         }).then(collection => {
             this.setState({
                 data: collection.entity._embedded[this.props.rel],
