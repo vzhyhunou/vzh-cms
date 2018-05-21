@@ -3,6 +3,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Helmet} from 'react-helmet';
+import AceEditor from 'react-ace';
+import 'brace/mode/html';
+import 'brace/theme/textmate';
 import {Layout} from './commons';
 import client from "./client";
 
@@ -47,8 +50,6 @@ class Main extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.state.page.properties[this.props.locale].title = ReactDOM.findDOMNode(this.refs.title).value;
-        this.state.page.properties[this.props.locale].content = ReactDOM.findDOMNode(this.refs.content).value;
         this.saveData();
     }
 
@@ -62,10 +63,25 @@ class Main extends Component {
             <h4><span className="fa fa-edit" aria-hidden="true"></span> {this.props.messages.pages.editor}</h4>
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <input className="form-control" placeholder={this.props.messages.pages.model.title} ref={'title'} defaultValue={this.state.page.properties[this.props.locale].title} required/>
+                    <input
+                        className="form-control"
+                        placeholder={this.props.messages.pages.model.title}
+                        defaultValue={this.state.page.properties[this.props.locale].title}
+                        required
+                        onChange={(e) => this.state.page.properties[this.props.locale].title = e.target.value}
+                    />
                 </div>
+                <input type="hidden" ref={'content'}/>
                 <div className="form-group">
-                    <textarea className="form-control" rows="20" placeholder={this.props.messages.pages.model.content} ref={'content'} defaultValue={this.state.page.properties[this.props.locale].content} required/>
+                    <AceEditor
+                        className="form-control"
+                        mode="html"
+                        theme="textmate"
+                        onChange={(val) => this.state.page.properties[this.props.locale].content = val}
+                        width={'100%'}
+                        fontSize={16}
+                        value={this.state.page.properties[this.props.locale].content}
+                    />
                 </div>
                 <input type="submit" className="btn btn-primary" value={this.props.messages.apply}/>
             </form>
