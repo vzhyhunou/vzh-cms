@@ -83,7 +83,7 @@ class Main extends Component {
                         value={this.state.page.properties[this.props.locale].content}
                     />
                 </div>
-                <input type="submit" className="btn btn-primary" value={this.props.messages.apply}/>
+                <input type="submit" className="btn btn-primary" value={this.props.messages.save}/>
             </form>
         </main>;
     }
