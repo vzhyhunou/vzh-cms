@@ -27,7 +27,7 @@ public class PageControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void pages() throws Exception {
+    public void page() throws Exception {
 
         mockMvc.perform(get("/abc"))
                 .andDo(print())
