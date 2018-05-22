@@ -12,7 +12,8 @@ import vzh.cms.config.property.ApplicationProperties;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
 /**
  * @author Viktar Zhyhunou
@@ -26,21 +27,12 @@ public class PageControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void index() throws Exception {
-
-        mockMvc.perform(get("/"))
-                .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", equalTo("pages/home")));
-    }
-
-    @Test
     public void pages() throws Exception {
 
-        mockMvc.perform(get("/pages"))
+        mockMvc.perform(get("/abc"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(xpath("//body/script[1]/@src").string(equalTo("/static/built/commons.js")))
-                .andExpect(xpath("//body/script[2]/@src").string(equalTo("/static/built/pages.js")));
+                .andExpect(xpath("//body/script[2]/@src").string(equalTo("/static/built/abc.js")));
     }
 }
