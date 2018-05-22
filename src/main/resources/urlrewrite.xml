@@ -2,6 +2,6 @@
 <urlrewrite>
     <rule>
         <from>^/$</from>
-        <to type="redirect">%{context-path}/pages/home</to>
+        <to type="redirect">pages/home</to>
     </rule>
 </urlrewrite>
