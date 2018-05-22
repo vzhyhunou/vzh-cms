@@ -6,9 +6,7 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class PageProperties {
+public class UrlrewriteProperties {
 
-    private HomeProperties home;
-
-    private InitProperties init;
+    private String path;
 }

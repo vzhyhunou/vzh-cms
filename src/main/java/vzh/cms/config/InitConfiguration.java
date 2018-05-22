@@ -37,7 +37,7 @@ public class InitConfiguration {
             LOG.info("Initialization start");
 
             Repositories repositories = new Repositories(listableBeanFactory);
-            Path path = Paths.get(properties.getPage().getInit().getPath());
+            Path path = Paths.get(properties.getInit().getPath());
             ObjectMapper mapper = new ObjectMapper();
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
                 for (Path p : directoryStream) {

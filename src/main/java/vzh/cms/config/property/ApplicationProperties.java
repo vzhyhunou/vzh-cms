@@ -10,5 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class ApplicationProperties {
 
-    private PageProperties page;
+    private InitProperties init;
+
+    private UrlrewriteProperties urlrewrite;
 }

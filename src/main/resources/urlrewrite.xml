@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlrewrite>
+    <rule>
+        <from>^/$</from>
+        <to type="redirect">%{context-path}/pages/home</to>
+    </rule>
+</urlrewrite>
