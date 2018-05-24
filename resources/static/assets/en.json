@@ -3,8 +3,7 @@
   "save": "Save",
   "pages": {
     "model": {
-      "title": "Title",
-      "content": "Content"
+      "title": "Title"
     },
     "home": "Home Page",
     "manager": "Pages Manager",
