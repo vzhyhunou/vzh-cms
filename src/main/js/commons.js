@@ -99,3 +99,25 @@ class Locale extends Component {
         </ul>;
     }
 }
+
+export const Modal = (props) => (
+    <div className="modal fade" role="dialog" aria-labelledby="actionModalLabel" id="actionModal">
+        <div className="modal-dialog modal-sm">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <button type="button" className="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 className="modal-title" id="actionModalLabel">{props.messageAction}</h4>
+                </div>
+                <div className="modal-body">
+                    <p>{props.messageAction + ' ' + props.item + '?'}</p>
+                </div>
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-default" data-dismiss="modal">{props.messages.cancel}</button>
+                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.action}>{props.messageAction}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+);

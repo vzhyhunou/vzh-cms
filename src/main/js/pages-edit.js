@@ -6,42 +6,64 @@ import {Helmet} from 'react-helmet';
 import AceEditor from 'react-ace';
 import 'brace/mode/html';
 import 'brace/theme/textmate';
-import {Layout} from './commons';
+import {Layout, locales, Modal} from './commons';
 import client from "./client";
-import {locales} from './commons';
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.save = this.save.bind(this);
+        this.to = this.to.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
-    loadData() {
+    load() {
         client.get('pages/' + this.props.path).then(response => {
-            this.setState({
-                page: response.data
-            });
+            this.set(response.data);
         });
     }
 
-    saveData() {
+    save() {
         client.put('pages/' + this.props.path, this.state.page).then(response => {
-            if (response.status === 200)
-                window.location.href = '/pages/' + this.props.path;
-            else {
+            if (response.status === 200) {
+                if (this.stay)
+                    this.set(this.state.page);
+                else
+                    this.to();
+            } else {
                 // TODO
             }
         });
     }
 
-    componentWillMount() {
-        this.loadData();
+    set(page) {
+        this.page = JSON.parse(JSON.stringify(page));
+        this.setState({
+            page: page
+        });
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        this.saveData();
+    delete() {
+        client.delete('pages/' + this.props.path).then(response => {
+            if (response.status === 204) {
+                window.location.href = '/';
+            } else {
+                // TODO
+            }
+        });
+    }
+
+    to() {
+        window.location.href = '/pages/' + this.props.path;
+    }
+
+    verify() {
+        return JSON.stringify(this.state.page) === JSON.stringify(this.page);
+    }
+
+    componentWillMount() {
+        this.load();
     }
 
     render() {
@@ -54,7 +76,10 @@ class Main extends Component {
                 <title>{messages.pages.editor}</title>
             </Helmet>
             <h4><span className="fa fa-edit" aria-hidden="true"></span> {messages.pages.editor}</h4>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                this.save();
+            }}>
                 <ul className="nav nav-tabs">
                     {Object.keys(locales).map(l =>
                         <li key={l} className={l === this.props.locale ? 'active' : ''}>
@@ -72,7 +97,10 @@ class Main extends Component {
                                     placeholder={messages.pages.model.title}
                                     defaultValue={page.properties[l].title}
                                     required
-                                    onChange={(e) => page.properties[l].title = e.target.value}
+                                    onChange={(e) => {
+                                        page.properties[l].title = e.target.value;
+                                        this.setState({});
+                                    }}
                                 />
                             </div>
                             <input type="hidden" ref={'content'}/>
@@ -81,7 +109,10 @@ class Main extends Component {
                                     className="form-control"
                                     mode="html"
                                     theme="textmate"
-                                    onChange={(val) => page.properties[l].content = val}
+                                    onChange={(val) => {
+                                        page.properties[l].content = val;
+                                        this.setState({});
+                                    }}
                                     width={'100%'}
                                     fontSize={14}
                                     value={page.properties[l].content}
@@ -90,8 +121,12 @@ class Main extends Component {
                         </div>
                     )}
                 </div>
-                <input type="submit" className="btn btn-primary" value={messages.save}/>
+                <input disabled={this.verify()} type="submit" className="btn btn-default" value={messages.save} onClick={() => this.stay = false}/>
+                <input disabled={this.verify()} type="submit" className="btn btn-default" value={messages.apply} onClick={() => this.stay = true}/>
+                <input type="button" className="btn btn-default" value={messages.cancel} onClick={this.to}/>
+                <input type="button" className="btn btn-danger" value={messages.delete} data-toggle="modal" data-target="#actionModal"/>
             </form>
+            <Modal messages={messages} messageAction={messages.delete} item={this.props.path} action={this.delete}/>
         </main>;
     }
 }

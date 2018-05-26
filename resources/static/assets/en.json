@@ -1,6 +1,9 @@
 {
   "locale": "Eng",
   "save": "Save",
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "delete": "Delete",
   "pages": {
     "model": {
       "title": "Title"

@@ -6,8 +6,13 @@ body {
     padding-right: 15px;
 }
 
-.navbar .btn {
+.btn {
     margin-right: 10px;
+}
+
+.btn-danger {
+    margin-right: inherit;
+    float: right;
 }
 
 .starter {
