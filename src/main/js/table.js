@@ -5,8 +5,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory from 'react-bootstrap-table2-filter';
 import client from './client';
 
-const root = '/api/';
-
 export class Table extends Component {
 
     constructor(props) {
@@ -17,26 +15,20 @@ export class Table extends Component {
     }
 
     loadData(locale) {
-        client({
-            method: 'GET',
-            path: root + this.props.rel + '/search/filter?sort=id&locale=' + locale
-        }).then(collection => {
+        client.get(this.props.rel + '/search/filter?sort=id&locale=' + locale).then(response => {
             this.setState({
-                data: collection.entity._embedded[this.props.rel],
-                links: collection.entity._links
+                data: response.data._embedded[this.props.rel],
+                links: response.data._links
             });
             this.handleOnScroll();
         });
     }
 
     updateData(locale) {
-        client({
-            method: 'GET',
-            path: root + this.props.rel + '/search/filter?sort=id&locale=' + locale
-        }).then(collection => {
+        client.get(this.props.rel + '/search/filter?sort=id&locale=' + locale).then(response => {
             this.setState({
-                data: collection.entity._embedded[this.props.rel],
-                links: collection.entity._links
+                data: response.data._embedded[this.props.rel],
+                links: response.data._links
             });
             this.handleOnScroll();
         });
@@ -50,13 +42,10 @@ export class Table extends Component {
     }
 
     onNavigate(navUri) {
-        client({
-            method: 'GET',
-            path: navUri
-        }).then(collection => {
+        client.get(navUri).then(response => {
             this.setState({
-                data: this.state.data.concat(collection.entity._embedded[this.props.rel]),
-                links: collection.entity._links,
+                data: this.state.data.concat(response.data._embedded[this.props.rel]),
+                links: response.data._links,
                 requestSent: false
             });
             this.handleOnScroll();
@@ -89,13 +78,13 @@ export class Table extends Component {
     handleTableChange(type, {sortField, sortOrder, filters}) {
         const f = Object.keys(filters).map(k => k + '=' + filters[k].filterVal).join('&');
         const s = sortField ? 'sort=' + sortField + ',' + sortOrder : '';
-        client({
-            method: 'GET',
-            path: root + this.props.rel + '/search/filter?sort=id&locale=' + this.props.locale + (f ? '&' + f : '') + (s ? '&' + s : '')
-        }).then(collection => {
+        client.get(
+            this.props.rel + '/search/filter?sort=id&locale=' + this.props.locale
+            + (f ? '&' + f : '') + (s ? '&' + s : '')
+        ).then(response => {
             this.setState({
-                data: collection.entity._embedded[this.props.rel],
-                links: collection.entity._links
+                data: response.data._embedded[this.props.rel],
+                links: response.data._links
             });
             this.handleOnScroll();
         });
@@ -103,8 +92,12 @@ export class Table extends Component {
 
     render() {
         return <div>
-            <BootstrapTable remote={{sort: true, filter: true}} keyField='id' data={this.state.data}
-                            columns={this.props.columns} filter={filterFactory()} onTableChange={this.handleTableChange}
+            <BootstrapTable remote={{sort: true, filter: true}}
+                            keyField='id'
+                            data={this.state.data}
+                            columns={this.props.columns}
+                            filter={filterFactory()}
+                            onTableChange={this.handleTableChange}
                             striped hover condensed
             />
             {(() => {

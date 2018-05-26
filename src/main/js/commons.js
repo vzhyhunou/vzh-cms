@@ -2,8 +2,12 @@
 
 import React, {Component} from 'react';
 import cookie from 'react-cookies';
-import client from './client';
-import locales from './locales';
+import axios from 'axios';
+
+export const locales = {
+    "en": "English",
+    "ru": "Русский"
+};
 
 export class Layout extends Component {
 
@@ -15,13 +19,10 @@ export class Layout extends Component {
     }
 
     loadMessages(locale) {
-        client({
-            method: 'GET',
-            path: '/static/assets/' + locale + '.json'
-        }).then(m => {
+        axios.get('/static/assets/' + locale + '.json').then(response => {
             this.setState({
                 locale: locale,
-                messages: m.entity
+                messages: response.data
             });
         });
     }
@@ -34,6 +35,7 @@ export class Layout extends Component {
         if (!this.state)
             return <div/>;
         const {Main} = this.props;
+        var messages = this.state.messages;
         return <div>
             <nav className="navbar navbar-inverse navbar-fixed-top">
                 <div className="navbar-header">
@@ -42,29 +44,29 @@ export class Layout extends Component {
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                     </button>
-                    <a href="/" className="navbar-brand" title={this.state.messages.pages.home}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
+                    <a href="/" className="navbar-brand" title={messages.pages.home}><span className="fa fa-home" aria-hidden="true"></span> Project</a>
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
                     <div className="navbar-form navbar-right">
                         {(() => {
                             if (this.path[0] !== 'pages-manage') {
-                                return <a className="btn btn-primary" href="/pages-manage" title={this.state.messages.pages.manager}>
+                                return <a className="btn btn-primary" href="/pages-manage" title={messages.pages.manager}>
                                     <span className="fa fa-list" aria-hidden="true"></span>
                                 </a>;
                             }
                         })()}
                         {(() => {
                             if (this.path[0] === 'pages') {
-                                return <a className="btn btn-primary" href={'/pages-edit/' + this.path[1]} title={this.state.messages.pages.editor}>
+                                return <a className="btn btn-primary" href={'/pages-edit/' + this.path[1]} title={messages.pages.editor}>
                                     <span className="fa fa-edit" aria-hidden="true"></span>
                                 </a>;
                             }
                         })()}
                     </div>
-                    <Locale locale={this.state.locale} messages={this.state.messages} loadMessages={this.loadMessages}/>
+                    <Locale locale={this.state.locale} messages={messages} loadMessages={this.loadMessages}/>
                 </div>
             </nav>
-            <Main locale={this.state.locale} messages={this.state.messages} path={this.path.slice(1)}/>
+            <Main locale={this.state.locale} messages={messages} path={this.path.slice(1)}/>
         </div>;
     }
 }

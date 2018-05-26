@@ -8,9 +8,7 @@ import 'brace/mode/html';
 import 'brace/theme/textmate';
 import {Layout} from './commons';
 import client from "./client";
-import locales from './locales';
-
-const root = '/api/';
+import {locales} from './commons';
 
 class Main extends Component {
 
@@ -20,24 +18,16 @@ class Main extends Component {
     }
 
     loadData() {
-        client({
-            method: 'GET',
-            path: root + 'pages/' + this.props.path
-        }).then(item => {
+        client.get('pages/' + this.props.path).then(response => {
             this.setState({
-                page: item.entity
+                page: response.data
             });
         });
     }
 
     saveData() {
-        client({
-            method: 'PUT',
-            path: root + 'pages/' + this.props.path,
-            entity: this.state.page,
-            headers: {'Content-Type': 'application/json'}
-        }).then(response => {
-            if (response.status.code === 200)
+        client.put('pages/' + this.props.path, this.state.page).then(response => {
+            if (response.status === 200)
                 window.location.href = '/pages/' + this.props.path;
             else {
                 // TODO

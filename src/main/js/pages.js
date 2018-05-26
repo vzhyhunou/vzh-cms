@@ -13,12 +13,9 @@ class Main extends Component {
     }
 
     loadData(locale) {
-        client({
-            method: 'GET',
-            path: '/api/pages/search/one/' + this.props.path + '?locale=' + locale
-        }).then(item => {
+        client.get('pages/search/one/' + this.props.path + '?locale=' + locale).then(response => {
             this.setState({
-                page: item.entity
+                page: response.data
             });
         });
     }
@@ -37,11 +34,12 @@ class Main extends Component {
     render() {
         if (!this.state)
             return <div/>;
+        var page = this.state.page;
         return <div>
             <Helmet>
-                <title>{this.state.page.properties[this.props.locale].title}</title>
+                <title>{page.properties[this.props.locale].title}</title>
             </Helmet>
-            <div dangerouslySetInnerHTML={{__html: this.state.page.properties[this.props.locale].content}}/>
+            <div dangerouslySetInnerHTML={{__html: page.properties[this.props.locale].content}}/>
         </div>;
     }
 }
