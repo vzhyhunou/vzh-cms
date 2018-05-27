@@ -115,6 +115,7 @@ class Main extends Component {
                                     }}
                                     width={'100%'}
                                     fontSize={14}
+                                    setOptions={{useWorker: false}}
                                     value={page.properties[l].content}
                                 />
                             </div>
