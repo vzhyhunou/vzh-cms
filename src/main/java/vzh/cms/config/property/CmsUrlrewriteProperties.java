@@ -6,7 +6,7 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class UrlrewriteProperties {
+public class CmsUrlrewriteProperties {
 
     private String path;
 }

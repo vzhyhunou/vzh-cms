@@ -8,9 +8,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("cms")
 @Data
-public class ApplicationProperties {
+public class CmsProperties {
 
-    private InitProperties init;
+    private CmsInitProperties init;
 
-    private UrlrewriteProperties urlrewrite;
+    private CmsUrlrewriteProperties urlrewrite;
+
+    private CmsTemplateProperties template;
 }

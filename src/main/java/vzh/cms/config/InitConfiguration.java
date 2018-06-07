@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
-import vzh.cms.config.property.ApplicationProperties;
+import vzh.cms.config.property.CmsProperties;
 
 import java.io.File;
 import java.nio.file.DirectoryStream;
@@ -25,13 +25,13 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @Configuration
-@EnableConfigurationProperties(ApplicationProperties.class)
+@EnableConfigurationProperties(CmsProperties.class)
 public class InitConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(InitConfiguration.class);
 
     @Bean
-    public CommandLineRunner init(ListableBeanFactory listableBeanFactory, ApplicationProperties properties) {
+    public CommandLineRunner init(ListableBeanFactory listableBeanFactory, CmsProperties properties) {
         return (args) -> {
 
             LOG.info("Initialization start");
