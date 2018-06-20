@@ -31,6 +31,7 @@ public class InitConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(InitConfiguration.class);
 
     @Bean
+    @SuppressWarnings("unchecked")
     public CommandLineRunner init(ListableBeanFactory listableBeanFactory, CmsProperties properties) {
         return (args) -> {
 
