@@ -48,20 +48,12 @@ export class Layout extends Component {
                 </div>
                 <div id="navbar" className="collapse navbar-collapse">
                     <div className="navbar-form navbar-right">
-                        {(() => {
-                            if (this.path[0] !== 'pages-manage') {
-                                return <a className="btn btn-primary" href="/pages-manage" title={messages.pages.manager}>
-                                    <span className="fa fa-list" aria-hidden="true"></span>
-                                </a>;
-                            }
-                        })()}
-                        {(() => {
-                            if (this.path[0] === 'pages') {
-                                return <a className="btn btn-primary" href={'/pages-edit/' + this.path[1]} title={messages.pages.editor}>
-                                    <span className="fa fa-edit" aria-hidden="true"></span>
-                                </a>;
-                            }
-                        })()}
+                        <a className="btn btn-primary" href="/admin" title={messages.pages.manager}>
+                            <span className="fa fa-list" aria-hidden="true"></span>
+                        </a>
+                        <a className="btn btn-primary" href={'/admin#/pages/' + this.path[1]} title={messages.pages.editor}>
+                            <span className="fa fa-edit" aria-hidden="true"></span>
+                        </a>
                     </div>
                     <Locale locale={this.state.locale} messages={messages} loadMessages={this.loadMessages}/>
                 </div>
@@ -87,7 +79,7 @@ class Locale extends Component {
     render() {
         return <ul className="nav navbar-nav navbar-right">
             <li className="dropdown">
-                <a data-toggle="dropdown" className="dropdown-toggle" href="#">{this.props.messages.locale} <b className="caret"></b></a>
+                <a data-toggle="dropdown" className="dropdown-toggle" href="#">{this.props.locale} <b className="caret"></b></a>
                 <ul className="dropdown-menu">
                     {Object.keys(locales).filter(l => l !== this.props.locale).map(l =>
                         <li key={l}>
