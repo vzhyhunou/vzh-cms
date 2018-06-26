@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 import {changeLocale, translate, ViewTitle, getLocale} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
-import locales from '../commons/locales';
+import LOCALES from '../commons/locales';
 
 const styles = {
     label: {
@@ -27,8 +27,8 @@ const Configuration = ({classes, locale, changeLocale, translate}) =>
                 value={locale}
                 onChange={(e) => changeLocale(e.target.value)}
             >
-                {Object.keys(locales).map(l =>
-                    <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
+                {Object.keys(LOCALES).map(l =>
+                    <MenuItem key={l} value={l}>{LOCALES[l]}</MenuItem>
                 )}
             </Select>
         </CardContent>

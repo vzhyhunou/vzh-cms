@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import locales from './locales';
+import LOCALES from './locales';
 
 export default class extends Component {
 
@@ -45,8 +45,8 @@ export default class extends Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
             >
-                {Object.keys(locales).filter(l => l !== locale).map(l =>
-                    <MenuItem key={l} onClick={() => changeLocale(l)}>{locales[l]}</MenuItem>
+                {Object.keys(LOCALES).filter(l => l !== locale).map(l =>
+                    <MenuItem key={l} onClick={() => changeLocale(l)}>{LOCALES[l]}</MenuItem>
                 )}
             </Menu>
         </div>;
