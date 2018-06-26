@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
     mode: 'none',
     entry: {
-        "pages": '@basedir@/src/main/js/pages.js',
-        "admin": '@basedir@/src/main/js/admin.js'
+        "pages": '@basedir@/src/main/js/pages/index.js',
+        "admin": '@basedir@/src/main/js/admin/index.js'
     },
     devtool: 'source-map',
     output: {
