@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import {i18nLoader, i18nProvider} from './locales';
+import {i18nLoader, i18nUpdater} from './locales';
 import Bar from './bar';
 
 export default class extends Component {
@@ -13,7 +13,7 @@ export default class extends Component {
         i18nLoader().then(state => this.setState(state));
     }
 
-    changeLocale = locale => i18nProvider(locale).then(messages => this.setState({locale, messages}));
+    changeLocale = locale => i18nUpdater(locale).then(messages => this.setState({locale, messages}));
 
     render() {
         if (!this.state)

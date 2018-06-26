@@ -11,24 +11,21 @@ export default class extends Component {
 
     state = {anchorEl: null};
 
-    shouldComponentUpdate(nextProps) {
-
-        const {locale} = this.props;
-
-        if (locale === nextProps.locale)
-            return true;
-        this.handleClose();
-        return false;
-    }
-
     handleClick = e => this.setState({anchorEl: e.currentTarget});
 
     handleClose = () => this.setState({anchorEl: null});
 
+    changeLocale = locale => {
+
+        const {changeLocale} = this.props;
+
+        changeLocale(locale).then(this.handleClose);
+    };
+
     render() {
 
         const {anchorEl} = this.state;
-        const {locale, changeLocale} = this.props;
+        const {locale} = this.props;
 
         return <div>
             <Button
@@ -45,8 +42,14 @@ export default class extends Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
             >
-                {Object.keys(LOCALES).filter(l => l !== locale).map(l =>
-                    <MenuItem key={l} onClick={() => changeLocale(l)}>{LOCALES[l]}</MenuItem>
+                {Object.keys(LOCALES).map(l =>
+                    <MenuItem
+                        key={l}
+                        onClick={() => this.changeLocale(l)}
+                        selected={l === locale}
+                    >
+                        {LOCALES[l]}
+                    </MenuItem>
                 )}
             </Menu>
         </div>;
