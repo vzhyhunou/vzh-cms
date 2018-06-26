@@ -1,49 +1,54 @@
 'use strict';
 
 import React, {Component} from 'react';
-import cookie from 'react-cookies';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import locales from './locales';
 
-const locales = {
-    "en": "English",
-    "ru": "Русский"
-};
+export default class extends Component {
 
-const name = 'locale';
+    state = {anchorEl: null};
 
-var locale;
-var messages;
+    shouldComponentUpdate(nextProps) {
 
-const load = (value, callback) => {
-    return import(`./i18n/${value}`).then(response => {
-        messages = response.default;
-        callback();
-        return messages;
-    });
-};
+        const {locale} = this.props;
 
-export const i18nLoader = callback => {
-    locale = cookie.load(name) || 'en';
-    load(locale, () => callback({locale, messages}));
-};
+        if (locale === nextProps.locale)
+            return true;
+        this.handleClose();
+        return false;
+    }
 
-export const i18nProvider = value => {
-    return value === locale ? messages : load(value, () => {
-        cookie.save(name, value, {path: '/'});
-        locale = value;
-    });
-};
+    handleClick = e => this.setState({anchorEl: e.currentTarget});
 
-export const i18nLocale = () => locale;
+    handleClose = () => this.setState({anchorEl: null});
 
-export default ({locale, changeLocale}) =>
-    <Select
-        value={locale}
-        onChange={(e) => changeLocale(e.target.value)}
-    >
-        {Object.keys(locales).map(l =>
-            <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
-        )}
-    </Select>
-;
+    render() {
+
+        const {anchorEl} = this.state;
+        const {locale, changeLocale} = this.props;
+
+        return <div>
+            <Button
+                aria-owns={anchorEl ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleClick}
+                color="inherit"
+            >
+                {locale}
+            </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={this.handleClose}
+            >
+                {Object.keys(locales).filter(l => l !== locale).map(l =>
+                    <MenuItem key={l} onClick={() => changeLocale(l)}>{locales[l]}</MenuItem>
+                )}
+            </Menu>
+        </div>;
+    }
+}

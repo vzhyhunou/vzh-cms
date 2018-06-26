@@ -1,6 +1,6 @@
 'use strict';
 
-import { stringify } from 'query-string';
+import {stringify} from 'query-string';
 import {
     fetchUtils,
     GET_LIST,
@@ -13,7 +13,9 @@ import {
     DELETE,
     DELETE_MANY,
 } from 'react-admin';
-import {i18nLocale} from '../commons/locale';
+import {i18nLocale} from '../commons/locales';
+
+export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 
 export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
 
@@ -23,8 +25,8 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
         const locale = i18nLocale();
         switch (type) {
             case GET_LIST: {
-                const { page, perPage } = params.pagination;
-                const { field, order } = params.sort;
+                const {page, perPage} = params.pagination;
+                const {field, order} = params.sort;
                 const query = {
                     locale: locale,
                     page: page - 1,
@@ -40,14 +42,14 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 break;
             case GET_MANY: {
                 const query = {
-                    filter: JSON.stringify({ id: params.ids }),
+                    filter: JSON.stringify({id: params.ids}),
                 };
                 url = `${apiUrl}/${resource}?${stringify(query)}`;
                 break;
             }
             case GET_MANY_REFERENCE: {
-                const { page, perPage } = params.pagination;
-                const { field, order } = params.sort;
+                const {page, perPage} = params.pagination;
+                const {field, order} = params.sort;
                 const query = {
                     sort: JSON.stringify([field, order]),
                     range: JSON.stringify([
@@ -76,14 +78,17 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 url = `${apiUrl}/${resource}/${params.id}`;
                 options.method = 'DELETE';
                 break;
+            case GET_ONE_LOCALE:
+                url = `${apiUrl}/${resource}/search/one/${params.id}?locale=${locale}`;
+                break;
             default:
                 throw new Error(`Unsupported fetch action type ${type}`);
         }
-        return { url, options };
+        return {url, options};
     };
 
     const convertHTTPResponse = (response, type, resource, params) => {
-        const { json } = response;
+        const {json} = response;
         switch (type) {
             case GET_LIST:
             case GET_MANY_REFERENCE:
@@ -92,9 +97,9 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     total: json.page.totalElements,
                 };
             case CREATE:
-                return { data: { ...params.data, id: json.id } };
+                return {data: {...params.data, id: json.id}};
             default:
-                return { data: json };
+                return {data: json};
         }
     };
 
@@ -125,7 +130,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
             }));
         }
 
-        const { url, options } = convertDataRequestToHTTP(
+        const {url, options} = convertDataRequestToHTTP(
             type,
             resource,
             params

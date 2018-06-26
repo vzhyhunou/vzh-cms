@@ -4,11 +4,11 @@
     "properties": {
       "ru": {
         "title": "Домашняя страница",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Домашняя страница</h1>\n\t\t<p class=\"lead\">Используйте этот документ для создания нового проекта.</p>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Домашняя страница</h1>\n\t<p>Используйте этот документ для создания нового проекта.</p>\n</div>"
       },
       "en": {
         "title": "Home page",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Home page</h1>\n\t\t<p class=\"lead\">Use this document as a way to start new project.</p>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Home page</h1>\n\t<p>Use this document as a way to start new project.</p>\n</div>"
       }
     }
   },
@@ -17,11 +17,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 1",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 1</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 1</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 1",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 1</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 1</h1>\n</div>"
       }
     }
   },
@@ -30,11 +30,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 2",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 2</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 2</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 2",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 2</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 2</h1>\n</div>"
       }
     }
   },
@@ -43,11 +43,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 3",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 3</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 3</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 3",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 3</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 3</h1>\n</div>"
       }
     }
   },
@@ -56,11 +56,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 4",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 4</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 4</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 4",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 4</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 4</h1>\n</div>"
       }
     }
   },
@@ -69,11 +69,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 5",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 5</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 5</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 5",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 5</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 5</h1>\n</div>"
       }
     }
   },
@@ -82,11 +82,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 6",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 6</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 6</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 6",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 6</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 6</h1>\n</div>"
       }
     }
   },
@@ -95,11 +95,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 7",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 7</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 7</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 7",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 7</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 7</h1>\n</div>"
       }
     }
   },
@@ -108,11 +108,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 8",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 8</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 8</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 8",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 8</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 8</h1>\n</div>"
       }
     }
   },
@@ -121,11 +121,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 9",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 9</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 9</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 9",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 9</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 9</h1>\n</div>"
       }
     }
   },
@@ -134,11 +134,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 10",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 10</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 10</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 10",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 10</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 10</h1>\n</div>"
       }
     }
   },
@@ -147,11 +147,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 11",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 11</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 11</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 11",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 11</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 11</h1>\n</div>"
       }
     }
   },
@@ -160,11 +160,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 12",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 12</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 12</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 12",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 12</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 12</h1>\n</div>"
       }
     }
   },
@@ -173,11 +173,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 13",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 13</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 13</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 13",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 13</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 13</h1>\n</div>"
       }
     }
   },
@@ -186,11 +186,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 14",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 14</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 14</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 14",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 14</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 14</h1>\n</div>"
       }
     }
   },
@@ -199,11 +199,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 15",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 15</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 15</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 15",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 15</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 15</h1>\n</div>"
       }
     }
   },
@@ -212,11 +212,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 16",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 16</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 16</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 16",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 16</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 16</h1>\n</div>"
       }
     }
   },
@@ -225,11 +225,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 17",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 17</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 17</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 17",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 17</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 17</h1>\n</div>"
       }
     }
   },
@@ -238,11 +238,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 18",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 18</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 18</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 18",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 18</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 18</h1>\n</div>"
       }
     }
   },
@@ -251,11 +251,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 19",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 19</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 19</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 19",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 19</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 19</h1>\n</div>"
       }
     }
   },
@@ -264,11 +264,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 20",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 20</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 20</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 20",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 20</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 20</h1>\n</div>"
       }
     }
   },
@@ -277,11 +277,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 21",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 21</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 21</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 21",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 21</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 21</h1>\n</div>"
       }
     }
   },
@@ -290,11 +290,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 22",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 22</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 22</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 22",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 22</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 22</h1>\n</div>"
       }
     }
   },
@@ -303,11 +303,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 23",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 23</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 23</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 23",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 23</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 23</h1>\n</div>"
       }
     }
   },
@@ -316,11 +316,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 24",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 24</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 24</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 24",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 24</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 24</h1>\n</div>"
       }
     }
   },
@@ -329,11 +329,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 25",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 25</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 25</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 25",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 25</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 25</h1>\n</div>"
       }
     }
   },
@@ -342,11 +342,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 26",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 26</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 26</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 26",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 26</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 26</h1>\n</div>"
       }
     }
   },
@@ -355,11 +355,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 27",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 27</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 27</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 27",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 27</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 27</h1>\n</div>"
       }
     }
   },
@@ -368,11 +368,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 28",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 28</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 28</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 28",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 28</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 28</h1>\n</div>"
       }
     }
   },
@@ -381,11 +381,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 29",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 29</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 29</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 29",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 29</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 29</h1>\n</div>"
       }
     }
   },
@@ -394,11 +394,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 30",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 30</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 30</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 30",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 30</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 30</h1>\n</div>"
       }
     }
   },
@@ -407,11 +407,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 31",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 31</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 31</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 31",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 31</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 31</h1>\n</div>"
       }
     }
   },
@@ -420,11 +420,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 32",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 32</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 32</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 32",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 32</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 32</h1>\n</div>"
       }
     }
   },
@@ -433,11 +433,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 33",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 33</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 33</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 33",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 33</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 33</h1>\n</div>"
       }
     }
   },
@@ -446,11 +446,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 34",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 34</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 34</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 34",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 34</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 34</h1>\n</div>"
       }
     }
   },
@@ -459,11 +459,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 35",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 35</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 35</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 35",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 35</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 35</h1>\n</div>"
       }
     }
   },
@@ -472,11 +472,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 36",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 36</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 36</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 36",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 36</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 36</h1>\n</div>"
       }
     }
   },
@@ -485,11 +485,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 37",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 37</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 37</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 37",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 37</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 37</h1>\n</div>"
       }
     }
   },
@@ -498,11 +498,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 38",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 38</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 38</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 38",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 38</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 38</h1>\n</div>"
       }
     }
   },
@@ -511,11 +511,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 39",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 39</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 39</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 39",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 39</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 39</h1>\n</div>"
       }
     }
   },
@@ -524,11 +524,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 40",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 40</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 40</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 40",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 40</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 40</h1>\n</div>"
       }
     }
   },
@@ -537,11 +537,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 41",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 41</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 41</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 41",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 41</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 41</h1>\n</div>"
       }
     }
   },
@@ -550,11 +550,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 42",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 42</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 42</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 42",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 42</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 42</h1>\n</div>"
       }
     }
   },
@@ -563,11 +563,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 43",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 43</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 43</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 43",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 43</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 43</h1>\n</div>"
       }
     }
   },
@@ -576,11 +576,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 44",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 44</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 44</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 44",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 44</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 44</h1>\n</div>"
       }
     }
   },
@@ -589,11 +589,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 45",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 45</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 45</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 45",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 45</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 45</h1>\n</div>"
       }
     }
   },
@@ -602,11 +602,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 46",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 46</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 46</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 46",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 46</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 46</h1>\n</div>"
       }
     }
   },
@@ -615,11 +615,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 47",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 47</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 47</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 47",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 47</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 47</h1>\n</div>"
       }
     }
   },
@@ -628,11 +628,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 48",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 48</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 48</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 48",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 48</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 48</h1>\n</div>"
       }
     }
   },
@@ -641,11 +641,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 49",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 49</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 49</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 49",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 49</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 49</h1>\n</div>"
       }
     }
   },
@@ -654,11 +654,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 50",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 50</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 50</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 50",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 50</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 50</h1>\n</div>"
       }
     }
   },
@@ -667,11 +667,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 51",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 51</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 51</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 51",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 51</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 51</h1>\n</div>"
       }
     }
   },
@@ -680,11 +680,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 52",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 52</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 52</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 52",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 52</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 52</h1>\n</div>"
       }
     }
   },
@@ -693,11 +693,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 53",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 53</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 53</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 53",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 53</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 53</h1>\n</div>"
       }
     }
   },
@@ -706,11 +706,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 54",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 54</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 54</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 54",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 54</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 54</h1>\n</div>"
       }
     }
   },
@@ -719,11 +719,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 55",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 55</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 55</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 55",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 55</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 55</h1>\n</div>"
       }
     }
   },
@@ -732,11 +732,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 56",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 56</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 56</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 56",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 56</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 56</h1>\n</div>"
       }
     }
   },
@@ -745,11 +745,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 57",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 57</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 57</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 57",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 57</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 57</h1>\n</div>"
       }
     }
   },
@@ -758,11 +758,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 58",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 58</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 58</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 58",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 58</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 58</h1>\n</div>"
       }
     }
   },
@@ -771,11 +771,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 59",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 59</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 59</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 59",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 59</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 59</h1>\n</div>"
       }
     }
   },
@@ -784,11 +784,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 60",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 60</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 60</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 60",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 60</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 60</h1>\n</div>"
       }
     }
   },
@@ -797,11 +797,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 61",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 61</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 61</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 61",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 61</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 61</h1>\n</div>"
       }
     }
   },
@@ -810,11 +810,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 62",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 62</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 62</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 62",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 62</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 62</h1>\n</div>"
       }
     }
   },
@@ -823,11 +823,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 63",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 63</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 63</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 63",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 63</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 63</h1>\n</div>"
       }
     }
   },
@@ -836,11 +836,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 64",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 64</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 64</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 64",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 64</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 64</h1>\n</div>"
       }
     }
   },
@@ -849,11 +849,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 65",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 65</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 65</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 65",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 65</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 65</h1>\n</div>"
       }
     }
   },
@@ -862,11 +862,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 66",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 66</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 66</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 66",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 66</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 66</h1>\n</div>"
       }
     }
   },
@@ -875,11 +875,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 67",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 67</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 67</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 67",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 67</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 67</h1>\n</div>"
       }
     }
   },
@@ -888,11 +888,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 68",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 68</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 68</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 68",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 68</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 68</h1>\n</div>"
       }
     }
   },
@@ -901,11 +901,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 69",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 69</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 69</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 69",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 69</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 69</h1>\n</div>"
       }
     }
   },
@@ -914,11 +914,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 70",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 70</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 70</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 70",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 70</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 70</h1>\n</div>"
       }
     }
   },
@@ -927,11 +927,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 71",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 71</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 71</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 71",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 71</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 71</h1>\n</div>"
       }
     }
   },
@@ -940,11 +940,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 72",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 72</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 72</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 72",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 72</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 72</h1>\n</div>"
       }
     }
   },
@@ -953,11 +953,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 73",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 73</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 73</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 73",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 73</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 73</h1>\n</div>"
       }
     }
   },
@@ -966,11 +966,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 74",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 74</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 74</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 74",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 74</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 74</h1>\n</div>"
       }
     }
   },
@@ -979,11 +979,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 75",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 75</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 75</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 75",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 75</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 75</h1>\n</div>"
       }
     }
   },
@@ -992,11 +992,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 76",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 76</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 76</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 76",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 76</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 76</h1>\n</div>"
       }
     }
   },
@@ -1005,11 +1005,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 77",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 77</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 77</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 77",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 77</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 77</h1>\n</div>"
       }
     }
   },
@@ -1018,11 +1018,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 78",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 78</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 78</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 78",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 78</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 78</h1>\n</div>"
       }
     }
   },
@@ -1031,11 +1031,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 79",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 79</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 79</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 79",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 79</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 79</h1>\n</div>"
       }
     }
   },
@@ -1044,11 +1044,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 80",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 80</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 80</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 80",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 80</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 80</h1>\n</div>"
       }
     }
   },
@@ -1057,11 +1057,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 81",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 81</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 81</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 81",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 81</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 81</h1>\n</div>"
       }
     }
   },
@@ -1070,11 +1070,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 82",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 82</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 82</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 82",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 82</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 82</h1>\n</div>"
       }
     }
   },
@@ -1083,11 +1083,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 83",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 83</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 83</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 83",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 83</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 83</h1>\n</div>"
       }
     }
   },
@@ -1096,11 +1096,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 84",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 84</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 84</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 84",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 84</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 84</h1>\n</div>"
       }
     }
   },
@@ -1109,11 +1109,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 85",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 85</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 85</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 85",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 85</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 85</h1>\n</div>"
       }
     }
   },
@@ -1122,11 +1122,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 86",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 86</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 86</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 86",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 86</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 86</h1>\n</div>"
       }
     }
   },
@@ -1135,11 +1135,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 87",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 87</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 87</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 87",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 87</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 87</h1>\n</div>"
       }
     }
   },
@@ -1148,11 +1148,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 88",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 88</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 88</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 88",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 88</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 88</h1>\n</div>"
       }
     }
   },
@@ -1161,11 +1161,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 89",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 89</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 89</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 89",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 89</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 89</h1>\n</div>"
       }
     }
   },
@@ -1174,11 +1174,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 90",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 90</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 90</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 90",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 90</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 90</h1>\n</div>"
       }
     }
   },
@@ -1187,11 +1187,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 91",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 91</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 91</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 91",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 91</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 91</h1>\n</div>"
       }
     }
   },
@@ -1200,11 +1200,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 92",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 92</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 92</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 92",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 92</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 92</h1>\n</div>"
       }
     }
   },
@@ -1213,11 +1213,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 93",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 93</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 93</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 93",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 93</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 93</h1>\n</div>"
       }
     }
   },
@@ -1226,11 +1226,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 94",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 94</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 94</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 94",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 94</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 94</h1>\n</div>"
       }
     }
   },
@@ -1239,11 +1239,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 95",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 95</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 95</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 95",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 95</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 95</h1>\n</div>"
       }
     }
   },
@@ -1252,11 +1252,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 96",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 96</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 96</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 96",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 96</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 96</h1>\n</div>"
       }
     }
   },
@@ -1265,11 +1265,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 97",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 97</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 97</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 97",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 97</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 97</h1>\n</div>"
       }
     }
   },
@@ -1278,11 +1278,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 98",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 98</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 98</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 98",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 98</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 98</h1>\n</div>"
       }
     }
   },
@@ -1291,11 +1291,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 99",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 99</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 99</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 99",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 99</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 99</h1>\n</div>"
       }
     }
   },
@@ -1304,11 +1304,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 100",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Пример страницы 100</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 100</h1>\n</div>"
       },
       "en": {
         "title": "Sample page 100",
-        "content": "<main role=\"main\" class=\"container\">\n\t<div class=\"starter\">\n\t\t<h1>Sample page 100</h1>\n\t</div>\n</main>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 100</h1>\n</div>"
       }
     }
   }

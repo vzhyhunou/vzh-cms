@@ -16,7 +16,7 @@ import {
 } from 'react-admin';
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
-import {locales} from "../commons";
+import locales from "../commons/locales";
 
 const PageFilter = props => (
     <Filter {...props}>

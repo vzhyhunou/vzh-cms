@@ -4,13 +4,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import {changeLocale, translate, ViewTitle, getLocale} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
-import LocaleSelect from '../commons/locale';
+import locales from '../commons/locales';
 
 const styles = {
-    label: {width: '10em', display: 'inline-block'}
+    label: {
+        width: '10em',
+        display: 'inline-block'
+    }
 };
 
 const Configuration = ({classes, locale, changeLocale, translate}) =>
@@ -18,10 +23,14 @@ const Configuration = ({classes, locale, changeLocale, translate}) =>
         <ViewTitle title={translate('pos.configuration')}/>
         <CardContent>
             <div className={classes.label}>{translate('pos.language')}</div>
-            <LocaleSelect
-                locale={locale}
-                changeLocale={changeLocale}
-            />
+            <Select
+                value={locale}
+                onChange={(e) => changeLocale(e.target.value)}
+            >
+                {Object.keys(locales).map(l =>
+                    <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
+                )}
+            </Select>
         </CardContent>
     </Card>
 ;

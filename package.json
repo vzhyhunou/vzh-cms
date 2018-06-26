@@ -11,7 +11,6 @@
   "dependencies": {
     "react": "~16.3.0",
     "react-dom": "~16.3.0",
-    "axios": "^0.18.0",
     "react-helmet": "^5.2.0",
     "react-cookies": "^0.1.0",
     "react-admin": "^2.0.3",

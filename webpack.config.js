@@ -9,6 +9,7 @@ module.exports = {
     devtool: 'source-map',
     output: {
         path: '@basedir@/resources',
+        publicPath: '/',
         filename: 'static/built/[name].js'
     },
     module: {

@@ -3,16 +3,16 @@
 import React, {Component} from 'react';
 import {Admin, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
-import dataProvider from './rest';
+import dataProvider from '../commons/rest';
 import {PageList, PageEdit} from './pages';
 import routes from './routes';
 import Menu from './menu';
-import {i18nLoader, i18nProvider} from '../commons/locale';
+import {i18nLoader, i18nProvider} from '../commons/locales';
 
 export default class extends Component {
 
     componentWillMount() {
-        i18nLoader((state) => this.setState(state));
+        i18nLoader().then(state => this.setState(state));
     }
 
     render() {
@@ -20,9 +20,10 @@ export default class extends Component {
             return <div/>;
 
         const {locale, messages} = this.state;
+        const title = messages.pos.title;
 
         return <Admin
-            title={messages.pos.title}
+            title={title}
             locale={locale}
             customRoutes={routes}
             menu={Menu}
@@ -30,7 +31,7 @@ export default class extends Component {
             i18nProvider={i18nProvider}
         >
             <Helmet>
-                <title>{messages.pos.title}</title>
+                <title>{title}</title>
             </Helmet>
             <Resource
                 name="pages"
