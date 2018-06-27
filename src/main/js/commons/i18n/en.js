@@ -7,7 +7,8 @@ export default {
     pos: {
         configuration: 'Configuration',
         language: 'Language',
-        title: 'Admin Panel'
+        title: 'Admin Panel',
+        general: 'General'
     },
     resources: {
         pages: {

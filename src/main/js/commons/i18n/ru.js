@@ -7,7 +7,8 @@ export default {
     pos: {
         configuration: 'Конфигурация',
         language: 'Язык',
-        title: 'Админ панель'
+        title: 'Админ панель',
+        general: 'Общие'
     },
     resources: {
         pages: {

@@ -2,17 +2,18 @@
 
 import React from 'react';
 import {
+    Create,
     Datagrid,
+    Edit,
+    EditButton,
     Filter,
+    FormTab,
     getLocale,
     List,
-    TextField,
-    TextInput,
-    Edit,
+    LongTextInput,
     TabbedForm,
-    FormTab,
-    EditButton,
-    LongTextInput
+    TextField,
+    TextInput
 } from 'react-admin';
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
@@ -60,19 +61,36 @@ export const PageList = compose(
 export const PageEdit = props =>
     <Edit {...props}>
         <TabbedForm>
-            {Object.keys(LOCALES).map(l =>
-                <FormTab key={l} label={l}>
-                    <TextInput
-                        source={`properties.${l}.title`}
-                        label="resources.pages.fields.title"
-                    />
-                    <LongTextInput
-                        source={`properties.${l}.content`}
-                        label="resources.pages.fields.content"
-                        options={{rows: 20}}
-                    />
-                </FormTab>
-            )}
+            {tabs()}
         </TabbedForm>
     </Edit>
+;
+
+export const PageCreate = props =>
+    <Create {...props}>
+        <TabbedForm>
+            <FormTab label="pos.general">
+                <TextInput
+                    source="id"
+                />
+            </FormTab>
+            {tabs()}
+        </TabbedForm>
+    </Create>
+;
+
+const tabs = () =>
+    Object.keys(LOCALES).map(l =>
+        <FormTab key={l} label={l}>
+            <TextInput
+                source={`properties.${l}.title`}
+                label="resources.pages.fields.title"
+            />
+            <LongTextInput
+                source={`properties.${l}.content`}
+                label="resources.pages.fields.content"
+                options={{rows: 20}}
+            />
+        </FormTab>
+    )
 ;

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {Admin, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import dataProvider from '../commons/rest';
-import {PageEdit, PageList} from './pages';
+import {PageCreate, PageEdit, PageList} from './pages';
 import routes from './routes';
 import Menu from './menu';
 import {i18nLoader, i18nProvider} from '../commons/locales';
@@ -37,6 +37,7 @@ export default class extends Component {
                 name="pages"
                 list={PageList}
                 edit={PageEdit}
+                create={PageCreate}
             />
         </Admin>;
     }
