@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import vzh.cms.model.Page;
 import vzh.cms.repository.PageRepository;
 
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 
 /**
@@ -26,7 +28,8 @@ public class PageService {
             Predicate predicateId = b.like(root.get("id"), "%" + id + "%");
             if (Long.class == q.getResultType())
                 return predicateId;
-            Predicate predicateLocale = b.equal(((MapJoin) root.fetch("properties")).key(), locale);
+            Path key = ((MapJoin) root.fetch("properties", JoinType.LEFT)).key();
+            Predicate predicateLocale = b.or(b.equal(key, locale), b.isNull(key));
             return b.and(predicateId, predicateLocale);
         }, pageable);
     }
