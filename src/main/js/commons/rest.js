@@ -93,7 +93,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
             case GET_LIST:
             case GET_MANY_REFERENCE:
                 return {
-                    data: json._embedded[resource],
+                    data: json._embedded ? json._embedded[resource] : [],
                     total: json.page.totalElements,
                 };
             case CREATE:
