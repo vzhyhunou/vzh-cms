@@ -19,9 +19,23 @@ public class PageServiceTest {
     private PageService service;
 
     @Test
-    public void filter() {
+    public void listAll() {
 
-        org.springframework.data.domain.Page<Page> result = service.filter("ple", "en", null);
+        org.springframework.data.domain.Page<Page> result = service.list(new Page(), "en", null);
+
+        assertThat(result).isNotNull();
+        List<Page> content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content.size()).isEqualTo(31);
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+    }
+
+    @Test
+    public void listFilter() {
+
+        Page filter = new Page();
+        filter.setId("ple");
+        org.springframework.data.domain.Page<Page> result = service.list(filter, "en", null);
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();

@@ -34,7 +34,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     sort: `${field},${order}`,
                     ...params.filter,
                 };
-                url = `${apiUrl}/${resource}/search/filter?${stringify(query)}`;
+                url = `${apiUrl}/${resource}/search/list?${stringify(query)}`;
                 break;
             }
             case GET_ONE:

@@ -28,14 +28,14 @@ public class PageRestController {
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/filter")
-    public PagedResources<Resource<Page>> filter(
-            @RequestParam(defaultValue = "", required = false) String id,
+    @GetMapping("/pages/search/list")
+    public PagedResources<Resource<Page>> list(
             @RequestParam String locale,
+            Page filter,
             Pageable pageable
     ) {
 
-        return assembler.toResource(service.filter(id, locale, pageable));
+        return assembler.toResource(service.list(filter, locale, pageable));
     }
 
     @ResponseBody
