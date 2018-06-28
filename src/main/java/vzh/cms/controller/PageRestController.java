@@ -31,7 +31,8 @@ public class PageRestController {
     @GetMapping("/pages/search/filter")
     public PagedResources<Resource<Page>> filter(
             @RequestParam(defaultValue = "", required = false) String id,
-            @RequestParam String locale, Pageable pageable
+            @RequestParam String locale,
+            Pageable pageable
     ) {
 
         return assembler.toResource(service.filter(id, locale, pageable));
