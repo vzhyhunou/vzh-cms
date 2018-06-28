@@ -22,7 +22,6 @@ import LOCALES from "../commons/locales";
 const PageFilter = props => (
     <Filter {...props}>
         <TextInput
-            label="Id"
             source="id"
             alwaysOn
         />
@@ -33,7 +32,16 @@ const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-const PageListLocale = ({locale, ...props}) =>
+const withLocale = component => compose(
+    connect(
+        state => ({
+            locale: getLocale(state)
+        }),
+        {}
+    )
+)(component);
+
+export const PageList = withLocale(({locale, ...props}) =>
     <List {...props} filters={<PageFilter/>}>
         <Datagrid>
             <LinkField
@@ -41,32 +49,22 @@ const PageListLocale = ({locale, ...props}) =>
             />
             <TextField
                 source={`properties.${locale}.title`}
-                label="resources.pages.fields.title"
                 sortable={false}
             />
             <EditButton/>
         </Datagrid>
     </List>
-;
+);
 
-export const PageList = compose(
-    connect(
-        state => ({
-            locale: getLocale(state)
-        }),
-        {}
-    )
-)(PageListLocale);
-
-export const PageEdit = props =>
+export const PageEdit = withLocale(({locale, ...props}) =>
     <Edit {...props}>
         <TabbedForm>
-            {tabs()}
+            {tabs(locale)}
         </TabbedForm>
     </Edit>
-;
+);
 
-export const PageCreate = props =>
+export const PageCreate = withLocale(({locale, ...props}) =>
     <Create {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
@@ -74,21 +72,21 @@ export const PageCreate = props =>
                     source="id"
                 />
             </FormTab>
-            {tabs()}
+            {tabs(locale)}
         </TabbedForm>
     </Create>
-;
+);
 
-const tabs = () =>
+const tabs = locale =>
     Object.keys(LOCALES).map(l =>
         <FormTab key={l} label={l}>
             <TextInput
                 source={`properties.${l}.title`}
-                label="resources.pages.fields.title"
+                label={`resources.pages.fields.properties.${locale}.title`}
             />
             <LongTextInput
                 source={`properties.${l}.content`}
-                label="resources.pages.fields.content"
+                label={`resources.pages.fields.properties.${locale}.content`}
                 options={{rows: 20}}
             />
         </FormTab>

@@ -14,8 +14,12 @@ export default {
         pages: {
             name: 'Страницы',
             fields: {
-                title: 'Заголовок',
-                content: 'Контент'
+                properties: {
+                    ru: {
+                        title: 'Заголовок',
+                        content: 'Контент'
+                    }
+                }
             }
         }
     }

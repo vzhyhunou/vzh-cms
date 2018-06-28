@@ -14,8 +14,12 @@ export default {
         pages: {
             name: 'Pages',
             fields: {
-                title: 'Title',
-                content: 'Content'
+                properties: {
+                    en: {
+                        title: 'Title',
+                        content: 'Content'
+                    }
+                }
             }
         }
     }
