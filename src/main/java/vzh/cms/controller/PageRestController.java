@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.model.Page;
+import vzh.cms.model.PageFilter;
 import vzh.cms.service.PageService;
 
 /**
@@ -31,7 +32,7 @@ public class PageRestController {
     @GetMapping("/pages/search/list")
     public PagedResources<Resource<Page>> list(
             @RequestParam String locale,
-            Page filter,
+            PageFilter filter,
             Pageable pageable
     ) {
 

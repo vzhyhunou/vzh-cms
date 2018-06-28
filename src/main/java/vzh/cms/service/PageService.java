@@ -3,6 +3,7 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Page;
+import vzh.cms.model.PageFilter;
 import vzh.cms.repository.PageRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,7 +26,7 @@ public class PageService {
         this.repository = repository;
     }
 
-    public org.springframework.data.domain.Page<Page> list(Page filter, String locale, Pageable pageable) {
+    public org.springframework.data.domain.Page<Page> list(PageFilter filter, String locale, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             Predicate predicateId = b.like(root.get("id"), getLikeParam(filter.getId()));
             if (Long.class == q.getResultType())

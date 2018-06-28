@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import vzh.cms.model.Page;
+import vzh.cms.model.PageFilter;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class PageServiceTest {
     @Test
     public void listAll() {
 
-        org.springframework.data.domain.Page<Page> result = service.list(new Page(), "en", null);
+        org.springframework.data.domain.Page<Page> result = service.list(new PageFilter(), "en", null);
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
@@ -33,7 +34,7 @@ public class PageServiceTest {
     @Test
     public void listFilter() {
 
-        Page filter = new Page();
+        PageFilter filter = new PageFilter();
         filter.setId("ple");
         org.springframework.data.domain.Page<Page> result = service.list(filter, "en", null);
 
