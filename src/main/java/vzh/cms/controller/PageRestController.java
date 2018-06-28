@@ -29,15 +29,20 @@ public class PageRestController {
 
     @ResponseBody
     @GetMapping("/pages/search/filter")
-    public PagedResources<Resource<Page>> filter(@RequestParam(defaultValue = "", required = false) String id, @RequestParam String locale, Pageable pageable) {
+    public PagedResources<Resource<Page>> filter(
+            @RequestParam(defaultValue = "", required = false) String id,
+            @RequestParam String locale, Pageable pageable
+    ) {
 
-        org.springframework.data.domain.Page<Page> data = service.filter(id, locale, pageable);
-        return assembler.toResource(data);
+        return assembler.toResource(service.filter(id, locale, pageable));
     }
 
     @ResponseBody
     @GetMapping("/pages/search/one/{id}")
-    public Page one(@PathVariable String id, @RequestParam String locale) {
+    public Page one(
+            @PathVariable String id,
+            @RequestParam String locale
+    ) {
 
         return service.one(id, locale);
     }
