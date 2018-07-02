@@ -28,7 +28,6 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 const {page, perPage} = params.pagination;
                 const {field, order} = params.sort;
                 const query = {
-                    locale: locale,
                     page: page - 1,
                     size: perPage,
                     sort: `${field},${order}`,
@@ -79,7 +78,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 options.method = 'DELETE';
                 break;
             case GET_ONE_LOCALE:
-                url = `${apiUrl}/${resource}/search/one/${params.id}?locale=${locale}`;
+                url = `${apiUrl}/${resource}/search/one/${params.id}/${locale}`;
                 break;
             default:
                 throw new Error(`Unsupported fetch action type ${type}`);

@@ -33,7 +33,7 @@ public class InitConfiguration {
     @Bean
     @SuppressWarnings("unchecked")
     public CommandLineRunner init(ListableBeanFactory listableBeanFactory, CmsProperties properties) {
-        return (args) -> {
+        return args -> {
 
             LOG.info("Initialization start");
 
