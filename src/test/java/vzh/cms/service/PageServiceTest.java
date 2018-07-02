@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
@@ -34,12 +37,21 @@ public class PageServiceTest {
         persist("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
-        org.springframework.data.domain.Page<Page> result = service.list(filter, null);
+
+        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).contains("home").contains("sample");
+        assertThat(content).extracting(Page::getId).containsOnly("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+
+        result = service.list(filter, page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).extracting(Page::getId).containsOnly("sample");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
     }
 
@@ -50,30 +62,47 @@ public class PageServiceTest {
         persist("sample");
 
         PageFilter filter = new PageFilter();
-        org.springframework.data.domain.Page<Page> result = service.list(filter, null);
+
+        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).contains("home").contains("sample");
+        assertThat(content).extracting(Page::getId).contains("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
+
+        result = service.list(filter, page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).extracting(Page::getId).contains("sample");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
     }
 
     @Test
-    public void listIdLocale() {
+    public void listIdLocales() {
 
-        persist("home");
-        persist("sample", "en", "ru");
+        persist("home", "en", "ru");
+        persist("sample");
 
         PageFilter filter = new PageFilter();
-        filter.setId("ple");
-        org.springframework.data.domain.Page<Page> result = service.list(filter, null);
+        filter.setId("om");
+
+        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("sample");
+        assertThat(content).extracting(Page::getId).containsOnly("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+
+        result = service.list(filter, page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).isEmpty();
     }
 
     @Test
@@ -83,14 +112,22 @@ public class PageServiceTest {
         persist("sample");
 
         PageFilter filter = new PageFilter();
-        filter.setId("ple");
-        org.springframework.data.domain.Page<Page> result = service.list(filter, null);
+        filter.setId("om");
+
+        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<Page> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("sample");
+        assertThat(content).extracting(Page::getId).containsOnly("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
+
+        result = service.list(filter, page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).isEmpty();
     }
 
     @Test
@@ -161,5 +198,9 @@ public class PageServiceTest {
         });
         manager.persistAndFlush(page);
         manager.clear();
+    }
+
+    private static Pageable page(int i) {
+        return new PageRequest(i, 1, Sort.Direction.ASC, "id");
     }
 }
