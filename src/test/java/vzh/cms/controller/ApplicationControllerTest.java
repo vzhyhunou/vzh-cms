@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(ApplicationController.class)
 @EnableConfigurationProperties(CmsProperties.class)
-public class PageControllerTest {
+public class ApplicationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

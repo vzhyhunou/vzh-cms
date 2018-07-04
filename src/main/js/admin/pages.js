@@ -19,11 +19,15 @@ import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 import LOCALES from "../commons/locales";
 
-const PageFilter = props => (
+const PageFilter = ({locale, ...props}) => (
     <Filter {...props}>
         <TextInput
             source="id"
             alwaysOn
+        />
+        <TextInput
+            source="title"
+            label={`resources.pages.fields.properties.${locale}.title`}
         />
     </Filter>
 );
@@ -42,7 +46,7 @@ const withLocale = component => compose(
 )(component);
 
 export const PageList = withLocale(({locale, ...props}) =>
-    <List {...props} filters={<PageFilter/>}>
+    <List {...props} filters={<PageFilter locale={locale}/>}>
         <Datagrid>
             <LinkField
                 source="id"
