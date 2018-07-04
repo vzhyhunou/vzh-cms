@@ -45,11 +45,12 @@ public class PageService {
     }
 
     public Page one(String id, String locale) {
-        return repository.findOne((root, q, b) -> {
-            Predicate predicateId = b.equal(root.get("id"), id);
-            Predicate predicateLocale = b.equal(((MapJoin) root.fetch("properties")).key(), locale);
-            return b.and(predicateId, predicateLocale);
-        });
+        return repository.findOne((root, q, b) ->
+                b.and(
+                        b.equal(root.get("id"), id),
+                        b.equal(((MapJoin) root.fetch("properties")).key(), locale)
+                )
+        );
     }
 
     private static Predicate filter(CriteriaBuilder b, Expression<String> expression, Object field) {
