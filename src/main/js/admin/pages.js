@@ -29,6 +29,10 @@ const PageFilter = ({locale, ...props}) => (
             source="title"
             label={`resources.pages.fields.properties.${locale}.title`}
         />
+        <TextInput
+            source="content"
+            label={`resources.pages.fields.properties.${locale}.content`}
+        />
     </Filter>
 );
 

@@ -64,7 +64,8 @@ public class PageService {
                 (MapJoin<Page, String, PageProperty>) root.<Page, PageProperty>join("properties", JoinType.LEFT);
         return b.and(Stream.of(
                 filter(b, root.get("id"), filter.getId()),
-                filter(b, properties.value().get("title"), filter.getTitle())
+                filter(b, properties.value().get("title"), filter.getTitle()),
+                filter(b, properties.value().get("content"), filter.getContent())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }
