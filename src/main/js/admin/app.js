@@ -1,10 +1,10 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {Admin, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import dataProvider from '../commons/rest';
-import {PageCreate, PageEdit, PageList} from './pages';
+import PageCreate from './pages/create';
+import PageEdit from './pages/edit';
+import PageList from './pages/list';
 import routes from './routes';
 import Menu from './menu';
 import {i18nLoader, i18nProvider} from '../commons/locales';
