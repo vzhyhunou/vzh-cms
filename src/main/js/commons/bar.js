@@ -19,7 +19,7 @@ const styles = {
     }
 };
 
-export default withStyles(styles)(({classes, ...props}) =>
+const Bar = ({classes, ...props}) =>
     <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
@@ -46,4 +46,6 @@ export default withStyles(styles)(({classes, ...props}) =>
             </Toolbar>
         </AppBar>
     </div>
-);
+;
+
+export default withStyles(styles)(Bar);
