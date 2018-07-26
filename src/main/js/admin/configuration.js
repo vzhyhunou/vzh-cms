@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from '@material-ui/core/Card';
@@ -25,7 +23,7 @@ const Configuration = ({classes, locale, changeLocale, translate}) =>
             <div className={classes.label}>{translate('pos.language')}</div>
             <Select
                 value={locale}
-                onChange={(e) => changeLocale(e.target.value)}
+                onChange={e => changeLocale(e.target.value)}
             >
                 {Object.keys(LOCALES).map(l =>
                     <MenuItem key={l} value={l}>{LOCALES[l]}</MenuItem>
