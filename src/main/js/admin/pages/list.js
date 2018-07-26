@@ -1,10 +1,9 @@
 import React from 'react';
 import {Datagrid, EditButton, Filter, getLocale, List, TextField, TextInput} from 'react-admin';
 import {connect} from 'react-redux';
-import compose from 'recompose/compose';
 
-const PageFilter = ({locale, ...props}) => (
-    <Filter {...props}>
+const PageFilter = ({locale, ...rest}) => (
+    <Filter {...rest}>
         <TextInput
             source="id"
             alwaysOn
@@ -24,8 +23,8 @@ const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-const PageList = ({locale, ...props}) =>
-    <List {...props} filters={<PageFilter locale={locale}/>}>
+const PageList = ({locale, ...rest}) =>
+    <List {...rest} filters={<PageFilter locale={locale}/>}>
         <Datagrid>
             <LinkField
                 source="id"
@@ -39,11 +38,9 @@ const PageList = ({locale, ...props}) =>
     </List>
 ;
 
-export default compose(
-    connect(
-        state => ({
-            locale: getLocale(state)
-        }),
-        {}
-    )
+export default connect(
+    state => ({
+        locale: getLocale(state)
+    }),
+    {}
 )(PageList);
