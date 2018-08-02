@@ -15,4 +15,6 @@ public class CmsProperties {
     private CmsUrlrewriteProperties urlrewrite;
 
     private CmsTemplateProperties template;
+
+    private CmsFilesProperties files;
 }

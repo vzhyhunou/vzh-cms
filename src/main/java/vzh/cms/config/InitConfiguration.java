@@ -1,8 +1,6 @@
 package vzh.cms.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -13,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
 import vzh.cms.config.property.CmsProperties;
+import vzh.cms.model.Content;
+import vzh.cms.repository.FileRepository;
 
-import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * @author Viktar Zhyhunou
@@ -31,8 +29,7 @@ public class InitConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(InitConfiguration.class);
 
     @Bean
-    @SuppressWarnings("unchecked")
-    public CommandLineRunner init(ListableBeanFactory listableBeanFactory, CmsProperties properties) {
+    public CommandLineRunner init(ListableBeanFactory listableBeanFactory, CmsProperties properties, FileRepository fileRepository) {
         return args -> {
 
             LOG.info("Initialization start");
@@ -40,14 +37,19 @@ public class InitConfiguration {
             Repositories repositories = new Repositories(listableBeanFactory);
             Path path = Paths.get(properties.getInit().getPath());
             ObjectMapper mapper = new ObjectMapper();
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
-                for (Path p : directoryStream) {
-                    File file = p.toFile();
-                    Class<?> c = Class.forName(FilenameUtils.removeExtension(file.getName()));
-                    CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, c);
-                    Iterable values = mapper.readValue(file, type);
+            try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {
+                for (Path dir : pathStream) {
+                    Class<?> c = Class.forName(dir.toFile().getName());
                     CrudRepository repository = (CrudRepository) repositories.getRepositoryFor(c);
-                    repository.save(values);
+                    try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
+                        for (Path file : dirStream) {
+                            Object entity = mapper.readValue(file.toFile(), c);
+                            repository.save(entity);
+                            if (entity instanceof Content) {
+                                fileRepository.save(((Content) entity).getFiles());
+                            }
+                        }
+                    }
                 }
             }
 

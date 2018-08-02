@@ -1,5 +1,3 @@
-'use strict';
-
 import messages from 'ra-language-english';
 
 export default {
@@ -19,7 +17,8 @@ export default {
                         title: 'Title',
                         content: 'Content'
                     }
-                }
+                },
+                files: 'Pictures'
             }
         }
     }

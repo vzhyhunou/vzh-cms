@@ -1,5 +1,3 @@
-'use strict';
-
 import messages from 'ra-language-russian';
 
 export default {
@@ -19,7 +17,8 @@ export default {
                         title: 'Заголовок',
                         content: 'Контент'
                     }
-                }
+                },
+                files: 'Изображения'
             }
         }
     }

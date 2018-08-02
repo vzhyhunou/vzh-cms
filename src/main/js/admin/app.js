@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {Admin, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
+
 import dataProvider from '../commons/rest';
+import addUploadFeature from './upload';
 import PageCreate from './pages/create';
 import PageEdit from './pages/edit';
 import PageList from './pages/list';
 import routes from './routes';
 import Menu from './menu';
 import {i18nLoader, i18nProvider} from '../commons/locales';
+import cmsReducer from './reducer';
 
 export default class extends Component {
 
@@ -27,8 +30,9 @@ export default class extends Component {
             locale={locale}
             customRoutes={routes}
             menu={Menu}
-            dataProvider={dataProvider('/api')}
+            dataProvider={addUploadFeature(dataProvider('/api'))}
             i18nProvider={i18nProvider}
+            customReducers={{cms: cmsReducer}}
         >
             <Helmet>
                 <title>{title}</title>

@@ -1,6 +1,7 @@
 package vzh.cms.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -14,9 +15,10 @@ import java.util.Map;
 /**
  * @author Viktar Zhyhunou
  */
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-public class Page {
+public class Page extends Content {
 
     @Id
     private String id;
