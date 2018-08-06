@@ -4,11 +4,11 @@ import {Helmet} from 'react-helmet';
 
 import dataProvider from '../commons/rest';
 import addUploadFeature from './upload';
-import PageCreate from './pages/create';
-import PageEdit from './pages/edit';
-import PageList from './pages/list';
+import PageCreate from './pages/Create';
+import PageEdit from './pages/Edit';
+import PageList from './pages/List';
 import routes from './routes';
-import Menu from './menu';
+import Menu from './Menu';
 import {i18nLoader, i18nProvider} from '../commons/locales';
 import cmsReducer from './reducer';
 

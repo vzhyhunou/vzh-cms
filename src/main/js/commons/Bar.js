@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import EditIcon from '@material-ui/icons/Edit';
-import Locale from './locale';
+import Locale from './Locale';
 
 const styles = {
     root: {

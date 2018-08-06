@@ -1,5 +1,3 @@
-'use strict';
-
 import {stringify} from 'query-string';
 import {
     fetchUtils,

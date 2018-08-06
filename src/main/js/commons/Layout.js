@@ -1,9 +1,7 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {i18nLoader, i18nUpdater} from './locales';
-import Bar from './bar';
+import Bar from './Bar';
 
 export default class extends Component {
 

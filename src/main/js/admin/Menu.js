@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {getResources, getLocale, MenuItemLink, translate} from 'react-admin';
 import {connect} from 'react-redux';

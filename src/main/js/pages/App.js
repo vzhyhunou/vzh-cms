@@ -1,8 +1,6 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import Layout from '../commons/layout';
+import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 
 class Main extends Component {
