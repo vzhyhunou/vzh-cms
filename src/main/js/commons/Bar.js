@@ -17,7 +17,7 @@ const styles = {
     }
 };
 
-const Bar = ({classes, ...props}) =>
+const Bar = ({classes, path, ...rest}) =>
     <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
@@ -34,10 +34,10 @@ const Bar = ({classes, ...props}) =>
                 >
                     Project
                 </Typography>
-                <Locale {...props}/>
+                <Locale {...rest}/>
                 <IconButton
                     color="inherit"
-                    href={`/admin#/${props.path[0]}/${props.path[1]}`}
+                    href={`/admin#/${path[0]}/${path[1]}`}
                 >
                     <EditIcon/>
                 </IconButton>
