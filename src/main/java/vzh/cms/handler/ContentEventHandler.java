@@ -25,7 +25,6 @@ public class ContentEventHandler {
     @HandleBeforeCreate
     @HandleBeforeSave
     public void apply(Content content) throws IOException {
-
         repository.save(content.getFiles());
     }
 }
