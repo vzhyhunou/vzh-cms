@@ -33,8 +33,8 @@ public class PageServiceTest {
     @Test
     public void listAllLocales() {
 
-        persist("home", new String[]{"en", "-a-"}, new String[]{"ru", "-b-"});
-        persist("sample", new String[]{"en", "-c-"}, new String[]{"ru", "-d-"});
+        persist("home", "en", "ru");
+        persist("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
 
@@ -83,11 +83,11 @@ public class PageServiceTest {
     @Test
     public void listIdLocales() {
 
-        persist("home", new String[]{"en", "-a-"}, new String[]{"ru", "-b-"});
+        persist("home", "en", "ru");
         persist("sample");
 
         PageFilter filter = new PageFilter();
-        filter.setId("om");
+        filter.setId("oM");
 
         org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
@@ -112,7 +112,7 @@ public class PageServiceTest {
         persist("sample");
 
         PageFilter filter = new PageFilter();
-        filter.setId("om");
+        filter.setId("oM");
 
         org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
@@ -133,11 +133,11 @@ public class PageServiceTest {
     @Test
     public void listTitle() {
 
-        persist("home", new String[]{"en", "-a-"}, new String[]{"ru", "-b-"});
-        persist("sample", new String[]{"en", "-c-"}, new String[]{"ru", "-d-"});
+        persist("home", "en", "ru");
+        persist("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
-        filter.setTitle("A");
+        filter.setTitle("mE.E");
 
         org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
 
@@ -158,7 +158,7 @@ public class PageServiceTest {
     @Test
     public void oneAllLocales() {
 
-        persist("home", new String[]{"en", "-a-"}, new String[]{"ru", "-b-"});
+        persist("home", "en", "ru");
         persist("sample");
 
         Page result = service.one("home", "en");
@@ -192,7 +192,7 @@ public class PageServiceTest {
     @Test
     public void oneLocale() {
 
-        persist("home", new String[]{"en", "-a-"});
+        persist("home", "en");
         persist("sample");
 
         Page result = service.one("home", "en");
@@ -205,7 +205,7 @@ public class PageServiceTest {
     @Test
     public void oneNoLocale() {
 
-        persist("home", new String[]{"ru", "-b-"});
+        persist("home", "ru");
         persist("sample");
 
         Page result = service.one("home", "en");
@@ -213,13 +213,14 @@ public class PageServiceTest {
         assertThat(result).isNull();
     }
 
-    private void persist(String id, String[]... props) {
+    private void persist(String id, String... locales) {
         Page page = new Page();
         page.setId(id);
-        Arrays.stream(props).forEach(p -> {
+        Arrays.stream(locales).forEach(l -> {
             PageProperty property = new PageProperty();
-            property.setTitle(p[1]);
-            page.getProperties().put(p[0], property);
+            property.setTitle(String.format("%s.%s.title", id, l));
+            property.setTitle(String.format("%s.%s.content", id, l));
+            page.getProperties().put(l, property);
         });
         manager.persistAndFlush(page);
         manager.clear();
