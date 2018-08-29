@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
+import vzh.cms.model.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.model.PageProperty;
@@ -38,21 +39,21 @@ public class PageServiceTest {
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<Page> content = result.getContent();
+        List<NoContentPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
 
-        result = service.list(filter, page(1));
+        result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("sample");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("sample");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
     }
 
     @Test
@@ -63,20 +64,20 @@ public class PageServiceTest {
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<Page> content = result.getContent();
+        List<NoContentPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).contains("home");
+        assertThat(content).extracting(NoContentPage::getId).contains("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
 
-        result = service.list(filter, page(1));
+        result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).contains("sample");
+        assertThat(content).extracting(NoContentPage::getId).contains("sample");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
     }
 
@@ -89,15 +90,15 @@ public class PageServiceTest {
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<Page> content = result.getContent();
+        List<NoContentPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
 
-        result = service.list(filter, page(1));
+        result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
@@ -114,15 +115,15 @@ public class PageServiceTest {
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<Page> content = result.getContent();
+        List<NoContentPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("home");
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
 
-        result = service.list(filter, page(1));
+        result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
@@ -139,15 +140,15 @@ public class PageServiceTest {
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
 
-        org.springframework.data.domain.Page<Page> result = service.list(filter, page(0));
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<Page> content = result.getContent();
+        List<NoContentPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(Page::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).contains("en").contains("ru");
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
 
-        result = service.list(filter, page(1));
+        result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();

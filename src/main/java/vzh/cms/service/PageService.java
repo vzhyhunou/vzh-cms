@@ -2,6 +2,7 @@ package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vzh.cms.model.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.model.PageProperty;
@@ -30,7 +31,7 @@ public class PageService {
         this.repository = repository;
     }
 
-    public org.springframework.data.domain.Page<Page> list(PageFilter filter, Pageable pageable) {
+    public org.springframework.data.domain.Page<NoContentPage> list(PageFilter filter, String locale, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
@@ -41,7 +42,7 @@ public class PageService {
                 Root<Page> p = subquery.from(Page.class);
                 return root.in(subquery.select(p).where(filter(p, b, filter)));
             }
-        }, pageable);
+        }, NoContentPage.class, locale, pageable);
     }
 
     public Page one(String id, String locale) {
