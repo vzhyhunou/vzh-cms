@@ -8,6 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import vzh.cms.model.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.service.PageService;
@@ -20,21 +21,21 @@ public class PageRestController {
 
     private PageService service;
 
-    private PagedResourcesAssembler<Page> assembler;
+    private PagedResourcesAssembler<NoContentPage> assembler;
 
-    public PageRestController(PageService service, PagedResourcesAssembler<Page> assembler) {
+    public PageRestController(PageService service, PagedResourcesAssembler<NoContentPage> assembler) {
         this.service = service;
         this.assembler = assembler;
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/list")
-    public PagedResources<Resource<Page>> list(
+    @GetMapping("/pages/search/list/{locale}")
+    public PagedResources<Resource<NoContentPage>> list(
             PageFilter filter,
+            @PathVariable String locale,
             Pageable pageable
     ) {
-
-        return assembler.toResource(service.list(filter, pageable));
+        return assembler.toResource(service.list(filter, locale, pageable));
     }
 
     @ResponseBody
@@ -43,7 +44,6 @@ public class PageRestController {
             @PathVariable String id,
             @PathVariable String locale
     ) {
-
         return service.one(id, locale);
     }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-public class Page extends Content {
+public class Page extends Content implements Localized<PageProperty> {
 
     @Id
     private String id;
