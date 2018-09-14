@@ -11,7 +11,11 @@ export default {
     resources: {
         pages: {
             name: 'Pages',
+            tags: {
+                'menu': 'Menu'
+            },
             fields: {
+                tags: 'Tags',
                 properties: {
                     en: {
                         title: 'Title',

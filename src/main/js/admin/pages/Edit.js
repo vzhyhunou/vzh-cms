@@ -9,10 +9,17 @@ import has from 'lodash/has';
 import LOCALES from '../../commons/locales';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
+import TagsInput from '../input/TagsInput';
+import tags from './tags';
 
 const PageEdit = ({locale, img, ...rest}) =>
     <Edit {...rest}>
         <TabbedForm toolbar={<ContentImageToolbar resource={rest.resource}/>}>
+            <FormTab label="pos.general">
+                <TagsInput
+                    tags={tags}
+                />
+            </FormTab>
             {Object.keys(LOCALES).map((l, i) =>
                 <FormTab key={l} label={l}>
                     <TextInput

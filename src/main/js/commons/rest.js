@@ -1,19 +1,20 @@
 import {stringify} from 'query-string';
 import {
-    fetchUtils,
-    GET_LIST,
-    GET_ONE,
-    GET_MANY,
-    GET_MANY_REFERENCE,
     CREATE,
-    UPDATE,
-    UPDATE_MANY,
     DELETE,
     DELETE_MANY,
+    fetchUtils,
+    GET_LIST,
+    GET_MANY,
+    GET_MANY_REFERENCE,
+    GET_ONE,
+    UPDATE,
+    UPDATE_MANY,
 } from 'react-admin';
 import {i18nLocale} from '../commons/locales';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
+export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
 export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
 
@@ -30,8 +31,9 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     size: perPage,
                     sort: `${field},${order}`,
                     ...params.filter,
+                    locale,
                 };
-                url = `${apiUrl}/${resource}/search/list/${locale}?${stringify(query)}`;
+                url = `${apiUrl}/${resource}/search/list?${stringify(query)}`;
                 break;
             }
             case GET_ONE:
@@ -76,7 +78,10 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 options.method = 'DELETE';
                 break;
             case GET_ONE_LOCALE:
-                url = `${apiUrl}/${resource}/search/one/${params.id}/${locale}`;
+                url = `${apiUrl}/${resource}/search/one/${params.id}?${stringify({locale})}`;
+                break;
+            case GET_MENU_LOCALE:
+                url = `${apiUrl}/${resource}/search/menu?${stringify({locale})}`;
                 break;
             default:
                 throw new Error(`Unsupported fetch action type ${type}`);

@@ -7,11 +7,15 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.model.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
+import vzh.cms.model.TitlePage;
 import vzh.cms.service.PageService;
+
+import java.util.List;
 
 /**
  * @author Viktar Zhyhunou
@@ -29,20 +33,28 @@ public class PageRestController {
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/list/{locale}")
+    @GetMapping("/pages/search/list")
     public PagedResources<Resource<NoContentPage>> list(
             PageFilter filter,
-            @PathVariable String locale,
+            @RequestParam String locale,
             Pageable pageable
     ) {
         return assembler.toResource(service.list(filter, locale, pageable));
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/one/{id}/{locale}")
+    @GetMapping("/pages/search/menu")
+    public List<TitlePage> menu(
+            @RequestParam String locale
+    ) {
+        return service.menu(locale);
+    }
+
+    @ResponseBody
+    @GetMapping("/pages/search/one/{id}")
     public Page one(
             @PathVariable String id,
-            @PathVariable String locale
+            @RequestParam String locale
     ) {
         return service.one(id, locale);
     }

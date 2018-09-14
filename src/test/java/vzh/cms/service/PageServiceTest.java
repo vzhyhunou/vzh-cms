@@ -14,6 +14,7 @@ import vzh.cms.model.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.model.PageProperty;
+import vzh.cms.model.TitlePage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +35,8 @@ public class PageServiceTest {
     @Test
     public void listAllLocales() {
 
-        persist("home", "en", "ru");
-        persist("sample", "en", "ru");
+        persistLocales("home", "en", "ru");
+        persistLocales("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
 
@@ -59,8 +60,8 @@ public class PageServiceTest {
     @Test
     public void listAllNoLocales() {
 
-        persist("home");
-        persist("sample");
+        persistLocales("home");
+        persistLocales("sample");
 
         PageFilter filter = new PageFilter();
 
@@ -84,8 +85,8 @@ public class PageServiceTest {
     @Test
     public void listIdLocales() {
 
-        persist("home", "en", "ru");
-        persist("sample");
+        persistLocales("home", "en", "ru");
+        persistLocales("sample");
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -109,8 +110,8 @@ public class PageServiceTest {
     @Test
     public void listIdNoLocales() {
 
-        persist("home");
-        persist("sample");
+        persistLocales("home");
+        persistLocales("sample");
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -134,8 +135,8 @@ public class PageServiceTest {
     @Test
     public void listTitle() {
 
-        persist("home", "en", "ru");
-        persist("sample", "en", "ru");
+        persistLocales("home", "en", "ru");
+        persistLocales("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
@@ -157,10 +158,50 @@ public class PageServiceTest {
     }
 
     @Test
+    public void listNoTags() {
+
+        persistTags("home");
+
+        PageFilter filter = new PageFilter();
+        filter.setTags(new String[]{"a"});
+
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+
+        assertThat(result).isNotNull();
+        List<NoContentPage> content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).isEmpty();
+    }
+
+    @Test
+    public void listAllTags() {
+
+        persistTags("home", "a", "b");
+        persistTags("sample", "c", "d");
+
+        PageFilter filter = new PageFilter();
+        filter.setTags(new String[]{"a"});
+
+        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+
+        assertThat(result).isNotNull();
+        List<NoContentPage> content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+
+        result = service.list(filter, "en", page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).isEmpty();
+    }
+
+    @Test
     public void oneAllLocales() {
 
-        persist("home", "en", "ru");
-        persist("sample");
+        persistLocales("home", "en", "ru");
+        persistLocales("sample");
 
         Page result = service.one("home", "en");
 
@@ -172,7 +213,7 @@ public class PageServiceTest {
     @Test
     public void oneNone() {
 
-        persist("sample");
+        persistLocales("sample");
 
         Page result = service.one("home", "en");
 
@@ -182,8 +223,8 @@ public class PageServiceTest {
     @Test
     public void oneNoLocales() {
 
-        persist("home");
-        persist("sample");
+        persistLocales("home");
+        persistLocales("sample");
 
         Page result = service.one("home", "en");
 
@@ -193,8 +234,8 @@ public class PageServiceTest {
     @Test
     public void oneLocale() {
 
-        persist("home", "en");
-        persist("sample");
+        persistLocales("home", "en");
+        persistLocales("sample");
 
         Page result = service.one("home", "en");
 
@@ -206,23 +247,49 @@ public class PageServiceTest {
     @Test
     public void oneNoLocale() {
 
-        persist("home", "ru");
-        persist("sample");
+        persistLocales("home", "ru");
+        persistLocales("sample");
 
         Page result = service.one("home", "en");
 
         assertThat(result).isNull();
     }
 
-    private void persist(String id, String... locales) {
+    @Test
+    public void menu() {
+
+        persistTags("home");
+        persistTags("sample", "menu");
+
+        List<TitlePage> results = service.menu("en");
+
+        assertThat(results).isNotNull();
+        assertThat(results).extracting(TitlePage::getId).containsOnly("sample");
+        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+    }
+
+    private void persistLocales(String id, String... locales) {
         Page page = new Page();
         page.setId(id);
         Arrays.stream(locales).forEach(l -> {
             PageProperty property = new PageProperty();
             property.setTitle(String.format("%s.%s.title", id, l));
-            property.setTitle(String.format("%s.%s.content", id, l));
+            property.setContent(String.format("%s.%s.content", id, l));
             page.getProperties().put(l, property);
         });
+        manager.persistAndFlush(page);
+        manager.clear();
+    }
+
+    private void persistTags(String id, String... tags) {
+        Page page = new Page();
+        page.setId(id);
+        page.getTags().addAll(Arrays.asList(tags));
+        PageProperty property = new PageProperty();
+        property.setTitle(String.format("%s.title", id));
+        property.setContent(String.format("%s.content", id));
+        page.getProperties().put("en", property);
+        page.getProperties().put("ru", property);
         manager.persistAndFlush(page);
         manager.clear();
     }

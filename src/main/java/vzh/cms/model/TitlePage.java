@@ -1,16 +1,13 @@
 package vzh.cms.model;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Viktar Zhyhunou
  */
-public interface NoContentPage {
+public interface TitlePage {
 
     String getId();
-
-    Set<String> getTags();
 
     Map<String, NoContentPageProperty> getProperties();
 }
