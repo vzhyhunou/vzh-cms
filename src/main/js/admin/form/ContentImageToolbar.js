@@ -10,13 +10,13 @@ const styles = {
     }
 };
 
-const ContentImageToolbar = ({classes, resource, ...rest}) =>
+const ContentImageToolbar = ({classes, ...rest}) =>
     <Toolbar {...rest} className={classes.bar}>
         <ContentImageInput
             multiple
             source="files"
             accept="image/*"
-            resource={resource}
+            resource={rest.resource}
         >
             <ImageField source="src" title="title"/>
         </ContentImageInput>

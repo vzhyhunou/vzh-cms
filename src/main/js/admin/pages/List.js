@@ -2,11 +2,18 @@ import React from 'react';
 import {Datagrid, EditButton, Filter, getLocale, List, TextField, TextInput} from 'react-admin';
 import {connect} from 'react-redux';
 
+import TagsField from '../field/TagsField';
+import TagsInput from '../input/TagsInput';
+import tags from './tags';
+
 const PageFilter = ({locale, ...rest}) => (
     <Filter {...rest}>
         <TextInput
             source="id"
             alwaysOn
+        />
+        <TagsInput
+            tags={tags}
         />
         <TextInput
             source="title"
@@ -33,6 +40,7 @@ const PageList = ({locale, ...rest}) =>
                 source={`properties.${locale}.title`}
                 sortable={false}
             />
+            <TagsField/>
             <EditButton/>
         </Datagrid>
     </List>

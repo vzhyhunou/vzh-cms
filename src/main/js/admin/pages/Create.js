@@ -9,6 +9,8 @@ import has from 'lodash/has';
 import LOCALES from '../../commons/locales';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
+import TagsInput from '../input/TagsInput';
+import tags from './tags';
 
 const PageCreate = ({locale, img, ...rest}) =>
     <Create {...rest}>
@@ -16,6 +18,9 @@ const PageCreate = ({locale, img, ...rest}) =>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
+                />
+                <TagsInput
+                    tags={tags}
                 />
             </FormTab>
             {Object.keys(LOCALES).map((l, i) =>

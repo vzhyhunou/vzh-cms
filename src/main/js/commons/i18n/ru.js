@@ -11,7 +11,11 @@ export default {
     resources: {
         pages: {
             name: 'Страницы',
+            tags: {
+                'menu': 'Меню'
+            },
             fields: {
+                tags: 'Теги',
                 properties: {
                     ru: {
                         title: 'Заголовок',

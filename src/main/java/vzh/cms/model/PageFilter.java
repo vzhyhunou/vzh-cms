@@ -13,4 +13,6 @@ public class PageFilter {
     private String title;
 
     private String content;
+
+    private String[] tags;
 }
