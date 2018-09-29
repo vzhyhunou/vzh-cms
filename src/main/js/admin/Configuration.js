@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {changeLocale, translate, ViewTitle, getLocale} from 'react-admin';
+import {changeLocale, translate, Title, getLocale} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 import LOCALES from '../commons/locales';
@@ -18,7 +18,7 @@ const styles = {
 
 const Configuration = ({classes, locale, changeLocale, translate}) =>
     <Card>
-        <ViewTitle title={translate('pos.configuration')}/>
+        <Title title={translate('pos.configuration')}/>
         <CardContent>
             <div className={classes.label}>{translate('pos.language')}</div>
             <Select
