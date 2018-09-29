@@ -7,14 +7,14 @@ const styles = {
     chip: { margin: 4 },
 };
 
-const TagsField = ({ record, translate }) => (
+const TagsField = ({ record, translate, resource }) => (
     <span style={styles.main}>
         {record.tags &&
             record.tags.map(tag => (
                 <Chip
                     key={tag}
                     style={styles.chip}
-                    label={translate(`resources.pages.tags.${tag}`)}
+                    label={translate(`resources.${resource}.tags.${tag}`)}
                 />
             ))}
     </span>

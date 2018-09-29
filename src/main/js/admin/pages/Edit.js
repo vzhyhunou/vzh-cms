@@ -18,6 +18,7 @@ const PageEdit = ({locale, img, ...rest}) =>
             <FormTab label="pos.general">
                 <TagsInput
                     tags={tags}
+                    resource="pages"
                 />
             </FormTab>
             {Object.keys(LOCALES).map((l, i) =>
