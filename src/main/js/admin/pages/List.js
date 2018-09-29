@@ -14,6 +14,7 @@ const PageFilter = ({locale, ...rest}) => (
         />
         <TagsInput
             tags={tags}
+            resource="pages"
         />
         <TextInput
             source="title"
@@ -40,7 +41,10 @@ const PageList = ({locale, ...rest}) =>
                 source={`properties.${locale}.title`}
                 sortable={false}
             />
-            <TagsField/>
+            <TagsField
+                resource="pages"
+                sortable={false}
+            />
             <EditButton/>
         </Datagrid>
     </List>

@@ -21,6 +21,7 @@ const PageCreate = ({locale, img, ...rest}) =>
                 />
                 <TagsInput
                     tags={tags}
+                    resource="pages"
                 />
             </FormTab>
             {Object.keys(LOCALES).map((l, i) =>
