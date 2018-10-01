@@ -25,3 +25,5 @@ export const i18nUpdater = value => value === locale ? new Promise(resolve => re
 export const i18nProvider = value => value === locale ? messages : i18nWriter(value);
 
 export const i18nLocale = () => locale;
+
+export const getMessages = state => state.i18n.messages;

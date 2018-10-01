@@ -1,17 +1,29 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {SelectArrayInput, translate} from 'react-admin';
+import compose from 'recompose/compose';
+import {getMessages} from '../../commons/locales';
 
-const TagsInput = ({translate, addField, tags, resource, ...rest}) => (
+const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     <SelectArrayInput
         {...rest}
-        choices={tags.map(tag => ({
+        choices={Object.keys(messages.resources[resource].tags).map(tag => ({
             id: tag,
             name: translate(`resources.${resource}.tags.${tag}`),
         }))}
+        label={`resources.${resource}.fields.tags`}
     />
 );
 
-const TranslatedTagsInput = translate(TagsInput);
+const TranslatedTagsInput = compose(
+    connect(
+        state => ({
+            messages: getMessages(state)
+        }),
+        {}
+    ),
+    translate
+)(TagsInput);
 
 TranslatedTagsInput.defaultProps = {
     addField: true,
