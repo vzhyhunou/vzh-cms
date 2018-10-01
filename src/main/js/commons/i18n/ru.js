@@ -24,6 +24,16 @@ export default {
                 },
                 files: 'Изображения'
             }
+        },
+        users: {
+            name: 'Пользователи',
+            tags: {
+                'manager': 'Менеджер',
+                'editor': 'Редактор'
+            },
+            fields: {
+                tags: 'Теги'
+            }
         }
     }
 }

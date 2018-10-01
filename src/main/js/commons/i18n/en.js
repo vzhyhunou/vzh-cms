@@ -24,6 +24,16 @@ export default {
                 },
                 files: 'Pictures'
             }
+        },
+        users: {
+            name: 'Users',
+            tags: {
+                'manager': 'Manager',
+                'editor': 'Editor'
+            },
+            fields: {
+                tags: 'Tags'
+            }
         }
     }
 }

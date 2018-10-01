@@ -10,7 +10,6 @@ import vzh.cms.model.TitlePage;
 import vzh.cms.repository.PageRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
@@ -19,19 +18,16 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService {
-
-    private PageRepository repository;
+public class PageService extends BaseService<PageRepository> {
 
     public PageService(PageRepository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
     public org.springframework.data.domain.Page<NoContentPage> list(PageFilter filter, String locale, Pageable pageable) {
@@ -66,18 +62,6 @@ public class PageService {
                         b.equal(((MapJoin) root.fetch("properties")).key(), locale)
                 )
         );
-    }
-
-    private static Predicate like(CriteriaBuilder b, Expression<String> expression, String field) {
-        return Optional.ofNullable(field)
-                .map(f -> b.like(b.lower(expression), String.format("%%%s%%", f.toLowerCase())))
-                .orElse(null);
-    }
-
-    private static Predicate in(Expression<String[]> expression, Object[] fields) {
-        return Optional.ofNullable(fields)
-                .map(f -> expression.in(fields))
-                .orElse(null);
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
