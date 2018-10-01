@@ -2,7 +2,6 @@ import React from 'react';
 import {getResources, getLocale, MenuItemLink, translate} from 'react-admin';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import DefaultIcon from '@material-ui/icons/ViewList';
 import SettingsIcon from '@material-ui/icons/Settings';
 import compose from 'recompose/compose';
 
@@ -13,7 +12,7 @@ const Menu = ({resources, onMenuClick, translate}) =>
                 key={resource.name}
                 to={`/${resource.name}`}
                 primaryText={translate(`resources.${resource.name}.name`)}
-                leftIcon={resource.icon ? <resource.icon/> : <DefaultIcon/>}
+                leftIcon={<resource.icon/>}
                 onClick={onMenuClick}
             />
         )}
