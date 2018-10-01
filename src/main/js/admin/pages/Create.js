@@ -13,7 +13,7 @@ import TagsInput from '../input/TagsInput';
 
 const PageCreate = ({locale, img, ...rest}) =>
     <Create {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar resource={rest.resource}/>}>
+        <TabbedForm toolbar={<ContentImageToolbar/>}>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
