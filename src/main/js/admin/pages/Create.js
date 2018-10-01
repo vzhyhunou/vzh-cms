@@ -10,19 +10,15 @@ import LOCALES from '../../commons/locales';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
 import TagsInput from '../input/TagsInput';
-import tags from './tags';
 
 const PageCreate = ({locale, img, ...rest}) =>
     <Create {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar resource={rest.resource}/>}>
+        <TabbedForm toolbar={<ContentImageToolbar/>}>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
                 />
-                <TagsInput
-                    tags={tags}
-                    resource="pages"
-                />
+                <TagsInput/>
             </FormTab>
             {Object.keys(LOCALES).map((l, i) =>
                 <FormTab key={l} label={l}>

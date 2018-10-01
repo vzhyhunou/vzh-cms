@@ -10,16 +10,12 @@ import LOCALES from '../../commons/locales';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
 import TagsInput from '../input/TagsInput';
-import tags from './tags';
 
 const PageEdit = ({locale, img, ...rest}) =>
     <Edit {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar resource={rest.resource}/>}>
+        <TabbedForm toolbar={<ContentImageToolbar/>}>
             <FormTab label="pos.general">
-                <TagsInput
-                    tags={tags}
-                    resource="pages"
-                />
+                <TagsInput/>
             </FormTab>
             {Object.keys(LOCALES).map((l, i) =>
                 <FormTab key={l} label={l}>
@@ -29,7 +25,7 @@ const PageEdit = ({locale, img, ...rest}) =>
                     />
                     <FormDataConsumer>
                         {({formData}) =>
-                            <Route exact path={`${rest.match.url}${i ? `/${i}` : ''}`}>
+                            <Route exact path={`${rest.match.url}/${i + 1}`}>
                                 {routeProps => {
                                     if (routeProps.match && img) {
                                         const path = ['properties', l, 'content'];

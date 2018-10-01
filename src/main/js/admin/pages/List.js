@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 
 import TagsField from '../field/TagsField';
 import TagsInput from '../input/TagsInput';
-import tags from './tags';
 
 const PageFilter = ({locale, ...rest}) => (
     <Filter {...rest}>
@@ -12,10 +11,7 @@ const PageFilter = ({locale, ...rest}) => (
             source="id"
             alwaysOn
         />
-        <TagsInput
-            tags={tags}
-            resource="pages"
-        />
+        <TagsInput/>
         <TextInput
             source="title"
             label={`resources.pages.fields.properties.${locale}.title`}
@@ -42,7 +38,6 @@ const PageList = ({locale, ...rest}) =>
                 sortable={false}
             />
             <TagsField
-                resource="pages"
                 sortable={false}
             />
             <EditButton/>
