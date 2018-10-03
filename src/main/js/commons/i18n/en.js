@@ -32,6 +32,7 @@ export default {
                 'editor': 'Editor'
             },
             fields: {
+                password: 'Password',
                 tags: 'Tags'
             }
         }

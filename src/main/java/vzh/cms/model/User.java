@@ -1,6 +1,5 @@
 package vzh.cms.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +27,6 @@ public class User {
     @Id
     private String id;
 
-    @JsonIgnore
     private String password;
 
     @ElementCollection

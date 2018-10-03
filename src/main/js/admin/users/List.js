@@ -23,6 +23,7 @@ export default (props) =>
             <TagsField
                 sortable={false}
             />
+            <EditButton/>
         </Datagrid>
     </List>
 ;

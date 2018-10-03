@@ -9,6 +9,7 @@ import addUploadFeature from './upload';
 import PageCreate from './pages/Create';
 import PageEdit from './pages/Edit';
 import PageList from './pages/List';
+import UserEdit from './users/Edit';
 import UserList from './users/List';
 import routes from './routes';
 import Menu from './Menu';
@@ -50,6 +51,7 @@ export default class extends Component {
             <Resource
                 name="users"
                 list={UserList}
+                edit={UserEdit}
                 icon={UserIcon}
             />
         </Admin>;
