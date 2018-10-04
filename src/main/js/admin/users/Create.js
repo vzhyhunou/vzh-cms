@@ -1,16 +1,19 @@
 import React from 'react';
-import {Edit, SimpleForm, TextInput} from 'react-admin';
+import {Create, SimpleForm, TextInput} from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
 
 export default (props) =>
-    <Edit {...props}>
+    <Create {...props}>
         <SimpleForm>
+            <TextInput
+                source="id"
+            />
             <TextInput
                 source="password"
                 type="password"
             />
             <TagsInput/>
         </SimpleForm>
-    </Edit>
+    </Create>
 ;
