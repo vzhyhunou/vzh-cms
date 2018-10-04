@@ -15,7 +15,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,14 +33,8 @@ public class PageService extends BaseService<PageRepository> {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
-                return filter(root, b, filter);
-            } else {
-                root.fetch("properties", JoinType.LEFT);
-                root.fetch("tags", JoinType.LEFT);
-                Subquery<Page> subquery = q.subquery(Page.class);
-                Root<Page> p = subquery.from(Page.class);
-                return root.in(subquery.select(p).where(filter(p, b, filter)));
             }
+            return filter(root, b, filter);
         }, NoContentPage.class, locale, pageable);
     }
 
