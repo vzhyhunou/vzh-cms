@@ -1,4 +1,4 @@
-package vzh.cms.model;
+package vzh.cms.projection;
 
 /**
  * @author Viktar Zhyhunou

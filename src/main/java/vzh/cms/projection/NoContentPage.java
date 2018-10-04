@@ -1,4 +1,4 @@
-package vzh.cms.model;
+package vzh.cms.projection;
 
 import java.util.Map;
 import java.util.Set;

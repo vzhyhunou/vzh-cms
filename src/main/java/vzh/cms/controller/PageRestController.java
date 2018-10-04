@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import vzh.cms.model.NoContentPage;
+import vzh.cms.projection.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
-import vzh.cms.model.TitlePage;
+import vzh.cms.projection.TitlePage;
 import vzh.cms.service.PageService;
 
 import java.util.List;
