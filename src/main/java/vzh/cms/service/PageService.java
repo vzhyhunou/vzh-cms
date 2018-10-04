@@ -2,11 +2,11 @@ package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vzh.cms.model.NoContentPage;
+import vzh.cms.projection.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.model.PageProperty;
-import vzh.cms.model.TitlePage;
+import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
