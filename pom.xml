@@ -21,7 +21,8 @@
 		<commons.version>2.6</commons.version>
 		<jaxb.version>2.3.0</jaxb.version>
 		<urlrewritefilter.version>4.0.4</urlrewritefilter.version>
-		<outdir>${user.home}/.vzh_cms</outdir>
+		<frontend.version>1.6</frontend.version>
+		<node.version>v9.11.1</node.version>
 		<karma.conf>karma.conf.ci.js</karma.conf>
 	</properties>
 
@@ -94,7 +95,6 @@
 	</dependencies>
 
 	<build>
-		<directory>${outdir}/target</directory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -102,42 +102,9 @@
 			</plugin>
 
 			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${outdir}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}</directory>
-									<filtering>true</filtering>
-									<includes>
-										<include>package.json</include>
-										<include>webpack.config.js</include>
-										<include>karma.conf.js</include>
-										<include>karma.conf.ci.js</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.6</version>
-				<configuration>
-					<installDirectory>${outdir}</installDirectory>
-					<workingDirectory>${outdir}</workingDirectory>
-				</configuration>
+				<version>${frontend.version}</version>
 				<executions>
 					<execution>
 						<id>install node and npm</id>
@@ -145,7 +112,7 @@
 							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
-							<nodeVersion>v9.11.1</nodeVersion>
+							<nodeVersion>${node.version}</nodeVersion>
 						</configuration>
 					</execution>
 					<execution>

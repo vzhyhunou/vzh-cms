@@ -7,10 +7,10 @@ module.exports = function (config) {
         browsers: ['jsdom'],
         frameworks: ['mocha'],
         files: [
-            '@basedir@/src/test/js/tests.webpack.js'
+            'src/test/js/tests.webpack.js'
         ],
         preprocessors: {
-            '@basedir@/src/test/js/tests.webpack.js': ['webpack']
+            'src/test/js/tests.webpack.js': ['webpack']
         },
         reporters: ['dots'],
         webpack: webpackConfig
