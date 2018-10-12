@@ -12,9 +12,5 @@ public class CmsProperties {
 
     private CmsInitProperties init;
 
-    private CmsUrlrewriteProperties urlrewrite;
-
-    private CmsTemplateProperties template;
-
     private CmsFilesProperties files;
 }

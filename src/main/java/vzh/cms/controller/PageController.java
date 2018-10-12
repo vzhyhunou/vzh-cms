@@ -21,13 +21,13 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @RepositoryRestController
-public class PageRestController {
+public class PageController {
 
     private PageService service;
 
     private PagedResourcesAssembler<NoContentPage> assembler;
 
-    public PageRestController(PageService service, PagedResourcesAssembler<NoContentPage> assembler) {
+    public PageController(PageService service, PagedResourcesAssembler<NoContentPage> assembler) {
         this.service = service;
         this.assembler = assembler;
     }

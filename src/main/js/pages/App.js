@@ -48,4 +48,4 @@ class Main extends Component {
     }
 }
 
-export default () => <Layout Main={Main}/>;
+export default props => <Layout Main={Main} {...props}/>;

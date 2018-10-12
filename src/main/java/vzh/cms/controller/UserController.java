@@ -15,13 +15,13 @@ import vzh.cms.service.UserService;
  * @author Viktar Zhyhunou
  */
 @RepositoryRestController
-public class UserRestController {
+public class UserController {
 
     private UserService service;
 
     private PagedResourcesAssembler<User> assembler;
 
-    public UserRestController(UserService service, PagedResourcesAssembler<User> assembler) {
+    public UserController(UserService service, PagedResourcesAssembler<User> assembler) {
         this.service = service;
         this.assembler = assembler;
     }
