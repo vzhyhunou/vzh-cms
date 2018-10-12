@@ -2,10 +2,10 @@ package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vzh.cms.projection.NoContentPage;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageFilter;
 import vzh.cms.model.PageProperty;
+import vzh.cms.projection.NoContentPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
@@ -15,6 +15,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +35,9 @@ public class PageService extends BaseService<PageRepository> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
             }
-            return filter(root, b, filter);
+            Subquery<Page> subquery = q.subquery(Page.class);
+            Root<Page> p = subquery.from(Page.class);
+            return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, NoContentPage.class, locale, pageable);
     }
 
