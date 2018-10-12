@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 
-import {i18nLoader, i18nUpdater} from './locales';
+import {i18nUpdater} from './locales';
 import Bar from './Bar';
 import Menu from './Menu';
 
@@ -37,14 +37,14 @@ const styles = theme => ({
 
 class Layout extends Component {
 
-    state = {
-        open: false,
-    };
-
-    path = window.location.pathname.split('/').slice(1);
-
-    componentWillMount() {
-        i18nLoader().then(state => this.setState(state));
+    constructor({locale, messages}) {
+        super();
+        this.state = {
+            open: false,
+            locale,
+            messages
+        };
+        this.path = window.location.pathname.split('/').slice(1);
     }
 
     changeLocale = locale => i18nUpdater(locale).then(messages => this.setState({locale, messages}));
@@ -54,8 +54,6 @@ class Layout extends Component {
     handleDrawerClose = () => this.setState({open: false});
 
     render() {
-        if (!this.state.locale)
-            return <div/>;
 
         const {classes, Main} = this.props;
         const {open} = this.state;
@@ -65,7 +63,6 @@ class Layout extends Component {
                 {...this.state}
                 changeLocale={this.changeLocale}
                 path={this.path}
-                open={open}
                 handleDrawerOpen={this.handleDrawerOpen}
             />
             <div className={classNames(classes.content, classes.content, {
@@ -78,7 +75,6 @@ class Layout extends Component {
             </div>
             <Menu
                 {...this.state}
-                open={open}
                 handleDrawerClose={this.handleDrawerClose}
             />
         </div>;

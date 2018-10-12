@@ -3,8 +3,7 @@ const path = require('path');
 module.exports = {
     mode: 'none',
     entry: {
-        "pages": './src/main/js/pages/index.js',
-        "admin": './src/main/js/admin/index.js'
+        "index": './src/main/js/index.js'
     },
     devtool: 'source-map',
     output: {
@@ -24,11 +23,5 @@ module.exports = {
                 }
             }
         ]
-    },
-    optimization: {
-        splitChunks: {
-            name: "commons",
-            chunks: "initial"
-        }
     }
 };
