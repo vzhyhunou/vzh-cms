@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
-import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {connect} from 'react-redux';
+import {changeLocale, getLocale} from 'react-admin';
+
 import LOCALES from './locales';
 
-export default class extends Component {
+class Locale extends Component {
 
-    state = {anchorEl: null};
+    state = {
+        anchorEl: null
+    };
 
     handleClick = e => this.setState({anchorEl: e.currentTarget});
 
@@ -17,7 +21,8 @@ export default class extends Component {
 
         const {changeLocale} = this.props;
 
-        changeLocale(locale).then(this.handleClose);
+        changeLocale(locale);
+        this.handleClose();
     };
 
     render() {
@@ -53,3 +58,10 @@ export default class extends Component {
         </div>;
     }
 }
+
+export default connect(
+    state => ({
+        locale: getLocale(state)
+    }),
+    {changeLocale}
+)(Locale);

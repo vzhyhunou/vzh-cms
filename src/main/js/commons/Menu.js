@@ -7,6 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import {connect} from 'react-redux';
+import {getLocale} from 'react-admin';
+import compose from 'recompose/compose';
 
 import dataProvider, {GET_MENU_LOCALE} from './rest';
 
@@ -88,4 +91,12 @@ class Menu extends Component {
     }
 }
 
-export default withStyles(styles, {withTheme: true})(Menu);
+export default compose(
+    connect(
+        state => ({
+            locale: getLocale(state)
+        }),
+        {}
+    ),
+    withStyles(styles, {withTheme: true})
+)(Menu);

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
+import {getLocale} from 'react-admin';
+import compose from 'recompose/compose';
 
-import {i18nUpdater} from './locales';
 import Bar from './Bar';
 import Menu from './Menu';
 
@@ -37,17 +39,11 @@ const styles = theme => ({
 
 class Layout extends Component {
 
-    constructor({locale, messages}) {
-        super();
-        this.state = {
-            open: false,
-            locale,
-            messages
-        };
-        this.path = window.location.pathname.split('/').slice(1);
-    }
+    state = {
+        open: false,
+    };
 
-    changeLocale = locale => i18nUpdater(locale).then(messages => this.setState({locale, messages}));
+    path = window.location.pathname.split('/').slice(1);
 
     handleDrawerOpen = () => this.setState({open: true});
 
@@ -55,13 +51,12 @@ class Layout extends Component {
 
     render() {
 
-        const {classes, Main} = this.props;
+        const {classes, Main, ...rest} = this.props;
         const {open} = this.state;
 
         return <div className={classes.appFrame}>
             <Bar
-                {...this.state}
-                changeLocale={this.changeLocale}
+                open={open}
                 path={this.path}
                 handleDrawerOpen={this.handleDrawerOpen}
             />
@@ -69,16 +64,24 @@ class Layout extends Component {
                 [classes.contentShift]: open,
             })}>
                 <Main
-                    {...this.state}
+                    {...rest}
                     path={this.path.slice(1)}
                 />
             </div>
             <Menu
-                {...this.state}
+                open={open}
                 handleDrawerClose={this.handleDrawerClose}
             />
         </div>;
     }
 }
 
-export default withStyles(styles, {withTheme: true})(Layout);
+export default compose(
+    connect(
+        state => ({
+            locale: getLocale(state)
+        }),
+        {}
+    ),
+    withStyles(styles, {withTheme: true})
+)(Layout);
