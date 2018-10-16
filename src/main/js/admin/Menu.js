@@ -1,5 +1,5 @@
 import React from 'react';
-import {getResources, getLocale, MenuItemLink, translate} from 'react-admin';
+import {getResources, MenuItemLink, translate} from 'react-admin';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -29,7 +29,6 @@ export default compose(
     withRouter,
     connect(
         state => ({
-            locale: getLocale(state),
             resources: getResources(state)
         }),
         {}

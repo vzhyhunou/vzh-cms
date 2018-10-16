@@ -24,7 +24,7 @@ export default class extends Component {
         const dataProvider = addUploadFeature(restProvider('/api'));
         const history = createHistory();
         const customReducers = {cms: cmsReducer};
-        const {locale, ...rest} = this.state;
+        const {locale} = this.state;
 
         return <Provider
             store={createAdminStore({
@@ -37,8 +37,8 @@ export default class extends Component {
         >
             <BrowserRouter>
                 <div>
-                    <Route path="/pages" render={() => <PagesApp {...this.state}/>}/>
-                    <Route path="/admin" render={() => <AdminApp history={history} {...rest}/>}/>
+                    <Route path="/pages" component={PagesApp}/>
+                    <Route path="/admin" render={() => <AdminApp history={history}/>}/>
                     <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
                 </div>
             </BrowserRouter>

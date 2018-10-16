@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import cookie from 'react-cookies';
 
 export default {
@@ -19,8 +19,6 @@ const i18nWriter = value => load(value).then(() => {
     cookie.save(NAME, locale = value, {path: '/'});
     return messages;
 });
-
-export const i18nUpdater = value => value === locale ? new Promise(resolve => resolve(messages)) : i18nWriter(value);
 
 export const i18nProvider = value => value === locale ? messages : i18nWriter(value);
 

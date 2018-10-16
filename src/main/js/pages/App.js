@@ -36,8 +36,7 @@ class Main extends Component {
             return <div/>;
 
         const {locale} = this.props;
-        const {page} = this.state;
-        const properties = page.properties[locale];
+        const properties = this.state.page.properties[locale];
 
         return <div>
             <Helmet>
@@ -48,4 +47,4 @@ class Main extends Component {
     }
 }
 
-export default props => <Layout Main={Main} {...props}/>;
+export default () => <Layout Main={Main}/>;

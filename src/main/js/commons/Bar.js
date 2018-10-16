@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -41,7 +41,7 @@ const styles = theme => ({
     },
 });
 
-const Bar = ({classes, path, open, handleDrawerOpen, ...rest}) =>
+const Bar = ({classes, path, open, handleDrawerOpen}) =>
     <AppBar position="static"
             className={classNames(classes.appBar, {
                 [classes.appBarShift]: open,
@@ -60,7 +60,7 @@ const Bar = ({classes, path, open, handleDrawerOpen, ...rest}) =>
             >
                 Project
             </Typography>
-            <Locale {...rest}/>
+            <Locale/>
             <IconButton
                 color="inherit"
                 href={`/admin#/${path[0]}/${path[1]}`}

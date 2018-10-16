@@ -3,6 +3,7 @@ import {Admin, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import PageIcon from '@material-ui/icons/Collections';
 import UserIcon from '@material-ui/icons/Person';
+import {connect} from 'react-redux';
 
 import PageCreate from './pages/Create';
 import PageEdit from './pages/Edit';
@@ -12,8 +13,9 @@ import UserEdit from './users/Edit';
 import UserList from './users/List';
 import routes from './routes';
 import Menu from './Menu';
+import {getMessages} from '../commons/locales';
 
-export default class extends Component {
+class App extends Component {
 
     render() {
 
@@ -45,4 +47,11 @@ export default class extends Component {
             />
         </Admin>;
     }
-};
+}
+
+export default connect(
+    state => ({
+        messages: getMessages(state)
+    }),
+    {}
+)(App);
