@@ -127,6 +127,9 @@
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<workingDirectory>src/main/app</workingDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
