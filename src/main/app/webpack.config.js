@@ -3,11 +3,11 @@ const path = require('path');
 module.exports = {
     mode: 'none',
     entry: {
-        "index": './src/main/js/index.js'
+        "index": './src/index.js'
     },
     devtool: 'source-map',
     output: {
-        path: path.resolve(__dirname, 'resources'),
+        path: path.resolve(__dirname, '../../../resources'),
         publicPath: '/',
         filename: 'static/built/[name].js'
     },

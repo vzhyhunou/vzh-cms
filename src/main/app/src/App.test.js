@@ -1,7 +1,7 @@
 import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
-import App from '../../main/js/App';
+import App from './App';
 
 describe('app', function () {
 
