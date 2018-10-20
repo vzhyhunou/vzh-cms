@@ -9,11 +9,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import vzh.cms.config.SecurityConfiguration;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
 /**
  * @author Viktar Zhyhunou
@@ -32,6 +32,10 @@ public class ApplicationControllerTest {
         mockMvc.perform(get("/index.html"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("//body/script[1]/@src").string(equalTo("/static/built/index.js")));
+                .andExpect(content().string(containsString("/static/css/")))
+                .andExpect(content().string(containsString(".chunk.css")))
+                .andExpect(content().string(containsString("/static/js/")))
+                .andExpect(content().string(containsString(".chunk.js")))
+        ;
     }
 }

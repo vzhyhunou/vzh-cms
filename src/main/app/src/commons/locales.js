@@ -1,4 +1,3 @@
-import React from 'react';
 import cookie from 'react-cookies';
 
 export default {

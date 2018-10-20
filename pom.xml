@@ -20,19 +20,10 @@
 		<java.version>1.8</java.version>
 		<commons.version>2.6</commons.version>
 		<jaxb.version>2.3.0</jaxb.version>
+		<activation.version>1.2.0</activation.version>
 		<frontend.version>1.6</frontend.version>
 		<node.version>v9.11.1</node.version>
-		<karma.conf>karma.conf.ci.js</karma.conf>
 	</properties>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<karma.conf>karma.conf.js</karma.conf>
-			</properties>
-		</profile>
-	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -82,6 +73,11 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>${jaxb.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>javax.activation</artifactId>
+			<version>${activation.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -112,18 +108,22 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>webpack build</id>
+						<id>npm build</id>
 						<goals>
-							<goal>webpack</goal>
+							<goal>npm</goal>
 						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
 					</execution>
 					<execution>
 						<id>javascript tests</id>
 						<goals>
-							<goal>karma</goal>
+							<goal>npm</goal>
 						</goals>
+						<phase>test</phase>
 						<configuration>
-							<karmaConfPath>${karma.conf}</karmaConfPath>
+							<arguments>test</arguments>
 						</configuration>
 					</execution>
 				</executions>
