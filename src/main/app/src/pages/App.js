@@ -3,6 +3,7 @@ import {Helmet} from 'react-helmet';
 
 import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
+import './App.css';
 
 class Main extends Component {
 

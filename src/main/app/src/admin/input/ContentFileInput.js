@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {shallowEqual} from 'recompose';
 import Dropzone from 'react-dropzone';
-import {withStyles} from '@material-ui/core/styles';
 import classnames from 'classnames';
-import {addField, Labeled, translate} from 'react-admin';
+import {Labeled} from 'react-admin';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
