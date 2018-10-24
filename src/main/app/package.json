@@ -27,7 +27,7 @@
     "enzyme-adapter-react-16": "^1.1.1"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "react-scripts build && mkdir -p ../../../target/classes && mv build ../../../target/classes/static",
     "test": "CI=true react-scripts test"
   },
   "browserslist": [
