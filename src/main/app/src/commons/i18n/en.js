@@ -28,8 +28,8 @@ export default {
         users: {
             name: 'Users',
             tags: {
-                'manager': 'Manager',
-                'editor': 'Editor'
+                'ROLE_MANAGER': 'Manager',
+                'ROLE_EDITOR': 'Editor'
             },
             fields: {
                 password: 'Password',
