@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ public class User {
 
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "tag")
     @CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
     private Set<String> tags = new HashSet<>();
