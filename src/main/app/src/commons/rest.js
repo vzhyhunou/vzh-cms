@@ -16,7 +16,18 @@ import {i18nLocale} from '../commons/locales';
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
-export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
+const client = (url, options = {}) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        if (!options.headers) {
+            options.headers = new Headers();
+        }
+        options.headers.set('Authorization', `Bearer ${token}`);
+    }
+    return fetchUtils.fetchJson(url, options);
+};
+
+export default (apiUrl, httpClient = client) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';

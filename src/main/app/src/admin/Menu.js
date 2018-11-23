@@ -1,11 +1,11 @@
 import React from 'react';
-import {getResources, MenuItemLink, translate} from 'react-admin';
+import {getResources, MenuItemLink, Responsive, translate} from 'react-admin';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';
 import compose from 'recompose/compose';
 
-const Menu = ({resources, onMenuClick, translate}) =>
+const Menu = ({resources, onMenuClick, translate, logout}) =>
     <div>
         {resources.map(resource =>
             <MenuItemLink
@@ -22,6 +22,7 @@ const Menu = ({resources, onMenuClick, translate}) =>
             leftIcon={<SettingsIcon/>}
             onClick={onMenuClick}
         />
+        <Responsive xsmall={logout} medium={null}/>
     </div>
 ;
 
