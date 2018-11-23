@@ -1,13 +1,25 @@
 package vzh.cms.repository;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
+
+import java.util.List;
 
 /**
  * @author Viktar Zhyhunou
  */
+@PreAuthorize("hasRole('ROLE_EDITOR')")
 public interface PageRepository extends PagingAndSortingRepository<Page, String>, JpaSpecificationExecutor<Page>, LocalizedRepository<Page, PageProperty> {
 
+    @Override
+    @PreAuthorize("permitAll")
+    Page findOne(Specification<Page> specification);
+
+    @Override
+    @PreAuthorize("permitAll")
+    <E> List<E> findAll(Specification<Page> specification, Class<E> type);
 }

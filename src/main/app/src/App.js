@@ -5,6 +5,7 @@ import createHistory from 'history/createHashHistory';
 
 import createAdminStore from './admin/createAdminStore';
 import restProvider from './commons/rest';
+import authProvider from './admin/auth';
 import addUploadFeature from './admin/upload';
 import {i18nLoader, i18nProvider} from './commons/locales';
 import cmsReducer from './admin/reducer';
@@ -28,6 +29,7 @@ export default class extends Component {
 
         return <Provider
             store={createAdminStore({
+                authProvider,
                 dataProvider,
                 i18nProvider,
                 customReducers,

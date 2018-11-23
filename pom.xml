@@ -23,6 +23,7 @@
 		<activation.version>1.2.0</activation.version>
 		<frontend.version>1.6</frontend.version>
 		<node.version>v9.11.1</node.version>
+		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 
 	<dependencies>
@@ -46,6 +47,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
