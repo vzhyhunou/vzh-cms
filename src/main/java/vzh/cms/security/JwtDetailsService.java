@@ -2,6 +2,9 @@ package vzh.cms.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,8 @@ import java.util.List;
 @Service
 public class JwtDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
+    private static final Logger LOG = LoggerFactory.getLogger(JwtDetailsService.class);
+
     private JwtProperties properties;
 
     public JwtDetailsService(JwtProperties properties) {
@@ -27,8 +32,8 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication) throws UsernameNotFoundException {
 
         String principal = (String) authentication.getPrincipal();
-        if (principal != null) {
-            String prefix = properties.getPrefix() + " ";
+        String prefix = properties.getPrefix() + " ";
+        try {
             if (principal.startsWith(prefix)) {
                 Claims claims = Jwts.parser()
                         .setSigningKey(properties.getSecret().getBytes())
@@ -42,8 +47,11 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                         AuthorityUtils.createAuthorityList(authorities.toArray(new String[authorities.size()]))
                 );
             }
+        } catch (Exception e) {
+            LOG.warn("User won't be authenticated: {}", e.getMessage());
         }
 
-        throw new UsernameNotFoundException(principal);
+        LOG.warn("Principal '{}' won't be authenticated", principal);
+        throw new BadCredentialsException(principal);
     }
 }
