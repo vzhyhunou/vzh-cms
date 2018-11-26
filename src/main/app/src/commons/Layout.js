@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
-import {connect} from 'react-redux';
-import {getLocale} from 'react-admin';
-import compose from 'recompose/compose';
 
 import Bar from './Bar';
 import Menu from './Menu';
@@ -49,7 +46,7 @@ class Layout extends Component {
 
     render() {
 
-        const {classes, Main, ...rest} = this.props;
+        const {classes, Main} = this.props;
         const {open} = this.state;
 
         return <div className={classes.appFrame}>
@@ -60,7 +57,7 @@ class Layout extends Component {
             <div className={classNames(classes.content, classes.content, {
                 [classes.contentShift]: open,
             })}>
-                <Main {...rest}/>
+                <Main/>
             </div>
             <Menu
                 open={open}
@@ -70,12 +67,4 @@ class Layout extends Component {
     }
 }
 
-export default compose(
-    connect(
-        state => ({
-            locale: getLocale(state)
-        }),
-        {}
-    ),
-    withStyles(styles, {withTheme: true})
-)(Layout);
+export default withStyles(styles, {withTheme: true})(Layout);

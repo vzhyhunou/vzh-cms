@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getLocale} from 'react-admin';
+import compose from 'recompose/compose';
 
 import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
@@ -49,4 +52,14 @@ class Main extends Component {
     }
 }
 
-export default () => <Layout Main={withRouter(Main)}/>;
+const enhance = compose(
+    withRouter,
+    connect(
+        state => ({
+            locale: getLocale(state)
+        }),
+        {}
+    )
+);
+
+export default () => <Layout Main={enhance(Main)}/>;
