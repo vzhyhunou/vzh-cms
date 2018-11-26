@@ -43,8 +43,6 @@ class Layout extends Component {
         open: false,
     };
 
-    path = window.location.pathname.split('/').slice(1);
-
     handleDrawerOpen = () => this.setState({open: true});
 
     handleDrawerClose = () => this.setState({open: false});
@@ -57,16 +55,12 @@ class Layout extends Component {
         return <div className={classes.appFrame}>
             <Bar
                 open={open}
-                path={this.path}
                 handleDrawerOpen={this.handleDrawerOpen}
             />
             <div className={classNames(classes.content, classes.content, {
                 [classes.contentShift]: open,
             })}>
-                <Main
-                    {...rest}
-                    path={this.path.slice(1)}
-                />
+                <Main {...rest}/>
             </div>
             <Menu
                 open={open}
