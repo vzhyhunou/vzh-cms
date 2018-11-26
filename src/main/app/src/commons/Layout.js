@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
-import {connect} from 'react-redux';
-import {getLocale} from 'react-admin';
-import compose from 'recompose/compose';
 
 import Bar from './Bar';
 import Menu from './Menu';
@@ -43,30 +40,24 @@ class Layout extends Component {
         open: false,
     };
 
-    path = window.location.pathname.split('/').slice(1);
-
     handleDrawerOpen = () => this.setState({open: true});
 
     handleDrawerClose = () => this.setState({open: false});
 
     render() {
 
-        const {classes, Main, ...rest} = this.props;
+        const {classes, Main} = this.props;
         const {open} = this.state;
 
         return <div className={classes.appFrame}>
             <Bar
                 open={open}
-                path={this.path}
                 handleDrawerOpen={this.handleDrawerOpen}
             />
             <div className={classNames(classes.content, classes.content, {
                 [classes.contentShift]: open,
             })}>
-                <Main
-                    {...rest}
-                    path={this.path.slice(1)}
-                />
+                <Main/>
             </div>
             <Menu
                 open={open}
@@ -76,12 +67,4 @@ class Layout extends Component {
     }
 }
 
-export default compose(
-    connect(
-        state => ({
-            locale: getLocale(state)
-        }),
-        {}
-    ),
-    withStyles(styles, {withTheme: true})
-)(Layout);
+export default withStyles(styles, {withTheme: true})(Layout);

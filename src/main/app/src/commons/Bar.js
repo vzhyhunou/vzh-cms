@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import EditIcon from '@material-ui/icons/Edit';
+import {withRouter} from 'react-router-dom';
+import compose from 'recompose/compose';
 
 import Locale from './Locale';
 
@@ -41,41 +43,52 @@ const styles = theme => ({
     },
 });
 
-const Bar = ({classes, path, open, handleDrawerOpen}) =>
-    <AppBar position="static"
-            className={classNames(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}>
-        <Toolbar>
-            <IconButton
-                color="inherit"
-                href="/"
-            >
-                <HomeIcon/>
-            </IconButton>
-            <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-            >
-                Project
-            </Typography>
-            <Locale/>
-            <IconButton
-                color="inherit"
-                href={`/admin#/${path[0]}/${path[1]}`}
-            >
-                <EditIcon/>
-            </IconButton>
-            <IconButton
-                color="inherit"
-                onClick={handleDrawerOpen}
-                className={classNames(classes.menuButton, open && classes.hide)}
-            >
-                <MenuIcon/>
-            </IconButton>
-        </Toolbar>
-    </AppBar>
-;
+class Bar extends Component {
 
-export default withStyles(styles, {withTheme: true})(Bar);
+    render() {
+
+        const {classes, open, handleDrawerOpen, location} = this.props;
+        const {pathname} = location;
+        const path = pathname.split('/');
+
+        return <AppBar position="static"
+                       className={classNames(classes.appBar, {
+                           [classes.appBarShift]: open,
+                       })}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    href="/"
+                >
+                    <HomeIcon/>
+                </IconButton>
+                <Typography
+                    variant="title"
+                    color="inherit"
+                    className={classes.flex}
+                >
+                    Project
+                </Typography>
+                <Locale/>
+                <IconButton
+                    color="inherit"
+                    href={`/admin#/${path[1]}/${path[2]}`}
+                >
+                    <EditIcon/>
+                </IconButton>
+                <IconButton
+                    color="inherit"
+                    onClick={handleDrawerOpen}
+                    className={classNames(classes.menuButton, open && classes.hide)}
+                >
+                    <MenuIcon/>
+                </IconButton>
+            </Toolbar>
+        </AppBar>;
+    }
+}
+
+export default compose(
+    withRouter,
+    withStyles(styles, {withTheme: true})
+)(Bar);

@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getLocale} from 'react-admin';
+import compose from 'recompose/compose';
 
 import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
@@ -11,9 +15,9 @@ class Main extends Component {
 
     loadData = () => {
 
-        const {path} = this.props;
+        const {pathname} = this.props.location;
 
-        this.dataProvider(GET_ONE_LOCALE, 'pages', {id: path}).then(response => {
+        this.dataProvider(GET_ONE_LOCALE, 'pages', {id: pathname.split('/')[2]}).then(response => {
             this.setState({page: response.data});
         })
     };
@@ -48,4 +52,14 @@ class Main extends Component {
     }
 }
 
-export default () => <Layout Main={Main}/>;
+const enhance = compose(
+    withRouter,
+    connect(
+        state => ({
+            locale: getLocale(state)
+        }),
+        {}
+    )
+);
+
+export default () => <Layout Main={enhance(Main)}/>;
