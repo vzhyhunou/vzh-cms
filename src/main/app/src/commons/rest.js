@@ -11,13 +11,15 @@ import {
     UPDATE,
     UPDATE_MANY,
 } from 'react-admin';
+
 import {i18nLocale} from '../commons/locales';
+import {TOKEN} from '../admin/auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
 const client = (url, options = {}) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(TOKEN);
     if (token) {
         if (!options.headers) {
             options.headers = new Headers();
