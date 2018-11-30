@@ -2,6 +2,7 @@ import compose from 'recompose/compose';
 import {withStyles} from '@material-ui/core/styles';
 import {addField, translate} from 'react-admin';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 import {ContentFileInput} from './ContentFileInput';
 import {addImageToContent} from '../actions';
@@ -49,6 +50,7 @@ export class ContentImageInput extends ContentFileInput {
 }
 
 export default compose(
+    withRouter,
     addField,
     translate,
     withStyles(styles),

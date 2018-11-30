@@ -2,18 +2,18 @@ const convertFileToBase64 = file =>
     new Promise((resolve, reject) => {
 
         const reader = new FileReader();
-        const {rawFile} = file;
+        const {rawFile, name} = file;
 
         reader.readAsDataURL(rawFile);
 
         reader.onload = () => resolve({
             src: reader.result.match(/,(.*)/)[1],
-            name: name(rawFile)
+            name
         });
         reader.onerror = reject;
     });
 
-const addUploadCapabilities = requestHandler => (type, resource, params) => {
+export default requestHandler => (type, resource, params) => {
     if (type === 'UPDATE' || type === 'CREATE') {
 
         const {files} = params.data;
@@ -45,7 +45,3 @@ const addUploadCapabilities = requestHandler => (type, resource, params) => {
 
     return requestHandler(type, resource, params);
 };
-
-export default addUploadCapabilities;
-
-export const name = rawFile => `${rawFile.preview.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)[0]}.${rawFile.type.split('/')[1]}`;

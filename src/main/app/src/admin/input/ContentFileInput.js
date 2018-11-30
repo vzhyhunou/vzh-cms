@@ -7,7 +7,6 @@ import {Labeled} from 'react-admin';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
-import {name} from '../upload';
 
 export class ContentFileInput extends Component {
     static propTypes = {
@@ -29,7 +28,8 @@ export class ContentFileInput extends Component {
         source: PropTypes.string,
         translate: PropTypes.func.isRequired,
         placeholder: PropTypes.node,
-        addImageToContent: PropTypes.func.isRequired
+        addImageToContent: PropTypes.func.isRequired,
+        location: PropTypes.object
     };
 
     static defaultProps = {
@@ -78,7 +78,7 @@ export class ContentFileInput extends Component {
     onAdd = file => () => {
         const {addImageToContent} = this.props;
 
-        addImageToContent(`<img src="/static/files/${name(file.rawFile)}"/>`)
+        addImageToContent(`<img src="/static/files/${file.name}"/>`)
     };
 
     onRemove = file => () => {
@@ -105,9 +105,15 @@ export class ContentFileInput extends Component {
             this.props.children
         )[0].props;
 
+        const {location} = this.props;
+        const {pathname} = location;
+        const {preview, type} = file;
+        const path = pathname.split('/');
+
         const transformedFile = {
             rawFile: file,
             [source]: file.preview,
+            name: `${path[1]}/${path[2]}/${preview.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)[0]}.${type.split('/')[1]}`
         };
 
         if (title) {
