@@ -1,14 +1,14 @@
-const convertFileToBase64 = file =>
+const convertFileToBase64 = (resource, id) => file =>
     new Promise((resolve, reject) => {
 
         const reader = new FileReader();
-        const {rawFile, name} = file;
+        const {rawFile} = file;
 
         reader.readAsDataURL(rawFile);
 
         reader.onload = () => resolve({
             src: reader.result.match(/,(.*)/)[1],
-            name
+            name: name(resource, id, rawFile)
         });
         reader.onerror = reject;
     });
@@ -27,12 +27,12 @@ export default requestHandler => (type, resource, params) => {
                 p => p.rawFile instanceof File
             );
 
-            return Promise.all(newFiles.map(convertFileToBase64))
+            return Promise.all(newFiles.map(convertFileToBase64(resource, params.id)))
                 .then(transformedNewFiles =>
                     requestHandler(type, resource, {
                         ...params,
                         data: {
-                            ...params.data,
+                            ...replaceSrc(params.data, transformedNewFiles),
                             files: [
                                 ...transformedNewFiles,
                                 ...formerFiles,
@@ -44,4 +44,14 @@ export default requestHandler => (type, resource, params) => {
     }
 
     return requestHandler(type, resource, params);
+};
+
+const PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
+
+const name = (resource, id, rawFile) => `${resource}/${id}/${rawFile.preview.match(PATTERN)[0]}.${rawFile.type.split('/')[1]}`;
+
+const replaceSrc = (data, files) => {
+    let s = JSON.stringify(data);
+    files.forEach(f => s = s.replace(new RegExp(`"[^"]*${f.name.match(PATTERN)[0]}`, 'g'), `"/static/files/${f.name}`));
+    return JSON.parse(s);
 };

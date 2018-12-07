@@ -3,7 +3,6 @@ import {Admin, Login, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import PageIcon from '@material-ui/icons/Collections';
 import UserIcon from '@material-ui/icons/Person';
-import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 
 import PageCreate from './pages/Create';
@@ -16,13 +15,6 @@ import routes from './routes';
 import Menu from './Menu';
 import {getMessages} from '../commons/locales';
 import authProvider from './auth';
-
-const styles = theme => ({
-    main: {
-        background: 'none',
-        backgroundColor: theme.palette.primary.main
-    }
-});
 
 class App extends Component {
 
@@ -37,7 +29,7 @@ class App extends Component {
             menu={Menu}
             authProvider={authProvider}
             history={history}
-            loginPage={withStyles(styles)(Login)}
+            loginPage={() => <Login backgroundImage="/static/img/background.png"/>}
         >
             {permissions => [
                 <Helmet>

@@ -1,12 +1,28 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {shallowEqual} from 'recompose';
+import { shallowEqual } from 'recompose';
 import Dropzone from 'react-dropzone';
+import compose from 'recompose/compose';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
+import { addField, translate } from 'ra-core';
 import {Labeled} from 'react-admin';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
+
+const styles = {
+    dropZone: {
+        background: '#efefef',
+        cursor: 'pointer',
+        padding: '1rem',
+        textAlign: 'center',
+        color: '#999',
+    },
+    preview: {},
+    removeButton: {},
+    root: { width: '100%' },
+};
 
 export class ContentFileInput extends Component {
     static propTypes = {
@@ -15,6 +31,7 @@ export class ContentFileInput extends Component {
         classes: PropTypes.object,
         className: PropTypes.string,
         disableClick: PropTypes.bool,
+        id: PropTypes.string,
         input: PropTypes.object,
         isRequired: PropTypes.bool,
         label: PropTypes.string,
@@ -28,16 +45,14 @@ export class ContentFileInput extends Component {
         source: PropTypes.string,
         translate: PropTypes.func.isRequired,
         placeholder: PropTypes.node,
-        addImageToContent: PropTypes.func.isRequired,
-        location: PropTypes.object
+        addImageToContent: PropTypes.func.isRequired
     };
 
     static defaultProps = {
         labelMultiple: 'ra.input.file.upload_several',
         labelSingle: 'ra.input.file.upload_single',
         multiple: false,
-        onUpload: () => {
-        },
+        onUpload: () => {},
     };
 
     constructor(props) {
@@ -58,7 +73,7 @@ export class ContentFileInput extends Component {
             files = [files];
         }
 
-        this.setState({files: files.map(this.transformFile)});
+        this.setState({ files: files.map(this.transformFile) });
     }
 
     onDrop = files => {
@@ -66,7 +81,7 @@ export class ContentFileInput extends Component {
             ? [...this.state.files, ...files.map(this.transformFile)]
             : [...files.map(this.transformFile)];
 
-        this.setState({files: updatedFiles});
+        this.setState({ files: updatedFiles });
 
         if (this.props.multiple) {
             this.props.input.onChange(updatedFiles);
@@ -75,18 +90,14 @@ export class ContentFileInput extends Component {
         }
     };
 
-    onAdd = file => () => {
-        const {addImageToContent} = this.props;
-
-        addImageToContent(`<img src="/static/files/${file.name}"/>`)
-    };
+    onAdd = file => () => this.props.addImageToContent(`<img src="${file.rawFile.preview}"/>`);
 
     onRemove = file => () => {
         const filteredFiles = this.state.files.filter(
             stateFile => !shallowEqual(stateFile, file)
         );
 
-        this.setState({files: filteredFiles});
+        this.setState({ files: filteredFiles });
 
         if (this.props.multiple) {
             this.props.input.onChange(filteredFiles);
@@ -101,19 +112,13 @@ export class ContentFileInput extends Component {
             return file;
         }
 
-        const {source, title} = React.Children.toArray(
+        const { source, title } = React.Children.toArray(
             this.props.children
         )[0].props;
-
-        const {location} = this.props;
-        const {pathname} = location;
-        const {preview, type} = file;
-        const path = pathname.split('/');
 
         const transformedFile = {
             rawFile: file,
             [source]: file.preview,
-            name: `${path[1]}/${path[2]}/${preview.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)[0]}.${type.split('/')[1]}`
         };
 
         if (title) {
@@ -149,6 +154,7 @@ export class ContentFileInput extends Component {
             classes = {},
             className,
             disableClick,
+            id,
             isRequired,
             label,
             maxSize,
@@ -156,12 +162,13 @@ export class ContentFileInput extends Component {
             multiple,
             resource,
             source,
-            options,
+            options = {},
             ...rest
         } = this.props;
 
         return (
             <Labeled
+                id={id}
                 label={label}
                 className={classnames(classes.root, className)}
                 source={source}
@@ -179,6 +186,7 @@ export class ContentFileInput extends Component {
                         multiple={multiple}
                         className={classes.dropZone}
                         {...options}
+                        inputProps={{ id, ...options.inputProps }}
                     >
                         {this.label()}
                     </Dropzone>
@@ -205,3 +213,9 @@ export class ContentFileInput extends Component {
         );
     }
 }
+
+export default compose(
+    addField,
+    translate,
+    withStyles(styles)
+)(ContentFileInput);
