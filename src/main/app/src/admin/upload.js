@@ -52,6 +52,6 @@ const name = (resource, id, rawFile) => `${resource}/${id}/${rawFile.preview.mat
 
 const replaceSrc = (data, files) => {
     let s = JSON.stringify(data);
-    files.forEach(f => s = s.replace(new RegExp(`"[^"]*${f.name.match(PATTERN)[0]}`, 'g'), `"/static/files/${f.name}`));
+    files.forEach(f => s = s.replace(new RegExp(`"[^"]*${f.name.match(PATTERN)[0]}`, 'g'), `"/static/${f.name}`));
     return JSON.parse(s);
 };
