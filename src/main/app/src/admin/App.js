@@ -15,6 +15,7 @@ import routes from './routes';
 import Menu from './Menu';
 import {getMessages} from '../commons/locales';
 import authProvider from './auth';
+import background from './background.png';
 
 class App extends Component {
 
@@ -29,7 +30,7 @@ class App extends Component {
             menu={Menu}
             authProvider={authProvider}
             history={history}
-            loginPage={() => <Login backgroundImage="/static/img/background.png"/>}
+            loginPage={() => <Login backgroundImage={background}/>}
         >
             {permissions => [
                 <Helmet>
