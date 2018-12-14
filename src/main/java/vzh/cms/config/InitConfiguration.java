@@ -38,15 +38,17 @@ public class InitConfiguration {
 
                 Path path = Paths.get(properties.getInit().getPath());
                 ObjectMapper mapper = new ObjectMapper();
-                try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {
-                    for (Path dir : pathStream) {
-                        Class<?> c = Class.forName(dir.toFile().getName());
-                        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
-                            for (Path file : dirStream) {
-                                Object entity = mapper.readValue(file.toFile(), c);
-                                manager.persist(entity);
-                                if (entity instanceof Content) {
-                                    fileRepository.save(((Content) entity).getFiles());
+                if (Files.exists(path)) {
+                    try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {
+                        for (Path dir : pathStream) {
+                            Class<?> c = Class.forName(dir.toFile().getName());
+                            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
+                                for (Path file : dirStream) {
+                                    Object entity = mapper.readValue(file.toFile(), c);
+                                    manager.persist(entity);
+                                    if (entity instanceof Content) {
+                                        fileRepository.save(((Content) entity).getFiles());
+                                    }
                                 }
                             }
                         }
