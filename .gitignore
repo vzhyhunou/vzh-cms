@@ -1,5 +1,6 @@
+static
 build
-resources/static
+dist
 node
 node_modules
 package-lock.json

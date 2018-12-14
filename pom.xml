@@ -141,6 +141,15 @@
 							<arguments>test</arguments>
 						</configuration>
 					</execution>
+					<execution>
+						<id>npm compile</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run compile</arguments>
+						</configuration>
+					</execution>
 				</executions>
 				<configuration>
 					<workingDirectory>src/main/app</workingDirectory>
