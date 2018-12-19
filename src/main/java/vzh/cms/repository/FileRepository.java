@@ -23,8 +23,8 @@ public class FileRepository {
 
     public void save(Base64File... files) throws IOException {
         for (Base64File file : files) {
-            File out = new File(path, file.getName());
-            byte[] data = Base64.getDecoder().decode(file.getSrc());
+            File out = new File(path, file.getPath());
+            byte[] data = Base64.getDecoder().decode(file.getData());
             FileUtils.writeByteArrayToFile(out, data);
         }
     }

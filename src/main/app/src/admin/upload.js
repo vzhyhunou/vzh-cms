@@ -17,8 +17,8 @@ export default requestHandler => (type, resource, params) => {
 
             return Promise.all(newFiles.map(convertFileToBase64))
                 .then(base64Files => base64Files.map((picture64, index) => ({
-                    src: picture64.match(/,(.*)/)[1],
-                    name: `${resource}/${params.id}/${name(newFiles[index].rawFile)}`
+                    data: picture64.match(/,(.*)/)[1],
+                    path: `${resource}/${params.id}/${name(newFiles[index].rawFile)}`
                 })))
                 .then(transformedNewFiles =>
                     requestHandler(type, resource, {
