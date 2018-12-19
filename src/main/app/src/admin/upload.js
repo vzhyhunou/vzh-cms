@@ -35,7 +35,22 @@ export default requestHandler => (type, resource, params) => {
         }
     }
 
-    return requestHandler(type, resource, params);
+    return requestHandler(type, resource, params).then(responseHandler);
+};
+
+const responseHandler = response => {
+    const {data} = response;
+    const s = JSON.stringify(data);
+    const set = new Set();
+    const exp = /<img.*?src=\\"(.*?)\\"/g;
+    let result;
+    while ((result = exp.exec(s)) !== null) {
+        set.add(result[1]);
+    }
+    set.forEach(f => {
+        data.files.push({src: f, title: f});
+    });
+    return response;
 };
 
 const PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
