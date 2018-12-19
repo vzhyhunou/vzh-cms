@@ -90,7 +90,13 @@ export class ContentFileInput extends Component {
         }
     };
 
-    onAdd = file => () => this.props.addImageToContent(`<img src="${file.rawFile.preview}"/>`);
+    onAdd = file => () => {
+        const {source} = React.Children.toArray(
+            this.props.children
+        )[0].props;
+
+        this.props.addImageToContent(`<img src="${file[source]}"/>`);
+    };
 
     onRemove = file => () => {
         const filteredFiles = this.state.files.filter(
