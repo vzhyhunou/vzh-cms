@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Base64File {
 
-    private String src;
+    private String data;
 
-    private String name;
+    private String path;
 }
