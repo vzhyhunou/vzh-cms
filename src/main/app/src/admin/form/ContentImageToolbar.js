@@ -20,7 +20,7 @@ class ContentImageToolbar extends Component {
         const data = JSON.stringify(record);
         let result;
         let set = new Set();
-        while (result = PATTERN.exec(data)) {
+        while ((result = PATTERN.exec(data)) !== null) {
             set.add(result[1]);
         }
         set.forEach(f => record.files.push({src: f, title: f}));
