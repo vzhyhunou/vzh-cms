@@ -16,7 +16,6 @@ const ContentImageToolbar = ({classes, ...rest}) =>
             multiple
             source="files"
             accept="image/*"
-            resource={rest.resource}
         >
             <ImageField source="src" title="title"/>
         </ContentImageInput>

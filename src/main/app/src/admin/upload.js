@@ -1,17 +1,9 @@
-const convertFileToBase64 = (resource, id) => file =>
-    new Promise((resolve, reject) => {
-
-        const reader = new FileReader();
-        const {rawFile} = file;
-
-        reader.readAsDataURL(rawFile);
-
-        reader.onload = () => resolve({
-            src: reader.result.match(/,(.*)/)[1],
-            name: name(resource, id, rawFile)
-        });
-        reader.onerror = reject;
-    });
+const convertFileToBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file.rawFile);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+});
 
 export default requestHandler => (type, resource, params) => {
     if (type === 'UPDATE' || type === 'CREATE') {
@@ -19,15 +11,15 @@ export default requestHandler => (type, resource, params) => {
         const {files} = params.data;
 
         if (files && files.length) {
-            // only freshly dropped files are instance of File
-            const formerFiles = files.filter(
-                p => !(p.rawFile instanceof File)
-            );
-            const newFiles = files.filter(
-                p => p.rawFile instanceof File
-            );
 
-            return Promise.all(newFiles.map(convertFileToBase64(resource, params.id)))
+            //const formerFiles = files.filter(p => !(p.rawFile instanceof File));
+            const newFiles = files.filter(p => p.rawFile instanceof File);
+
+            return Promise.all(newFiles.map(convertFileToBase64))
+                .then(base64Files => base64Files.map((picture64, index) => ({
+                    src: picture64.match(/,(.*)/)[1],
+                    name: `${resource}/${params.id}/${name(newFiles[index].rawFile)}`
+                })))
                 .then(transformedNewFiles =>
                     requestHandler(type, resource, {
                         ...params,
@@ -35,7 +27,7 @@ export default requestHandler => (type, resource, params) => {
                             ...replaceSrc(params.data, transformedNewFiles),
                             files: [
                                 ...transformedNewFiles,
-                                ...formerFiles,
+                                //...formerFiles,
                             ],
                         },
                     })
@@ -43,12 +35,27 @@ export default requestHandler => (type, resource, params) => {
         }
     }
 
-    return requestHandler(type, resource, params);
+    return requestHandler(type, resource, params).then(responseHandler);
+};
+
+const responseHandler = response => {
+    const {data} = response;
+    const s = JSON.stringify(data);
+    const set = new Set();
+    const exp = /<img.*?src=\\"(.*?)\\"/g;
+    let result;
+    while ((result = exp.exec(s)) !== null) {
+        set.add(result[1]);
+    }
+    set.forEach(f => {
+        data.files.push({src: f, title: f});
+    });
+    return response;
 };
 
 const PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
-const name = (resource, id, rawFile) => `${resource}/${id}/${rawFile.preview.match(PATTERN)[0]}.${rawFile.type.split('/')[1]}`;
+const name = rawFile => `${rawFile.preview.match(PATTERN)[0]}.${rawFile.type.split('/')[1]}`;
 
 const replaceSrc = (data, files) => {
     let s = JSON.stringify(data);
