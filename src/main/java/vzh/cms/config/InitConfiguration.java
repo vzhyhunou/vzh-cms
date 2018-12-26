@@ -47,7 +47,7 @@ public class InitConfiguration {
                                     Object entity = mapper.readValue(file.toFile(), c);
                                     manager.persist(entity);
                                     if (entity instanceof Content) {
-                                        fileRepository.save(((Content) entity).getFiles());
+                                        fileRepository.save((Content) entity);
                                     }
                                 }
                             }

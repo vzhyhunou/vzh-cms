@@ -18,13 +18,13 @@ export default requestHandler => (type, resource, params) => {
             return Promise.all(newFiles.map(convertFileToBase64))
                 .then(base64Files => base64Files.map((picture64, index) => ({
                     data: picture64.match(/,(.*)/)[1],
-                    path: `${resource}/${params.id}/${name(newFiles[index].rawFile)}`
+                    path: name(newFiles[index].rawFile)
                 })))
                 .then(transformedNewFiles =>
                     requestHandler(type, resource, {
                         ...params,
                         data: {
-                            ...replaceSrc(params.data, transformedNewFiles),
+                            ...replaceSrc(resource, params, transformedNewFiles),
                             files: [
                                 ...transformedNewFiles,
                                 //...formerFiles,
@@ -57,8 +57,11 @@ const PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
 const name = rawFile => `${rawFile.preview.match(PATTERN)[0]}.${rawFile.type.split('/')[1]}`;
 
-const replaceSrc = (data, files) => {
-    let s = JSON.stringify(data);
-    files.forEach(f => s = s.replace(new RegExp(`"[^"]*${f.name.match(PATTERN)[0]}`, 'g'), `"/static/${f.name}`));
+const replaceSrc = (resource, params, files) => {
+    let s = JSON.stringify(params.data);
+    files.forEach(f => s = s.replace(
+        new RegExp(`\\\\[^\\\\]*${f.path.match(PATTERN)[0]}`, 'g'),
+        `\\"/static/${resource}/${params.id}/${f.path}`
+    ));
     return JSON.parse(s);
 };
