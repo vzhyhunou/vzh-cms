@@ -12,5 +12,7 @@ public class CmsProperties {
 
     private CmsInitProperties init;
 
+    private CmsExportProperties export;
+
     private CmsFilesProperties files;
 }
