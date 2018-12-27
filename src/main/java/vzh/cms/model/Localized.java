@@ -5,9 +5,7 @@ import java.util.Map;
 /**
  * @author Viktar Zhyhunou
  */
-public interface Localized<T> {
+public interface Localized {
 
-    Map<String, T> getProperties();
-
-    void setProperties(Map<String, T> properties);
+    Map<String, ?> getProperties();
 }

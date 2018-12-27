@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Viktar Zhyhunou
  */
-public interface LocalizedRepository<T extends Localized<P>, P> extends Repository<T> {
+public interface LocalizedRepository<T extends Localized> extends Repository<T> {
 
     <E> List<E> findAll(Specification<T> specification, Class<E> type, String locale);
 

@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Viktar Zhyhunou
@@ -17,5 +19,5 @@ public class Content {
     private String id;
 
     @Transient
-    private Base64File[] files = new Base64File[0];
+    private Set<Base64File> files = new HashSet<>();
 }

@@ -18,7 +18,7 @@ import java.util.Set;
  */
 @Data
 @Entity
-public class Page extends Content implements Localized<PageProperty> {
+public class Page extends Content implements Localized {
 
     @ElementCollection
     @Column(name = "tag")

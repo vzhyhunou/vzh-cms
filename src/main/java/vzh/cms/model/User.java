@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Viktar Zhyhunou
@@ -24,6 +25,8 @@ import java.util.Set;
 public class User {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
+    private static Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
 
     @Id
     private String id;
@@ -36,6 +39,6 @@ public class User {
     private Set<String> tags = new HashSet<>();
 
     public void setPassword(String password) {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = BCRYPT_PATTERN.matcher(password).matches() ? password : PASSWORD_ENCODER.encode(password);
     }
 }
