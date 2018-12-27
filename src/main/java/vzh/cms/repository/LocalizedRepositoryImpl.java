@@ -7,14 +7,13 @@ import vzh.cms.model.Localized;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
  */
-public class LocalizedRepositoryImpl<T extends Localized<P>, P, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T, P> {
+public class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
 
     public LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
@@ -31,10 +30,7 @@ public class LocalizedRepositoryImpl<T extends Localized<P>, P, ID extends Seria
     }
 
     private Consumer<T> getConsumer(String locale) {
-        return p -> p.setProperties(
-                p.getProperties().entrySet().stream()
-                        .filter(e -> e.getKey().equals(locale))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-        );
+        return p -> p.getProperties().keySet().stream().filter(k -> !k.equals(locale)).collect(Collectors.toSet())
+                .forEach(k -> p.getProperties().remove(k));
     }
 }
