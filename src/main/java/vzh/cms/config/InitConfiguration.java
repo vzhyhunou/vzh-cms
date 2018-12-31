@@ -36,7 +36,7 @@ public class InitConfiguration {
 
                 LOG.info("Initialization start");
 
-                Path path = Paths.get(properties.getInit().getPath());
+                Path path = Paths.get(properties.getImp().getPath());
                 ObjectMapper mapper = new ObjectMapper();
                 if (Files.exists(path)) {
                     try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {

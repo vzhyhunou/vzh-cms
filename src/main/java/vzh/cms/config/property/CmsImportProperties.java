@@ -6,7 +6,7 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class CmsInitProperties {
+public class CmsImportProperties {
 
     private String path;
 }
