@@ -9,4 +9,6 @@ import lombok.Data;
 public class CmsExportProperties {
 
     private String path;
+
+    private String pattern;
 }
