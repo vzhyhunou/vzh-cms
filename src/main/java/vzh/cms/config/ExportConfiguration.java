@@ -43,13 +43,13 @@ public class ExportConfiguration {
     private ResourceMappings mappings;
 
     public ExportConfiguration(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ResourceMappings mappings) {
-        this.properties = properties.getExport();
+        this.properties = properties.getExp();
         this.fileRepository = fileRepository;
         this.manager = manager;
         this.mappings = mappings;
     }
 
-    @Scheduled(cron = "${cms.export.cron}")
+    @Scheduled(cron = "${cms.exp.cron}")
     @Transactional
     public void export() throws Exception {
 

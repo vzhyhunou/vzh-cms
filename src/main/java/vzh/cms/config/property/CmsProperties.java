@@ -10,9 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class CmsProperties {
 
-    private CmsInitProperties init;
+    private CmsImportProperties imp;
 
-    private CmsExportProperties export;
+    private CmsExportProperties exp;
 
     private CmsFilesProperties files;
 }
