@@ -10,6 +10,10 @@ import vzh.cms.model.Content;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 
 /**
@@ -28,13 +32,32 @@ public class FileRepository {
     }
 
     public void save(Content content) throws IOException {
+        File dir = location(content);
         for (Base64File file : content.getFiles()) {
-            File file2 = new File(content.getId(), file.getPath());
-            ResourceMetadata meta = mappings.getMetadataFor(content.getClass());
-            File file3 = new File(meta.getRel(), file2.getPath());
-            File out = new File(path, file3.getPath());
+            File out = new File(dir, file.getPath());
             byte[] data = Base64.getDecoder().decode(file.getData());
             FileUtils.writeByteArrayToFile(out, data);
         }
+    }
+
+    public void fill(Content content) throws IOException {
+        Path dir = Paths.get(location(content).getPath());
+        if (Files.exists(dir)) {
+            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
+                for (Path file : dirStream) {
+                    Base64File f = new Base64File();
+                    f.setPath(file.getFileName().toString());
+                    byte[] data = FileUtils.readFileToByteArray(file.toFile());
+                    f.setData(new String(Base64.getEncoder().encode(data)));
+                    content.getFiles().add(f);
+                }
+            }
+        }
+    }
+
+    private File location(Content content) {
+        ResourceMetadata meta = mappings.getMetadataFor(content.getClass());
+        File dir = new File(meta.getRel(), content.getId());
+        return new File(path, dir.getPath());
     }
 }
