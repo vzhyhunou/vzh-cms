@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import vzh.cms.model.Content;
 import vzh.cms.repository.FileRepository;
 
-import java.io.IOException;
-
 /**
  * @author Viktar Zhyhunou
  */
@@ -24,7 +22,7 @@ public class ContentEventHandler {
 
     @HandleBeforeCreate
     @HandleBeforeSave
-    public void apply(Content content) throws IOException {
+    public void apply(Content content) throws Exception {
         repository.save(content);
     }
 }
