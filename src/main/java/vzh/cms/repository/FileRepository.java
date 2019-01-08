@@ -1,5 +1,6 @@
 package vzh.cms.repository;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
@@ -9,7 +10,6 @@ import vzh.cms.model.Base64File;
 import vzh.cms.model.Content;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ public class FileRepository {
         this.mappings = mappings;
     }
 
-    public void save(Content content) throws IOException {
+    public void save(Content content) throws Exception {
         File dir = location(content);
         for (Base64File file : content.getFiles()) {
             File out = new File(dir, file.getPath());
@@ -40,7 +40,7 @@ public class FileRepository {
         }
     }
 
-    public void fill(Content content) throws IOException {
+    public void fill(Content content) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (Files.exists(dir)) {
             try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
@@ -55,9 +55,10 @@ public class FileRepository {
         }
     }
 
-    private File location(Content content) {
-        ResourceMetadata meta = mappings.getMetadataFor(content.getClass());
-        File dir = new File(meta.getRel(), content.getId());
+    private File location(Object entity) throws Exception {
+        ResourceMetadata meta = mappings.getMetadataFor(entity.getClass());
+        String id = BeanUtils.getProperty(entity, "id");
+        File dir = new File(meta.getRel(), id);
         return new File(path, dir.getPath());
     }
 }
