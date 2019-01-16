@@ -1,18 +1,22 @@
+import {
+    CREATE,
+    UPDATE,
+} from 'react-admin';
+
 const convertFileToBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file.rawFile);
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
+    reader.readAsDataURL(file.rawFile);
 });
 
 export default requestHandler => (type, resource, params) => {
-    if (type === 'UPDATE' || type === 'CREATE') {
+    if (type === UPDATE || type === CREATE) {
 
         const {files} = params.data;
 
         if (files && files.length) {
 
-            //const formerFiles = files.filter(p => !(p.rawFile instanceof File));
             const newFiles = files.filter(p => p.rawFile instanceof File);
 
             return Promise.all(newFiles.map(convertFileToBase64))
@@ -26,8 +30,7 @@ export default requestHandler => (type, resource, params) => {
                         data: {
                             ...replaceSrc(resource, params, transformedNewFiles),
                             files: [
-                                ...transformedNewFiles,
-                                //...formerFiles,
+                                ...transformedNewFiles
                             ],
                         },
                     })
