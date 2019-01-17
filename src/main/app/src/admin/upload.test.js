@@ -4,7 +4,7 @@ import addUploadFeature from './upload';
 
 class MockFileReader {
     readAsDataURL() {
-        this.result = 'data:image/jpeg;base64,abc';
+        this.result = 'data:image/png;base64,abc';
         this.onload();
     }
 }
