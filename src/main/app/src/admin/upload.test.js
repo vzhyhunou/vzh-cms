@@ -14,10 +14,18 @@ describe('upload', () => {
     it('should modify request data', () => {
         expect.assertions(2);
 
-        const rawFile = new File([], null, {
+        const rawFile1 = new File([], null, {
             type: "image/png"
         });
-        rawFile.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc";
+        rawFile1.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc";
+        const rawFile2 = new File([], null, {
+            type: "image/png"
+        });
+        rawFile2.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd";
+        const rawFile3 = new File([], null, {
+            type: "image/png"
+        });
+        rawFile3.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be";
         window.FileReader = MockFileReader;
 
         const request = {
@@ -25,10 +33,17 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        rawFile: rawFile
+                        rawFile: rawFile1
+                    },
+                    {
+                        rawFile: rawFile2
                     }
                 ],
-                content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>"
+                file: {
+                    rawFile: rawFile3
+                },
+                content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
             }
         };
         const expectedRequest = {
@@ -37,10 +52,12 @@ describe('upload', () => {
                 files: [
                     {
                         data: "abc",
-                        path: "cb822ba5-8864-4d03-97c2-a798cad9c7bc.png"
+                        path: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
-                content: "<img src=\"/static/items/sample/cb822ba5-8864-4d03-97c2-a798cad9c7bc.png\"/>"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         };
 
@@ -66,18 +83,18 @@ describe('upload', () => {
         const response = {
             data: {
                 files: [],
-                content: "<img src=\"/static/items/sample/cb822ba5-8864-4d03-97c2-a798cad9c7bc.png\"/>"
+                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         };
         const expectedResponse = {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/cb822ba5-8864-4d03-97c2-a798cad9c7bc.png",
-                        title: "/static/items/sample/cb822ba5-8864-4d03-97c2-a798cad9c7bc.png"
+                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
-                content: "<img src=\"/static/items/sample/cb822ba5-8864-4d03-97c2-a798cad9c7bc.png\"/>"
+                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         };
 
