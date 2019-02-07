@@ -152,6 +152,7 @@
 						<goals>
 							<goal>npm</goal>
 						</goals>
+						<phase>install</phase>
 						<configuration>
 							<arguments>run compile</arguments>
 						</configuration>
