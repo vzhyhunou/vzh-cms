@@ -1,4 +1,4 @@
-import {CREATE, UPDATE,} from 'react-admin';
+import {CREATE, GET_ONE, UPDATE} from 'react-admin';
 import {dumpKeysRecursively} from 'recursive-keys';
 import get from 'lodash/get';
 import set from 'lodash/set';
@@ -14,7 +14,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 export default requestHandler => (type, resource, params) => {
     if (type === UPDATE || type === CREATE) {
 
-        const keys = dumpKeysRecursively(params.data).filter(k => get(params.data, k).rawFile instanceof File);
+        const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, key).rawFile instanceof File);
 
         if (keys.length) {
 
@@ -43,13 +43,26 @@ export default requestHandler => (type, resource, params) => {
                     })
                 );
         }
+    } else if (type === GET_ONE) {
+
+        return requestHandler(type, resource, params).then(response => {
+            analyzeSrc(response.data);
+            analyzeFiles(resource, params.id, response.data);
+            return response;
+        });
     }
 
-    return requestHandler(type, resource, params).then(responseHandler);
+    return requestHandler(type, resource, params);
 };
 
-const responseHandler = response => {
-    const {data} = response;
+const analyzeFiles = (resource, id, data) => {
+    dumpKeysRecursively(data).filter(key => /^[a-f0-9]{32}\..+$/.test(get(data, key))).forEach(key => {
+        const f = `/static/${resource}/${id}/${get(data, key)}`;
+        set(data, key, {src: f, title: f});
+    });
+};
+
+const analyzeSrc = data => {
     const s = JSON.stringify(data);
     const set = new Set();
     const exp = /<img.*?src=\\"(.*?)\\"/g;
@@ -60,7 +73,6 @@ const responseHandler = response => {
     set.forEach(f => {
         data.files.push({src: f, title: f});
     });
-    return response;
 };
 
 const replaceFiles = (data, files) => {

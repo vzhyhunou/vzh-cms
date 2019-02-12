@@ -77,24 +77,31 @@ describe('upload', () => {
         expect.assertions(2);
 
         const request = {
-            data: {}
+            id: 'sample'
         };
 
         const response = {
             data: {
                 files: [],
-                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>" +
+                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>"
             }
         };
         const expectedResponse = {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
-                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
+                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
-                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                file: {
+                    src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
+                },
+                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>" +
+                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>"
             }
         };
 
