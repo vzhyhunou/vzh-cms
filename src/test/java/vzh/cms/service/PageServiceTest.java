@@ -309,6 +309,6 @@ public class PageServiceTest {
     }
 
     private static Pageable page(int i) {
-        return new PageRequest(i, 1, Sort.Direction.ASC, "id");
+        return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
     }
 }
