@@ -18,6 +18,7 @@ import vzh.cms.projection.TitlePage;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -203,11 +204,16 @@ public class PageServiceTest {
         persistLocales("home", "en", "ru");
         persistLocales("sample");
 
-        Page result = service.one("home", "en");
+        Optional<Page> result = service.one("home", "en");
 
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo("home");
-        assertThat(result.getProperties().keySet()).containsOnly("en");
+        assertThat(result.isPresent()).isTrue();
+
+        Page page = result.get();
+
+        assertThat(page).isNotNull();
+        assertThat(page.getId()).isEqualTo("home");
+        assertThat(page.getProperties().keySet()).containsOnly("en");
     }
 
     @Test
@@ -215,9 +221,10 @@ public class PageServiceTest {
 
         persistLocales("sample");
 
-        Page result = service.one("home", "en");
+        Optional<Page> result = service.one("home", "en");
 
-        assertThat(result).isNull();
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
     }
 
     @Test
@@ -226,9 +233,10 @@ public class PageServiceTest {
         persistLocales("home");
         persistLocales("sample");
 
-        Page result = service.one("home", "en");
+        Optional<Page> result = service.one("home", "en");
 
-        assertThat(result).isNull();
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
     }
 
     @Test
@@ -237,11 +245,16 @@ public class PageServiceTest {
         persistLocales("home", "en");
         persistLocales("sample");
 
-        Page result = service.one("home", "en");
+        Optional<Page> result = service.one("home", "en");
 
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo("home");
-        assertThat(result.getProperties().keySet()).containsOnly("en");
+        assertThat(result.isPresent()).isTrue();
+
+        Page page = result.get();
+
+        assertThat(page).isNotNull();
+        assertThat(page.getId()).isEqualTo("home");
+        assertThat(page.getProperties().keySet()).containsOnly("en");
     }
 
     @Test
@@ -250,9 +263,10 @@ public class PageServiceTest {
         persistLocales("home", "ru");
         persistLocales("sample");
 
-        Page result = service.one("home", "en");
+        Optional<Page> result = service.one("home", "en");
 
-        assertThat(result).isNull();
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
     }
 
     @Test

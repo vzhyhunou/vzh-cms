@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-public class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
+abstract class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
 
-    public LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
+    protected LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 

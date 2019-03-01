@@ -16,6 +16,7 @@ import vzh.cms.projection.TitlePage;
 import vzh.cms.service.PageService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Viktar Zhyhunou
@@ -52,7 +53,7 @@ public class PageController {
 
     @ResponseBody
     @GetMapping("/pages/search/one/{id}")
-    public Page one(
+    public Optional<Page> one(
             @PathVariable String id,
             @RequestParam String locale
     ) {
