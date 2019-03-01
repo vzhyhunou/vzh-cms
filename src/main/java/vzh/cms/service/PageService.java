@@ -17,6 +17,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -46,7 +47,7 @@ public class PageService extends BaseService<PageRepository> {
         );
     }
 
-    public Page one(String id, String locale) {
+    public Optional<Page> one(String id, String locale) {
         return repository.findOne((root, q, b) ->
                 b.and(
                         b.equal(root.get("id"), id),

@@ -11,6 +11,34 @@ class MockFileReader {
 
 describe('upload', () => {
 
+    it('no files in request', () => {
+        expect.assertions(2);
+
+        const request = {
+            id: 'sample',
+            data: {
+                content: ""
+            }
+        };
+        const expectedRequest = {
+            id: 'sample',
+            data: {
+                content: ""
+            }
+        };
+
+        const response = {
+            data: {}
+        };
+
+        return addUploadFeature((type, resource, params) => new Promise(resolve => {
+            expect(params).toEqual(expectedRequest);
+            resolve(response);
+        }))(CREATE, 'items', request).then(r => {
+            expect(r).toEqual(response);
+        });
+    });
+
     it('should modify request data', () => {
         expect.assertions(2);
 

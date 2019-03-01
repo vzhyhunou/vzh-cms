@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-public class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements Repository<T> {
+abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements Repository<T> {
 
     private final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
-    public RepositoryImpl(Class<T> domainClass, EntityManager manager) {
+    protected RepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 

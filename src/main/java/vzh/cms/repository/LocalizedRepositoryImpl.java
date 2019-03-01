@@ -1,5 +1,6 @@
 package vzh.cms.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import vzh.cms.model.Localized;
@@ -13,9 +14,9 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-public class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
+abstract class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
 
-    public LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
+    protected LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 
@@ -25,7 +26,7 @@ public class LocalizedRepositoryImpl<T extends Localized, ID extends Serializabl
     }
 
     @Override
-    public <E> org.springframework.data.domain.Page<E> findAll(Specification<T> specification, Class<E> type, String locale, Pageable pageable) {
+    public <E> Page<E> findAll(Specification<T> specification, Class<E> type, String locale, Pageable pageable) {
         return findAll(specification, type, getConsumer(locale), pageable);
     }
 

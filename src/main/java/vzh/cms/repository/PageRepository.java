@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import vzh.cms.model.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Viktar Zhyhunou
@@ -16,7 +17,7 @@ public interface PageRepository extends PagingAndSortingRepository<Page, String>
 
     @Override
     @PreAuthorize("permitAll")
-    Page findOne(Specification<Page> specification);
+    Optional<Page> findOne(Specification<Page> specification);
 
     @Override
     @PreAuthorize("permitAll")

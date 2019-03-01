@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -37,7 +38,7 @@ public class UserServiceTest {
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<User> result = service.list(filter, page(0));
+        Page<User> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<User> content = result.getContent();
@@ -54,7 +55,7 @@ public class UserServiceTest {
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<User> result = service.list(filter, page(0));
+        Page<User> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<User> content = result.getContent();
@@ -80,6 +81,6 @@ public class UserServiceTest {
     }
 
     private static Pageable page(int i) {
-        return new PageRequest(i, 1, Sort.Direction.ASC, "id");
+        return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
     }
 }
