@@ -2,6 +2,7 @@ import React, {Component, lazy, Suspense} from 'react';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createHashHistory';
+import {Loading, TranslationProvider} from 'react-admin';
 
 import createAdminStore from './admin/createAdminStore';
 import restProvider from './commons/rest';
@@ -37,15 +38,17 @@ export default class extends Component {
                 locale
             })}
         >
-            <BrowserRouter>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <div>
-                        <Route path="/pages" component={PagesApp}/>
-                        <Route path="/admin" render={() => <AdminApp history={history}/>}/>
-                        <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
-                    </div>
-                </Suspense>
-            </BrowserRouter>
+            <TranslationProvider>
+                <BrowserRouter>
+                    <Suspense fallback={<Loading/>}>
+                        <div>
+                            <Route path="/pages" component={PagesApp}/>
+                            <Route path="/admin" render={() => <AdminApp history={history}/>}/>
+                            <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
+                        </div>
+                    </Suspense>
+                </BrowserRouter>
+            </TranslationProvider>
         </Provider>;
     }
 };
