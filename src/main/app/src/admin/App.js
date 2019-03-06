@@ -1,10 +1,9 @@
 import React from 'react';
-import {Admin, Login, Resource} from 'react-admin';
+import {Admin, Login, Resource, translate} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import {createMuiTheme} from '@material-ui/core/styles';
 import PageIcon from '@material-ui/icons/LibraryBooks';
 import UserIcon from '@material-ui/icons/People';
-import {connect} from 'react-redux';
 
 import PageCreate from './pages/Create';
 import PageEdit from './pages/Edit';
@@ -14,7 +13,6 @@ import UserEdit from './users/Edit';
 import UserList from './users/List';
 import routes from './routes';
 import Menu from './Menu';
-import {getMessages} from '../commons/locales';
 import authProvider from './auth';
 import background from './background.png';
 
@@ -29,13 +27,9 @@ const theme = createMuiTheme({
     }
 });
 
-const App = ({messages, history}) => {
-
-    const {title} = messages.pos;
-
-    return <Admin
+const App = ({history, translate}) =>
+    <Admin
         theme={theme}
-        title={title}
         customRoutes={routes}
         menu={Menu}
         authProvider={authProvider}
@@ -44,7 +38,7 @@ const App = ({messages, history}) => {
     >
         {permissions => [
             <Helmet>
-                <title>{title}</title>
+                <title>{translate('pos.title')}</title>
             </Helmet>,
             permissions.includes('ROLE_EDITOR')
                 ? <Resource
@@ -65,12 +59,7 @@ const App = ({messages, history}) => {
                 />
                 : null
         ]}
-    </Admin>;
-};
+    </Admin>
+;
 
-export default connect(
-    state => ({
-        messages: getMessages(state)
-    }),
-    {}
-)(App);
+export default translate(App);

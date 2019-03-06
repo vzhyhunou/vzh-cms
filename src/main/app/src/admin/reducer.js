@@ -10,3 +10,4 @@ export default (state = initialState, {type, payload}) => {
 };
 
 export const getImage = state => state.cms.img;
+export const getMessages = state => state.i18n.messages;

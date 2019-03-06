@@ -19,7 +19,7 @@ const styles = {
 
 const Configuration = ({classes, locale, changeLocale, translate}) =>
     <Card>
-        <Title title={translate('pos.configuration')}/>
+        <Title title={'pos.configuration'}/>
         <CardContent>
             <div className={classes.label}>{translate('pos.language')}</div>
             <Select
