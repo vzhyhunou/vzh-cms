@@ -28,6 +28,7 @@ export default {
         users: {
             name: 'Users',
             tags: {
+                'ROLE_ADMIN': 'Administrator',
                 'ROLE_MANAGER': 'Manager',
                 'ROLE_EDITOR': 'Editor'
             },
