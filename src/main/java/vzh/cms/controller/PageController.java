@@ -7,6 +7,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.projection.NoContentPage;
@@ -22,6 +23,7 @@ import java.util.Optional;
  * @author Viktar Zhyhunou
  */
 @RepositoryRestController
+@RequestMapping("pages")
 public class PageController {
 
     private PageService service;
@@ -34,7 +36,7 @@ public class PageController {
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/list")
+    @GetMapping("search/list")
     public PagedResources<Resource<NoContentPage>> list(
             PageFilter filter,
             @RequestParam String locale,
@@ -44,7 +46,7 @@ public class PageController {
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/menu")
+    @GetMapping("search/menu")
     public List<TitlePage> menu(
             @RequestParam String locale
     ) {
@@ -52,7 +54,7 @@ public class PageController {
     }
 
     @ResponseBody
-    @GetMapping("/pages/search/one/{id}")
+    @GetMapping("search/one/{id}")
     public Optional<Page> one(
             @PathVariable String id,
             @RequestParam String locale
