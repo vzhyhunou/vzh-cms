@@ -1,6 +1,7 @@
 import React from 'react';
 import {Admin, Login, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
+import {createMuiTheme} from '@material-ui/core/styles';
 import PageIcon from '@material-ui/icons/LibraryBooks';
 import UserIcon from '@material-ui/icons/People';
 import {connect} from 'react-redux';
@@ -17,11 +18,23 @@ import {getMessages} from '../commons/locales';
 import authProvider from './auth';
 import background from './background.png';
 
+const theme = createMuiTheme({
+    palette: {
+        secondary: {
+            light: '#5f5fc4',
+            main: '#283593',
+            dark: '#001064',
+            contrastText: '#fff'
+        }
+    }
+});
+
 const App = ({messages, history}) => {
 
     const {title} = messages.pos;
 
     return <Admin
+        theme={theme}
         title={title}
         customRoutes={routes}
         menu={Menu}
