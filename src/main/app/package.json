@@ -30,7 +30,7 @@
     "enzyme-adapter-react-16": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3010 react-scripts start",
     "build": "react-scripts build && mkdir -p ../../../target/classes && mv build ../../../target/classes/static",
     "test": "CI=true react-scripts test",
     "transpile": "rm -rf dist && NODE_ENV=production babel src -d dist --copy-files && echo '{\"name\":\"vzh-cms\",\"version\":\"0.0.1\"}' > dist/package.json"
