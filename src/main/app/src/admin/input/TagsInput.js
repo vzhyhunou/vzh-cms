@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {SelectArrayInput, translate} from 'react-admin';
 import compose from 'recompose/compose';
-import {getMessages} from '../../commons/locales';
+import {getMessages} from '../reducer';
 
 const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     <SelectArrayInput

@@ -5,7 +5,7 @@ export default {
     pos: {
         configuration: 'Configuration',
         language: 'Language',
-        title: 'Admin Panel',
+        title: 'Control Panel',
         general: 'General'
     },
     resources: {
@@ -28,6 +28,7 @@ export default {
         users: {
             name: 'Users',
             tags: {
+                'ROLE_ADMIN': 'Administrator',
                 'ROLE_MANAGER': 'Manager',
                 'ROLE_EDITOR': 'Editor'
             },

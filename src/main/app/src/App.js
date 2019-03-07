@@ -2,9 +2,8 @@ import React, {Component, lazy, Suspense} from 'react';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createHashHistory';
-import {Loading, TranslationProvider} from 'react-admin';
+import {createAdminStore, Loading, TranslationProvider} from 'react-admin';
 
-import createAdminStore from './admin/createAdminStore';
 import restProvider from './commons/rest';
 import authProvider from './admin/auth';
 import addUploadFeature from './admin/upload';

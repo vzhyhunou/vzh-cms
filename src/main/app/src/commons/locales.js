@@ -20,5 +20,3 @@ const i18nWriter = value => load(value).then(() => {
 export const i18nProvider = value => value === locale ? messages : i18nWriter(value);
 
 export const i18nLocale = () => locale;
-
-export const getMessages = state => state.i18n.messages;
