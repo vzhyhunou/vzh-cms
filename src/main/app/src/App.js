@@ -1,7 +1,7 @@
 import React, {Component, lazy, Suspense} from 'react';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import createHistory from 'history/createHashHistory';
+import createHistory from 'history/createBrowserHistory';
 import {createAdminStore, Loading, TranslationProvider} from 'react-admin';
 
 import restProvider from './commons/rest';
@@ -13,7 +13,7 @@ import PagesApp from './pages/App';
 
 export default class extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         i18nLoader().then(state => this.setState(state));
     }
 
@@ -22,7 +22,7 @@ export default class extends Component {
             return <div/>;
 
         const dataProvider = addUploadFeature(restProvider('/api'));
-        const history = createHistory();
+        const history = createHistory({basename: '/admin'});
         const customReducers = {cms: cmsReducer};
         const {locale} = this.state;
         const AdminApp = lazy(() => import('./admin/App'));

@@ -12,7 +12,7 @@ import {
     UPDATE_MANY,
 } from 'react-admin';
 
-import {i18nLocale} from '../commons/locales';
+import {locale} from '../commons/locales';
 import {TOKEN} from '../admin/auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
@@ -34,7 +34,6 @@ export default (apiUrl, httpClient = client) => {
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
         const options = {};
-        const locale = i18nLocale();
         switch (type) {
             case GET_LIST: {
                 const {page, perPage} = params.pagination;

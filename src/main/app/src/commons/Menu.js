@@ -49,7 +49,7 @@ class Menu extends Component {
         return false;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadData();
     }
 

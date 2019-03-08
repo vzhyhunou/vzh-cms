@@ -69,7 +69,7 @@ const Bar = ({classes, open, handleDrawerOpen, location}) => {
             <Locale/>
             <IconButton
                 color="inherit"
-                href={`/admin#/${path[1]}/${path[2]}`}
+                href={`/admin/${path[1]}/${path[2]}`}
             >
                 <EditIcon/>
             </IconButton>

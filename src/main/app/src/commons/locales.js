@@ -5,8 +5,9 @@ export default {
 
 const LOCALE = 'locale';
 
-var locale;
-var messages;
+export let locale;
+
+let messages;
 
 const load = value => import(`./i18n/${value}`).then(response => messages = response.default);
 
@@ -18,5 +19,3 @@ const i18nWriter = value => load(value).then(() => {
 });
 
 export const i18nProvider = value => value === locale ? messages : i18nWriter(value);
-
-export const i18nLocale = () => locale;
