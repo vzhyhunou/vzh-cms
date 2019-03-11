@@ -10,6 +10,7 @@ import addUploadFeature from './admin/upload';
 import {i18nLoader, i18nProvider} from './commons/locales';
 import cmsReducer from './admin/reducer';
 import Layout from './commons/Layout';
+import routes from './routes';
 
 export default class extends Component {
 
@@ -43,7 +44,7 @@ export default class extends Component {
                         <Switch>
                             <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
                             <Route path="/admin" render={() => <Admin history={history}/>}/>
-                            <Route component={Layout}/>
+                            <Route render={() => <Layout routes={routes}/>}/>
                         </Switch>
                     </Suspense>
                 </BrowserRouter>

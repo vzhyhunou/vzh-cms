@@ -4,7 +4,6 @@ import {withStyles} from '@material-ui/core/styles';
 
 import Bar from './Bar';
 import Menu from './Menu';
-import routes from '../routes';
 
 const drawerWidth = 240;
 
@@ -47,7 +46,7 @@ class Layout extends Component {
 
     render() {
 
-        const {classes} = this.props;
+        const {classes, routes} = this.props;
         const {open} = this.state;
 
         return <div className={classes.appFrame}>
