@@ -43,15 +43,11 @@ const styles = theme => ({
     },
 });
 
-const Bar = ({classes, open, handleDrawerOpen, location}) => {
-
-    const {pathname} = location;
-    const path = pathname.split('/');
-
-    return <AppBar position="static"
-                   className={classNames(classes.appBar, {
-                       [classes.appBarShift]: open,
-                   })}>
+const Bar = ({classes, open, handleDrawerOpen, location}) =>
+    <AppBar position="static"
+            className={classNames(classes.appBar, {
+                [classes.appBarShift]: open,
+            })}>
         <Toolbar>
             <IconButton
                 color="inherit"
@@ -69,7 +65,7 @@ const Bar = ({classes, open, handleDrawerOpen, location}) => {
             <Locale/>
             <IconButton
                 color="inherit"
-                href={`/admin/${path[1]}/${path[2]}`}
+                href={`/admin${location.pathname}`}
             >
                 <EditIcon/>
             </IconButton>
@@ -81,8 +77,8 @@ const Bar = ({classes, open, handleDrawerOpen, location}) => {
                 <MenuIcon/>
             </IconButton>
         </Toolbar>
-    </AppBar>;
-};
+    </AppBar>
+;
 
 export default compose(
     withRouter,

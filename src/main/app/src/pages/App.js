@@ -15,9 +15,9 @@ class Main extends Component {
 
     loadData = () => {
 
-        const {pathname} = this.props.location;
+        const {id} = this.props.match.params;
 
-        this.dataProvider(GET_ONE_LOCALE, 'pages', {id: pathname.split('/')[2]}).then(response => {
+        this.dataProvider(GET_ONE_LOCALE, 'pages', {id}).then(response => {
             this.setState({page: response.data});
         })
     };

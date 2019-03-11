@@ -41,7 +41,7 @@ export default class extends Component {
                 <BrowserRouter>
                     <Suspense fallback={<Loading/>}>
                         <div>
-                            <Route path="/pages" component={PagesApp}/>
+                            <Route path="/pages/:id" component={PagesApp}/>
                             <Route path="/admin" render={() => <AdminApp history={history}/>}/>
                             <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
                         </div>
