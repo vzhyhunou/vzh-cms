@@ -41,12 +41,13 @@ class App extends Component {
 
         const {locale} = this.props;
         const properties = this.state.page.properties[locale];
+        const {title, content} = properties;
 
         return <div>
             <Helmet>
-                <title>{properties.title}</title>
+                <title>{title}</title>
             </Helmet>
-            <div dangerouslySetInnerHTML={{__html: properties.content}}/>
+            <div dangerouslySetInnerHTML={{__html: content}}/>
         </div>;
     }
 }
