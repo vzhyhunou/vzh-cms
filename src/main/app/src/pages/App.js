@@ -40,8 +40,7 @@ class App extends Component {
             return <div/>;
 
         const {locale} = this.props;
-        const properties = this.state.page.properties[locale];
-        const {title, content} = properties;
+        const {title, content} = this.state.page.properties[locale];
 
         return <div>
             <Helmet>
