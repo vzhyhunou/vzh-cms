@@ -11,7 +11,7 @@ import './App.css';
 
 class Main extends Component {
 
-    dataProvider = dataProvider('/api');
+    dataProvider = dataProvider();
 
     loadData = () => {
 
