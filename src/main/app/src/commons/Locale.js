@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {connect} from 'react-redux';
 import {changeLocale, getLocale} from 'react-admin';
 
-import LOCALES from './locales';
+import {locales} from './locales';
 
 class Locale extends Component {
 
@@ -45,13 +45,13 @@ class Locale extends Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
             >
-                {Object.keys(LOCALES).map(l =>
+                {Object.keys(locales).map(l =>
                     <MenuItem
                         key={l}
                         onClick={() => this.changeLocale(l)}
                         selected={l === locale}
                     >
-                        {LOCALES[l]}
+                        {locales[l]}
                     </MenuItem>
                 )}
             </Menu>

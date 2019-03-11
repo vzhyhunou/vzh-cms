@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import has from 'lodash/has';
 
-import LOCALES from '../../commons/locales';
+import {locales} from '../../commons/locales';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
 import TagsInput from '../input/TagsInput';
@@ -17,7 +17,7 @@ const PageEdit = ({locale, img, ...rest}) =>
             <FormTab label="pos.general">
                 <TagsInput/>
             </FormTab>
-            {Object.keys(LOCALES).map((l, i) =>
+            {Object.keys(locales).map((l, i) =>
                 <FormTab key={l} label={l}>
                     <TextInput
                         source={`properties.${l}.title`}

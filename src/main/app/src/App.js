@@ -12,10 +12,15 @@ import cmsReducer from './admin/reducer';
 import Layout from './commons/Layout';
 import routes from './routes';
 
+const locales = {
+    "en": "English",
+    "ru": "Русский"
+};
+
 export default class extends Component {
 
     componentDidMount() {
-        i18nLoader().then(state => this.setState(state));
+        i18nLoader(locales).then(state => this.setState(state));
     }
 
     render() {
