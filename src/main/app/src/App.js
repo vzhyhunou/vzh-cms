@@ -40,11 +40,9 @@ export default class extends Component {
             <TranslationProvider>
                 <BrowserRouter>
                     <Suspense fallback={<Loading/>}>
-                        <div>
-                            <Route path="/pages/:id" component={PagesApp}/>
-                            <Route path="/admin" render={() => <AdminApp history={history}/>}/>
-                            <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
-                        </div>
+                        <Route path="/pages/:id" component={PagesApp}/>
+                        <Route path="/admin" render={() => <AdminApp history={history}/>}/>
+                        <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
                     </Suspense>
                 </BrowserRouter>
             </TranslationProvider>
