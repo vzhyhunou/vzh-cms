@@ -20,7 +20,7 @@ const locales = {
 export default class extends Component {
 
     componentDidMount() {
-        i18nLoader(locales).then(state => this.setState(state));
+        i18nLoader(locales, l => import(`./commons/i18n/${l}`)).then(state => this.setState(state));
     }
 
     render() {
