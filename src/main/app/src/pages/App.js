@@ -5,19 +5,18 @@ import {connect} from 'react-redux';
 import {getLocale} from 'react-admin';
 import compose from 'recompose/compose';
 
-import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 import './App.css';
 
-class Main extends Component {
+class App extends Component {
 
-    dataProvider = dataProvider('/api');
+    dataProvider = dataProvider();
 
     loadData = () => {
 
-        const {pathname} = this.props.location;
+        const {id} = this.props.match.params;
 
-        this.dataProvider(GET_ONE_LOCALE, 'pages', {id: pathname.split('/')[2]}).then(response => {
+        this.dataProvider(GET_ONE_LOCALE, 'pages', {id}).then(response => {
             this.setState({page: response.data});
         })
     };
@@ -41,18 +40,18 @@ class Main extends Component {
             return <div/>;
 
         const {locale} = this.props;
-        const properties = this.state.page.properties[locale];
+        const {title, content} = this.state.page.properties[locale];
 
         return <div>
             <Helmet>
-                <title>{properties.title}</title>
+                <title>{title}</title>
             </Helmet>
-            <div dangerouslySetInnerHTML={{__html: properties.content}}/>
+            <div dangerouslySetInnerHTML={{__html: content}}/>
         </div>;
     }
 }
 
-const enhance = compose(
+export default compose(
     withRouter,
     connect(
         state => ({
@@ -60,6 +59,4 @@ const enhance = compose(
         }),
         {}
     )
-);
-
-export default () => <Layout Main={enhance(Main)}/>;
+)(App);

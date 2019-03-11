@@ -31,7 +31,7 @@ const styles = theme => ({
 
 class Menu extends Component {
 
-    dataProvider = dataProvider('/api');
+    dataProvider = dataProvider();
 
     loadData = () => {
         this.dataProvider(GET_MENU_LOCALE, 'pages').then(response => {

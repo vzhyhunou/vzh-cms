@@ -29,7 +29,7 @@ const client = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (apiUrl, httpClient = client) => {
+export default (apiUrl = '/api', httpClient = client) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';

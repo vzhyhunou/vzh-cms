@@ -1,5 +1,5 @@
 import React, {Component, lazy, Suspense} from 'react';
-import {BrowserRouter, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import {createAdminStore, Loading, TranslationProvider} from 'react-admin';
@@ -9,7 +9,8 @@ import authProvider from './admin/auth';
 import addUploadFeature from './admin/upload';
 import {i18nLoader, i18nProvider} from './commons/locales';
 import cmsReducer from './admin/reducer';
-import PagesApp from './pages/App';
+import Layout from './commons/Layout';
+import routes from './routes';
 
 export default class extends Component {
 
@@ -21,11 +22,11 @@ export default class extends Component {
         if (!this.state)
             return <div/>;
 
-        const dataProvider = addUploadFeature(restProvider('/api'));
+        const dataProvider = addUploadFeature(restProvider());
         const history = createHistory({basename: '/admin'});
         const customReducers = {cms: cmsReducer};
         const {locale} = this.state;
-        const AdminApp = lazy(() => import('./admin/App'));
+        const Admin = lazy(() => import('./admin/App'));
 
         return <Provider
             store={createAdminStore({
@@ -40,11 +41,11 @@ export default class extends Component {
             <TranslationProvider>
                 <BrowserRouter>
                     <Suspense fallback={<Loading/>}>
-                        <div>
-                            <Route path="/pages" component={PagesApp}/>
-                            <Route path="/admin" render={() => <AdminApp history={history}/>}/>
+                        <Switch>
                             <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
-                        </div>
+                            <Route path="/admin" render={() => <Admin history={history}/>}/>
+                            <Route render={() => <Layout routes={routes}/>}/>
+                        </Switch>
                     </Suspense>
                 </BrowserRouter>
             </TranslationProvider>
