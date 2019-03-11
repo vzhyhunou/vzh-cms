@@ -5,11 +5,10 @@ import {connect} from 'react-redux';
 import {getLocale} from 'react-admin';
 import compose from 'recompose/compose';
 
-import Layout from '../commons/Layout';
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 import './App.css';
 
-class Main extends Component {
+class App extends Component {
 
     dataProvider = dataProvider();
 
@@ -52,7 +51,7 @@ class Main extends Component {
     }
 }
 
-const enhance = compose(
+export default compose(
     withRouter,
     connect(
         state => ({
@@ -60,6 +59,4 @@ const enhance = compose(
         }),
         {}
     )
-);
-
-export default () => <Layout Main={enhance(Main)}/>;
+)(App);

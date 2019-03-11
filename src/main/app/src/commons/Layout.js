@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {cloneElement, Component} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 
 import Bar from './Bar';
 import Menu from './Menu';
+import routes from '../routes';
 
 const drawerWidth = 240;
 
@@ -46,7 +47,7 @@ class Layout extends Component {
 
     render() {
 
-        const {classes, Main} = this.props;
+        const {classes} = this.props;
         const {open} = this.state;
 
         return <div className={classes.appFrame}>
@@ -57,7 +58,7 @@ class Layout extends Component {
             <div className={classNames(classes.content, classes.content, {
                 [classes.contentShift]: open,
             })}>
-                <Main/>
+                {routes.map((route, key) => cloneElement(route, {key}))}
             </div>
             <Menu
                 open={open}
