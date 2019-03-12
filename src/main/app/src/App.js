@@ -27,7 +27,7 @@ export default class extends Component {
         if (!this.state)
             return <div/>;
 
-        const dataProvider = addUploadFeature(restProvider('/api'));
+        const dataProvider = addUploadFeature(restProvider());
         const history = createHistory({basename: '/admin'});
         const customReducers = {cms: cmsReducer};
         const {locale} = this.state;
