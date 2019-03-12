@@ -7,15 +7,11 @@ import {createAdminStore, Loading, TranslationProvider} from 'react-admin';
 import restProvider from './commons/rest';
 import authProvider from './admin/auth';
 import addUploadFeature from './admin/upload';
-import {i18nLoader, i18nProvider} from './commons/locales';
+import {i18nLoader, i18nProvider} from './commons/locale';
 import cmsReducer from './admin/reducer';
 import Layout from './commons/Layout';
 import routes from './routes';
-
-const locales = {
-    "en": "English",
-    "ru": "Русский"
-};
+import locales from './locales';
 
 export default class extends Component {
 

@@ -5,9 +5,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {connect} from 'react-redux';
 import {changeLocale, getLocale} from 'react-admin';
 
-import {locales} from './locales';
+import {locales} from './locale';
 
-class Locale extends Component {
+class LocaleInput extends Component {
 
     state = {
         anchorEl: null
@@ -64,4 +64,4 @@ export default connect(
         locale: getLocale(state)
     }),
     {changeLocale}
-)(Locale);
+)(LocaleInput);

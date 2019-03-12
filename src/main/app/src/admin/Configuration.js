@@ -8,7 +8,7 @@ import {changeLocale, translate, Title, getLocale} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
-import {locales} from '../commons/locales';
+import {locales} from '../commons/locale';
 
 const styles = {
     label: {

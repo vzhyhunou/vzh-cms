@@ -12,7 +12,7 @@ import {
     UPDATE_MANY,
 } from 'react-admin';
 
-import {locale} from '../commons/locales';
+import {locale} from '../commons/locale';
 import {TOKEN} from '../admin/auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';

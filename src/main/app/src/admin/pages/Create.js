@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import has from 'lodash/has';
 
-import {locales} from '../../commons/locales';
+import {locales} from '../../commons/locale';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import {getImage} from '../reducer';
 import TagsInput from '../input/TagsInput';
