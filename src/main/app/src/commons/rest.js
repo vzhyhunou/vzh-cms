@@ -12,7 +12,7 @@ import {
     UPDATE_MANY,
 } from 'react-admin';
 
-import {locale} from '../commons/locales';
+import {locale} from './locale';
 import {TOKEN} from '../admin/auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
@@ -29,11 +29,7 @@ const client = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-let apiUrl;
-
-export default (url = apiUrl, httpClient = client) => {
-
-    apiUrl = url;
+export default (apiUrl = '/api', httpClient = client) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';

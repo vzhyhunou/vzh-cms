@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
 
-import Locale from './Locale';
+import LocaleInput from './LocaleInput';
 
 const drawerWidth = 240;
 
@@ -62,7 +62,7 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
             >
                 Project
             </Typography>
-            <Locale/>
+            <LocaleInput/>
             <IconButton
                 color="inherit"
                 href={`/admin${location.pathname}`}
