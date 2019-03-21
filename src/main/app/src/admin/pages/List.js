@@ -1,6 +1,5 @@
 import React from 'react';
-import {Datagrid, EditButton, Filter, getLocale, List, TextField, TextInput} from 'react-admin';
-import {connect} from 'react-redux';
+import {Datagrid, EditButton, Filter, List, TextField, TextInput, translate} from 'react-admin';
 
 import TagsField from '../field/TagsField';
 import TagsInput from '../input/TagsInput';
@@ -45,9 +44,4 @@ const PageList = ({locale, ...rest}) =>
     </List>
 ;
 
-export default connect(
-    state => ({
-        locale: getLocale(state)
-    }),
-    {}
-)(PageList);
+export default translate(PageList);

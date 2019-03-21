@@ -8,7 +8,6 @@ import restProvider from './commons/rest';
 import authProvider from './admin/auth';
 import addUploadFeature from './admin/upload';
 import {i18nLoader, i18nProvider} from './commons/locale';
-import cmsReducer from './admin/reducer';
 import Layout from './commons/Layout';
 import routes from './routes';
 import locales from './locales';
@@ -25,7 +24,6 @@ export default class extends Component {
 
         const dataProvider = addUploadFeature(restProvider());
         const history = createHistory({basename: '/admin'});
-        const customReducers = {cms: cmsReducer};
         const {locale} = this.state;
         const Admin = lazy(() => import('./admin/App'));
 
@@ -34,7 +32,6 @@ export default class extends Component {
                 authProvider,
                 dataProvider,
                 i18nProvider,
-                customReducers,
                 history,
                 locale
             })}

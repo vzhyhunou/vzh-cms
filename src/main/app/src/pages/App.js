@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {getLocale} from 'react-admin';
+import {translate} from 'react-admin';
 import compose from 'recompose/compose';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
@@ -53,10 +52,5 @@ class App extends Component {
 
 export default compose(
     withRouter,
-    connect(
-        state => ({
-            locale: getLocale(state)
-        }),
-        {}
-    )
+    translate
 )(App);

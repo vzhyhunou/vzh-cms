@@ -15,6 +15,7 @@ import routes from './routes';
 import Menu from './Menu';
 import authProvider from './auth';
 import background from './background.png';
+import EditionProvider from './EditionContext';
 
 const theme = createMuiTheme({
     palette: {
@@ -28,38 +29,40 @@ const theme = createMuiTheme({
 });
 
 const App = ({history, translate}) =>
-    <Admin
-        theme={theme}
-        customRoutes={routes}
-        menu={Menu}
-        authProvider={authProvider}
-        history={history}
-        loginPage={() => <Login backgroundImage={background}/>}
-    >
-        {permissions => [
-            <Helmet>
-                <title>{translate('pos.title')}</title>
-            </Helmet>,
-            permissions.includes('ROLE_EDITOR')
-                ? <Resource
-                    name="pages"
-                    list={PageList}
-                    edit={PageEdit}
-                    create={PageCreate}
-                    icon={PageIcon}
-                />
-                : null,
-            permissions.includes('ROLE_MANAGER')
-                ? <Resource
-                    name="users"
-                    list={UserList}
-                    edit={UserEdit}
-                    create={UserCreate}
-                    icon={UserIcon}
-                />
-                : null
-        ]}
-    </Admin>
+    <EditionProvider>
+        <Helmet>
+            <title>{translate('pos.title')}</title>
+        </Helmet>
+        <Admin
+            theme={theme}
+            customRoutes={routes}
+            menu={Menu}
+            authProvider={authProvider}
+            history={history}
+            loginPage={() => <Login backgroundImage={background}/>}
+        >
+            {permissions => [
+                permissions.includes('ROLE_EDITOR')
+                    ? <Resource
+                        name="pages"
+                        list={PageList}
+                        edit={PageEdit}
+                        create={PageCreate}
+                        icon={PageIcon}
+                    />
+                    : null,
+                permissions.includes('ROLE_MANAGER')
+                    ? <Resource
+                        name="users"
+                        list={UserList}
+                        edit={UserEdit}
+                        create={UserCreate}
+                        icon={UserIcon}
+                    />
+                    : null
+            ]}
+        </Admin>
+    </EditionProvider>
 ;
 
 export default translate(App);
