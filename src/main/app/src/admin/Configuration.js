@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {changeLocale, translate, Title, getLocale} from 'react-admin';
+import {changeLocale, Title, translate} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
@@ -36,9 +36,7 @@ const Configuration = ({classes, locale, changeLocale, translate}) =>
 
 export default compose(
     connect(
-        state => ({
-            locale: getLocale(state)
-        }),
+        undefined,
         {changeLocale}
     ),
     translate,

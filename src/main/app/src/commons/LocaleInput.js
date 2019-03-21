@@ -3,7 +3,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {connect} from 'react-redux';
-import {changeLocale, getLocale} from 'react-admin';
+import {changeLocale, translate} from 'react-admin';
+import compose from 'recompose/compose';
 
 import {locales} from './locale';
 
@@ -59,9 +60,10 @@ class LocaleInput extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        locale: getLocale(state)
-    }),
-    {changeLocale}
+export default compose(
+    connect(
+        undefined,
+        {changeLocale}
+    ),
+    translate
 )(LocaleInput);

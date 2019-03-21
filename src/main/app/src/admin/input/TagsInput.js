@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {SelectArrayInput, translate} from 'react-admin';
 import compose from 'recompose/compose';
-import {getMessages} from '../reducer';
 
 const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     <SelectArrayInput
@@ -18,7 +17,7 @@ const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
 const TranslatedTagsInput = compose(
     connect(
         state => ({
-            messages: getMessages(state)
+            messages: state.i18n.messages
         }),
         {}
     ),

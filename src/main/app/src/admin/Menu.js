@@ -1,7 +1,6 @@
 import React from 'react';
 import {getResources, MenuItemLink, Responsive, translate} from 'react-admin';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';
 import compose from 'recompose/compose';
 
@@ -27,7 +26,6 @@ const Menu = ({resources, onMenuClick, translate, logout}) =>
 ;
 
 export default compose(
-    withRouter,
     connect(
         state => ({
             resources: getResources(state)

@@ -1,13 +1,12 @@
 import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import {addField, translate} from 'react-admin';
-import {connect} from 'react-redux';
 
 import {ContentFileInput} from './ContentFileInput';
-import {addImageToContent} from '../actions';
+import {withEdition} from '../EditionContext';
 
 const styles = {
-    root: { width: '100%' },
+    root: {width: '100%'},
     dropZone: {
         background: '#efefef',
         cursor: 'pointer',
@@ -52,8 +51,5 @@ export default compose(
     addField,
     translate,
     withStyles(styles),
-    connect(
-        undefined,
-        {addImageToContent}
-    )
+    withEdition
 )(ContentImageInput);
