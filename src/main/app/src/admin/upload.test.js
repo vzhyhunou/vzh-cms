@@ -71,6 +71,7 @@ describe('upload', () => {
                     rawFile: rawFile3
                 },
                 content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
                 "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
             }
         };
@@ -85,6 +86,7 @@ describe('upload', () => {
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
                 "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         };
