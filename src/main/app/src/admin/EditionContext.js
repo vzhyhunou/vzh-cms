@@ -2,6 +2,7 @@ import React, {Children, cloneElement, Component, createContext} from 'react';
 import {connect} from 'react-redux';
 import {change, formValueSelector} from 'redux-form';
 import {REDUX_FORM_NAME} from 'react-admin';
+
 import locales from '../locales';
 
 const EditionContext = createContext();
