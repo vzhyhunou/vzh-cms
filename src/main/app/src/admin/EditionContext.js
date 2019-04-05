@@ -2,8 +2,9 @@ import React, {Children, cloneElement, Component, createContext} from 'react';
 import {connect} from 'react-redux';
 import {change, formValueSelector} from 'redux-form';
 import {REDUX_FORM_NAME} from 'react-admin';
+import compose from 'recompose/compose';
 
-import locales from '../locales';
+import {withTranslation} from '../commons/TranslationContext';
 
 const EditionContext = createContext();
 
@@ -36,7 +37,7 @@ export const withEdition = Component => props =>
 
 const selector = formValueSelector(REDUX_FORM_NAME);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, {locales}) => {
 
     const {location} = state.router;
     if (!location) return {};
@@ -45,7 +46,10 @@ const mapStateToProps = state => {
     return {name, content: selector(state, name)};
 };
 
-export default connect(
-    mapStateToProps,
-    {change}
+export default compose(
+    withTranslation,
+    connect(
+        mapStateToProps,
+        {change}
+    )
 )(EditionProvider);

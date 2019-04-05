@@ -1,13 +1,12 @@
 import React from 'react';
 import {Create, FormTab, LongTextInput, TabbedForm, TextInput} from 'react-admin';
 
-import {locales} from '../../commons/locale';
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import TagsInput from '../input/TagsInput';
 import EditionProvider from '../EditionContext';
 import {withTranslation} from '../../commons/TranslationContext';
 
-const PageCreate = ({locale, ...rest}) =>
+const PageCreate = ({locale, locales, ...rest}) =>
     <EditionProvider>
         <Create {...rest}>
             <TabbedForm toolbar={<ContentImageToolbar/>}>

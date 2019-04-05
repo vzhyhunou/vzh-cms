@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {locales} from './locale';
 import {withTranslationUpdate} from './TranslationContext';
 
 class LocaleInput extends Component {
@@ -27,7 +26,7 @@ class LocaleInput extends Component {
     render() {
 
         const {anchorEl} = this.state;
-        const {locale} = this.props;
+        const {locale, locales} = this.props;
 
         return <div>
             <Button
