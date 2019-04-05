@@ -5,12 +5,13 @@ import Layout from './commons/Layout';
 import routes from './routes';
 import TranslationProvider from './commons/TranslationContext';
 import Loading from './admin/layout/Loading';
+import locales from './commons/locales';
 
 export default () => {
 
     const Admin = lazy(() => import('./admin/App'));
 
-    return <TranslationProvider>
+    return <TranslationProvider locales={locales}>
         <BrowserRouter>
             <Suspense fallback={<Loading/>}>
                 <Switch>

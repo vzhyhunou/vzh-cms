@@ -1,14 +1,12 @@
 const name = 'locale';
 
-export let locales;
 export let locale;
 let imp;
 let messages;
 
 const load = value => imp(value).then(response => messages = response.default);
 
-export const i18nLoader = (l, i) => {
-    locales = l;
+export const i18nLoader = i => {
     imp = i;
     return load(locale = localStorage.getItem(name) || 'en').then(() => ({locale, messages}));
 };

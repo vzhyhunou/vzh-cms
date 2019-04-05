@@ -8,7 +8,6 @@ import {changeLocale, Title} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
-import {locales} from '../commons/locale';
 import {withTranslationUpdate} from '../commons/TranslationContext';
 
 const styles = {
@@ -30,7 +29,7 @@ class Configuration extends Component {
 
     render() {
 
-        const {classes, locale, translate} = this.props;
+        const {classes, locale, translate, locales} = this.props;
 
         return <Card>
             <Title title={'pos.configuration'}/>
