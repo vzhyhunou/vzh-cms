@@ -1,8 +1,9 @@
 import React from 'react';
-import {Datagrid, EditButton, Filter, List, TextField, TextInput, translate} from 'react-admin';
+import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
 import TagsInput from '../input/TagsInput';
+import {withTranslation} from '../../commons/TranslationContext';
 
 const PageFilter = ({locale, ...rest}) => (
     <Filter {...rest}>
@@ -44,4 +45,4 @@ const PageList = ({locale, ...rest}) =>
     </List>
 ;
 
-export default translate(PageList);
+export default withTranslation(PageList);

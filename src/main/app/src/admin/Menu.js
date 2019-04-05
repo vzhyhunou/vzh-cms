@@ -1,8 +1,10 @@
 import React from 'react';
-import {getResources, MenuItemLink, Responsive, translate} from 'react-admin';
+import {getResources, MenuItemLink, Responsive} from 'react-admin';
 import {connect} from 'react-redux';
 import SettingsIcon from '@material-ui/icons/Settings';
 import compose from 'recompose/compose';
+
+import {withTranslation} from '../commons/TranslationContext';
 
 const Menu = ({resources, onMenuClick, translate, logout}) =>
     <div>
@@ -32,5 +34,5 @@ export default compose(
         }),
         {}
     ),
-    translate
+    withTranslation
 )(Menu);

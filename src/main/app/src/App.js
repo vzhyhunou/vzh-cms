@@ -1,52 +1,24 @@
-import React, {Component, lazy, Suspense} from 'react';
+import React, {lazy, Suspense} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
-import {createAdminStore, Loading, TranslationProvider} from 'react-admin';
 
-import restProvider from './commons/rest';
-import authProvider from './admin/auth';
-import addUploadFeature from './admin/upload';
-import {i18nLoader, i18nProvider} from './commons/locale';
 import Layout from './commons/Layout';
 import routes from './routes';
-import locales from './locales';
+import TranslationProvider from './commons/TranslationContext';
+import Loading from './admin/layout/Loading';
 
-export default class extends Component {
+export default () => {
 
-    componentDidMount() {
-        i18nLoader(locales, l => import(`./commons/i18n/${l}`)).then(state => this.setState(state));
-    }
+    const Admin = lazy(() => import('./admin/App'));
 
-    render() {
-        if (!this.state)
-            return <div/>;
-
-        const dataProvider = addUploadFeature(restProvider());
-        const history = createHistory({basename: '/admin'});
-        const {locale} = this.state;
-        const Admin = lazy(() => import('./admin/App'));
-
-        return <Provider
-            store={createAdminStore({
-                authProvider,
-                dataProvider,
-                i18nProvider,
-                history,
-                locale
-            })}
-        >
-            <TranslationProvider>
-                <BrowserRouter>
-                    <Suspense fallback={<Loading/>}>
-                        <Switch>
-                            <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
-                            <Route path="/admin" render={() => <Admin history={history}/>}/>
-                            <Route render={() => <Layout routes={routes}/>}/>
-                        </Switch>
-                    </Suspense>
-                </BrowserRouter>
-            </TranslationProvider>
-        </Provider>;
-    }
+    return <TranslationProvider>
+        <BrowserRouter>
+            <Suspense fallback={<Loading/>}>
+                <Switch>
+                    <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
+                    <Route path="/admin" render={() => <Admin/>}/>
+                    <Route render={() => <Layout routes={routes}/>}/>
+                </Switch>
+            </Suspense>
+        </BrowserRouter>
+    </TranslationProvider>;
 };

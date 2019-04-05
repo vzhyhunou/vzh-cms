@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {changeLocale, Title, translate} from 'react-admin';
+import {changeLocale, Title} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
 import {locales} from '../commons/locale';
+import {withTranslationUpdate} from '../commons/TranslationContext';
 
 const styles = {
     label: {
@@ -17,28 +18,42 @@ const styles = {
     }
 };
 
-const Configuration = ({classes, locale, changeLocale, translate}) =>
-    <Card>
-        <Title title={'pos.configuration'}/>
-        <CardContent>
-            <div className={classes.label}>{translate('pos.language')}</div>
-            <Select
-                value={locale}
-                onChange={e => changeLocale(e.target.value)}
-            >
-                {Object.keys(locales).map(l =>
-                    <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
-                )}
-            </Select>
-        </CardContent>
-    </Card>
-;
+class Configuration extends Component {
+
+    updateLocale = locale => {
+
+        const {changeLocale, updateLocale} = this.props;
+
+        updateLocale(locale);
+        changeLocale(locale);
+    };
+
+    render() {
+
+        const {classes, locale, translate} = this.props;
+
+        return <Card>
+            <Title title={'pos.configuration'}/>
+            <CardContent>
+                <div className={classes.label}>{translate('pos.language')}</div>
+                <Select
+                    value={locale}
+                    onChange={e => this.updateLocale(e.target.value)}
+                >
+                    {Object.keys(locales).map(l =>
+                        <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
+                    )}
+                </Select>
+            </CardContent>
+        </Card>;
+    }
+}
 
 export default compose(
     connect(
         undefined,
         {changeLocale}
     ),
-    translate,
+    withTranslationUpdate,
     withStyles(styles)
 )(Configuration);

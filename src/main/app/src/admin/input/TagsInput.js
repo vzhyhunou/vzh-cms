@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {SelectArrayInput, translate} from 'react-admin';
-import compose from 'recompose/compose';
+import {SelectArrayInput} from 'react-admin';
+
+import {withTranslation} from '../../commons/TranslationContext';
 
 const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     <SelectArrayInput
@@ -14,15 +14,7 @@ const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     />
 );
 
-const TranslatedTagsInput = compose(
-    connect(
-        state => ({
-            messages: state.i18n.messages
-        }),
-        {}
-    ),
-    translate
-)(TagsInput);
+const TranslatedTagsInput = withTranslation(TagsInput);
 
 TranslatedTagsInput.defaultProps = {
     addField: true,

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "react-helmet": "^5.2.0",
-    "react-admin": "^2.7.2",
+    "react-admin": "^2.8.5",
     "ra-language-english": "^2.7.0",
     "ra-language-russian": "^2.0.3",
     "query-string": "^6.1.0",
