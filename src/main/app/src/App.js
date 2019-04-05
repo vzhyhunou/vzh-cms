@@ -1,11 +1,11 @@
 import React, {lazy, Suspense} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 
-import Layout from './commons/Layout';
-import routes from './routes';
 import TranslationProvider from './commons/TranslationContext';
 import Loading from './admin/layout/Loading';
+
 import locales from './commons/locales';
+import Layout from './commons/Layout';
 
 export default () => {
 
@@ -17,7 +17,7 @@ export default () => {
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
                     <Route path="/admin" render={() => <Admin/>}/>
-                    <Route render={() => <Layout routes={routes}/>}/>
+                    <Route component={Layout}/>
                 </Switch>
             </Suspense>
         </BrowserRouter>
