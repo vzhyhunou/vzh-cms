@@ -11,7 +11,10 @@ export default () => {
 
     const Admin = lazy(() => import('./admin/App'));
 
-    return <TranslationProvider locales={locales}>
+    return <TranslationProvider
+        locales={locales}
+        i18n={l => import(`./commons/i18n/${l}`)}
+    >
         <BrowserRouter>
             <Suspense fallback={<Loading/>}>
                 <Switch>
