@@ -1,6 +1,7 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
-import { translate } from 'react-admin';
+
+import {withTranslation} from '../../commons/TranslationContext';
 
 const styles = {
     main: { display: 'flex', flexWrap: 'wrap' },
@@ -20,7 +21,7 @@ const TagsField = ({ record, translate, resource }) => (
     </span>
 );
 
-const TranslatedTagsField = translate(TagsField);
+const TranslatedTagsField = withTranslation(TagsField);
 
 TranslatedTagsField.defaultProps = {
     addLabel: true,

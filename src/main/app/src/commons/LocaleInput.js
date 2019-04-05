@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {connect} from 'react-redux';
-import {changeLocale, translate} from 'react-admin';
-import compose from 'recompose/compose';
 
 import {locales} from './locale';
+import {withTranslationUpdate} from './TranslationContext';
 
 class LocaleInput extends Component {
 
@@ -20,9 +18,9 @@ class LocaleInput extends Component {
 
     changeLocale = locale => {
 
-        const {changeLocale} = this.props;
+        const {updateLocale} = this.props;
 
-        changeLocale(locale);
+        updateLocale(locale);
         this.handleClose();
     };
 
@@ -60,10 +58,4 @@ class LocaleInput extends Component {
     }
 }
 
-export default compose(
-    connect(
-        undefined,
-        {changeLocale}
-    ),
-    translate
-)(LocaleInput);
+export default withTranslationUpdate(LocaleInput);

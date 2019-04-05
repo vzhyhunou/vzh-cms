@@ -13,7 +13,7 @@ export const i18nLoader = (l, i) => {
     return load(locale = localStorage.getItem(name) || 'en').then(() => ({locale, messages}));
 };
 
-const i18nWriter = value => load(value).then(() => {
+export const i18nWriter = value => load(value).then(() => {
     localStorage.setItem(name, locale = value);
     return messages;
 });

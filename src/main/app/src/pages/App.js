@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
-import {translate} from 'react-admin';
 import compose from 'recompose/compose';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 import './App.css';
+import {withTranslation} from '../commons/TranslationContext';
 
 class App extends Component {
 
@@ -52,5 +52,5 @@ class App extends Component {
 
 export default compose(
     withRouter,
-    translate
+    withTranslation
 )(App);

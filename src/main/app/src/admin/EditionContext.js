@@ -18,7 +18,7 @@ class EditionProvider extends Component {
 
     render() {
 
-        const {children, ...rest} = this.props;
+        const {children, change, name, content, ...rest} = this.props;
 
         return <EditionContext.Provider value={{
             addImageToContent: this.addImageToContent

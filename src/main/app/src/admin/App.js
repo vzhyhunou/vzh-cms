@@ -1,9 +1,10 @@
 import React from 'react';
-import {Admin, Login, Resource, translate} from 'react-admin';
+import {Admin, Login, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import {createMuiTheme} from '@material-ui/core/styles';
 import PageIcon from '@material-ui/icons/LibraryBooks';
 import UserIcon from '@material-ui/icons/People';
+import createHistory from 'history/createBrowserHistory';
 
 import PageCreate from './pages/Create';
 import PageEdit from './pages/Edit';
@@ -15,7 +16,10 @@ import routes from './routes';
 import Menu from './Menu';
 import authProvider from './auth';
 import background from './background.png';
-import EditionProvider from './EditionContext';
+import {withTranslation} from '../commons/TranslationContext';
+import restProvider from '../commons/rest';
+import addUploadFeature from './upload';
+import {i18nProvider} from '../commons/locale';
 
 const theme = createMuiTheme({
     palette: {
@@ -28,8 +32,8 @@ const theme = createMuiTheme({
     }
 });
 
-const App = ({history, translate}) =>
-    <EditionProvider>
+const App = ({locale, translate}) =>
+    <div>
         <Helmet>
             <title>{translate('pos.title')}</title>
         </Helmet>
@@ -37,9 +41,12 @@ const App = ({history, translate}) =>
             theme={theme}
             customRoutes={routes}
             menu={Menu}
+            dataProvider={addUploadFeature(restProvider())}
             authProvider={authProvider}
-            history={history}
+            history={createHistory({basename: '/admin'})}
             loginPage={() => <Login backgroundImage={background}/>}
+            locale={locale}
+            i18nProvider={i18nProvider}
         >
             {permissions => [
                 permissions.includes('ROLE_EDITOR')
@@ -62,7 +69,7 @@ const App = ({history, translate}) =>
                     : null
             ]}
         </Admin>
-    </EditionProvider>
+    </div>
 ;
 
-export default translate(App);
+export default withTranslation(App);
