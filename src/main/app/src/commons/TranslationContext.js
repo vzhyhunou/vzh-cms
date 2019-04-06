@@ -1,4 +1,4 @@
-import React, {Children, cloneElement, Component, createContext} from 'react';
+import React, {Component, createContext} from 'react';
 import Polyglot from 'node-polyglot';
 
 import {i18nLoader, i18nWriter} from './locale';
@@ -53,14 +53,14 @@ export default class extends Component {
         if (!this.state)
             return <div/>;
 
-        const {children, ...rest} = this.props;
+        const {children} = this.props;
         const {contextValues} = this.state;
 
         return <TranslationContext.Provider value={{
             ...contextValues,
             updateLocale: this.updateLocale
         }}>
-            {Children.map(children, e => cloneElement(e, {...rest}))}
+            {children}
         </TranslationContext.Provider>;
     }
 }
