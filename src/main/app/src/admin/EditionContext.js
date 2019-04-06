@@ -1,4 +1,4 @@
-import React, {Children, cloneElement, Component, createContext} from 'react';
+import React, {Component, createContext} from 'react';
 import {connect} from 'react-redux';
 import {change, formValueSelector} from 'redux-form';
 import {REDUX_FORM_NAME} from 'react-admin';
@@ -19,12 +19,12 @@ class EditionProvider extends Component {
 
     render() {
 
-        const {children, change, name, content, ...rest} = this.props;
+        const {children} = this.props;
 
         return <EditionContext.Provider value={{
             addImageToContent: this.addImageToContent
         }}>
-            {Children.map(children, e => cloneElement(e, {...rest}))}
+            {children}
         </EditionContext.Provider>;
     }
 }

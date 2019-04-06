@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Admin, Login, Resource} from 'react-admin';
 import {Helmet} from 'react-helmet';
 import {createMuiTheme} from '@material-ui/core/styles';
@@ -32,44 +32,57 @@ const theme = createMuiTheme({
     }
 });
 
-const App = ({locale, translate}) =>
-    <div>
-        <Helmet>
-            <title>{translate('pos.title')}</title>
-        </Helmet>
-        <Admin
-            theme={theme}
-            customRoutes={routes}
-            menu={Menu}
-            dataProvider={addUploadFeature(restProvider())}
-            authProvider={authProvider}
-            history={createHistory({basename: '/admin'})}
-            loginPage={() => <Login backgroundImage={background}/>}
-            locale={locale}
-            i18nProvider={i18nProvider}
-        >
-            {permissions => [
-                permissions.includes('ROLE_EDITOR')
-                    ? <Resource
-                        name="pages"
-                        list={PageList}
-                        edit={PageEdit}
-                        create={PageCreate}
-                        icon={PageIcon}
-                    />
-                    : null,
-                permissions.includes('ROLE_MANAGER')
-                    ? <Resource
-                        name="users"
-                        list={UserList}
-                        edit={UserEdit}
-                        create={UserCreate}
-                        icon={UserIcon}
-                    />
-                    : null
-            ]}
-        </Admin>
-    </div>
-;
+class App extends Component {
+
+    shouldComponentUpdate(nextProps) {
+
+        const {locale} = this.props;
+
+        return locale === nextProps.locale;
+    }
+
+    render() {
+
+        const {locale, translate} = this.props;
+
+        return <div>
+            <Helmet>
+                <title>{translate('pos.title')}</title>
+            </Helmet>
+            <Admin
+                theme={theme}
+                customRoutes={routes}
+                menu={Menu}
+                dataProvider={addUploadFeature(restProvider())}
+                authProvider={authProvider}
+                history={createHistory({basename: '/admin'})}
+                loginPage={() => <Login backgroundImage={background}/>}
+                locale={locale}
+                i18nProvider={i18nProvider}
+            >
+                {permissions => [
+                    permissions.includes('ROLE_EDITOR')
+                        ? <Resource
+                            name="pages"
+                            list={PageList}
+                            edit={PageEdit}
+                            create={PageCreate}
+                            icon={PageIcon}
+                        />
+                        : null,
+                    permissions.includes('ROLE_MANAGER')
+                        ? <Resource
+                            name="users"
+                            list={UserList}
+                            edit={UserEdit}
+                            create={UserCreate}
+                            icon={UserIcon}
+                        />
+                        : null
+                ]}
+            </Admin>
+        </div>;
+    }
+}
 
 export default withTranslation(App);
