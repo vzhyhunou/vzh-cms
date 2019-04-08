@@ -30,9 +30,9 @@ export default class extends Component {
 
     updateLocale = locale => {
 
-        const {locales} = this.props;
+        const {locales, i18n} = this.props;
 
-        i18nWriter(locale).then(messages => {
+        i18nWriter(i18n, locale).then(messages => {
 
             const polyglot = new Polyglot({
                 locale,
@@ -51,7 +51,12 @@ export default class extends Component {
 
     getLocale = () => this.state.contextValues.locale;
 
-    getMessages = locale => i18nWriter(locale);
+    getMessages = locale => {
+
+        const {i18n} = this.props;
+
+        return i18nWriter(i18n, locale);
+    };
 
     render() {
         if (!this.state)
