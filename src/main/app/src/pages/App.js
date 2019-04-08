@@ -9,13 +9,11 @@ import {withTranslation} from '../commons/TranslationContext';
 
 class App extends Component {
 
-    dataProvider = dataProvider();
-
-    loadData = () => {
+    loadData = locale => {
 
         const {id} = this.props.match.params;
 
-        this.dataProvider(GET_ONE_LOCALE, 'pages', {id}).then(response => {
+        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => {
             this.setState({page: response.data});
         })
     };
@@ -26,12 +24,16 @@ class App extends Component {
 
         if (locale === nextProps.locale)
             return true;
-        this.loadData();
+
+        this.loadData(nextProps.locale);
         return false;
     }
 
     componentDidMount() {
-        this.loadData();
+
+        const {locale} = this.props;
+
+        this.loadData(locale);
     }
 
     render() {

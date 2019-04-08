@@ -7,27 +7,6 @@ const TranslationContext = createContext();
 
 export default class extends Component {
 
-    updateLocale = locale => {
-
-        const {locales} = this.props;
-
-        i18nWriter(locale).then(messages => {
-
-            const polyglot = new Polyglot({
-                locale,
-                phrases: messages
-            });
-            this.setState({
-                contextValues: {
-                    locale,
-                    messages,
-                    translate: polyglot.t.bind(polyglot),
-                    locales
-                }
-            });
-        });
-    };
-
     componentDidMount() {
 
         const {locales, i18n} = this.props;
@@ -49,6 +28,36 @@ export default class extends Component {
         });
     }
 
+    updateLocale = locale => {
+
+        const {locales, i18n} = this.props;
+
+        i18nWriter(i18n, locale).then(messages => {
+
+            const polyglot = new Polyglot({
+                locale,
+                phrases: messages
+            });
+            this.setState({
+                contextValues: {
+                    locale,
+                    messages,
+                    translate: polyglot.t.bind(polyglot),
+                    locales
+                }
+            });
+        });
+    };
+
+    getLocale = () => this.state.contextValues.locale;
+
+    getMessages = locale => {
+
+        const {i18n} = this.props;
+
+        return i18nWriter(i18n, locale);
+    };
+
     render() {
         if (!this.state)
             return <div/>;
@@ -58,7 +67,9 @@ export default class extends Component {
 
         return <TranslationContext.Provider value={{
             ...contextValues,
-            updateLocale: this.updateLocale
+            updateLocale: this.updateLocale,
+            getLocale: this.getLocale,
+            getMessages: this.getMessages
         }}>
             {children}
         </TranslationContext.Provider>;
@@ -67,7 +78,7 @@ export default class extends Component {
 
 export const withTranslation = Component => props =>
     <TranslationContext.Consumer>
-        {({updateLocale, ...state}) => <Component {...props} {...state}/>}
+        {({updateLocale, getLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>
 ;
 

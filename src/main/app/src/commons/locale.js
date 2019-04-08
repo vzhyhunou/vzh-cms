@@ -1,19 +1,13 @@
 const name = 'locale';
 
-export let locale;
-let imp;
-let messages;
+const load = (i18n, locale) => i18n(locale).then(response => response.default);
 
-const load = value => imp(value).then(response => messages = response.default);
-
-export const i18nLoader = i => {
-    imp = i;
-    return load(locale = localStorage.getItem(name) || 'en').then(() => ({locale, messages}));
+export const i18nLoader = i18n => {
+    const locale = localStorage.getItem(name) || 'en';
+    return load(i18n, locale).then(messages => ({locale, messages}));
 };
 
-export const i18nWriter = value => load(value).then(() => {
-    localStorage.setItem(name, locale = value);
+export const i18nWriter = (i18n, locale) => load(i18n, locale).then(messages => {
+    localStorage.setItem(name, locale);
     return messages;
 });
-
-export const i18nProvider = value => value === locale ? messages : i18nWriter(value);

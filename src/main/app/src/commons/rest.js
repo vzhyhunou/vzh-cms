@@ -12,7 +12,6 @@ import {
     UPDATE_MANY,
 } from 'react-admin';
 
-import {locale} from './locale';
 import {TOKEN} from '../admin/auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
@@ -29,11 +28,12 @@ const client = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (apiUrl = '/api', httpClient = client) => {
+export default (locale, apiUrl = '/api', httpClient = client) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
         const options = {};
+        const l = locale === 'function' ? locale() : locale;
         switch (type) {
             case GET_LIST: {
                 const {page, perPage} = params.pagination;
@@ -43,7 +43,7 @@ export default (apiUrl = '/api', httpClient = client) => {
                     size: perPage,
                     sort: `${field},${order}`,
                     ...params.filter,
-                    locale,
+                    locale: l,
                 };
                 url = `${apiUrl}/${resource}/search/list?${stringify(query)}`;
                 break;
@@ -90,10 +90,10 @@ export default (apiUrl = '/api', httpClient = client) => {
                 options.method = 'DELETE';
                 break;
             case GET_ONE_LOCALE:
-                url = `${apiUrl}/${resource}/search/one/${params.id}?${stringify({locale})}`;
+                url = `${apiUrl}/${resource}/search/one/${params.id}?${stringify({locale: l})}`;
                 break;
             case GET_MENU_LOCALE:
-                url = `${apiUrl}/${resource}/search/menu?${stringify({locale})}`;
+                url = `${apiUrl}/${resource}/search/menu?${stringify({locale: l})}`;
                 break;
             default:
                 throw new Error(`Unsupported fetch action type ${type}`);
