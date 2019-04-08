@@ -3,34 +3,31 @@ import {Create, FormTab, LongTextInput, TabbedForm, TextInput} from 'react-admin
 
 import ContentImageToolbar from '../form/ContentImageToolbar';
 import TagsInput from '../input/TagsInput';
-import EditionProvider from '../EditionContext';
 import {withTranslation} from '../../commons/TranslationContext';
 
 const PageCreate = ({locale, locales, ...rest}) =>
-    <EditionProvider>
-        <Create {...rest}>
-            <TabbedForm toolbar={<ContentImageToolbar/>}>
-                <FormTab label="pos.general">
+    <Create {...rest}>
+        <TabbedForm toolbar={<ContentImageToolbar/>}>
+            <FormTab label="pos.general">
+                <TextInput
+                    source="id"
+                />
+                <TagsInput/>
+            </FormTab>
+            {Object.keys(locales).map((l, i) =>
+                <FormTab key={l} label={l}>
                     <TextInput
-                        source="id"
+                        source={`properties.${l}.title`}
+                        label={`resources.pages.fields.properties.${locale}.title`}
                     />
-                    <TagsInput/>
+                    <LongTextInput
+                        source={`properties.${l}.content`}
+                        label={`resources.pages.fields.properties.${locale}.content`}
+                    />
                 </FormTab>
-                {Object.keys(locales).map((l, i) =>
-                    <FormTab key={l} label={l}>
-                        <TextInput
-                            source={`properties.${l}.title`}
-                            label={`resources.pages.fields.properties.${locale}.title`}
-                        />
-                        <LongTextInput
-                            source={`properties.${l}.content`}
-                            label={`resources.pages.fields.properties.${locale}.content`}
-                        />
-                    </FormTab>
-                )}
-            </TabbedForm>
-        </Create>
-    </EditionProvider>
+            )}
+        </TabbedForm>
+    </Create>
 ;
 
 export default withTranslation(PageCreate);
