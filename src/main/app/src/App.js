@@ -13,7 +13,7 @@ export default () => {
 
     return <TranslationProvider
         locales={locales}
-        i18n={l => import(`./commons/i18n/${l}`)}
+        i18n={locale => import(`./commons/i18n/${locale}`)}
     >
         <BrowserRouter>
             <Suspense fallback={<Loading/>}>

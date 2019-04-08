@@ -51,6 +51,8 @@ export default class extends Component {
 
     getLocale = () => this.state.contextValues.locale;
 
+    getMessages = locale => i18nWriter(locale);
+
     render() {
         if (!this.state)
             return <div/>;
@@ -61,7 +63,8 @@ export default class extends Component {
         return <TranslationContext.Provider value={{
             ...contextValues,
             updateLocale: this.updateLocale,
-            getLocale: this.getLocale
+            getLocale: this.getLocale,
+            getMessages: this.getMessages
         }}>
             {children}
         </TranslationContext.Provider>;
@@ -70,7 +73,7 @@ export default class extends Component {
 
 export const withTranslation = Component => props =>
     <TranslationContext.Consumer>
-        {({updateLocale, getLocale, ...state}) => <Component {...props} {...state}/>}
+        {({updateLocale, getLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>
 ;
 
