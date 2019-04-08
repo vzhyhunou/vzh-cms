@@ -15,5 +15,3 @@ export const i18nWriter = value => load(value).then(() => {
     localStorage.setItem(name, locale = value);
     return messages;
 });
-
-export const i18nProvider = value => value === locale ? messages : i18nWriter(value);

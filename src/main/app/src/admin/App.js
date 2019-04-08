@@ -8,7 +8,7 @@ import authProvider from './auth';
 import {withTranslation} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
-import {i18nProvider} from '../commons/locale';
+import {i18nWriter} from '../commons/locale';
 import EditionProvider from './EditionContext';
 import Main from './Main';
 
@@ -23,9 +23,10 @@ class App extends Component {
 
     render() {
 
-        const {locale, translate} = this.props;
+        const {locale, translate, messages} = this.props;
         const dataProvider = addUploadFeature(restProvider());
         const history = createHistory({basename: '/admin'});
+        const i18nProvider = value => value === locale ? messages : i18nWriter(value);
 
         return <div>
             <Helmet>
