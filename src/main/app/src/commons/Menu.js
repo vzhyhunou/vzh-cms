@@ -30,10 +30,9 @@ const styles = theme => ({
 
 class Menu extends Component {
 
-    dataProvider = dataProvider();
+    loadData = locale => {
 
-    loadData = () => {
-        this.dataProvider(GET_MENU_LOCALE, 'pages').then(response => {
+        dataProvider(locale)(GET_MENU_LOCALE, 'pages').then(response => {
             this.setState({items: response.data});
         })
     };
@@ -44,12 +43,16 @@ class Menu extends Component {
 
         if (locale === nextProps.locale)
             return true;
-        this.loadData();
+
+        this.loadData(nextProps.locale);
         return false;
     }
 
     componentDidMount() {
-        this.loadData();
+
+        const {locale} = this.props;
+
+        this.loadData(locale);
     }
 
     render() {

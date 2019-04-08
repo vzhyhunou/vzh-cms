@@ -1,16 +1,16 @@
 const name = 'locale';
 
-export let locale;
 let imp;
 
-const load = value => imp(value).then(response => response.default);
+const load = locale => imp(locale).then(response => response.default);
 
 export const i18nLoader = i => {
     imp = i;
-    return load(locale = localStorage.getItem(name) || 'en').then(messages => ({locale, messages}));
+    const locale = localStorage.getItem(name) || 'en';
+    return load(locale).then(messages => ({locale, messages}));
 };
 
-export const i18nWriter = value => load(value).then(messages => {
-    localStorage.setItem(name, locale = value);
+export const i18nWriter = locale => load(locale).then(messages => {
+    localStorage.setItem(name, locale);
     return messages;
 });

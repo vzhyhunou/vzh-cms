@@ -5,7 +5,7 @@ import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
 import authProvider from './auth';
-import {withTranslation} from '../commons/TranslationContext';
+import {withTranslationUpdate} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import {i18nWriter} from '../commons/locale';
@@ -23,8 +23,8 @@ class App extends Component {
 
     render() {
 
-        const {locale, translate, messages} = this.props;
-        const dataProvider = addUploadFeature(restProvider());
+        const {locale, translate, messages, getLocale} = this.props;
+        const dataProvider = addUploadFeature(restProvider(getLocale));
         const history = createHistory({basename: '/admin'});
         const i18nProvider = value => value === locale ? messages : i18nWriter(value);
 
@@ -49,4 +49,4 @@ class App extends Component {
     }
 }
 
-export default withTranslation(App);
+export default withTranslationUpdate(App);
