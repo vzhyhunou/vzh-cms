@@ -1,6 +1,7 @@
 package vzh.cms.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,10 +20,11 @@ import java.util.regex.Pattern;
 /**
  * @author Viktar Zhyhunou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ToString(exclude = "password")
 @Entity
-public class User {
+public class User extends Item {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
