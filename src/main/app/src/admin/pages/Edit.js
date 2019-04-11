@@ -1,13 +1,13 @@
 import React from 'react';
-import {Edit, FormTab, LongTextInput, TabbedForm, TextInput} from 'react-admin';
+import {Edit, FormTab, ImageField, LongTextInput, TabbedForm, TextInput} from 'react-admin';
 
-import ContentImageToolbar from '../form/ContentImageToolbar';
 import TagsInput from '../input/TagsInput';
 import {withTranslation} from '../../commons/TranslationContext';
+import ContentImageInput from '../input/ContentImageInput';
 
 const PageEdit = ({locale, locales, ...rest}) =>
     <Edit {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar/>}>
+        <TabbedForm>
             <FormTab label="pos.general">
                 <TagsInput/>
             </FormTab>
@@ -21,6 +21,13 @@ const PageEdit = ({locale, locales, ...rest}) =>
                         source={`properties.${l}.content`}
                         label={`resources.pages.fields.properties.${locale}.content`}
                     />
+                    <ContentImageInput
+                        multiple
+                        source="files"
+                        accept="image/*"
+                    >
+                        <ImageField source="src" title="title"/>
+                    </ContentImageInput>
                 </FormTab>
             )}
         </TabbedForm>
