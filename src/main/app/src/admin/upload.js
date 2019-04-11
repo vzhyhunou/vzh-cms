@@ -65,7 +65,7 @@ const analyzeFiles = (resource, id, data) => {
 const analyzeSrc = data => {
     const s = JSON.stringify(data);
     const set = new Set();
-    const exp = /<img.*?src=\\"(.*?)\\"/g;
+    const exp = /(\/static\/.*?[a-f0-9]{32}\..+?)[^\w]/g;
     let result;
     while ((result = exp.exec(s)) !== null) {
         set.add(result[1]);
