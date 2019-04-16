@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-class BaseService<T> {
+abstract class BaseService<T> {
 
     protected T repository;
 
