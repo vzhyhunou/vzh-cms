@@ -16,6 +16,8 @@ export default {
             },
             fields: {
                 tags: 'Теги',
+                date: 'Последнее обновление',
+                userId: 'Пользователем',
                 properties: {
                     ru: {
                         title: 'Заголовок',

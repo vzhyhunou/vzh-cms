@@ -29,7 +29,10 @@ const PageCreate = ({locale, locales, ...rest}) =>
                         source="files"
                         accept="image/*"
                     >
-                        <ImageField source="src" title="title"/>
+                        <ImageField
+                            source="src"
+                            title="title"
+                        />
                     </ContentImageInput>
                 </FormTab>
             )}
