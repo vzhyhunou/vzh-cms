@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * @author Viktar Zhyhunou
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
 public class Content extends Item {
 

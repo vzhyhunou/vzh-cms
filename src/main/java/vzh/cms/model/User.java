@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Viktar Zhyhunou
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
 @ToString(exclude = "password")
 @Entity
