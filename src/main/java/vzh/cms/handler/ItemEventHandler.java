@@ -7,9 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Item;
-import vzh.cms.model.User;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 
 /**
@@ -19,19 +17,12 @@ import java.util.Date;
 @RepositoryEventHandler(Item.class)
 public class ItemEventHandler {
 
-    private EntityManager manager;
-
-    public ItemEventHandler(EntityManager manager) {
-        this.manager = manager;
-    }
-
     @HandleBeforeCreate
     @HandleBeforeSave
     public void apply(Item item) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
-        User user = manager.find(User.class, id);
-        item.setUser(user);
+        item.setUserId(id);
         item.setDate(new Date());
     }
 }
