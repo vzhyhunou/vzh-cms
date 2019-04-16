@@ -16,33 +16,30 @@ export default requestHandler => (type, resource, params) => {
 
         const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`) instanceof File);
 
-        if (keys.length) {
-
-            return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
-                .then(base64Files => base64Files.map((picture64, index) => ({
-                    data: picture64.match(/,(.*)/)[1],
-                    type: picture64.match(/\/(.*);/)[1],
-                    key: keys[index]
-                })))
-                .then(base64Files => base64Files.map(({type, ...rest}) => ({
-                    ...rest,
-                    path: `${md5(rest.data)}.${type}`,
-                    preview: get(params.data, `${rest.key}.rawFile.preview`)
-                })))
-                .then(process)
-                .then(transformedNewFiles =>
-                    requestHandler(type, resource, {
-                        ...params,
-                        data: {
-                            ...replaceFiles(params.data, transformedNewFiles),
-                            ...replaceSrc(resource, params, transformedNewFiles),
-                            files: [
-                                ...transformedNewFiles.map(({data, path}) => ({data, path}))
-                            ],
-                        },
-                    })
-                );
-        }
+        return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
+            .then(base64Files => base64Files.map((picture64, index) => ({
+                data: picture64.match(/,(.*)/)[1],
+                type: picture64.match(/\/(.*);/)[1],
+                key: keys[index]
+            })))
+            .then(base64Files => base64Files.map(({type, ...rest}) => ({
+                ...rest,
+                path: `${md5(rest.data)}.${type}`,
+                preview: get(params.data, `${rest.key}.rawFile.preview`)
+            })))
+            .then(process)
+            .then(transformedNewFiles =>
+                requestHandler(type, resource, {
+                    ...params,
+                    data: {
+                        ...replaceFiles(params.data, transformedNewFiles),
+                        ...replaceSrc(resource, params, transformedNewFiles),
+                        files: [
+                            ...transformedNewFiles.map(({data, path}) => ({data, path}))
+                        ],
+                    },
+                })
+            );
     } else if (type === GET_ONE) {
 
         return requestHandler(type, resource, params).then(response => {
@@ -65,7 +62,7 @@ const analyzeFiles = (resource, id, data) => {
 const analyzeSrc = data => {
     const s = JSON.stringify(data);
     const set = new Set();
-    const exp = /<img.*?src=\\"(.*?)\\"/g;
+    const exp = /(\/static\/.*?[a-f0-9]{32}\..+?)[^\w]/g;
     let result;
     while ((result = exp.exec(s)) !== null) {
         set.add(result[1]);

@@ -30,17 +30,19 @@ public class ImportService {
 
     private EntityManager manager;
 
-    public ImportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager) {
+    private ObjectMapper mapper;
+
+    public ImportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ObjectMapper mapper) {
         this.properties = properties.getImp();
         this.fileRepository = fileRepository;
         this.manager = manager;
+        this.mapper = mapper;
     }
 
     @Transactional
     public void imp() throws Exception {
 
         Path path = Paths.get(properties.getPath());
-        ObjectMapper mapper = new ObjectMapper();
         if (Files.exists(path)) {
             try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {
                 for (Path dir : pathStream) {

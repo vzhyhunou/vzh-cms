@@ -16,6 +16,8 @@ export default {
             },
             fields: {
                 tags: 'Tags',
+                date: 'Last Update',
+                userId: 'By User',
                 properties: {
                     en: {
                         title: 'Title',

@@ -1,14 +1,35 @@
 import React from 'react';
-import {Edit, FormTab, LongTextInput, TabbedForm, TextInput} from 'react-admin';
+import {
+    DateField,
+    Edit,
+    FormTab,
+    ImageField,
+    LongTextInput,
+    ReferenceField,
+    TabbedForm,
+    TextField,
+    TextInput
+} from 'react-admin';
 
-import ContentImageToolbar from '../form/ContentImageToolbar';
 import TagsInput from '../input/TagsInput';
 import {withTranslation} from '../../commons/TranslationContext';
+import ContentImageInput from '../input/ContentImageInput';
 
 const PageEdit = ({locale, locales, ...rest}) =>
     <Edit {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar/>}>
+        <TabbedForm>
             <FormTab label="pos.general">
+                <DateField
+                    source="date"
+                    showTime
+                />
+                <ReferenceField
+                    source="userId"
+                    reference="users"
+                    allowEmpty={true}
+                >
+                    <TextField source="id"/>
+                </ReferenceField>
                 <TagsInput/>
             </FormTab>
             {Object.keys(locales).map((l, i) =>
@@ -21,6 +42,16 @@ const PageEdit = ({locale, locales, ...rest}) =>
                         source={`properties.${l}.content`}
                         label={`resources.pages.fields.properties.${locale}.content`}
                     />
+                    <ContentImageInput
+                        multiple
+                        source="files"
+                        accept="image/*"
+                    >
+                        <ImageField
+                            source="src"
+                            title="title"
+                        />
+                    </ContentImageInput>
                 </FormTab>
             )}
         </TabbedForm>

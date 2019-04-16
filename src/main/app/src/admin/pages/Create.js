@@ -1,13 +1,13 @@
 import React from 'react';
-import {Create, FormTab, LongTextInput, TabbedForm, TextInput} from 'react-admin';
+import {Create, FormTab, ImageField, LongTextInput, TabbedForm, TextInput} from 'react-admin';
 
-import ContentImageToolbar from '../form/ContentImageToolbar';
 import TagsInput from '../input/TagsInput';
 import {withTranslation} from '../../commons/TranslationContext';
+import ContentImageInput from '../input/ContentImageInput';
 
 const PageCreate = ({locale, locales, ...rest}) =>
     <Create {...rest}>
-        <TabbedForm toolbar={<ContentImageToolbar/>}>
+        <TabbedForm>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
@@ -24,6 +24,16 @@ const PageCreate = ({locale, locales, ...rest}) =>
                         source={`properties.${l}.content`}
                         label={`resources.pages.fields.properties.${locale}.content`}
                     />
+                    <ContentImageInput
+                        multiple
+                        source="files"
+                        accept="image/*"
+                    >
+                        <ImageField
+                            source="src"
+                            title="title"
+                        />
+                    </ContentImageInput>
                 </FormTab>
             )}
         </TabbedForm>

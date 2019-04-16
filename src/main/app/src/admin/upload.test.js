@@ -23,7 +23,43 @@ describe('upload', () => {
         const expectedRequest = {
             id: 'sample',
             data: {
+                content: "",
+                files: []
+            }
+        };
+
+        const response = {
+            data: {}
+        };
+
+        return addUploadFeature((type, resource, params) => new Promise(resolve => {
+            expect(params).toEqual(expectedRequest);
+            resolve(response);
+        }))(CREATE, 'items', request).then(r => {
+            expect(r).toEqual(response);
+        });
+    });
+
+    it('existing files in request', () => {
+        expect.assertions(2);
+
+        const request = {
+            id: 'sample',
+            data: {
+                files: [
+                    {
+                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ],
                 content: ""
+            }
+        };
+        const expectedRequest = {
+            id: 'sample',
+            data: {
+                content: "",
+                files: []
             }
         };
 

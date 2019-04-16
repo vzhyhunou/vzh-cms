@@ -33,7 +33,7 @@ export default (locale, apiUrl = '/api', httpClient = client) => {
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
         const options = {};
-        const l = locale === 'function' ? locale() : locale;
+        const l = typeof locale === 'function' ? locale() : locale;
         switch (type) {
             case GET_LIST: {
                 const {page, perPage} = params.pagination;
@@ -53,9 +53,9 @@ export default (locale, apiUrl = '/api', httpClient = client) => {
                 break;
             case GET_MANY: {
                 const query = {
-                    filter: JSON.stringify({id: params.ids}),
+                    ids: params.ids,
                 };
-                url = `${apiUrl}/${resource}?${stringify(query)}`;
+                url = `${apiUrl}/${resource}/search/findByIdIn?${stringify(query)}`;
                 break;
             }
             case GET_MANY_REFERENCE: {
@@ -110,6 +110,8 @@ export default (locale, apiUrl = '/api', httpClient = client) => {
                     data: json._embedded ? json._embedded[resource] : [],
                     total: json.page.totalElements,
                 };
+            case GET_MANY:
+                return {data: json._embedded ? json._embedded[resource] : []};
             case CREATE:
                 return {data: {...params.data, id: json.id}};
             default:

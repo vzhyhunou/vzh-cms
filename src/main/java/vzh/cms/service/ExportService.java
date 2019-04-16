@@ -1,7 +1,6 @@
 package vzh.cms.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +39,14 @@ public class ExportService {
 
     private ResourceMappings mappings;
 
-    public ExportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ResourceMappings mappings) {
+    private ObjectMapper mapper;
+
+    public ExportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ResourceMappings mappings, ObjectMapper mapper) {
         this.properties = properties.getExp();
         this.fileRepository = fileRepository;
         this.manager = manager;
         this.mappings = mappings;
+        this.mapper = mapper;
     }
 
     @Transactional
@@ -54,8 +56,6 @@ public class ExportService {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File path2 = new File(path, sdf.format(new Date()));
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         for (Class type : mappings.filter(ResourceMapping::isExported).map(ResourceMetadata::getDomainType)) {
             File dir = new File(path2, type.getCanonicalName());
             dir.mkdirs();
