@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {createAdminStore} from 'react-admin';
-import {Helmet} from 'react-helmet';
+import DocumentTitle from 'react-document-title';
 import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
@@ -27,10 +27,7 @@ class App extends Component {
         const history = createHistory({basename: '/admin'});
         const i18nProvider = value => value === locale ? messages : getMessages(value);
 
-        return <div>
-            <Helmet>
-                <title>{translate('pos.title')}</title>
-            </Helmet>
+        return <DocumentTitle title={translate('pos.title')}>
             <Provider
                 store={createAdminStore({
                     authProvider,
@@ -44,7 +41,7 @@ class App extends Component {
                     <Main history={history}/>
                 </EditionProvider>
             </Provider>
-        </div>;
+        </DocumentTitle>;
     }
 }
 

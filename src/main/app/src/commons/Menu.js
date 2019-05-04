@@ -34,7 +34,7 @@ class Menu extends Component {
 
         dataProvider(locale)(GET_MENU_LOCALE, 'pages').then(response => {
             this.setState({items: response.data});
-        })
+        });
     };
 
     shouldComponentUpdate(nextProps) {

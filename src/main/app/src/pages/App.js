@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Helmet} from 'react-helmet';
+import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
-import './App.css';
 import {withTranslation} from '../commons/TranslationContext';
+
+import './App.css';
 
 class App extends Component {
 
@@ -43,12 +44,9 @@ class App extends Component {
         const {locale} = this.props;
         const {title, content} = this.state.page.properties[locale];
 
-        return <div>
-            <Helmet>
-                <title>{title}</title>
-            </Helmet>
+        return <DocumentTitle title={title}>
             <div dangerouslySetInnerHTML={{__html: content}}/>
-        </div>;
+        </DocumentTitle>;
     }
 }
 

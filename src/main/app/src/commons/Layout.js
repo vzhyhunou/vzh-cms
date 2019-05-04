@@ -35,10 +35,9 @@ const styles = theme => ({
     },
 });
 
-const Layout = props => {
+const Layout = ({classes}) => {
 
     const [open, setOpen] = useState(false);
-    const {classes} = props;
 
     return <div className={classes.appFrame}>
         <Bar
