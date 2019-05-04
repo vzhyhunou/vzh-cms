@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
@@ -8,47 +8,31 @@ import {withTranslation} from '../commons/TranslationContext';
 
 import './App.css';
 
-class App extends Component {
+const Page = memo(({page}) => {
 
-    loadData = locale => {
+    const {title, content} = page.properties[Object.keys(page.properties)[0]];
 
-        const {id} = this.props.match.params;
+    return <DocumentTitle title={title}>
+        <div dangerouslySetInnerHTML={{__html: content}}/>
+    </DocumentTitle>;
+});
 
-        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => {
-            this.setState({page: response.data});
-        })
-    };
+const App = ({locale, match}) => {
 
-    shouldComponentUpdate(nextProps) {
+    const [page, setPage] = useState();
 
-        const {locale} = this.props;
+    useEffect(() => {
 
-        if (locale === nextProps.locale)
-            return true;
+        const {id} = match.params;
 
-        this.loadData(nextProps.locale);
-        return false;
-    }
+        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => setPage(response.data));
+    }, locale);
 
-    componentDidMount() {
+    if (!page)
+        return <div/>;
 
-        const {locale} = this.props;
-
-        this.loadData(locale);
-    }
-
-    render() {
-        if (!this.state)
-            return <div/>;
-
-        const {locale} = this.props;
-        const {title, content} = this.state.page.properties[locale];
-
-        return <DocumentTitle title={title}>
-            <div dangerouslySetInnerHTML={{__html: content}}/>
-        </DocumentTitle>;
-    }
-}
+    return <Page page={page}/>;
+};
 
 export default compose(
     withRouter,
