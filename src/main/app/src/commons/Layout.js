@@ -1,4 +1,4 @@
-import React, {cloneElement, Component} from 'react';
+import React, {cloneElement, useState} from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -35,37 +35,26 @@ const styles = theme => ({
     },
 });
 
-class Layout extends Component {
+const Layout = props => {
 
-    state = {
-        open: false,
-    };
+    const [open, setOpen] = useState(false);
+    const {classes} = props;
 
-    handleDrawerOpen = () => this.setState({open: true});
-
-    handleDrawerClose = () => this.setState({open: false});
-
-    render() {
-
-        const {classes} = this.props;
-        const {open} = this.state;
-
-        return <div className={classes.appFrame}>
-            <Bar
-                open={open}
-                handleDrawerOpen={this.handleDrawerOpen}
-            />
-            <div className={classNames(classes.content, classes.content, {
-                [classes.contentShift]: open,
-            })}>
-                {routes.map((route, key) => cloneElement(route, {key}))}
-            </div>
-            <Menu
-                open={open}
-                handleDrawerClose={this.handleDrawerClose}
-            />
-        </div>;
-    }
-}
+    return <div className={classes.appFrame}>
+        <Bar
+            open={open}
+            handleDrawerOpen={() => setOpen(true)}
+        />
+        <div className={classNames(classes.content, {
+            [classes.contentShift]: open,
+        })}>
+            {routes.map((route, key) => cloneElement(route, {key}))}
+        </div>
+        <Menu
+            open={open}
+            handleDrawerClose={() => setOpen(false)}
+        />
+    </div>;
+};
 
 export default withStyles(styles, {withTheme: true})(Layout);
