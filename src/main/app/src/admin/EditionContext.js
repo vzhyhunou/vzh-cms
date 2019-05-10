@@ -13,7 +13,7 @@ const EditionProvider = ({change, name, content, children}) => {
     const addImageToContent = value => change(REDUX_FORM_NAME, name, content ? `${content}\n${value}` : value);
 
     return <EditionContext.Provider value={{
-        addImageToContent: addImageToContent
+        addImageToContent
     }}>
         {children}
     </EditionContext.Provider>;
@@ -33,7 +33,10 @@ const mapStateToProps = (state, {locales}) => {
     if (!location) return {};
 
     const name = `properties.${Object.keys(locales)[location.pathname.split('/')[3] - 1]}.content`;
-    return {name, content: selector(state, name)};
+    return {
+        name,
+        content: selector(state, name)
+    };
 };
 
 export default compose(

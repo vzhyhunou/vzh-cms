@@ -39,9 +39,9 @@ export default ({locales, i18n, children}) => {
 
     return <TranslationContext.Provider value={{
         ...contextValues,
-        updateLocale: updateLocale,
-        getLocale: getLocale,
-        getMessages: getMessages
+        updateLocale,
+        getLocale,
+        getMessages
     }}>
         {children}
     </TranslationContext.Provider>;
