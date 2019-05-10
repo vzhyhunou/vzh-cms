@@ -1,80 +1,51 @@
-import React, {Component, createContext} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import Polyglot from 'node-polyglot';
 
 import {i18nLoader, i18nWriter} from './locale';
 
 const TranslationContext = createContext();
 
-export default class extends Component {
+export default ({locales, i18n, children}) => {
 
-    componentDidMount() {
+    const [contextValues, setContextValues] = useState();
 
-        const {locales, i18n} = this.props;
+    const update = (locale, messages) => {
 
-        i18nLoader(i18n).then(({locale, messages}) => {
-
-            const polyglot = new Polyglot({
-                locale,
-                phrases: messages
-            });
-            this.setState({
-                contextValues: {
-                    locale,
-                    messages,
-                    translate: polyglot.t.bind(polyglot),
-                    locales
-                }
-            });
+        const polyglot = new Polyglot({
+            locale,
+            phrases: messages
         });
-    }
-
-    updateLocale = locale => {
-
-        const {locales, i18n} = this.props;
-
-        i18nWriter(i18n, locale).then(messages => {
-
-            const polyglot = new Polyglot({
-                locale,
-                phrases: messages
-            });
-            this.setState({
-                contextValues: {
-                    locale,
-                    messages,
-                    translate: polyglot.t.bind(polyglot),
-                    locales
-                }
-            });
+        setContextValues({
+            locale,
+            messages,
+            translate: polyglot.t.bind(polyglot),
+            locales
         });
     };
 
-    getLocale = () => this.state.contextValues.locale;
+    useEffect(() => {
 
-    getMessages = locale => {
+        i18nLoader(i18n).then(({locale, messages}) => update(locale, messages));
+    }, []);
 
-        const {i18n} = this.props;
+    const updateLocale = locale => i18nWriter(i18n, locale).then(messages => update(locale, messages));
 
-        return i18nWriter(i18n, locale);
-    };
+    const getLocale = () => contextValues.locale;
 
-    render() {
-        if (!this.state)
-            return <div/>;
+    const getMessages = locale => i18nWriter(i18n, locale);
 
-        const {children} = this.props;
-        const {contextValues} = this.state;
+    if (!contextValues)
+        return <div/>;
 
-        return <TranslationContext.Provider value={{
-            ...contextValues,
-            updateLocale: this.updateLocale,
-            getLocale: this.getLocale,
-            getMessages: this.getMessages
-        }}>
-            {children}
-        </TranslationContext.Provider>;
-    }
-}
+    return <TranslationContext.Provider value={{
+        ...contextValues,
+        updateLocale,
+        getLocale,
+        getMessages
+    }}>
+        {children}
+    </TranslationContext.Provider>;
+};
 
 export const withTranslation = Component => props =>
     <TranslationContext.Consumer>

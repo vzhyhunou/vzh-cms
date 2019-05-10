@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,36 +17,29 @@ const styles = {
     }
 };
 
-class Configuration extends Component {
+const Configuration = ({changeLocale, updateLocale, classes, locale, translate, locales}) => {
 
-    updateLocale = locale => {
-
-        const {changeLocale, updateLocale} = this.props;
+    const update = locale => {
 
         updateLocale(locale);
         changeLocale(locale);
     };
 
-    render() {
-
-        const {classes, locale, translate, locales} = this.props;
-
-        return <Card>
-            <Title title={'pos.configuration'}/>
-            <CardContent>
-                <div className={classes.label}>{translate('pos.language')}</div>
-                <Select
-                    value={locale}
-                    onChange={e => this.updateLocale(e.target.value)}
-                >
-                    {Object.keys(locales).map(l =>
-                        <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
-                    )}
-                </Select>
-            </CardContent>
-        </Card>;
-    }
-}
+    return <Card>
+        <Title title={'pos.configuration'}/>
+        <CardContent>
+            <div className={classes.label}>{translate('pos.language')}</div>
+            <Select
+                value={locale}
+                onChange={e => update(e.target.value)}
+            >
+                {Object.keys(locales).map(l =>
+                    <MenuItem key={l} value={l}>{locales[l]}</MenuItem>
+                )}
+            </Select>
+        </CardContent>
+    </Card>;
+};
 
 export default compose(
     connect(

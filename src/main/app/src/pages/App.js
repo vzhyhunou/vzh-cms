@@ -1,56 +1,40 @@
-import React, {Component} from 'react';
-import {Helmet} from 'react-helmet';
+import React, {memo, useEffect, useState} from 'react';
+import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
-import './App.css';
 import {withTranslation} from '../commons/TranslationContext';
 
-class App extends Component {
+import './App.css';
 
-    loadData = locale => {
+const Area = ({page}) => {
 
-        const {id} = this.props.match.params;
+    const {title, content} = page.properties[Object.keys(page.properties)[0]];
 
-        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => {
-            this.setState({page: response.data});
-        })
-    };
+    return <DocumentTitle title={title}>
+        <div dangerouslySetInnerHTML={{__html: content}}/>
+    </DocumentTitle>;
+};
 
-    shouldComponentUpdate(nextProps) {
+const EnhancedArea = memo(Area);
 
-        const {locale} = this.props;
+const App = ({locale, match}) => {
 
-        if (locale === nextProps.locale)
-            return true;
+    const [page, setPage] = useState();
 
-        this.loadData(nextProps.locale);
-        return false;
-    }
+    useEffect(() => {
 
-    componentDidMount() {
+        const {id} = match.params;
 
-        const {locale} = this.props;
+        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => setPage(response.data));
+    }, locale);
 
-        this.loadData(locale);
-    }
+    if (!page)
+        return <div/>;
 
-    render() {
-        if (!this.state)
-            return <div/>;
-
-        const {locale} = this.props;
-        const {title, content} = this.state.page.properties[locale];
-
-        return <div>
-            <Helmet>
-                <title>{title}</title>
-            </Helmet>
-            <div dangerouslySetInnerHTML={{__html: content}}/>
-        </div>;
-    }
-}
+    return <EnhancedArea page={page}/>;
+};
 
 export default compose(
     withRouter,

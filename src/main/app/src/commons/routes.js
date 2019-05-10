@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import Pages from '../pages/App';
+import Page from '../pages/App';
 
 export default [
-    <Route path="/pages/:id" component={Pages}/>
+    <Route path="/pages/:id" component={Page}/>
 ];
