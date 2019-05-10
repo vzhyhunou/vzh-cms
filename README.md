@@ -1,4 +1,4 @@
-# React.js and Spring Data REST - CMS
+# ReactJS and Spring Data REST - CMS
 [![Build Status](https://travis-ci.org/vzhyhunou/vzh-cms.svg?branch=master)](https://travis-ci.org/vzhyhunou/vzh-cms)
 ## Tech stack and libraries
 ### Backend
