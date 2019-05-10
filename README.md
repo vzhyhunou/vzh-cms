@@ -17,7 +17,6 @@
 
 ### Frontend
 - ReactJS
-- React Hooks
 - React-admin
 - React Router
 - Material-UI
