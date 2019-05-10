@@ -8,7 +8,8 @@ import {withTranslationUpdate} from './TranslationContext';
 const LocaleInput = ({locale, locales, updateLocale}) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const changeLocale = locale => {
+    const update = locale => {
+
         updateLocale(locale);
         setAnchorEl(null);
     };
@@ -31,7 +32,7 @@ const LocaleInput = ({locale, locales, updateLocale}) => {
             {Object.keys(locales).map(l =>
                 <MenuItem
                     key={l}
-                    onClick={() => changeLocale(l)}
+                    onClick={() => update(l)}
                     selected={l === locale}
                 >
                     {locales[l]}
