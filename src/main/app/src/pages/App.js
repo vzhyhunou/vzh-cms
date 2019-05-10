@@ -8,14 +8,16 @@ import {withTranslation} from '../commons/TranslationContext';
 
 import './App.css';
 
-const Page = memo(({page}) => {
+const Area = ({page}) => {
 
     const {title, content} = page.properties[Object.keys(page.properties)[0]];
 
     return <DocumentTitle title={title}>
         <div dangerouslySetInnerHTML={{__html: content}}/>
     </DocumentTitle>;
-});
+};
+
+const EnhancedArea = memo(Area);
 
 const App = ({locale, match}) => {
 
@@ -31,7 +33,7 @@ const App = ({locale, match}) => {
     if (!page)
         return <div/>;
 
-    return <Page page={page}/>;
+    return <EnhancedArea page={page}/>;
 };
 
 export default compose(

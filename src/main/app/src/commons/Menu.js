@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -28,70 +28,59 @@ const styles = theme => ({
     },
 });
 
-class Menu extends Component {
+const Area = ({classes, open, handleDrawerClose, items}) =>
+    <Drawer
+        variant="persistent"
+        anchor="right"
+        open={open}
+        classes={{
+            paper: classes.drawerPaper,
+        }}
+    >
+        <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+                <ChevronLeftIcon/>
+            </IconButton>
+        </div>
+        <Divider/>
+        <List>
+            {items.map(item =>
+                <ListItem
+                    key={item.id}
+                    component="a"
+                    href={item.id}
+                >
+                    <ListItemText
+                        primary={item.properties[Object.keys(item.properties)[0]].title}
+                    />
+                </ListItem>
+            )}
+        </List>
+    </Drawer>
+;
 
-    loadData = locale => {
-
-        dataProvider(locale)(GET_MENU_LOCALE, 'pages').then(response => this.setState({items: response.data}));
-    };
-
-    shouldComponentUpdate(nextProps) {
-
-        const {locale} = this.props;
-
-        if (locale === nextProps.locale)
-            return true;
-
-        this.loadData(nextProps.locale);
-        return false;
-    }
-
-    componentDidMount() {
-
-        const {locale} = this.props;
-
-        this.loadData(locale);
-    }
-
-    render() {
-        if (!this.state)
-            return <div/>;
-
-        const {classes, open, handleDrawerClose, locale} = this.props;
-        const {items} = this.state;
-
-        return <Drawer
-            variant="persistent"
-            anchor="right"
-            open={open}
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-        >
-            <div className={classes.drawerHeader}>
-                <IconButton onClick={handleDrawerClose}>
-                    <ChevronLeftIcon/>
-                </IconButton>
-            </div>
-            <Divider/>
-            <List>
-                {items.map(item =>
-                    <ListItem
-                        key={item.id}
-                        component="a"
-                        href={item.id}
-                    >
-                        <ListItemText
-                            primary={item.properties[locale].title}
-                        />
-                    </ListItem>
-                )}
-            </List>
-        </Drawer>;
-    }
-}
-
-export default compose(
-    withTranslation,
+const EnhancedArea = compose(
+    memo,
     withStyles(styles, {withTheme: true})
-)(Menu);
+)(Area);
+
+const Menu = ({open, handleDrawerClose, locale}) => {
+
+    const [items, setItems] = useState();
+
+    useEffect(() => {
+
+        dataProvider(locale)(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
+    }, locale);
+
+    if (!items)
+        return <div/>;
+
+    return <EnhancedArea
+        open={open}
+        handleDrawerClose={handleDrawerClose}
+        items={items}
+    />;
+};
+
+export default withTranslation(Menu);
