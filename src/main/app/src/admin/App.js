@@ -5,24 +5,23 @@ import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
 import authProvider from './auth';
-import {withTranslationUpdate} from '../commons/TranslationContext';
+import {withTranslationFull} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import EditionProvider from './EditionContext';
 import Main from './Main';
 
-const App = ({locale, translate, messages, getLocale, getMessages}) => {
+const App = ({locale, translate, getLocale, getMessages}) => {
 
     const dataProvider = addUploadFeature(restProvider(getLocale));
     const history = createHistory({basename: '/admin'});
-    const i18nProvider = value => value === locale ? messages : getMessages(value);
 
     return <DocumentTitle title={translate('pos.title')}>
         <Provider
             store={createAdminStore({
                 authProvider,
                 dataProvider,
-                i18nProvider,
+                i18nProvider: getMessages,
                 history,
                 locale
             })}
@@ -34,4 +33,4 @@ const App = ({locale, translate, messages, getLocale, getMessages}) => {
     </DocumentTitle>;
 };
 
-export default withTranslationUpdate(memo(App, () => true));
+export default withTranslationFull(memo(App, () => true));

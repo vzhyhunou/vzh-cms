@@ -8,7 +8,7 @@ import {changeLocale, Title} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
-import {withTranslationUpdate} from '../commons/TranslationContext';
+import {withTranslationFull} from '../commons/TranslationContext';
 
 const styles = {
     label: {
@@ -19,11 +19,7 @@ const styles = {
 
 const Configuration = ({changeLocale, updateLocale, classes, locale, translate, locales}) => {
 
-    const update = locale => {
-
-        updateLocale(locale);
-        changeLocale(locale);
-    };
+    const update = locale => updateLocale(locale).then(l => changeLocale(l));
 
     return <Card>
         <Title title={'pos.configuration'}/>
@@ -46,6 +42,6 @@ export default compose(
         undefined,
         {changeLocale}
     ),
-    withTranslationUpdate,
+    withTranslationFull,
     withStyles(styles)
 )(Configuration);
