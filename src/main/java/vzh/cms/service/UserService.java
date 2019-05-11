@@ -12,6 +12,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -27,8 +28,14 @@ public class UserService extends BaseService<UserRepository> {
 
     public org.springframework.data.domain.Page<User> list(UserFilter filter, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
-            q.distinct(true);
-            return filter(root, b, filter);
+            if (Long.class == q.getResultType()) {
+                q.distinct(true);
+            } else {
+                root.fetch("tags", JoinType.LEFT);
+            }
+            Subquery<User> subquery = q.subquery(User.class);
+            Root<User> p = subquery.from(User.class);
+            return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, pageable);
     }
 
