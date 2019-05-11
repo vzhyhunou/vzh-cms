@@ -58,7 +58,7 @@ export const withTranslation = Component => props =>
     </TranslationContext.Consumer>
 ;
 
-export const withTranslationUpdate = Component => props =>
+export const withTranslationFull = Component => props =>
     <TranslationContext.Consumer>
         {state => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>

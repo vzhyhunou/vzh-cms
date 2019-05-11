@@ -8,7 +8,7 @@ import {changeLocale, Title} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
-import {withTranslationUpdate} from '../commons/TranslationContext';
+import {withTranslationFull} from '../commons/TranslationContext';
 
 const styles = {
     label: {
@@ -42,6 +42,6 @@ export default compose(
         undefined,
         {changeLocale}
     ),
-    withTranslationUpdate,
+    withTranslationFull,
     withStyles(styles)
 )(Configuration);
