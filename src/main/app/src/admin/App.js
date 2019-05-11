@@ -11,7 +11,7 @@ import addUploadFeature from './upload';
 import EditionProvider from './EditionContext';
 import Main from './Main';
 
-const App = ({locale, translate, messages, getLocale, getMessages}) => {
+const App = ({locale, translate, getLocale, getMessages}) => {
 
     const dataProvider = addUploadFeature(restProvider(getLocale));
     const history = createHistory({basename: '/admin'});
