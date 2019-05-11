@@ -19,11 +19,7 @@ const styles = {
 
 const Configuration = ({changeLocale, updateLocale, classes, locale, translate, locales}) => {
 
-    const update = locale => {
-
-        updateLocale(locale);
-        changeLocale(locale);
-    };
+    const update = locale => updateLocale(locale).then(l => changeLocale(l));
 
     return <Card>
         <Title title={'pos.configuration'}/>

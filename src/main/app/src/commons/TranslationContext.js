@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useRef, useState} from 'react';
 import Polyglot from 'node-polyglot';
 
 import {i18nLoader, i18nWriter} from './locale';
@@ -8,6 +8,7 @@ const TranslationContext = createContext();
 export default ({locales, i18n, children}) => {
 
     const [contextValues, setContextValues] = useState();
+    const contextValuesRef = useRef();
 
     const update = (locale, messages) => {
 
@@ -15,12 +16,13 @@ export default ({locales, i18n, children}) => {
             locale,
             phrases: messages
         });
-        setContextValues({
+        contextValuesRef.current = {
             locale,
             messages,
             translate: polyglot.t.bind(polyglot),
             locales
-        });
+        };
+        setContextValues(contextValuesRef.current);
     };
 
     useEffect(() => {
@@ -28,11 +30,14 @@ export default ({locales, i18n, children}) => {
         i18nLoader(i18n).then(({locale, messages}) => update(locale, messages));
     }, []);
 
-    const updateLocale = locale => i18nWriter(i18n, locale).then(messages => update(locale, messages));
+    const updateLocale = locale => i18nWriter(i18n, locale).then(messages => {
+        update(locale, messages);
+        return locale;
+    });
 
-    const getLocale = () => contextValues.locale;
+    const getLocale = () => contextValuesRef.current.locale;
 
-    const getMessages = locale => i18nWriter(i18n, locale);
+    const getMessages = () => contextValuesRef.current.messages;
 
     if (!contextValues)
         return <div/>;

@@ -15,14 +15,13 @@ const App = ({locale, translate, messages, getLocale, getMessages}) => {
 
     const dataProvider = addUploadFeature(restProvider(getLocale));
     const history = createHistory({basename: '/admin'});
-    const i18nProvider = value => value === locale ? messages : getMessages(value);
 
     return <DocumentTitle title={translate('pos.title')}>
         <Provider
             store={createAdminStore({
                 authProvider,
                 dataProvider,
-                i18nProvider,
+                i18nProvider: getMessages,
                 history,
                 locale
             })}
