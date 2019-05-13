@@ -12,7 +12,7 @@ import {
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {withTranslation} from '../../commons/TranslationContext';
+import {withSanitizedTranslation} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
 const PageEdit = ({locale, locales, ...rest}) =>
@@ -58,4 +58,4 @@ const PageEdit = ({locale, locales, ...rest}) =>
     </Edit>
 ;
 
-export default withTranslation(PageEdit);
+export default withSanitizedTranslation(PageEdit);

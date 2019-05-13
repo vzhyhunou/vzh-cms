@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {withTranslationFull} from './TranslationContext';
+import {withTranslation} from './TranslationContext';
 
 const LocaleInput = ({locale, locales, updateLocale}) => {
 
@@ -42,4 +42,4 @@ const LocaleInput = ({locale, locales, updateLocale}) => {
     </div>;
 };
 
-export default withTranslationFull(LocaleInput);
+export default withTranslation(LocaleInput);

@@ -3,7 +3,7 @@ import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-ad
 
 import TagsField from '../field/TagsField';
 import TagsInput from '../input/TagsInput';
-import {withTranslation} from '../../commons/TranslationContext';
+import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
 const PageFilter = ({locale, ...rest}) => (
     <Filter {...rest}>
@@ -45,4 +45,4 @@ const PageList = ({locale, ...rest}) =>
     </List>
 ;
 
-export default withTranslation(PageList);
+export default withSanitizedTranslation(PageList);

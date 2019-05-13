@@ -1,7 +1,7 @@
 import React from 'react';
 import {SelectArrayInput} from 'react-admin';
 
-import {withTranslation} from '../../commons/TranslationContext';
+import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
 const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     <SelectArrayInput
@@ -14,7 +14,7 @@ const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
     />
 );
 
-const TranslatedTagsInput = withTranslation(TagsInput);
+const TranslatedTagsInput = withSanitizedTranslation(TagsInput);
 
 TranslatedTagsInput.defaultProps = {
     addField: true,
