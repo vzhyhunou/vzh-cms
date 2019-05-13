@@ -52,13 +52,13 @@ export default ({locales, i18n, children}) => {
     </TranslationContext.Provider>;
 };
 
-export const withTranslation = Component => props =>
+export const withSanitizedTranslation = Component => props =>
     <TranslationContext.Consumer>
         {({updateLocale, getLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>
 ;
 
-export const withTranslationFull = Component => props =>
+export const withTranslation = Component => props =>
     <TranslationContext.Consumer>
         {state => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>

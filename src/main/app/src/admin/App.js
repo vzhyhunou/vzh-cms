@@ -5,7 +5,7 @@ import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
 import authProvider from './auth';
-import {withTranslationFull} from '../commons/TranslationContext';
+import {withTranslation} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import EditionProvider from './EditionContext';
@@ -33,4 +33,4 @@ const App = ({locale, translate, getLocale, getMessages}) => {
     </DocumentTitle>;
 };
 
-export default withTranslationFull(memo(App, () => true));
+export default withTranslation(memo(App, () => true));
