@@ -4,7 +4,7 @@ import DocumentTitle from 'react-document-title';
 import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
-import authProvider from './auth';
+import authProvider from '../commons/auth';
 import {withTranslation} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';

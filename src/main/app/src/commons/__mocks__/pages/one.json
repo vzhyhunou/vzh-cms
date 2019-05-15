@@ -1,0 +1,10 @@
+{
+  "json": {
+    "properties": {
+      "x": {
+        "title": "test title",
+        "content": "test content"
+      }
+    }
+  }
+}

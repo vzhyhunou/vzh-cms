@@ -26,13 +26,12 @@
     "react": "~16.8.3",
     "react-dom": "~16.8.3",
     "react-scripts": "^2.0.3",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1"
+    "react-testing-library": "^7.0.0"
   },
   "scripts": {
     "start": "PORT=3010 react-scripts start",
     "build": "react-scripts build && mkdir -p ../../../target/classes && mv build ../../../target/classes/static",
-    "test": "CI=true react-scripts test",
+    "test": "CI=true react-scripts test --coverage",
     "transpile": "rm -rf dist && NODE_ENV=production babel src -d dist --copy-files && echo '{\"name\":\"vzh-cms\",\"version\":\"0.0.1\"}' > dist/package.json"
   },
   "proxy": "http://localhost:8090",
