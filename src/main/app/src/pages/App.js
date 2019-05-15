@@ -13,7 +13,7 @@ const Area = ({page}) => {
     const {title, content} = page.properties[Object.keys(page.properties)[0]];
 
     return <DocumentTitle title={title}>
-        <div dangerouslySetInnerHTML={{__html: content}}/>
+        <div data-testid="content" dangerouslySetInnerHTML={{__html: content}}/>
     </DocumentTitle>;
 };
 
