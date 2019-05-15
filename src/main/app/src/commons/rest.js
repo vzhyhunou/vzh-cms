@@ -11,7 +11,7 @@ import {
     UPDATE_MANY,
 } from 'react-admin';
 
-import {TOKEN} from '../admin/auth';
+import {TOKEN} from './auth';
 import fetchUtils from './fetch';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';

@@ -12,7 +12,7 @@ import UserEdit from './users/Edit';
 import UserList from './users/List';
 import routes from './routes';
 import Menu from './Menu';
-import authProvider from './auth';
+import authProvider from '../commons/auth';
 import background from './background.png';
 
 const theme = createMuiTheme({
