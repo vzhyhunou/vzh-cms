@@ -1,9 +1,9 @@
 import React from 'react';
+import {BrowserRouter, MemoryRouter} from 'react-router-dom';
 import {cleanup, render, waitForElement} from 'react-testing-library';
 
 import App from './App';
 
-jest.mock('./commons/fetch');
 afterEach(cleanup);
 
 describe('App', () => {
@@ -14,9 +14,19 @@ describe('App', () => {
     });
 
     it('should render content and set title', async () => {
-        const {getByTestId} = render(<App/>);
-        const container = await waitForElement(() => getByTestId('content'));
-        expect(container.innerHTML).toBe('test content');
+        const {getByText} = render(<App/>);
+        const container = await waitForElement(() => getByText('test content'));
+        expect(container).toBeDefined();
         expect(document.title).toBe('test title');
+    });
+
+    it('should render login page', async () => {
+        BrowserRouter.mockImplementationOnce(({children}) =>
+            <MemoryRouter initialEntries={['/admin']}>{children}</MemoryRouter>
+        );
+        const {getByText} = render(<App/>);
+        const container = await waitForElement(() => getByText('Sign in'));
+        expect(container).toBeDefined();
+        expect(document.title).toBe('Control Panel');
     });
 });

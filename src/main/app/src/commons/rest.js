@@ -3,16 +3,16 @@ import {
     CREATE,
     DELETE,
     DELETE_MANY,
+    fetchUtils,
     GET_LIST,
     GET_MANY,
     GET_MANY_REFERENCE,
     GET_ONE,
     UPDATE,
-    UPDATE_MANY,
+    UPDATE_MANY
 } from 'react-admin';
 
 import {TOKEN} from './auth';
-import fetchUtils from './fetch';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
