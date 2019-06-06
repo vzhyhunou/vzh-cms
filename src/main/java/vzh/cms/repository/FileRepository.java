@@ -31,7 +31,7 @@ public class FileRepository {
         this.mappings = mappings;
     }
 
-    public void save(Content<?> content) throws Exception {
+    public void save(Content content) throws Exception {
         File dir = location(content);
         for (Base64File file : content.getFiles()) {
             File out = new File(dir, file.getPath());
@@ -40,7 +40,7 @@ public class FileRepository {
         }
     }
 
-    public void fill(Content<?> content) throws Exception {
+    public void fill(Content content) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (Files.exists(dir)) {
             try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
