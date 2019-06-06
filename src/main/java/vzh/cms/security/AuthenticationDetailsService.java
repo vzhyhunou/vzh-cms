@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import vzh.cms.model.User;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.Set;
 
 /**
@@ -23,6 +24,7 @@ public class AuthenticationDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
         User user = manager.find(User.class, id);
