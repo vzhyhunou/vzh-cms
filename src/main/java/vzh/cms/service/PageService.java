@@ -3,7 +3,7 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Page;
-import vzh.cms.model.PageFilter;
+import vzh.cms.dto.PageFilter;
 import vzh.cms.model.PageProperty;
 import vzh.cms.projection.NoContentPage;
 import vzh.cms.projection.TitlePage;

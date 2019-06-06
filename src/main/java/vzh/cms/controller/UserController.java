@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.model.User;
-import vzh.cms.model.UserFilter;
+import vzh.cms.dto.UserFilter;
 import vzh.cms.service.UserService;
 
 /**

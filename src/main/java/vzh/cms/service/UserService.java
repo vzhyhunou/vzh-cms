@@ -4,7 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Page;
 import vzh.cms.model.User;
-import vzh.cms.model.UserFilter;
+import vzh.cms.dto.UserFilter;
 import vzh.cms.repository.UserRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;

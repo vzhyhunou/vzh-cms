@@ -3,7 +3,7 @@ package vzh.cms.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import vzh.cms.model.Localized;
+import vzh.cms.model.Content;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class LocalizedRepositoryImpl<T extends Localized, ID extends Serializable> extends RepositoryImpl<T, ID> implements LocalizedRepository<T> {
+abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends RepositoryImpl<T, ID> implements ContentRepository<T> {
 
-    protected LocalizedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
+    protected ContentRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 
