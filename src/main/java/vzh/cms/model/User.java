@@ -12,7 +12,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -37,7 +36,7 @@ public class User extends Item {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "tag")
-    @CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable
     private Set<String> tags = new HashSet<>();
 
     public void setPassword(String password) {

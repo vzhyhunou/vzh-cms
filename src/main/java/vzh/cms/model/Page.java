@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,11 +27,11 @@ public class Page extends Content implements Localized {
 
     @ElementCollection
     @Column(name = "tag")
-    @CollectionTable(joinColumns = @JoinColumn(name = "page_id"))
+    @CollectionTable
     private Set<String> tags = new HashSet<>();
 
     @ElementCollection
     @MapKeyColumn(name = "locale", length = 2)
-    @CollectionTable(joinColumns = @JoinColumn(name = "page_id"))
+    @CollectionTable
     private Map<String, PageProperty> properties = new HashMap<>();
 }
