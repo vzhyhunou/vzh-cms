@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 /**
  * @author Viktar Zhyhunou
  */
-public class PageRepositoryImpl extends LocalizedRepositoryImpl<Page, String> {
+public class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> {
 
     public PageRepositoryImpl(EntityManager manager) {
         super(Page.class, manager);
