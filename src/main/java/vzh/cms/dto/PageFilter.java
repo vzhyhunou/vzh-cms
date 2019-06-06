@@ -1,4 +1,4 @@
-package vzh.cms.model;
+package vzh.cms.dto;
 
 import lombok.Data;
 
@@ -6,9 +6,13 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class UserFilter {
+public class PageFilter {
 
     private String id;
+
+    private String title;
+
+    private String content;
 
     private String[] tags;
 }

@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import vzh.cms.model.User;
-import vzh.cms.model.UserFilter;
+import vzh.cms.dto.UserFilter;
 
 import java.util.Arrays;
 import java.util.List;

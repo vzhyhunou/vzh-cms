@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import vzh.cms.projection.NoContentPage;
 import vzh.cms.model.Page;
-import vzh.cms.model.PageFilter;
+import vzh.cms.dto.PageFilter;
 import vzh.cms.model.PageProperty;
 import vzh.cms.projection.TitlePage;
 

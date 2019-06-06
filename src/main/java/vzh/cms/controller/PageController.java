@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.projection.NoContentPage;
 import vzh.cms.model.Page;
-import vzh.cms.model.PageFilter;
+import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.service.PageService;
 
