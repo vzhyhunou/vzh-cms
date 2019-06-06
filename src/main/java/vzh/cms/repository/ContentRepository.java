@@ -3,13 +3,14 @@ package vzh.cms.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import vzh.cms.model.Content;
 
 import java.util.List;
 
 /**
  * @author Viktar Zhyhunou
  */
-public interface ContentRepository<T> extends Repository<T> {
+public interface ContentRepository<T extends Content> extends Repository<T> {
 
     <E> List<E> findAll(Specification<T> specification, Class<E> type, String locale);
 
