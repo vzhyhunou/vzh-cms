@@ -23,7 +23,7 @@ public class Page extends Content {
     private String id;
 
     @ElementCollection
-    @MapKeyColumn(name = "locale", length = 2)
+    @MapKeyColumn(name = "lang", length = 2)
     @CollectionTable
     private Map<String, PageProperty> properties = new HashMap<>();
 }

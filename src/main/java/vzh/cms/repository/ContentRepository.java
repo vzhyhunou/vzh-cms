@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ContentRepository<T extends Content> extends Repository<T> {
 
-    <E> List<E> findAll(Specification<T> specification, Class<E> type, String locale);
+    <E> List<E> findAll(Specification<T> specification, Class<E> type, String lang);
 
-    <E> Page<E> findAll(Specification<T> specification, Class<E> type, String locale, Pageable pageable);
+    <E> Page<E> findAll(Specification<T> specification, Class<E> type, String lang, Pageable pageable);
 }
