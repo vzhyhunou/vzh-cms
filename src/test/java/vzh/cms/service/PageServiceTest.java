@@ -34,10 +34,10 @@ public class PageServiceTest {
     private PageService service;
 
     @Test
-    public void listAllLocales() {
+    public void listAllLanguages() {
 
-        persistLocales("home", "en", "ru");
-        persistLocales("sample", "en", "ru");
+        persistLanguages("home", "en", "ru");
+        persistLanguages("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
 
@@ -59,10 +59,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void listAllNoLocales() {
+    public void listAllNoLanguages() {
 
-        persistLocales("home");
-        persistLocales("sample");
+        persistLanguages("home");
+        persistLanguages("sample");
 
         PageFilter filter = new PageFilter();
 
@@ -84,10 +84,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void listIdLocales() {
+    public void listIdLanguages() {
 
-        persistLocales("home", "en", "ru");
-        persistLocales("sample");
+        persistLanguages("home", "en", "ru");
+        persistLanguages("sample");
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -109,10 +109,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void listIdNoLocales() {
+    public void listIdNoLanguages() {
 
-        persistLocales("home");
-        persistLocales("sample");
+        persistLanguages("home");
+        persistLanguages("sample");
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -136,8 +136,8 @@ public class PageServiceTest {
     @Test
     public void listTitle() {
 
-        persistLocales("home", "en", "ru");
-        persistLocales("sample", "en", "ru");
+        persistLanguages("home", "en", "ru");
+        persistLanguages("sample", "en", "ru");
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
@@ -199,10 +199,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void oneAllLocales() {
+    public void oneAllLanguages() {
 
-        persistLocales("home", "en", "ru");
-        persistLocales("sample");
+        persistLanguages("home", "en", "ru");
+        persistLanguages("sample");
 
         Optional<Page> result = service.one("home", "en");
 
@@ -219,7 +219,7 @@ public class PageServiceTest {
     @Test
     public void oneNone() {
 
-        persistLocales("sample");
+        persistLanguages("sample");
 
         Optional<Page> result = service.one("home", "en");
 
@@ -228,10 +228,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void oneNoLocales() {
+    public void oneNoLanguages() {
 
-        persistLocales("home");
-        persistLocales("sample");
+        persistLanguages("home");
+        persistLanguages("sample");
 
         Optional<Page> result = service.one("home", "en");
 
@@ -240,10 +240,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void oneLocale() {
+    public void oneLanguage() {
 
-        persistLocales("home", "en");
-        persistLocales("sample");
+        persistLanguages("home", "en");
+        persistLanguages("sample");
 
         Optional<Page> result = service.one("home", "en");
 
@@ -258,10 +258,10 @@ public class PageServiceTest {
     }
 
     @Test
-    public void oneNoLocale() {
+    public void oneNoLanguage() {
 
-        persistLocales("home", "ru");
-        persistLocales("sample");
+        persistLanguages("home", "ru");
+        persistLanguages("sample");
 
         Optional<Page> result = service.one("home", "en");
 
@@ -282,10 +282,10 @@ public class PageServiceTest {
         assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
     }
 
-    private void persistLocales(String id, String... locales) {
+    private void persistLanguages(String id, String... languages) {
         Page page = new Page();
         page.setId(id);
-        Arrays.stream(locales).forEach(l -> {
+        Arrays.stream(languages).forEach(l -> {
             PageProperty property = new PageProperty();
             property.setTitle(String.format("%s.%s.title", id, l));
             property.setContent(String.format("%s.%s.content", id, l));
