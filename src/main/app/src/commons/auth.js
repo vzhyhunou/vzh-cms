@@ -41,7 +41,7 @@ export default (type, params) => {
         return Promise.resolve();
     }
     if (type === AUTH_CHECK) {
-        return localStorage.getItem(TOKEN) ? Promise.resolve() : Promise.reject();
+        return getToken() ? Promise.resolve() : Promise.reject();
     }
     if (type === AUTH_GET_PERMISSIONS) {
         const roles = localStorage.getItem(ROLES);
