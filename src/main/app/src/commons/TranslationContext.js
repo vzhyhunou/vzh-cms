@@ -35,8 +35,6 @@ export default ({locales, i18n, children}) => {
         return locale;
     });
 
-    const getLocale = () => contextValuesRef.current.locale;
-
     const getMessages = () => contextValuesRef.current.messages;
 
     if (!contextValues)
@@ -45,7 +43,6 @@ export default ({locales, i18n, children}) => {
     return <TranslationContext.Provider value={{
         ...contextValues,
         updateLocale,
-        getLocale,
         getMessages
     }}>
         {children}
@@ -54,7 +51,7 @@ export default ({locales, i18n, children}) => {
 
 export const withSanitizedTranslation = Component => props =>
     <TranslationContext.Consumer>
-        {({updateLocale, getLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
+        {({updateLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>
 ;
 

@@ -34,12 +34,11 @@ const client = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (locale, apiUrl = '/api', httpClient = client) => {
+export default (apiUrl = '/api', httpClient = client) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
         const options = {};
-        const l = typeof locale === 'function' ? locale() : locale;
         switch (type) {
             case GET_LIST: {
                 const {page, perPage} = params.pagination;
@@ -48,8 +47,7 @@ export default (locale, apiUrl = '/api', httpClient = client) => {
                     page: page - 1,
                     size: perPage,
                     sort: `${field},${order}`,
-                    ...params.filter,
-                    locale: l,
+                    ...params.filter
                 };
                 url = `${apiUrl}/${resource}/search/list?${stringify(query)}`;
                 break;
@@ -96,10 +94,10 @@ export default (locale, apiUrl = '/api', httpClient = client) => {
                 options.method = 'DELETE';
                 break;
             case GET_ONE_LOCALE:
-                url = `${apiUrl}/${resource}/search/one/${params.id}?${stringify({locale: l})}`;
+                url = `${apiUrl}/${resource}/search/one/${params.id}`;
                 break;
             case GET_MENU_LOCALE:
-                url = `${apiUrl}/${resource}/search/menu?${stringify({locale: l})}`;
+                url = `${apiUrl}/${resource}/search/menu`;
                 break;
             default:
                 throw new Error(`Unsupported fetch action type ${type}`);

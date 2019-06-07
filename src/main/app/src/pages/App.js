@@ -27,7 +27,7 @@ const App = ({locale, match}) => {
 
         const {id} = match.params;
 
-        dataProvider(locale)(GET_ONE_LOCALE, 'pages', {id}).then(response => setPage(response.data));
+        dataProvider()(GET_ONE_LOCALE, 'pages', {id}).then(response => setPage(response.data));
     }, locale);
 
     if (!page)

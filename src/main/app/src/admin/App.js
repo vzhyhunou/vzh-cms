@@ -11,9 +11,9 @@ import addUploadFeature from './upload';
 import EditionProvider from './EditionContext';
 import Main from './Main';
 
-const App = ({locale, translate, getLocale, getMessages}) => {
+const App = ({locale, translate, getMessages}) => {
 
-    const dataProvider = addUploadFeature(restProvider(getLocale));
+    const dataProvider = addUploadFeature(restProvider());
     const history = createHistory({basename: '/admin'});
 
     return <DocumentTitle title={translate('pos.title')}>

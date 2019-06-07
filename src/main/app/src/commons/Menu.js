@@ -70,7 +70,7 @@ const Menu = ({open, handleDrawerClose, locale}) => {
 
     useEffect(() => {
 
-        dataProvider(locale)(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
+        dataProvider()(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
     }, locale);
 
     if (!items)
