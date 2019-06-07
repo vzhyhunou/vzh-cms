@@ -1,7 +1,7 @@
 import {AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_LOGIN, AUTH_LOGOUT} from 'react-admin';
 import decodeJwt from 'jwt-decode';
 
-export const TOKEN = 'token';
+const TOKEN = 'token';
 const ROLES = 'roles';
 
 export default (type, params) => {
@@ -49,3 +49,5 @@ export default (type, params) => {
     }
     return Promise.reject('Unknown method');
 }
+
+export const getToken = () => localStorage.getItem(TOKEN);

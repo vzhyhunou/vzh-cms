@@ -12,13 +12,13 @@ import {
     UPDATE_MANY
 } from 'react-admin';
 
-import {TOKEN} from './auth';
+import {getToken} from './auth';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
 const client = (url, options = {}) => {
-    const token = localStorage.getItem(TOKEN);
+    const token = getToken();
     if (token) {
         if (!options.headers) {
             options.headers = new Headers();
