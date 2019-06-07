@@ -13,18 +13,24 @@ import {
 } from 'react-admin';
 
 import {getToken} from './auth';
+import {getLocale} from './locale';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
 const client = (url, options = {}) => {
+
+    if (!options.headers) {
+        options.headers = new Headers();
+    }
+
     const token = getToken();
     if (token) {
-        if (!options.headers) {
-            options.headers = new Headers();
-        }
         options.headers.set('Authorization', `Bearer ${token}`);
     }
+
+    options.headers.set('Accept-Language', getLocale());
+
     return fetchUtils.fetchJson(url, options);
 };
 
