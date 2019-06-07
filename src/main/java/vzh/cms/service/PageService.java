@@ -31,7 +31,7 @@ public class PageService extends BaseService<PageRepository> {
         super(repository);
     }
 
-    public org.springframework.data.domain.Page<NoContentPage> list(PageFilter filter, String locale, Pageable pageable) {
+    public org.springframework.data.domain.Page<NoContentPage> list(PageFilter filter, String lang, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
@@ -42,24 +42,24 @@ public class PageService extends BaseService<PageRepository> {
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
             return root.in(subquery.select(p).where(filter(p, b, filter)));
-        }, NoContentPage.class, locale, pageable);
+        }, NoContentPage.class, lang, pageable);
     }
 
-    public List<TitlePage> menu(String locale) {
+    public List<TitlePage> menu(String lang) {
         return repository.findAll((root, q, b) ->
                         b.and(
                                 ((Join) root.fetch("tags")).in("menu"),
-                                b.equal(((MapJoin) root.fetch("properties")).key(), locale)
+                                b.equal(((MapJoin) root.fetch("properties")).key(), lang)
                         ),
                 TitlePage.class
         );
     }
 
-    public Optional<Page> one(String id, String locale) {
+    public Optional<Page> one(String id, String lang) {
         return repository.findOne((root, q, b) ->
                 b.and(
                         b.equal(root.get("id"), id),
-                        b.equal(((MapJoin) root.fetch("properties")).key(), locale)
+                        b.equal(((MapJoin) root.fetch("properties")).key(), lang)
                 )
         );
     }

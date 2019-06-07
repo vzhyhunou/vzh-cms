@@ -8,15 +8,15 @@ import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import vzh.cms.projection.NoContentPage;
-import vzh.cms.model.Page;
 import vzh.cms.dto.PageFilter;
+import vzh.cms.model.Page;
+import vzh.cms.projection.NoContentPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.service.PageService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -37,28 +37,19 @@ public class PageController {
 
     @ResponseBody
     @GetMapping("search/list")
-    public PagedResources<Resource<NoContentPage>> list(
-            PageFilter filter,
-            @RequestParam String locale,
-            Pageable pageable
-    ) {
-        return assembler.toResource(service.list(filter, locale, pageable));
+    public PagedResources<Resource<NoContentPage>> list(PageFilter filter, Locale locale, Pageable pageable) {
+        return assembler.toResource(service.list(filter, locale.getLanguage(), pageable));
     }
 
     @ResponseBody
     @GetMapping("search/menu")
-    public List<TitlePage> menu(
-            @RequestParam String locale
-    ) {
-        return service.menu(locale);
+    public List<TitlePage> menu(Locale locale) {
+        return service.menu(locale.getLanguage());
     }
 
     @ResponseBody
     @GetMapping("search/one/{id}")
-    public Optional<Page> one(
-            @PathVariable String id,
-            @RequestParam String locale
-    ) {
-        return service.one(id, locale);
+    public Optional<Page> one(@PathVariable String id, Locale locale) {
+        return service.one(id, locale.getLanguage());
     }
 }

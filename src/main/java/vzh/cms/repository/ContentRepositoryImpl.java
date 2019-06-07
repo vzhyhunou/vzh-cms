@@ -21,17 +21,17 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
     }
 
     @Override
-    public <E> List<E> findAll(Specification<T> specification, Class<E> type, String locale) {
-        return findAll(specification, type, getConsumer(locale));
+    public <E> List<E> findAll(Specification<T> specification, Class<E> type, String lang) {
+        return findAll(specification, type, getConsumer(lang));
     }
 
     @Override
-    public <E> Page<E> findAll(Specification<T> specification, Class<E> type, String locale, Pageable pageable) {
-        return findAll(specification, type, getConsumer(locale), pageable);
+    public <E> Page<E> findAll(Specification<T> specification, Class<E> type, String lang, Pageable pageable) {
+        return findAll(specification, type, getConsumer(lang), pageable);
     }
 
-    private Consumer<T> getConsumer(String locale) {
-        return p -> p.getProperties().keySet().stream().filter(k -> !k.equals(locale)).collect(Collectors.toSet())
+    private Consumer<T> getConsumer(String lang) {
+        return p -> p.getProperties().keySet().stream().filter(k -> !k.equals(lang)).collect(Collectors.toSet())
                 .forEach(k -> p.getProperties().remove(k));
     }
 }
