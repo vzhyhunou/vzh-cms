@@ -2,9 +2,8 @@ package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vzh.cms.model.Page;
-import vzh.cms.model.User;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.model.User;
 import vzh.cms.repository.UserRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -40,7 +39,7 @@ public class UserService extends BaseService<UserRepository> {
     }
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
-        Join<Page, String[]> tags = root.join("tags", JoinType.LEFT);
+        Join<User, String[]> tags = root.join("tags", JoinType.LEFT);
         return b.and(Stream.of(
                 like(b, root.get("id"), filter.getId()),
                 in(tags, filter.getTags())
