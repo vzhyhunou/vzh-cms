@@ -30,10 +30,7 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("search/list")
-    public PagedResources<Resource<User>> list(
-            UserFilter filter,
-            Pageable pageable
-    ) {
+    public PagedResources<Resource<User>> list(UserFilter filter, Pageable pageable) {
         return assembler.toResource(service.list(filter, pageable));
     }
 }
