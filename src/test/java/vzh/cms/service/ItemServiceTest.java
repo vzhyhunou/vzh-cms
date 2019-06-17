@@ -14,15 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 abstract class ItemServiceTest {
 
     @Autowired
-    protected TestEntityManager manager;
-
-    protected void persistTags(String id) {
-        persistTags(id, new String[]{});
-    }
-
-    abstract protected void persistTags(String id, String... tags);
+    private TestEntityManager manager;
 
     protected static Pageable page(int i) {
         return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
+    }
+
+    protected void persist(Object obj) {
+        manager.persistAndFlush(obj);
+        manager.clear();
     }
 }

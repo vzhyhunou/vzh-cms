@@ -5,13 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
-import vzh.cms.model.User;
 import vzh.cms.projection.RowUser;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static vzh.cms.fixture.UserFixture.get;
 
 @Import(UserService.class)
 public class UserServiceTest extends ItemServiceTest {
@@ -22,7 +21,7 @@ public class UserServiceTest extends ItemServiceTest {
     @Test
     public void listNoTags() {
 
-        persistTags("admin");
+        persist(get("admin"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
@@ -38,8 +37,8 @@ public class UserServiceTest extends ItemServiceTest {
     @Test
     public void listAllTags() {
 
-        persistTags("admin", "a", "b");
-        persistTags("manager", "c", "d");
+        persist(get("admin", "a", "b"));
+        persist(get("manager", "c", "d"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
@@ -58,14 +57,5 @@ public class UserServiceTest extends ItemServiceTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
-    }
-
-    protected void persistTags(String id, String... tags) {
-        User user = new User();
-        user.setId(id);
-        user.setPassword(id);
-        user.getTags().addAll(Arrays.asList(tags));
-        manager.persistAndFlush(user);
-        manager.clear();
     }
 }
