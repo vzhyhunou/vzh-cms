@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static vzh.cms.fixture.PageFixture.getPageByLang;
-import static vzh.cms.fixture.PageFixture.getPageByTags;
+import static vzh.cms.fixture.PageFixture.pageByLang;
+import static vzh.cms.fixture.PageFixture.pageByTags;
 
 @Import(PageService.class)
 public class PageServiceTest extends ItemServiceTest {
@@ -24,8 +24,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listAllLanguages() {
 
-        persist(getPageByLang("home", "en", "ru"));
-        persist(getPageByLang("sample", "en", "ru"));
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
 
@@ -49,8 +49,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listAllNoLanguages() {
 
-        persist(getPageByLang("home"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
 
@@ -74,8 +74,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listIdLanguages() {
 
-        persist(getPageByLang("home", "en", "ru"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -99,8 +99,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listIdNoLanguages() {
 
-        persist(getPageByLang("home"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -124,8 +124,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listTitle() {
 
-        persist(getPageByLang("home", "en", "ru"));
-        persist(getPageByLang("sample", "en", "ru"));
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
@@ -149,7 +149,7 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listNoTags() {
 
-        persist(getPageByTags("home"));
+        persist(pageByTags("home"));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
@@ -165,8 +165,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listAllTags() {
 
-        persist(getPageByTags("home", "a", "b"));
-        persist(getPageByTags("sample", "c", "d"));
+        persist(pageByTags("home", "a", "b"));
+        persist(pageByTags("sample", "c", "d"));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
@@ -190,8 +190,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void oneAllLanguages() {
 
-        persist(getPageByLang("home", "en", "ru"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -208,7 +208,7 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void oneNone() {
 
-        persist(getPageByLang("sample"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -219,8 +219,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void oneNoLanguages() {
 
-        persist(getPageByLang("home"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -231,8 +231,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void oneLanguage() {
 
-        persist(getPageByLang("home", "en"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home", "en"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -249,8 +249,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void oneNoLanguage() {
 
-        persist(getPageByLang("home", "ru"));
-        persist(getPageByLang("sample"));
+        persist(pageByLang("home", "ru"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -261,8 +261,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void menu() {
 
-        persist(getPageByTags("home"));
-        persist(getPageByTags("sample", "menu"));
+        persist(pageByTags("home"));
+        persist(pageByTags("sample", "menu"));
 
         List<TitlePage> results = service.menu("en");
 

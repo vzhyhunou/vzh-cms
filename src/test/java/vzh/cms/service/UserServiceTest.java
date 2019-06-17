@@ -10,7 +10,7 @@ import vzh.cms.projection.RowUser;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static vzh.cms.fixture.UserFixture.getUser;
+import static vzh.cms.fixture.UserFixture.user;
 
 @Import(UserService.class)
 public class UserServiceTest extends ItemServiceTest {
@@ -21,7 +21,7 @@ public class UserServiceTest extends ItemServiceTest {
     @Test
     public void listNoTags() {
 
-        persist(getUser("admin"));
+        persist(user("admin"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
@@ -37,8 +37,8 @@ public class UserServiceTest extends ItemServiceTest {
     @Test
     public void listAllTags() {
 
-        persist(getUser("admin", "a", "b"));
-        persist(getUser("manager", "c", "d"));
+        persist(user("admin", "a", "b"));
+        persist(user("manager", "c", "d"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
