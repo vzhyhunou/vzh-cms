@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
-import vzh.cms.projection.NoContentPage;
+import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.service.PageService;
 
@@ -28,16 +28,16 @@ public class PageController {
 
     private PageService service;
 
-    private PagedResourcesAssembler<NoContentPage> assembler;
+    private PagedResourcesAssembler<RowPage> assembler;
 
-    public PageController(PageService service, PagedResourcesAssembler<NoContentPage> assembler) {
+    public PageController(PageService service, PagedResourcesAssembler<RowPage> assembler) {
         this.service = service;
         this.assembler = assembler;
     }
 
     @ResponseBody
     @GetMapping("search/list")
-    public PagedResources<Resource<NoContentPage>> list(PageFilter filter, Locale locale, Pageable pageable) {
+    public PagedResources<Resource<RowPage>> list(PageFilter filter, Locale locale, Pageable pageable) {
         return assembler.toResource(service.list(filter, locale.getLanguage(), pageable));
     }
 

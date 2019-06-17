@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import vzh.cms.model.Page;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.PageProperty;
-import vzh.cms.projection.NoContentPage;
+import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
@@ -31,7 +31,7 @@ public class PageService extends BaseService<PageRepository> {
         super(repository);
     }
 
-    public org.springframework.data.domain.Page<NoContentPage> list(PageFilter filter, String lang, Pageable pageable) {
+    public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, String lang, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
@@ -42,7 +42,7 @@ public class PageService extends BaseService<PageRepository> {
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
             return root.in(subquery.select(p).where(filter(p, b, filter)));
-        }, NoContentPage.class, lang, pageable);
+        }, RowPage.class, lang, pageable);
     }
 
     public List<TitlePage> menu(String lang) {

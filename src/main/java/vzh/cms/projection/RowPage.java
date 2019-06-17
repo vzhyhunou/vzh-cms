@@ -6,11 +6,11 @@ import java.util.Set;
 /**
  * @author Viktar Zhyhunou
  */
-public interface NoContentPage {
+public interface RowPage {
 
     String getId();
 
     Set<String> getTags();
 
-    Map<String, NoContentPageProperty> getProperties();
+    Map<String, TitlePageProperty> getProperties();
 }
