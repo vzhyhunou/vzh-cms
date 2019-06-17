@@ -2,8 +2,8 @@ package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vzh.cms.model.Page;
 import vzh.cms.dto.PageFilter;
+import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
@@ -46,21 +46,26 @@ public class PageService extends ItemService<PageRepository> {
     }
 
     public List<TitlePage> menu(String lang) {
-        return repository.findAll((root, q, b) ->
-                        b.and(
-                                ((Join) root.fetch("tags")).in("menu"),
-                                b.equal(((MapJoin) root.fetch("properties")).key(), lang)
-                        ),
+        return repository.findAll((root, q, b) -> {
+                    MapJoin properties = (MapJoin) root.fetch("properties");
+                    Join tags = (Join) root.fetch("tags");
+                    return b.and(
+                            tags.in("menu"),
+                            b.equal(properties.key(), lang)
+                    );
+                },
                 TitlePage.class
         );
     }
 
     public Optional<Page> one(String id, String lang) {
-        return repository.findOne((root, q, b) ->
-                b.and(
-                        b.equal(root.get("id"), id),
-                        b.equal(((MapJoin) root.fetch("properties")).key(), lang)
-                )
+        return repository.findOne((root, q, b) -> {
+                    MapJoin properties = (MapJoin) root.fetch("properties");
+                    return b.and(
+                            b.equal(root.get("id"), id),
+                            b.equal(properties.key(), lang)
+                    );
+                }
         );
     }
 
