@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class UserFixture {
 
-    public static User get(String id, String... tags) {
+    public static User getUser(String id, String... tags) {
         User user = new User();
         user.setId(id);
         user.setPassword(id);
