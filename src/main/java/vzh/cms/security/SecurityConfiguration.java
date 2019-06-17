@@ -14,10 +14,11 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
-import vzh.cms.model.User;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
+
+import static vzh.cms.model.User.PASSWORD_ENCODER;
 
 /**
  * @author Viktar Zhyhunou
@@ -59,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(User.PASSWORD_ENCODER);
+        auth.userDetailsService(userDetailsService).passwordEncoder(PASSWORD_ENCODER);
         auth.authenticationProvider(jwtAuthenticationProvider());
     }
 
