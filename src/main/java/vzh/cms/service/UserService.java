@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class UserService extends ItemService<UserRepository> {
+public class UserService extends ItemService<User, UserRepository> {
 
     public UserService(UserRepository repository) {
         super(repository);

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Viktar Zhyhunou
  */
-public interface ContentRepository<T extends Content> extends Repository<T> {
+public interface ContentRepository<T extends Content> extends ItemRepository<T> {
 
     <E> List<E> findAll(Specification<T> specification, Class<E> type, String lang);
 

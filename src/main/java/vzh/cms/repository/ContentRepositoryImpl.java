@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends RepositoryImpl<T, ID> implements ContentRepository<T> {
+abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements ContentRepository<T> {
 
     protected ContentRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);

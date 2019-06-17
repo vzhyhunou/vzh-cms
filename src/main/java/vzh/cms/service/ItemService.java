@@ -1,5 +1,8 @@
 package vzh.cms.service;
 
+import vzh.cms.model.Item;
+import vzh.cms.repository.ItemRepository;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
@@ -8,7 +11,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ItemService<T> {
+abstract class ItemService<I extends Item, T extends ItemRepository<I>> {
 
     protected T repository;
 
