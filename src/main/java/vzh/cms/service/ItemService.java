@@ -8,11 +8,11 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class BaseService<T> {
+abstract class ItemService<T> {
 
     protected T repository;
 
-    protected BaseService(T repository) {
+    protected ItemService(T repository) {
         this.repository = repository;
     }
 
