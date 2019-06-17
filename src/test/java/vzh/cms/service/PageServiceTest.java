@@ -1,19 +1,12 @@
 package vzh.cms.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
-import vzh.cms.projection.RowPage;
-import vzh.cms.model.Page;
 import vzh.cms.dto.PageFilter;
+import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
+import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 
 import java.util.Arrays;
@@ -22,13 +15,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
 @Import(PageService.class)
-public class PageServiceTest {
-
-    @Autowired
-    private TestEntityManager manager;
+public class PageServiceTest extends ItemServiceTest {
 
     @Autowired
     private PageService service;
@@ -46,16 +34,16 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("sample");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("sample");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
@@ -97,8 +85,8 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
@@ -122,7 +110,7 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("home");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
 
         result = service.list(filter, "en", page(1));
@@ -147,8 +135,8 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
@@ -188,7 +176,8 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowPage::getId).containsOnly("home");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(RowPage::getTags).containsOnlyOnce("a", "b");
 
         result = service.list(filter, "en", page(1));
 
@@ -213,7 +202,7 @@ public class PageServiceTest {
 
         assertThat(page).isNotNull();
         assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
@@ -254,7 +243,7 @@ public class PageServiceTest {
 
         assertThat(page).isNotNull();
         assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
@@ -278,8 +267,8 @@ public class PageServiceTest {
         List<TitlePage> results = service.menu("en");
 
         assertThat(results).isNotNull();
-        assertThat(results).extracting(TitlePage::getId).containsOnly("sample");
-        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(results).extracting(TitlePage::getId).containsOnlyOnce("sample");
+        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     private void persistLanguages(String id, String... languages) {
@@ -295,7 +284,7 @@ public class PageServiceTest {
         manager.clear();
     }
 
-    private void persistTags(String id, String... tags) {
+    protected void persistTags(String id, String... tags) {
         Page page = new Page();
         page.setId(id);
         page.getTags().addAll(Arrays.asList(tags));
@@ -306,9 +295,5 @@ public class PageServiceTest {
         page.getProperties().put("ru", property);
         manager.persistAndFlush(page);
         manager.clear();
-    }
-
-    private static Pageable page(int i) {
-        return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
     }
 }
