@@ -13,7 +13,7 @@ export default {
         pages: {
             name: 'Pages',
             tags: {
-                'menu': 'Menu'
+                'MENU': 'Menu'
             },
             fields: {
                 date: 'Update',

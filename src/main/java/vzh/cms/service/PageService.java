@@ -52,7 +52,7 @@ public class PageService extends ItemService<Page, PageRepository> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     Join tags = (Join) root.fetch("tags");
                     return b.and(
-                            tags.get("name").in("menu"),
+                            tags.get("name").in("MENU"),
                             active(b, tags.get("start"), tags.get("end")),
                             b.equal(properties.key(), lang)
                     );
