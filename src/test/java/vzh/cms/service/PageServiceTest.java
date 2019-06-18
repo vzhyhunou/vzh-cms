@@ -264,9 +264,9 @@ public class PageServiceTest extends ItemServiceTest {
     public void menu() {
 
         persist(pageByTags("home"));
-        persist(pageByTags("sample", tag("menu")));
-        persist(pageByTags("sample1", delayedTag("menu")));
-        persist(pageByTags("sample2", expiredTag("menu")));
+        persist(pageByTags("sample", tag("MENU")));
+        persist(pageByTags("sample1", delayedTag("MENU")));
+        persist(pageByTags("sample2", expiredTag("MENU")));
 
         List<TitlePage> results = service.menu("en");
 
