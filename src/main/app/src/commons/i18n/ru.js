@@ -9,15 +9,22 @@ export default {
         general: 'Общие'
     },
     resources: {
+        tags: {
+            fields: {
+                name: 'Тег',
+                start: 'Активно с',
+                end: 'Активно по'
+            }
+        },
         pages: {
             name: 'Страницы',
             tags: {
-                'menu': 'Меню'
+                'MENU': 'Меню'
             },
             fields: {
+                date: 'Обновление',
+                userId: 'Пользователь',
                 tags: 'Теги',
-                date: 'Последнее обновление',
-                userId: 'Пользователем',
                 properties: {
                     ru: {
                         title: 'Заголовок',
@@ -35,6 +42,8 @@ export default {
                 'ROLE_EDITOR': 'Редактор'
             },
             fields: {
+                date: 'Обновление',
+                userId: 'Пользователь',
                 password: 'Пароль',
                 tags: 'Теги'
             }

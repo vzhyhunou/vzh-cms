@@ -9,5 +9,5 @@ public interface TitlePage {
 
     String getId();
 
-    Map<String, NoContentPageProperty> getProperties();
+    Map<String, TitlePageProperty> getProperties();
 }

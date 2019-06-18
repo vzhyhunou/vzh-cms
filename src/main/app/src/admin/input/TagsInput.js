@@ -1,18 +1,33 @@
 import React from 'react';
-import {SelectArrayInput} from 'react-admin';
+import {ArrayInput, DateTimeInput, SelectInput, SimpleFormIterator} from 'react-admin';
 
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
-const TagsInput = ({translate, addField, messages, resource, ...rest}) => (
-    <SelectArrayInput
+const TagsInput = ({addField, messages, resource, ...rest}) =>
+    <ArrayInput
         {...rest}
-        choices={Object.keys(messages.resources[resource].tags).map(tag => ({
-            id: tag,
-            name: translate(`resources.${resource}.tags.${tag}`),
-        }))}
-        label={`resources.${resource}.fields.tags`}
-    />
-);
+        label=""
+    >
+        <SimpleFormIterator>
+            <SelectInput
+                source="name"
+                label={`resources.tags.fields.name`}
+                choices={Object.keys(messages.resources[resource].tags).map(tag => ({
+                    id: tag,
+                    name: `resources.${resource}.tags.${tag}`
+                }))}
+            />
+            <DateTimeInput
+                source="start"
+                label={`resources.tags.fields.start`}
+            />
+            <DateTimeInput
+                source="end"
+                label={`resources.tags.fields.end`}
+            />
+        </SimpleFormIterator>
+    </ArrayInput>
+;
 
 const TranslatedTagsInput = withSanitizedTranslation(TagsInput);
 

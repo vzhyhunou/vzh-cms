@@ -5,11 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import vzh.cms.consumer.ActiveTagsItemConsumer;
+import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Set;
 
 /**
  * @author Viktar Zhyhunou
@@ -29,11 +30,13 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
         User user = manager.find(User.class, id);
         if (user != null) {
-            Set<String> tags = user.getTags();
+            new ActiveTagsItemConsumer<>().accept(user);
             return new org.springframework.security.core.userdetails.User(
                     user.getId(),
                     user.getPassword(),
-                    AuthorityUtils.createAuthorityList(tags.toArray(new String[tags.size()]))
+                    AuthorityUtils.createAuthorityList(
+                            user.getTags().stream().map(Tag::getName).toArray(String[]::new)
+                    )
             );
         }
 

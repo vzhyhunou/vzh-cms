@@ -4,19 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.security.JwtDetailsService;
-import vzh.cms.security.AuthenticationDetailsService;
-
-import javax.persistence.EntityManager;
+import vzh.cms.security.SecurityConfiguration;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest
-@Import({SecurityConfiguration.class, AuthenticationDetailsService.class, JwtDetailsService.class})
+@Import({SecurityConfiguration.class, JwtDetailsService.class})
 public class ApplicationControllerTest {
 
     @Autowired
@@ -48,10 +43,5 @@ public class ApplicationControllerTest {
 
     @Configuration
     static class Config {
-
-        @Bean
-        public EntityManager manager() {
-            return mock(EntityManager.class);
-        }
     }
 }

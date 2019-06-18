@@ -8,8 +8,8 @@ import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import vzh.cms.model.User;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.projection.RowUser;
 import vzh.cms.service.UserService;
 
 /**
@@ -21,16 +21,16 @@ public class UserController {
 
     private UserService service;
 
-    private PagedResourcesAssembler<User> assembler;
+    private PagedResourcesAssembler<RowUser> assembler;
 
-    public UserController(UserService service, PagedResourcesAssembler<User> assembler) {
+    public UserController(UserService service, PagedResourcesAssembler<RowUser> assembler) {
         this.service = service;
         this.assembler = assembler;
     }
 
     @ResponseBody
     @GetMapping("search/list")
-    public PagedResources<Resource<User>> list(UserFilter filter, Pageable pageable) {
+    public PagedResources<Resource<RowUser>> list(UserFilter filter, Pageable pageable) {
         return assembler.toResource(service.list(filter, pageable));
     }
 }

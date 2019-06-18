@@ -1,34 +1,24 @@
 package vzh.cms.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
-import vzh.cms.projection.NoContentPage;
-import vzh.cms.model.Page;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.PageProperty;
+import vzh.cms.model.Page;
+import vzh.cms.projection.NameTag;
+import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static vzh.cms.fixture.PageFixture.pageByLang;
+import static vzh.cms.fixture.PageFixture.pageByTags;
+import static vzh.cms.fixture.TagFixture.*;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
 @Import(PageService.class)
-public class PageServiceTest {
-
-    @Autowired
-    private TestEntityManager manager;
+public class PageServiceTest extends ItemServiceTest {
 
     @Autowired
     private PageService service;
@@ -36,42 +26,42 @@ public class PageServiceTest {
     @Test
     public void listAllLanguages() {
 
-        persistLanguages("home", "en", "ru");
-        persistLanguages("sample", "en", "ru");
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("sample");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("sample");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
     public void listAllNoLanguages() {
 
-        persistLanguages("home");
-        persistLanguages("sample");
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).contains("home");
+        assertThat(content).extracting(RowPage::getId).contains("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
 
         result = service.list(filter, "en", page(1));
@@ -79,26 +69,26 @@ public class PageServiceTest {
         assertThat(result).isNotNull();
         content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).contains("sample");
+        assertThat(content).extracting(RowPage::getId).contains("sample");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
     }
 
     @Test
     public void listIdLanguages() {
 
-        persistLanguages("home", "en", "ru");
-        persistLanguages("sample");
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
@@ -111,18 +101,18 @@ public class PageServiceTest {
     @Test
     public void listIdNoLanguages() {
 
-        persistLanguages("home");
-        persistLanguages("sample");
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
 
         result = service.list(filter, "en", page(1));
@@ -136,19 +126,19 @@ public class PageServiceTest {
     @Test
     public void listTitle() {
 
-        persistLanguages("home", "en", "ru");
-        persistLanguages("sample", "en", "ru");
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
 
         result = service.list(filter, "en", page(1));
 
@@ -161,15 +151,15 @@ public class PageServiceTest {
     @Test
     public void listNoTags() {
 
-        persistTags("home");
+        persist(pageByTags("home"));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
     }
@@ -177,18 +167,19 @@ public class PageServiceTest {
     @Test
     public void listAllTags() {
 
-        persistTags("home", "a", "b");
-        persistTags("sample", "c", "d");
+        persist(pageByTags("home", tag("a"), tag("b")));
+        persist(pageByTags("sample", tag("c"), tag("d")));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<NoContentPage> result = service.list(filter, "en", page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, "en", page(0));
 
         assertThat(result).isNotNull();
-        List<NoContentPage> content = result.getContent();
+        List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(NoContentPage::getId).containsOnly("home");
+        assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
+        assertThat(content).flatExtracting(RowPage::getTags).extracting(NameTag::getName).containsOnlyOnce("a", "b");
 
         result = service.list(filter, "en", page(1));
 
@@ -201,8 +192,8 @@ public class PageServiceTest {
     @Test
     public void oneAllLanguages() {
 
-        persistLanguages("home", "en", "ru");
-        persistLanguages("sample");
+        persist(pageByLang("home", "en", "ru"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -213,13 +204,13 @@ public class PageServiceTest {
 
         assertThat(page).isNotNull();
         assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
     public void oneNone() {
 
-        persistLanguages("sample");
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -230,8 +221,8 @@ public class PageServiceTest {
     @Test
     public void oneNoLanguages() {
 
-        persistLanguages("home");
-        persistLanguages("sample");
+        persist(pageByLang("home"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -242,8 +233,8 @@ public class PageServiceTest {
     @Test
     public void oneLanguage() {
 
-        persistLanguages("home", "en");
-        persistLanguages("sample");
+        persist(pageByLang("home", "en"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -254,14 +245,14 @@ public class PageServiceTest {
 
         assertThat(page).isNotNull();
         assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getProperties().keySet()).containsOnlyOnce("en");
     }
 
     @Test
     public void oneNoLanguage() {
 
-        persistLanguages("home", "ru");
-        persistLanguages("sample");
+        persist(pageByLang("home", "ru"));
+        persist(pageByLang("sample"));
 
         Optional<Page> result = service.one("home", "en");
 
@@ -272,43 +263,15 @@ public class PageServiceTest {
     @Test
     public void menu() {
 
-        persistTags("home");
-        persistTags("sample", "menu");
+        persist(pageByTags("home"));
+        persist(pageByTags("sample", tag("MENU")));
+        persist(pageByTags("sample1", delayedTag("MENU")));
+        persist(pageByTags("sample2", expiredTag("MENU")));
 
         List<TitlePage> results = service.menu("en");
 
         assertThat(results).isNotNull();
-        assertThat(results).extracting(TitlePage::getId).containsOnly("sample");
-        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
-    }
-
-    private void persistLanguages(String id, String... languages) {
-        Page page = new Page();
-        page.setId(id);
-        Arrays.stream(languages).forEach(l -> {
-            PageProperty property = new PageProperty();
-            property.setTitle(String.format("%s.%s.title", id, l));
-            property.setContent(String.format("%s.%s.content", id, l));
-            page.getProperties().put(l, property);
-        });
-        manager.persistAndFlush(page);
-        manager.clear();
-    }
-
-    private void persistTags(String id, String... tags) {
-        Page page = new Page();
-        page.setId(id);
-        page.getTags().addAll(Arrays.asList(tags));
-        PageProperty property = new PageProperty();
-        property.setTitle(String.format("%s.title", id));
-        property.setContent(String.format("%s.content", id));
-        page.getProperties().put("en", property);
-        page.getProperties().put("ru", property);
-        manager.persistAndFlush(page);
-        manager.clear();
-    }
-
-    private static Pageable page(int i) {
-        return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
+        assertThat(results).extracting(TitlePage::getId).containsOnlyOnce("sample");
+        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnlyOnce("en");
     }
 }

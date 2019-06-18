@@ -9,15 +9,22 @@ export default {
         general: 'General'
     },
     resources: {
+        tags: {
+            fields: {
+                name: 'Tag',
+                start: 'Active after',
+                end: 'Active before'
+            }
+        },
         pages: {
             name: 'Pages',
             tags: {
-                'menu': 'Menu'
+                'MENU': 'Menu'
             },
             fields: {
+                date: 'Update',
+                userId: 'User',
                 tags: 'Tags',
-                date: 'Last Update',
-                userId: 'By User',
                 properties: {
                     en: {
                         title: 'Title',
@@ -35,6 +42,8 @@ export default {
                 'ROLE_EDITOR': 'Editor'
             },
             fields: {
+                date: 'Update',
+                userId: 'User',
                 password: 'Password',
                 tags: 'Tags'
             }

@@ -1,31 +1,21 @@
 package vzh.cms.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
-import vzh.cms.model.User;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.projection.NameTag;
+import vzh.cms.projection.RowUser;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static vzh.cms.fixture.TagFixture.tag;
+import static vzh.cms.fixture.UserFixture.user;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
 @Import(UserService.class)
-public class UserServiceTest {
-
-    @Autowired
-    private TestEntityManager manager;
+public class UserServiceTest extends ItemServiceTest {
 
     @Autowired
     private UserService service;
@@ -33,15 +23,15 @@ public class UserServiceTest {
     @Test
     public void listNoTags() {
 
-        persistTags("admin");
+        persist(user("admin"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<User> result = service.list(filter, page(0));
+        Page<RowUser> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
-        List<User> content = result.getContent();
+        List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
     }
@@ -49,19 +39,19 @@ public class UserServiceTest {
     @Test
     public void listAllTags() {
 
-        persistTags("admin", "a", "b");
-        persistTags("manager", "c", "d");
+        persist(user("admin", tag("a"), tag("b")));
+        persist(user("manager", tag("c"), tag("d")));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<User> result = service.list(filter, page(0));
+        Page<RowUser> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
-        List<User> content = result.getContent();
+        List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(User::getId).containsOnly("admin");
-        assertThat(content).extracting(User::getPassword).isNotNull();
+        assertThat(content).extracting(RowUser::getId).containsOnlyOnce("admin");
+        assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnlyOnce("a", "b");
 
         result = service.list(filter, page(1));
 
@@ -69,18 +59,5 @@ public class UserServiceTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
-    }
-
-    private void persistTags(String id, String... tags) {
-        User user = new User();
-        user.setId(id);
-        user.setPassword(id);
-        user.getTags().addAll(Arrays.asList(tags));
-        manager.persistAndFlush(user);
-        manager.clear();
-    }
-
-    private static Pageable page(int i) {
-        return PageRequest.of(i, 1, Sort.Direction.ASC, "id");
     }
 }

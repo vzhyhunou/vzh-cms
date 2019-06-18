@@ -1,5 +1,15 @@
 {
   "id": "admin",
   "password": "admin",
-  "tags": ["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_EDITOR"]
+  "tags": [
+    {
+      "name": "ROLE_ADMIN"
+    },
+    {
+      "name": "ROLE_MANAGER"
+    },
+    {
+      "name": "ROLE_EDITOR"
+    }
+  ]
 }

@@ -36,10 +36,8 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
 
     @Override
     public <E> List<E> findAll(Specification<T> specification, Class<E> type, Consumer<T> consumer) {
-        return findAll(specification).stream().map(e -> {
-            consumer.accept(e);
-            return factory.createProjection(type, e);
-        }).collect(Collectors.toList());
+        return findAll(specification).stream().peek(consumer).map(e -> factory.createProjection(type, e))
+                .collect(Collectors.toList());
     }
 
     @Override

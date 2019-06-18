@@ -3,7 +3,9 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.model.Tag;
 import vzh.cms.model.User;
+import vzh.cms.projection.RowUser;
 import vzh.cms.repository.UserRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,13 +21,13 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class UserService extends BaseService<UserRepository> {
+public class UserService extends ItemService<User, UserRepository> {
 
     public UserService(UserRepository repository) {
         super(repository);
     }
 
-    public org.springframework.data.domain.Page<User> list(UserFilter filter, Pageable pageable) {
+    public org.springframework.data.domain.Page<RowUser> list(UserFilter filter, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
@@ -35,14 +37,14 @@ public class UserService extends BaseService<UserRepository> {
             Subquery<User> subquery = q.subquery(User.class);
             Root<User> p = subquery.from(User.class);
             return root.in(subquery.select(p).where(filter(p, b, filter)));
-        }, pageable);
+        }, RowUser.class, pageable);
     }
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
-        Join<User, String[]> tags = root.join("tags", JoinType.LEFT);
+        Join<User, Tag> tags = root.join("tags", JoinType.LEFT);
         return b.and(Stream.of(
                 like(b, root.get("id"), filter.getId()),
-                in(tags, filter.getTags())
+                in(tags.get("name"), filter.getTags())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }

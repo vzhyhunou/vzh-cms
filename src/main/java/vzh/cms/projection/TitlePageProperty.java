@@ -3,7 +3,7 @@ package vzh.cms.projection;
 /**
  * @author Viktar Zhyhunou
  */
-public interface NoContentPageProperty {
+public interface TitlePageProperty {
 
     String getTitle();
 }

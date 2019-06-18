@@ -2,7 +2,7 @@ import React from 'react';
 import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
-import TagsInput from '../input/TagsInput';
+import TagsFilter from '../input/TagsFilter';
 
 const UserFilter = (props) => (
     <Filter {...props}>
@@ -10,7 +10,7 @@ const UserFilter = (props) => (
             source="id"
             alwaysOn
         />
-        <TagsInput/>
+        <TagsFilter/>
     </Filter>
 );
 
