@@ -6,10 +6,16 @@ export default {
         configuration: 'Configuration',
         language: 'Language',
         title: 'Control Panel',
-        general: 'General',
-        tags: 'Tags'
+        general: 'General'
     },
     resources: {
+        tags: {
+            fields: {
+                name: 'Tag',
+                start: 'Active after',
+                end: 'Active before'
+            }
+        },
         pages: {
             name: 'Pages',
             tags: {
@@ -18,11 +24,7 @@ export default {
             fields: {
                 date: 'Update',
                 userId: 'User',
-                tags: {
-                    name: 'Tag',
-                    start: 'Active after',
-                    end: 'Active before'
-                },
+                tags: 'Tags',
                 properties: {
                     en: {
                         title: 'Title',
@@ -43,11 +45,7 @@ export default {
                 date: 'Update',
                 userId: 'User',
                 password: 'Password',
-                tags: {
-                    name: 'Tag',
-                    start: 'Active after',
-                    end: 'Active before'
-                }
+                tags: 'Tags'
             }
         }
     }

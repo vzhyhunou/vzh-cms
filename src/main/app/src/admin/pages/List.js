@@ -11,7 +11,7 @@ const PageFilter = ({locale, ...rest}) => (
             source="id"
             alwaysOn
         />
-        <TagsFilter label="pos.tags"/>
+        <TagsFilter/>
         <TextInput
             source="title"
             label={`resources.pages.fields.properties.${locale}.title`}

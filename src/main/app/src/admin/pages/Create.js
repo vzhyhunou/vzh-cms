@@ -13,7 +13,7 @@ const PageCreate = ({locale, locales, ...rest}) =>
                     source="id"
                 />
             </FormTab>
-            <FormTab label="pos.tags">
+            <FormTab label="resources.pages.fields.tags">
                 <TagsInput/>
             </FormTab>
             {Object.keys(locales).map(l =>

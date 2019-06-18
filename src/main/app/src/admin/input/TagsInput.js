@@ -6,12 +6,12 @@ import {withSanitizedTranslation} from '../../commons/TranslationContext';
 const TagsInput = ({addField, messages, resource, ...rest}) =>
     <ArrayInput
         {...rest}
-        label={null}
+        label=""
     >
         <SimpleFormIterator>
             <SelectInput
                 source="name"
-                label={`resources.${resource}.fields.tags.name`}
+                label={`resources.tags.fields.name`}
                 choices={Object.keys(messages.resources[resource].tags).map(tag => ({
                     id: tag,
                     name: `resources.${resource}.tags.${tag}`
@@ -19,11 +19,11 @@ const TagsInput = ({addField, messages, resource, ...rest}) =>
             />
             <DateTimeInput
                 source="start"
-                label={`resources.${resource}.fields.tags.start`}
+                label={`resources.tags.fields.start`}
             />
             <DateTimeInput
                 source="end"
-                label={`resources.${resource}.fields.tags.end`}
+                label={`resources.tags.fields.end`}
             />
         </SimpleFormIterator>
     </ArrayInput>

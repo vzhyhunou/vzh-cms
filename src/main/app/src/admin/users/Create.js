@@ -15,7 +15,7 @@ export default (props) =>
                     type="password"
                 />
             </FormTab>
-            <FormTab label="pos.tags">
+            <FormTab label="resources.users.fields.tags">
                 <TagsInput/>
             </FormTab>
         </TabbedForm>

@@ -10,7 +10,7 @@ const UserFilter = (props) => (
             source="id"
             alwaysOn
         />
-        <TagsFilter label="pos.tags"/>
+        <TagsFilter/>
     </Filter>
 );
 
