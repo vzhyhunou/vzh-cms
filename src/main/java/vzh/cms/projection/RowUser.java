@@ -9,5 +9,5 @@ public interface RowUser {
 
     String getId();
 
-    Set<String> getTags();
+    Set<NameTag> getTags();
 }

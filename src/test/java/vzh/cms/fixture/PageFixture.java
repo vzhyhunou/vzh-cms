@@ -2,12 +2,13 @@ package vzh.cms.fixture;
 
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
+import vzh.cms.model.Tag;
 
 import java.util.Arrays;
 
 public class PageFixture {
 
-    public static Page pageByTags(String id, String... tags) {
+    public static Page pageByTags(String id, Tag... tags) {
         Page page = new Page();
         page.setId(id);
         page.getTags().addAll(Arrays.asList(tags));

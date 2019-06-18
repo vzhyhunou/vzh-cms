@@ -24,5 +24,5 @@ abstract public class Item {
     @ElementCollection
     @Column(name = "tag")
     @CollectionTable
-    private Set<String> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 }

@@ -1,5 +1,9 @@
 {
   "id": "manager",
   "password": "manager",
-  "tags": ["ROLE_MANAGER"]
+  "tags": [
+    {
+      "name": "ROLE_MANAGER"
+    }
+  ]
 }

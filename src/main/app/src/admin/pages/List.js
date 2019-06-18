@@ -2,7 +2,7 @@ import React from 'react';
 import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
-import TagsInput from '../input/TagsInput';
+import TagsFilter from '../input/TagsFilter';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
 const PageFilter = ({locale, ...rest}) => (
@@ -11,7 +11,7 @@ const PageFilter = ({locale, ...rest}) => (
             source="id"
             alwaysOn
         />
-        <TagsInput/>
+        <TagsFilter label="pos.tags"/>
         <TextInput
             source="title"
             label={`resources.pages.fields.properties.${locale}.title`}

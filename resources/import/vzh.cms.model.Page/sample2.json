@@ -1,6 +1,10 @@
 {
   "id": "sample2",
-  "tags": ["menu"],
+  "tags": [
+    {
+      "name": "menu"
+    }
+  ],
   "properties": {
     "ru": {
       "title": "Пример страницы 2",

@@ -10,7 +10,7 @@ public interface RowPage {
 
     String getId();
 
-    Set<String> getTags();
+    Set<NameTag> getTags();
 
     Map<String, TitlePageProperty> getProperties();
 }

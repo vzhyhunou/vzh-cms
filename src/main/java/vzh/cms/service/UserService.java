@@ -3,6 +3,7 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 import vzh.cms.projection.RowUser;
 import vzh.cms.repository.UserRepository;
@@ -40,10 +41,10 @@ public class UserService extends ItemService<User, UserRepository> {
     }
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
-        Join<User, String[]> tags = root.join("tags", JoinType.LEFT);
+        Join<User, Tag> tags = root.join("tags", JoinType.LEFT);
         return b.and(Stream.of(
                 like(b, root.get("id"), filter.getId()),
-                in(tags, filter.getTags())
+                in(tags.get("name"), filter.getTags())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }

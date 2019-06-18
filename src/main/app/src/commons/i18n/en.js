@@ -6,7 +6,8 @@ export default {
         configuration: 'Configuration',
         language: 'Language',
         title: 'Control Panel',
-        general: 'General'
+        general: 'General',
+        tags: 'Tags'
     },
     resources: {
         pages: {
@@ -15,9 +16,13 @@ export default {
                 'menu': 'Menu'
             },
             fields: {
-                tags: 'Tags',
-                date: 'Last Update',
-                userId: 'By User',
+                date: 'Update',
+                userId: 'User',
+                tags: {
+                    name: 'Tag',
+                    start: 'Active after',
+                    end: 'Active before'
+                },
                 properties: {
                     en: {
                         title: 'Title',
@@ -35,8 +40,14 @@ export default {
                 'ROLE_EDITOR': 'Editor'
             },
             fields: {
+                date: 'Update',
+                userId: 'User',
                 password: 'Password',
-                tags: 'Tags'
+                tags: {
+                    name: 'Tag',
+                    start: 'Active after',
+                    end: 'Active before'
+                }
             }
         }
     }

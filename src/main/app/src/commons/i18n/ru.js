@@ -6,7 +6,8 @@ export default {
         configuration: 'Конфигурация',
         language: 'Язык',
         title: 'Панель управления',
-        general: 'Общие'
+        general: 'Общие',
+        tags: 'Теги'
     },
     resources: {
         pages: {
@@ -15,9 +16,13 @@ export default {
                 'menu': 'Меню'
             },
             fields: {
-                tags: 'Теги',
-                date: 'Последнее обновление',
-                userId: 'Пользователем',
+                date: 'Обновление',
+                userId: 'Пользователь',
+                tags: {
+                    name: 'Тег',
+                    start: 'Активно с',
+                    end: 'Активно по'
+                },
                 properties: {
                     ru: {
                         title: 'Заголовок',
@@ -35,8 +40,14 @@ export default {
                 'ROLE_EDITOR': 'Редактор'
             },
             fields: {
+                date: 'Обновление',
+                userId: 'Пользователь',
                 password: 'Пароль',
-                tags: 'Теги'
+                tags: {
+                    name: 'Тег',
+                    start: 'Активно с',
+                    end: 'Активно по'
+                }
             }
         }
     }

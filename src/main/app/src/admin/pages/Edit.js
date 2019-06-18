@@ -30,6 +30,8 @@ const PageEdit = ({locale, locales, ...rest}) =>
                 >
                     <TextField source="id"/>
                 </ReferenceField>
+            </FormTab>
+            <FormTab label="pos.tags">
                 <TagsInput/>
             </FormTab>
             {Object.keys(locales).map(l =>

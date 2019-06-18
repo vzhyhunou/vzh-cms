@@ -1,5 +1,9 @@
 {
   "id": "editor",
   "password": "editor",
-  "tags": ["ROLE_EDITOR"]
+  "tags": [
+    {
+      "name": "ROLE_EDITOR"
+    }
+  ]
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
+import vzh.cms.model.Tag;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
@@ -45,12 +46,14 @@ public class PageService extends ItemService<Page, PageRepository> {
         }, RowPage.class, lang, pageable);
     }
 
+    @SuppressWarnings("unchecked")
     public List<TitlePage> menu(String lang) {
         return repository.findAll((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     Join tags = (Join) root.fetch("tags");
                     return b.and(
-                            tags.in("menu"),
+                            tags.get("name").in("menu"),
+                            active(b, tags.get("start"), tags.get("end")),
                             b.equal(properties.key(), lang)
                     );
                 },
@@ -72,10 +75,10 @@ public class PageService extends ItemService<Page, PageRepository> {
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
         MapJoin<Page, String, PageProperty> properties =
                 (MapJoin<Page, String, PageProperty>) root.<Page, PageProperty>join("properties", JoinType.LEFT);
-        Join<Page, String[]> tags = root.join("tags", JoinType.LEFT);
+        Join<Page, Tag> tags = root.join("tags", JoinType.LEFT);
         return b.and(Stream.of(
                 like(b, root.get("id"), filter.getId()),
-                in(tags, filter.getTags()),
+                in(tags.get("name"), filter.getTags()),
                 like(b, properties.value().get("title"), filter.getTitle()),
                 like(b, properties.value().get("content"), filter.getContent())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));

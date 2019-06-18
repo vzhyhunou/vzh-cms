@@ -6,6 +6,7 @@ import vzh.cms.repository.ItemRepository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -29,5 +30,12 @@ abstract class ItemService<I extends Item, T extends ItemRepository<I>> {
         return Optional.ofNullable(fields)
                 .map(f -> expression.in(fields))
                 .orElse(null);
+    }
+
+    protected static Predicate active(CriteriaBuilder b, Expression<Timestamp> start, Expression<Timestamp> end) {
+        return b.and(
+                b.or(b.isNull(start), b.greaterThan(b.currentTimestamp(), start)),
+                b.or(b.isNull(end), b.lessThan(b.currentTimestamp(), end))
+        );
     }
 }

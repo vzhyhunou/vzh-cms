@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
+import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.PageFixture.pageByLang;
 import static vzh.cms.fixture.PageFixture.pageByTags;
+import static vzh.cms.fixture.TagFixture.*;
 
 @Import(PageService.class)
 public class PageServiceTest extends ItemServiceTest {
@@ -165,8 +167,8 @@ public class PageServiceTest extends ItemServiceTest {
     @Test
     public void listAllTags() {
 
-        persist(pageByTags("home", "a", "b"));
-        persist(pageByTags("sample", "c", "d"));
+        persist(pageByTags("home", tag("a"), tag("b")));
+        persist(pageByTags("sample", tag("c"), tag("d")));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
@@ -177,7 +179,7 @@ public class PageServiceTest extends ItemServiceTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnlyOnce("home");
-        assertThat(content).flatExtracting(RowPage::getTags).containsOnlyOnce("a", "b");
+        assertThat(content).flatExtracting(RowPage::getTags).extracting(NameTag::getName).containsOnlyOnce("a", "b");
 
         result = service.list(filter, "en", page(1));
 
@@ -262,7 +264,9 @@ public class PageServiceTest extends ItemServiceTest {
     public void menu() {
 
         persist(pageByTags("home"));
-        persist(pageByTags("sample", "menu"));
+        persist(pageByTags("sample", tag("menu")));
+        persist(pageByTags("sample1", delayedTag("menu")));
+        persist(pageByTags("sample2", expiredTag("menu")));
 
         List<TitlePage> results = service.menu("en");
 
