@@ -19,19 +19,16 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends BaseService {
-
-    private PageRepository repository;
+public class PageService extends ContentService<Page> {
 
     public PageService(PageRepository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, String lang, Pageable pageable) {
@@ -60,17 +57,6 @@ public class PageService extends BaseService {
                     );
                 },
                 TitlePage.class
-        );
-    }
-
-    public Optional<Page> one(String id, String lang) {
-        return repository.findOne((root, q, b) -> {
-                    MapJoin properties = (MapJoin) root.fetch("properties");
-                    return b.and(
-                            b.equal(root.get("id"), id),
-                            b.equal(properties.key(), lang)
-                    );
-                }
         );
     }
 
