@@ -1,17 +1,12 @@
 package vzh.cms.service;
 
-import org.springframework.stereotype.Service;
 import vzh.cms.model.Content;
 import vzh.cms.repository.ContentRepository;
 
 import javax.persistence.criteria.MapJoin;
 import java.util.Optional;
 
-/**
- * @author Viktar Zhyhunou
- */
-@Service
-public class ContentService<T extends Content> extends BaseService {
+abstract class ContentService<T extends Content> extends BaseService {
 
     protected ContentRepository<T> repository;
 
