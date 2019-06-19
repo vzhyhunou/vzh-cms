@@ -1,7 +1,6 @@
 package vzh.cms.repository;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import vzh.cms.model.Page;
@@ -13,7 +12,7 @@ import java.util.Optional;
  * @author Viktar Zhyhunou
  */
 @PreAuthorize("hasRole('ROLE_EDITOR')")
-public interface PageRepository extends PagingAndSortingRepository<Page, String>, JpaSpecificationExecutor<Page>, ContentRepository<Page> {
+public interface PageRepository extends PagingAndSortingRepository<Page, String>, ContentRepository<Page> {
 
     @Override
     @PreAuthorize("permitAll")

@@ -8,6 +8,7 @@ import vzh.cms.model.Page;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
+import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import static vzh.cms.fixture.PageFixture.pageByTags;
 import static vzh.cms.fixture.TagFixture.*;
 
 @Import(PageService.class)
-public class PageServiceTest extends ItemServiceTest {
+public class PageServiceTest extends RepositoryTest {
 
     @Autowired
     private PageService service;

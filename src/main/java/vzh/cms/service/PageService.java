@@ -19,14 +19,13 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends ItemService<Page, PageRepository> {
+public class PageService extends ContentService<Page> {
 
     public PageService(PageRepository repository) {
         super(repository);
@@ -58,17 +57,6 @@ public class PageService extends ItemService<Page, PageRepository> {
                     );
                 },
                 TitlePage.class
-        );
-    }
-
-    public Optional<Page> one(String id, String lang) {
-        return repository.findOne((root, q, b) -> {
-                    MapJoin properties = (MapJoin) root.fetch("properties");
-                    return b.and(
-                            b.equal(root.get("id"), id),
-                            b.equal(properties.key(), lang)
-                    );
-                }
         );
     }
 

@@ -21,10 +21,12 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class UserService extends ItemService<User, UserRepository> {
+public class UserService extends BaseService {
+
+    private UserRepository repository;
 
     public UserService(UserRepository repository) {
-        super(repository);
+        this.repository = repository;
     }
 
     public org.springframework.data.domain.Page<RowUser> list(UserFilter filter, Pageable pageable) {
