@@ -26,10 +26,12 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends ItemService<Page, PageRepository> {
+public class PageService extends BaseService {
+
+    private PageRepository repository;
 
     public PageService(PageRepository repository) {
-        super(repository);
+        this.repository = repository;
     }
 
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, String lang, Pageable pageable) {
