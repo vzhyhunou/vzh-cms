@@ -3,31 +3,23 @@ package vzh.cms.security;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.test.context.junit4.SpringRunner;
+import vzh.cms.repository.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.user;
 import static vzh.cms.model.User.BCRYPT_PATTERN;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
 @Import(AuthenticationDetailsService.class)
-public class AuthenticationDetailsServiceTest {
+public class AuthenticationDetailsServiceTest extends BaseTest {
 
     private static final String ID = "id";
     private static final String NAME = "name";
-
-    @Autowired
-    private TestEntityManager manager;
 
     @Autowired
     private AuthenticationDetailsService service;
@@ -70,10 +62,5 @@ public class AuthenticationDetailsServiceTest {
         assertThat(BCRYPT_PATTERN.matcher(result.getPassword()).matches()).isTrue();
         assertThat(result.getAuthorities()).isNotNull();
         assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).containsOnlyOnce(NAME);
-    }
-
-    private void persist(Object obj) {
-        manager.persistAndFlush(obj);
-        manager.clear();
     }
 }

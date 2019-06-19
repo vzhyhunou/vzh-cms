@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowUser;
+import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.user;
 
 @Import(UserService.class)
-public class UserServiceTest extends ItemServiceTest {
+public class UserServiceTest extends RepositoryTest {
 
     @Autowired
     private UserService service;
