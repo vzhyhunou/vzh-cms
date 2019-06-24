@@ -49,7 +49,7 @@ describe('upload', () => {
                 files: [
                     {
                         src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
-                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
+                        title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 content: ""
@@ -59,7 +59,11 @@ describe('upload', () => {
             id: 'sample',
             data: {
                 content: "",
-                files: []
+                files: [
+                    {
+                        path: "900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ]
             }
         };
 
@@ -148,10 +152,12 @@ describe('upload', () => {
 
         const response = {
             data: {
-                files: [],
-                file: "900150983cd24fb0d6963f7d28e17f72.png",
-                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>" +
-                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                files: [
+                    {
+                        path: "900150983cd24fb0d6963f7d28e17f73.png"
+                    }
+                ],
+                file: "900150983cd24fb0d6963f7d28e17f72.png"
             }
         };
         const expectedResponse = {
@@ -159,15 +165,13 @@ describe('upload', () => {
                 files: [
                     {
                         src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png",
-                        title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png"
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
                     src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
-                    title: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png"
-                },
-                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>" +
-                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    title: "900150983cd24fb0d6963f7d28e17f72.png"
+                }
             }
         };
 

@@ -13,8 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.newDirectoryStream;
+import static java.nio.file.Files.*;
 import static org.apache.commons.beanutils.BeanUtils.getProperty;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
@@ -38,24 +37,45 @@ public class FileRepository {
     }
 
     public void save(Content content) throws Exception {
+        clean(content);
         File dir = location(content);
         for (Base64File file : content.getFiles()) {
-            File out = new File(dir, file.getPath());
-            byte[] data = DECODER.decode(file.getData());
-            writeByteArrayToFile(out, data);
+            if (file.getData() != null) {
+                File out = new File(dir, file.getPath());
+                byte[] data = DECODER.decode(file.getData());
+                writeByteArrayToFile(out, data);
+            }
         }
     }
 
-    public void fill(Content content) throws Exception {
+    public void fill(Content content, boolean addFiles) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
                 for (Path file : dirStream) {
                     Base64File f = new Base64File();
                     f.setPath(file.getFileName().toString());
-                    byte[] data = readFileToByteArray(file.toFile());
-                    f.setData(new String(ENCODER.encode(data)));
+                    if (addFiles) {
+                        byte[] data = readFileToByteArray(file.toFile());
+                        f.setData(new String(ENCODER.encode(data)));
+                    }
                     content.getFiles().add(f);
+                }
+            }
+        }
+    }
+
+    private void clean(Content content) throws Exception {
+        Path dir = Paths.get(location(content).getPath());
+        if (exists(dir)) {
+            try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
+                for (Path file : dirStream) {
+                    if (content.getFiles().stream().map(Base64File::getPath).noneMatch(file.getFileName().toString()::equals)) {
+                        delete(file);
+                        if (file.getParent().toFile().list().length == 0) {
+                            delete(file.getParent());
+                        }
+                    }
                 }
             }
         }

@@ -14,6 +14,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 export default requestHandler => (type, resource, params) => {
     if (type === UPDATE || type === CREATE) {
 
+        const formerFiles = params.data.files ? params.data.files.filter(f => !(f.rawFile instanceof File)) : [];
         const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`) instanceof File);
 
         return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
@@ -35,7 +36,8 @@ export default requestHandler => (type, resource, params) => {
                         ...replaceFiles(params.data, transformedNewFiles),
                         ...replaceSrc(resource, params, transformedNewFiles),
                         files: [
-                            ...transformedNewFiles.map(({data, path}) => ({data, path}))
+                            ...transformedNewFiles.map(({data, path}) => ({data, path})),
+                            ...formerFiles.map(({title}) => ({path: title}))
                         ],
                     },
                 })
@@ -43,7 +45,7 @@ export default requestHandler => (type, resource, params) => {
     } else if (type === GET_ONE) {
 
         return requestHandler(type, resource, params).then(response => {
-            analyzeSrc(response.data);
+            analyzeSrc(resource, params.id, response.data);
             analyzeFiles(resource, params.id, response.data);
             return response;
         });
@@ -53,23 +55,17 @@ export default requestHandler => (type, resource, params) => {
 };
 
 const analyzeFiles = (resource, id, data) => {
-    dumpKeysRecursively(data).filter(key => /^[a-f0-9]{32}\..+$/.test(get(data, key))).forEach(key => {
-        const f = `/static/${resource}/${id}/${get(data, key)}`;
-        set(data, key, {src: f, title: f});
-    });
+    dumpKeysRecursively(data)
+        .filter(key => key.substring(0, 5) !== "files")
+        .filter(key => /^[a-f0-9]{32}\..+$/.test(get(data, key)))
+        .forEach(key => {
+            const name = get(data, key);
+            set(data, key, {src: `/static/${resource}/${id}/${name}`, title: name});
+        });
 };
 
-const analyzeSrc = data => {
-    const s = JSON.stringify(data);
-    const set = new Set();
-    const exp = /(\/static\/.*?[a-f0-9]{32}\..+?)[^\w]/g;
-    let result;
-    while ((result = exp.exec(s)) !== null) {
-        set.add(result[1]);
-    }
-    set.forEach(f => {
-        data.files.push({src: f, title: f});
-    });
+const analyzeSrc = (resource, id, data) => {
+    data.files = data.files.map(f => ({src: `/static/${resource}/${id}/${f.path}`, title: f.path}));
 };
 
 const replaceFiles = (data, files) => {
