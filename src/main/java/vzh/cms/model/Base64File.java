@@ -10,5 +10,5 @@ public class Base64File {
 
     private String data;
 
-    private String path;
+    private String name;
 }

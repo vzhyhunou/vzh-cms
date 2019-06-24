@@ -61,7 +61,7 @@ describe('upload', () => {
                 content: "",
                 files: [
                     {
-                        path: "900150983cd24fb0d6963f7d28e17f72.png"
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ]
             }
@@ -121,7 +121,7 @@ describe('upload', () => {
                 files: [
                     {
                         data: "abc",
-                        path: "900150983cd24fb0d6963f7d28e17f72.png"
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
@@ -154,7 +154,7 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        path: "900150983cd24fb0d6963f7d28e17f73.png"
+                        name: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png"

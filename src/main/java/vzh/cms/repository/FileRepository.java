@@ -41,7 +41,7 @@ public class FileRepository {
         File dir = location(content);
         for (Base64File file : content.getFiles()) {
             if (file.getData() != null) {
-                File out = new File(dir, file.getPath());
+                File out = new File(dir, file.getName());
                 byte[] data = DECODER.decode(file.getData());
                 writeByteArrayToFile(out, data);
             }
@@ -54,7 +54,7 @@ public class FileRepository {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
                 for (Path file : dirStream) {
                     Base64File f = new Base64File();
-                    f.setPath(file.getFileName().toString());
+                    f.setName(file.getFileName().toString());
                     if (addFiles) {
                         byte[] data = readFileToByteArray(file.toFile());
                         f.setData(new String(ENCODER.encode(data)));
@@ -70,7 +70,7 @@ public class FileRepository {
         if (exists(dir)) {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
                 for (Path file : dirStream) {
-                    if (content.getFiles().stream().map(Base64File::getPath).noneMatch(file.getFileName().toString()::equals)) {
+                    if (content.getFiles().stream().map(Base64File::getName).noneMatch(file.getFileName().toString()::equals)) {
                         delete(file);
                         if (file.getParent().toFile().list().length == 0) {
                             delete(file.getParent());
