@@ -14,6 +14,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 export default requestHandler => (type, resource, params) => {
     if (type === UPDATE || type === CREATE) {
 
+        const formerFiles = params.data.files ? params.data.files.filter(f => !(f.rawFile instanceof File)) : [];
         const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`) instanceof File);
 
         return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
@@ -24,7 +25,7 @@ export default requestHandler => (type, resource, params) => {
             })))
             .then(base64Files => base64Files.map(({type, ...rest}) => ({
                 ...rest,
-                path: `${md5(rest.data)}.${type}`,
+                name: `${md5(rest.data)}.${type}`,
                 preview: get(params.data, `${rest.key}.rawFile.preview`)
             })))
             .then(process)
@@ -35,7 +36,8 @@ export default requestHandler => (type, resource, params) => {
                         ...replaceFiles(params.data, transformedNewFiles),
                         ...replaceSrc(resource, params, transformedNewFiles),
                         files: [
-                            ...transformedNewFiles.map(({data, path}) => ({data, path}))
+                            ...transformedNewFiles.map(({data, name}) => ({data, name})),
+                            ...formerFiles.map(({title}) => ({name: title}))
                         ],
                     },
                 })
@@ -43,7 +45,7 @@ export default requestHandler => (type, resource, params) => {
     } else if (type === GET_ONE) {
 
         return requestHandler(type, resource, params).then(response => {
-            analyzeSrc(response.data);
+            analyzeSrc(resource, params.id, response.data);
             analyzeFiles(resource, params.id, response.data);
             return response;
         });
@@ -53,27 +55,21 @@ export default requestHandler => (type, resource, params) => {
 };
 
 const analyzeFiles = (resource, id, data) => {
-    dumpKeysRecursively(data).filter(key => /^[a-f0-9]{32}\..+$/.test(get(data, key))).forEach(key => {
-        const f = `/static/${resource}/${id}/${get(data, key)}`;
-        set(data, key, {src: f, title: f});
-    });
+    dumpKeysRecursively(data)
+        .filter(key => key.substring(0, 5) !== "files")
+        .filter(key => /^[a-f0-9]{32}\..+$/.test(get(data, key)))
+        .forEach(key => {
+            const name = get(data, key);
+            set(data, key, {src: `/static/${resource}/${id}/${name}`, title: name});
+        });
 };
 
-const analyzeSrc = data => {
-    const s = JSON.stringify(data);
-    const set = new Set();
-    const exp = /(\/static\/.*?[a-f0-9]{32}\..+?)[^\w]/g;
-    let result;
-    while ((result = exp.exec(s)) !== null) {
-        set.add(result[1]);
-    }
-    set.forEach(f => {
-        data.files.push({src: f, title: f});
-    });
+const analyzeSrc = (resource, id, data) => {
+    data.files = data.files.map(f => ({src: `/static/${resource}/${id}/${f.name}`, title: f.name}));
 };
 
 const replaceFiles = (data, files) => {
-    files.forEach(file => file.keys.forEach(key => set(data, key, file.path)));
+    files.forEach(file => file.keys.forEach(key => set(data, key, file.name)));
     return data;
 };
 
@@ -81,7 +77,7 @@ const replaceSrc = (resource, params, files) => {
     let data = JSON.stringify(params.data);
     files.forEach(file => file.previews.forEach(preview => data = data.replace(
         new RegExp(preview, 'g'),
-        `/static/${resource}/${params.id}/${file.path}`
+        `/static/${resource}/${params.id}/${file.name}`
     )));
     return JSON.parse(data);
 };
@@ -89,14 +85,14 @@ const replaceSrc = (resource, params, files) => {
 const process = files => {
     const map = new Map();
     files.forEach(file => {
-        let f = map.get(file.path);
+        let f = map.get(file.name);
         if (!f) {
             f = {
                 ...file,
                 keys: [],
                 previews: []
             };
-            map.set(file.path, f);
+            map.set(file.name, f);
         }
         f.keys.push(file.key);
         f.previews.push(file.preview);

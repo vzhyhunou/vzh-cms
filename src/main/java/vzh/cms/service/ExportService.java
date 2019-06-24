@@ -61,7 +61,7 @@ public class ExportService {
             dir.mkdirs();
             for (Object entity : getEntities(type)) {
                 if (entity instanceof Content) {
-                    fileRepository.fill((Content) entity);
+                    fileRepository.fill((Content) entity, true);
                 }
                 String id = BeanUtils.getProperty(entity, "id");
                 File out = new File(dir, String.format("%s.json", id));
