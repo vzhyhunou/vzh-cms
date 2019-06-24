@@ -65,7 +65,7 @@ public class FileRepository {
         }
     }
 
-    private void clean(Content content) throws Exception {
+    public void clean(Content content) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
