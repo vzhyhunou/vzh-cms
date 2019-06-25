@@ -7,7 +7,6 @@ import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
 import vzh.cms.model.Tag;
 import vzh.cms.projection.RowPage;
-import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,7 +16,6 @@ import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -43,21 +41,6 @@ public class PageService extends ContentService<Page> {
             Root<Page> p = subquery.from(Page.class);
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowPage.class, lang, pageable);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<TitlePage> menu(String lang) {
-        return repository.findAll((root, q, b) -> {
-                    MapJoin properties = (MapJoin) root.fetch("properties");
-                    Join tags = (Join) root.fetch("tags");
-                    return b.and(
-                            tags.get("name").in("MENU"),
-                            active(b, tags.get("start"), tags.get("end")),
-                            b.equal(properties.key(), lang)
-                    );
-                },
-                TitlePage.class
-        );
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {

@@ -262,14 +262,14 @@ public class PageServiceTest extends RepositoryTest {
     }
 
     @Test
-    public void menu() {
+    public void listByActiveTags() {
 
         persist(pageByTags("home"));
         persist(pageByTags("sample", tag("MENU")));
         persist(pageByTags("sample1", delayedTag("MENU")));
         persist(pageByTags("sample2", expiredTag("MENU")));
 
-        List<TitlePage> results = service.menu("en");
+        List<TitlePage> results = service.listByActiveTags("en", TitlePage.class, "MENU");
 
         assertThat(results).isNotNull();
         assertThat(results).extracting(TitlePage::getId).containsOnlyOnce("sample");
