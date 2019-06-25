@@ -70,7 +70,9 @@ public class FileRepository {
         if (exists(dir)) {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
                 for (Path file : dirStream) {
-                    if (content.getFiles().stream().map(Base64File::getName).noneMatch(file.getFileName().toString()::equals)) {
+                    if (content.getFiles().stream()
+                            .map(Base64File::getName)
+                            .noneMatch(file.getFileName().toString()::equals)) {
                         delete(file);
                         if (file.getParent().toFile().list().length == 0) {
                             delete(file.getParent());

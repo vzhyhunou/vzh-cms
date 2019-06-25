@@ -44,7 +44,7 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu(Locale locale) {
-        return service.menu(locale.getLanguage());
+        return service.listByActiveTags(locale.getLanguage(), TitlePage.class, "MENU");
     }
 
     @ResponseBody
