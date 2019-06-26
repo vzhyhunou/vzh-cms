@@ -7,11 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
 
 import LocaleInput from './LocaleInput';
+import WithPermissions from './WithPermissions';
 
 const drawerWidth = 240;
 
@@ -63,12 +65,22 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
                 Project
             </Typography>
             <LocaleInput/>
-            <IconButton
-                color="inherit"
-                href={`/admin${location.pathname}`}
-            >
-                <EditIcon/>
-            </IconButton>
+            <WithPermissions>
+                {permissions => permissions.includes('ROLE_EDITOR')
+                    ? <IconButton
+                        color="inherit"
+                        href={`/admin${location.pathname}`}
+                    >
+                        <EditIcon/>
+                    </IconButton>
+                    : <IconButton
+                        color="inherit"
+                        href="/admin"
+                    >
+                        <AccountCircle/>
+                    </IconButton>
+                }
+            </WithPermissions>
             <IconButton
                 color="inherit"
                 onClick={handleDrawerOpen}
