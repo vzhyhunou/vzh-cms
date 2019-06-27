@@ -143,6 +143,28 @@ describe('upload', () => {
         });
     });
 
+    it('no files in response', () => {
+        expect.assertions(2);
+
+        const request = {
+            id: 'sample'
+        };
+
+        const response = {
+            data: {}
+        };
+        const expectedResponse = {
+            data: {}
+        };
+
+        return addUploadFeature((type, resource, params) => new Promise(resolve => {
+            expect(params).toEqual(request);
+            resolve(response);
+        }))(GET_ONE, 'items', request).then(r => {
+            expect(r).toEqual(expectedResponse);
+        });
+    });
+
     it('should modify response data', () => {
         expect.assertions(2);
 
@@ -154,7 +176,7 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        name: "900150983cd24fb0d6963f7d28e17f73.png"
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -164,8 +186,8 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png",
-                        title: "900150983cd24fb0d6963f7d28e17f73.png"
+                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {

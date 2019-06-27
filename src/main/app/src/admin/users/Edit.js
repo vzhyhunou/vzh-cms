@@ -3,7 +3,7 @@ import {DateField, Edit, FormTab, ReferenceField, TabbedForm, TextField, TextInp
 
 import TagsInput from '../input/TagsInput';
 
-export default (props) =>
+export default props =>
     <Edit {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
