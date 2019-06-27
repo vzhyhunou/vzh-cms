@@ -65,7 +65,9 @@ const analyzeFiles = (resource, id, data) => {
 };
 
 const analyzeSrc = (resource, id, data) => {
-    data.files = data.files.map(f => ({src: `/static/${resource}/${id}/${f.name}`, title: f.name}));
+    if (data.files) {
+        data.files = data.files.map(f => ({src: `/static/${resource}/${id}/${f.name}`, title: f.name}));
+    }
 };
 
 const replaceFiles = (data, files) => {

@@ -143,6 +143,28 @@ describe('upload', () => {
         });
     });
 
+    it('no files in response', () => {
+        expect.assertions(2);
+
+        const request = {
+            id: 'sample'
+        };
+
+        const response = {
+            data: {}
+        };
+        const expectedResponse = {
+            data: {}
+        };
+
+        return addUploadFeature((type, resource, params) => new Promise(resolve => {
+            expect(params).toEqual(request);
+            resolve(response);
+        }))(GET_ONE, 'items', request).then(r => {
+            expect(r).toEqual(expectedResponse);
+        });
+    });
+
     it('should modify response data', () => {
         expect.assertions(2);
 
