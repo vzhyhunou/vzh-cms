@@ -14,8 +14,8 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 export default requestHandler => (type, resource, params) => {
     if (type === UPDATE || type === CREATE) {
 
-        const formerFiles = params.data.files ? params.data.files.filter(f => !(f.rawFile instanceof File)) : [];
-        const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`) instanceof File);
+        const formerFiles = params.data.files ? params.data.files.filter(f => !f.rawFile) : [];
+        const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`));
 
         return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
             .then(base64Files => base64Files.map((picture64, index) => ({
