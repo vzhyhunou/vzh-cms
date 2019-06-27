@@ -176,7 +176,7 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        name: "900150983cd24fb0d6963f7d28e17f73.png"
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -186,8 +186,8 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f73.png",
-                        title: "900150983cd24fb0d6963f7d28e17f73.png"
+                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
