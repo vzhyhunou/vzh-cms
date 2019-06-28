@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
@@ -66,18 +67,25 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
             </Typography>
             <LocaleInput/>
             <WithPermissions>
-                {permissions => permissions.includes('ROLE_EDITOR')
-                    ? <IconButton
-                        color="inherit"
-                        href={`/admin${location.pathname}`}
-                    >
-                        <EditIcon/>
-                    </IconButton>
+                {permissions => permissions
+                    ? permissions.includes('ROLE_EDITOR')
+                        ? <IconButton
+                            color="inherit"
+                            href={`/admin${location.pathname}`}
+                        >
+                            <EditIcon/>
+                        </IconButton>
+                        : <IconButton
+                            color="inherit"
+                            href="/admin"
+                        >
+                            <DashboardIcon/>
+                        </IconButton>
                     : <IconButton
                         color="inherit"
                         href="/admin"
                     >
-                        <AccountCircle/>
+                        <AccountCircleIcon/>
                     </IconButton>
                 }
             </WithPermissions>
