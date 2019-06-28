@@ -5,15 +5,15 @@ import authProvider from './auth';
 
 export default ({children}) => {
 
-    const [permissions, setPermissions] = useState();
+    const [values, setValues] = useState();
 
     useEffect(() => {
 
-        authProvider(AUTH_GET_PERMISSIONS).then(setPermissions, roles => setPermissions([]));
+        authProvider(AUTH_GET_PERMISSIONS).then(roles => setValues({roles}), () => setValues({}));
     }, []);
 
-    if (!permissions)
+    if (!values)
         return <div/>;
 
-    return children(permissions);
+    return children(values.roles);
 };
