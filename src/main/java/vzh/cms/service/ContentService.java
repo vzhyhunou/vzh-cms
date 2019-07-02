@@ -8,7 +8,7 @@ import javax.persistence.criteria.MapJoin;
 import java.util.List;
 import java.util.Optional;
 
-abstract class ContentService<T extends Content> extends BaseService {
+abstract public class ContentService<T extends Content> extends BaseService {
 
     protected ContentRepository<T> repository;
 
