@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class BaseService {
+abstract public class BaseService {
 
     protected static Predicate like(CriteriaBuilder b, Expression<String> expression, String field) {
         return Optional.ofNullable(field)
