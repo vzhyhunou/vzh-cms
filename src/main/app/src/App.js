@@ -6,6 +6,7 @@ import Loading from './admin/layout/Loading';
 
 import locales from './commons/locales';
 import Layout from './commons/Layout';
+import resources from './admin/resources';
 
 export default () => {
 
@@ -19,7 +20,7 @@ export default () => {
             <Suspense fallback={<Loading/>}>
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
-                    <Route path="/admin" render={() => <Admin/>}/>
+                    <Route path="/admin" render={() => <Admin resources={resources}/>}/>
                     <Route component={Layout}/>
                 </Switch>
             </Suspense>
