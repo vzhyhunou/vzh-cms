@@ -1,12 +1,10 @@
 package vzh.cms.processor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
+import vzh.cms.consumer.FilesContentConsumer;
 import vzh.cms.model.Content;
-import vzh.cms.repository.FileRepository;
 
 /**
  * @author Viktar Zhyhunou
@@ -14,21 +12,15 @@ import vzh.cms.repository.FileRepository;
 @Component
 public class ContentResourceProcessor implements ResourceProcessor<Resource<Content>> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ContentResourceProcessor.class);
+    private FilesContentConsumer<Content> consumer;
 
-    private FileRepository repository;
-
-    public ContentResourceProcessor(FileRepository repository) {
-        this.repository = repository;
+    public ContentResourceProcessor(FilesContentConsumer<Content> consumer) {
+        this.consumer = consumer;
     }
 
     @Override
     public Resource<Content> process(Resource<Content> resource) {
-        try {
-            repository.fill(resource.getContent(), false);
-        } catch (Exception e) {
-            LOG.warn("Content won't be filled: {}", e.getMessage());
-        }
+        consumer.accept(resource.getContent());
         return resource;
     }
 }
