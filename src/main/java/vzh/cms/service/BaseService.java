@@ -11,13 +11,17 @@ import java.util.Optional;
  */
 abstract public class BaseService {
 
+    protected static Predicate equal(CriteriaBuilder b, Expression<Number> expression, Number field) {
+        return field.intValue() > 0 ? b.equal(expression, field) : null;
+    }
+
     protected static Predicate like(CriteriaBuilder b, Expression<String> expression, String field) {
         return Optional.ofNullable(field)
                 .map(f -> b.like(b.lower(expression), String.format("%%%s%%", f.toLowerCase())))
                 .orElse(null);
     }
 
-    protected static Predicate in(Expression<String[]> expression, Object[] fields) {
+    protected static Predicate in(Expression<Object[]> expression, Object[] fields) {
         return Optional.ofNullable(fields)
                 .map(f -> expression.in(fields))
                 .orElse(null);
