@@ -20,8 +20,11 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
     private EntityManager manager;
 
-    public AuthenticationDetailsService(EntityManager manager) {
+    private ActiveTagsItemConsumer<User> consumer;
+
+    public AuthenticationDetailsService(EntityManager manager, ActiveTagsItemConsumer<User> consumer) {
         this.manager = manager;
+        this.consumer = consumer;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
         User user = manager.find(User.class, id);
         if (user != null) {
-            new ActiveTagsItemConsumer<>().accept(user);
+            consumer.accept(user);
             return new org.springframework.security.core.userdetails.User(
                     user.getId(),
                     user.getPassword(),
