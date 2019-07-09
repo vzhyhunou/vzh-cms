@@ -15,7 +15,7 @@ import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.user;
 import static vzh.cms.model.User.BCRYPT_PATTERN;
 
-@Import(AuthenticationDetailsService.class)
+@Import({TestConfiguration.class, AuthenticationDetailsService.class})
 public class AuthenticationDetailsServiceTest extends BaseTest {
 
     private static final String ID = "id";
