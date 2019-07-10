@@ -69,7 +69,7 @@ export default requestHandler => (type, resource, params) => {
 
 const analyzeFiles = (resource, id, files, data) => {
     files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
-        src: `/static/${resource}/${id}/${name}`,
+        src: `/static/origin/${resource}/${id}/${name}`,
         title: name
     })));
     return data;
@@ -84,7 +84,7 @@ const replaceSrc = (resource, {data, id}, files) => {
     let s = JSON.stringify(data);
     files.forEach(({name, previews}) => previews.forEach(preview => s = s.replace(
         new RegExp(preview, 'g'),
-        `/static/${resource}/${id}/${name}`
+        `/static/origin/${resource}/${id}/${name}`
     )));
     return JSON.parse(s);
 };

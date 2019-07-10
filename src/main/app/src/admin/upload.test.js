@@ -48,7 +48,7 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
@@ -125,9 +125,9 @@ describe('upload', () => {
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
-                content: "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         };
 
@@ -186,12 +186,12 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
-                    src: "/static/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 }
             }
