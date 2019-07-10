@@ -1,5 +1,6 @@
 package vzh.cms.repository;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,7 @@ public class FileRepository {
 
     private ResourceMappings mappings;
 
-    public FileRepository(CmsProperties properties, ResourceMappings mappings) {
+    public FileRepository(CmsProperties properties, @Lazy ResourceMappings mappings) {
         this.path = properties.getFiles().getPath();
         this.mappings = mappings;
     }
@@ -65,6 +66,7 @@ public class FileRepository {
         }
     }
 
+    @SuppressWarnings("all")
     public void clean(Content content) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (exists(dir)) {
