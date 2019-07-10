@@ -1,5 +1,6 @@
 package vzh.cms.repository;
 
+import vzh.cms.consumer.FilesContentConsumer;
 import vzh.cms.model.Page;
 
 import javax.persistence.EntityManager;
@@ -9,7 +10,7 @@ import javax.persistence.EntityManager;
  */
 public class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> {
 
-    public PageRepositoryImpl(EntityManager manager) {
-        super(Page.class, manager);
+    public PageRepositoryImpl(EntityManager manager, FilesContentConsumer filesContentConsumer) {
+        super(Page.class, manager, filesContentConsumer);
     }
 }

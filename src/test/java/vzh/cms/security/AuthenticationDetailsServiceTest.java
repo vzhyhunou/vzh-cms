@@ -4,10 +4,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import vzh.cms.consumer.ActiveTagsItemConsumer;
 import vzh.cms.repository.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +22,9 @@ public class AuthenticationDetailsServiceTest extends BaseTest {
 
     private static final String ID = "id";
     private static final String NAME = "name";
+
+    @MockBean
+    private ActiveTagsItemConsumer activeTagsItemConsumer;
 
     @Autowired
     private AuthenticationDetailsService service;

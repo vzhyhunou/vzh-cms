@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import vzh.cms.consumer.ActiveTagsItemConsumer;
+import vzh.cms.model.Item;
 import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 
@@ -20,8 +21,11 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
     private EntityManager manager;
 
-    public AuthenticationDetailsService(EntityManager manager) {
+    private ActiveTagsItemConsumer<Item> consumer;
+
+    public AuthenticationDetailsService(EntityManager manager, ActiveTagsItemConsumer<Item> consumer) {
         this.manager = manager;
+        this.consumer = consumer;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
         User user = manager.find(User.class, id);
         if (user != null) {
-            new ActiveTagsItemConsumer<>().accept(user);
+            consumer.accept(user);
             return new org.springframework.security.core.userdetails.User(
                     user.getId(),
                     user.getPassword(),
