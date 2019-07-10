@@ -32,7 +32,7 @@ const mapStateToProps = (state, {locales}) => {
     const {location} = state.router;
     if (!location) return {};
 
-    const name = `properties.${Object.keys(locales)[location.pathname.split('/')[3] - 1]}.content`;
+    const name = `properties.${Object.keys(locales)[location.pathname.split('/')[3] - 2]}.content`;
     return {
         name,
         content: selector(state, name)
