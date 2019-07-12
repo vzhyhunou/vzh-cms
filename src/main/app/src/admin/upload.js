@@ -1,4 +1,4 @@
-import {CREATE, GET_ONE, UPDATE} from 'react-admin';
+import {CREATE, GET_LIST, GET_ONE, UPDATE} from 'react-admin';
 import {dumpKeysRecursively} from 'recursive-keys';
 import get from 'lodash/get';
 import set from 'lodash/set';
@@ -44,32 +44,40 @@ export default requestHandler => (type, resource, params) => {
             );
     } else if (type === GET_ONE) {
 
-        return requestHandler(type, resource, params).then(response => {
+        return requestHandler(type, resource, params).then(response => ({
+            ...response,
+            data: analyze(resource, response.data)
+        }));
+    } else if (type === GET_LIST) {
 
-            if (!response.data.files) return response;
-
-            const files = response.data.files.map(({name}) => ({
-                name,
-                keys: dumpKeysRecursively(response.data).filter(key => get(response.data, key) === name)
-            }));
-            const data = analyzeFiles(resource, params.id, files, response.data);
-
-            return {
-                ...response,
-                data: {
-                    ...data,
-                    files: data.files.map(({name}) => name)
-                }
-            };
-        });
+        return requestHandler(type, resource, params).then(response => ({
+            ...response,
+            data: response.data.map(item => analyze(resource, item))
+        }));
     }
 
     return requestHandler(type, resource, params);
 };
 
-const analyzeFiles = (resource, id, files, data) => {
+const analyze = (resource, item) => {
+
+    if (!item.files) return item;
+
+    const files = item.files.map(({name}) => ({
+        name,
+        keys: dumpKeysRecursively(item).filter(key => get(item, key) === name)
+    }));
+    const analyzed = analyzeFiles(resource, files, item);
+
+    return {
+        ...analyzed,
+        files: analyzed.files.map(({name}) => name)
+    };
+};
+
+const analyzeFiles = (resource, files, data) => {
     files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
-        src: `/static/origin/${resource}/${id}/${name}`,
+        src: `/static/origin/${resource}/${data.id}/${name}`,
         title: name
     })));
     return data;
