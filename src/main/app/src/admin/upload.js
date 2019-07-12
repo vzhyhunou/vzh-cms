@@ -46,20 +46,20 @@ export default requestHandler => (type, resource, params) => {
 
         return requestHandler(type, resource, params).then(response => ({
             ...response,
-            data: analyze(resource, params.id, response.data)
+            data: analyze(resource, response.data)
         }));
     } else if (type === GET_LIST) {
 
         return requestHandler(type, resource, params).then(response => ({
             ...response,
-            data: response.data.map(item => analyze(resource, params.id, item))
+            data: response.data.map(item => analyze(resource, item))
         }));
     }
 
     return requestHandler(type, resource, params);
 };
 
-const analyze = (resource, id, item) => {
+const analyze = (resource, item) => {
 
     if (!item.files) return item;
 
@@ -67,7 +67,7 @@ const analyze = (resource, id, item) => {
         name,
         keys: dumpKeysRecursively(item).filter(key => get(item, key) === name)
     }));
-    const analyzed = analyzeFiles(resource, id, files, item);
+    const analyzed = analyzeFiles(resource, files, item);
 
     return {
         ...analyzed,
@@ -75,9 +75,9 @@ const analyze = (resource, id, item) => {
     };
 };
 
-const analyzeFiles = (resource, id, files, data) => {
+const analyzeFiles = (resource, files, data) => {
     files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
-        src: `/static/origin/${resource}/${id}/${name}`,
+        src: `/static/origin/${resource}/${data.id}/${name}`,
         title: name
     })));
     return data;

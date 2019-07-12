@@ -28,9 +28,7 @@ describe('upload', () => {
             }
         };
 
-        const response = {
-            data: {}
-        };
+        const response = {};
 
         return addUploadFeature((type, resource, params) => new Promise(resolve => {
             expect(params).toEqual(expectedRequest);
@@ -67,9 +65,7 @@ describe('upload', () => {
             }
         };
 
-        const response = {
-            data: {}
-        };
+        const response = {};
 
         return addUploadFeature((type, resource, params) => new Promise(resolve => {
             expect(params).toEqual(expectedRequest);
@@ -131,9 +127,7 @@ describe('upload', () => {
             }
         };
 
-        const response = {
-            data: {}
-        };
+        const response = {};
 
         return addUploadFeature((type, resource, params) => new Promise(resolve => {
             expect(params).toEqual(expectedRequest);
@@ -146,9 +140,7 @@ describe('upload', () => {
     it('no files in response', () => {
         expect.assertions(2);
 
-        const request = {
-            id: 'sample'
-        };
+        const request = {};
 
         const response = {
             data: {}
@@ -168,12 +160,11 @@ describe('upload', () => {
     it('should modify response item', () => {
         expect.assertions(2);
 
-        const request = {
-            id: 'sample'
-        };
+        const request = {};
 
         const response = {
             data: {
+                id: 'sample',
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -184,6 +175,7 @@ describe('upload', () => {
         };
         const expectedResponse = {
             data: {
+                id: 'sample',
                 files: [
                     {
                         src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
@@ -208,12 +200,11 @@ describe('upload', () => {
     it('should modify response items', () => {
         expect.assertions(2);
 
-        const request = {
-            id: 'sample'
-        };
+        const request = {};
 
         const response = {
             data: [{
+                id: 'sample',
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -224,6 +215,7 @@ describe('upload', () => {
         };
         const expectedResponse = {
             data: [{
+                id: 'sample',
                 files: [
                     {
                         src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
