@@ -1,4 +1,4 @@
-import {CREATE, GET_ONE,} from 'react-admin';
+import {CREATE, GET_LIST, GET_ONE} from 'react-admin';
 
 import addUploadFeature from './upload';
 
@@ -165,7 +165,7 @@ describe('upload', () => {
         });
     });
 
-    it('should modify response data', () => {
+    it('should modify response item', () => {
         expect.assertions(2);
 
         const request = {
@@ -201,6 +201,46 @@ describe('upload', () => {
             expect(params).toEqual(request);
             resolve(response);
         }))(GET_ONE, 'items', request).then(r => {
+            expect(r).toEqual(expectedResponse);
+        });
+    });
+
+    it('should modify response items', () => {
+        expect.assertions(2);
+
+        const request = {
+            id: 'sample'
+        };
+
+        const response = {
+            data: [{
+                files: [
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ],
+                file: "900150983cd24fb0d6963f7d28e17f72.png"
+            }]
+        };
+        const expectedResponse = {
+            data: [{
+                files: [
+                    {
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ],
+                file: {
+                    src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    title: "900150983cd24fb0d6963f7d28e17f72.png"
+                }
+            }]
+        };
+
+        return addUploadFeature((type, resource, params) => new Promise(resolve => {
+            expect(params).toEqual(request);
+            resolve(response);
+        }))(GET_LIST, 'items', request).then(r => {
             expect(r).toEqual(expectedResponse);
         });
     });
