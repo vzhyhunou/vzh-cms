@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends ContentService<Page> {
+public class PageService extends ContentService<Page, PageRepository> {
 
     public PageService(PageRepository repository) {
         super(repository);
@@ -44,8 +44,7 @@ public class PageService extends ContentService<Page> {
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
-        MapJoin<Page, String, PageProperty> properties =
-                (MapJoin<Page, String, PageProperty>) root.<Page, PageProperty>join("properties", JoinType.LEFT);
+        MapJoin<Page, String, PageProperty> properties = root.joinMap("properties", JoinType.LEFT);
         Join<Page, Tag> tags = root.join("tags", JoinType.LEFT);
         return b.and(Stream.of(
                 like(b, root.get("id"), filter.getId()),
