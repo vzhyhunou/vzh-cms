@@ -34,13 +34,14 @@ public class PageService extends ContentService<Page, PageRepository> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
             } else {
-                root.fetch("properties", JoinType.LEFT);
+                MapJoin<Page, String, PageProperty> properties = root.joinMap("properties", JoinType.LEFT);
+                properties.on(b.equal(properties.key(), lang));
                 root.fetch("tags", JoinType.LEFT);
             }
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
             return root.in(subquery.select(p).where(filter(p, b, filter)));
-        }, RowPage.class, lang, pageable);
+        }, RowPage.class, pageable);
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {

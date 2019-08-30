@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author Viktar Zhyhunou
  */
 @PreAuthorize("hasRole('ROLE_EDITOR')")
-public interface PageRepository extends PagingAndSortingRepository<Page, String>, ContentRepository<Page> {
+public interface PageRepository extends PagingAndSortingRepository<Page, String>, Repository<Page> {
 
     @Override
     @PreAuthorize("permitAll")

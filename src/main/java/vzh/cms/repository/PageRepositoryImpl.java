@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
  */
 public class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> {
 
-    public PageRepositoryImpl(EntityManager manager, FilesContentConsumer filesContentConsumer) {
+    public PageRepositoryImpl(EntityManager manager, FilesContentConsumer<Page> filesContentConsumer) {
         super(Page.class, manager, filesContentConsumer);
     }
 }

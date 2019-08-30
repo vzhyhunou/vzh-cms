@@ -1,14 +1,14 @@
 package vzh.cms.service;
 
 import vzh.cms.model.Content;
-import vzh.cms.repository.ContentRepository;
+import vzh.cms.repository.Repository;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.MapJoin;
 import java.util.List;
 import java.util.Optional;
 
-abstract public class ContentService<T extends Content, R extends ContentRepository<T>> extends BaseService {
+abstract public class ContentService<T extends Content, R extends Repository<T>> extends BaseService {
 
     protected R repository;
 
