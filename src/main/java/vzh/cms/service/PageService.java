@@ -29,13 +29,12 @@ public class PageService extends ContentService<Page, PageRepository> {
         super(repository);
     }
 
-    public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, String lang, Pageable pageable) {
+    public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
             } else {
-                MapJoin<Page, String, PageProperty> properties = root.joinMap("properties", JoinType.LEFT);
-                properties.on(b.equal(properties.key(), lang));
+                root.fetch("properties", JoinType.LEFT);
                 root.fetch("tags", JoinType.LEFT);
             }
             Subquery<Page> subquery = q.subquery(Page.class);

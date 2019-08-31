@@ -1,5 +1,7 @@
 package vzh.cms.projection;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -12,5 +14,6 @@ public interface RowPage {
 
     Set<NameTag> getTags();
 
+    @Value("#{@langPropertiesFunction.apply(target.properties)}")
     Map<String, TitlePageProperty> getProperties();
 }
