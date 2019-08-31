@@ -11,7 +11,7 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @PreAuthorize("hasRole('ROLE_MANAGER')")
-public interface UserRepository extends PagingAndSortingRepository<User, String>, ItemRepository<User> {
+public interface UserRepository extends PagingAndSortingRepository<User, String>, Repository<User> {
 
     List<User> findByIdIn(@Param("ids") String[] ids);
 }

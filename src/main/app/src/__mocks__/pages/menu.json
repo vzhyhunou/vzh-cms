@@ -2,11 +2,7 @@
   "json": [
     {
       "id": "test id",
-      "properties": {
-        "x": {
-          "title": "test title"
-        }
-      }
+      "title": "test title"
     }
   ]
 }

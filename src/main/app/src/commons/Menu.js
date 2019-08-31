@@ -51,7 +51,7 @@ const Area = ({classes, open, handleDrawerClose, items}) =>
                     href={item.id}
                 >
                     <ListItemText
-                        primary={item.properties[Object.keys(item.properties)[0]].title}
+                        primary={item.title}
                     />
                 </ListItem>
             )}
