@@ -3,7 +3,7 @@ package vzh.cms.service;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import vzh.cms.consumer.LangPropertiesFunction;
+import vzh.cms.component.LangPropertiesFunction;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
 import vzh.cms.projection.NameTag;

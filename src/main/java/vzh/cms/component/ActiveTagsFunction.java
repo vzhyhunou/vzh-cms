@@ -1,4 +1,4 @@
-package vzh.cms.consumer;
+package vzh.cms.component;
 
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Tag;

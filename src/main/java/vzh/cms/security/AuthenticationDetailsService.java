@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import vzh.cms.consumer.ActiveTagsFunction;
+import vzh.cms.component.ActiveTagsFunction;
 import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 

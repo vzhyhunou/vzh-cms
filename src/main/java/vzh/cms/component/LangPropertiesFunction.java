@@ -1,4 +1,4 @@
-package vzh.cms.consumer;
+package vzh.cms.component;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;

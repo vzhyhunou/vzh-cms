@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import vzh.cms.consumer.ActiveTagsFunction;
+import vzh.cms.component.ActiveTagsFunction;
 import vzh.cms.repository.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
