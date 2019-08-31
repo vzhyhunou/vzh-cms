@@ -13,6 +13,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Set;
 
 import static java.nio.file.Files.*;
 import static org.apache.commons.beanutils.BeanUtils.getProperty;
@@ -49,7 +50,7 @@ public class FileRepository {
         }
     }
 
-    public void fill(Content content, boolean addFiles) throws Exception {
+    public Set<Base64File> fill(Content content, boolean addFiles) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> dirStream = newDirectoryStream(dir)) {
@@ -64,6 +65,7 @@ public class FileRepository {
                 }
             }
         }
+        return content.getFiles();
     }
 
     @SuppressWarnings("all")
