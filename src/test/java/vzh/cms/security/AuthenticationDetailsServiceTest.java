@@ -4,12 +4,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import vzh.cms.consumer.ActiveTagsItemConsumer;
+import vzh.cms.consumer.ActiveTagsFunction;
 import vzh.cms.repository.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,14 +16,11 @@ import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.user;
 import static vzh.cms.model.User.BCRYPT_PATTERN;
 
-@Import(AuthenticationDetailsService.class)
+@Import({AuthenticationDetailsService.class, ActiveTagsFunction.class})
 public class AuthenticationDetailsServiceTest extends BaseTest {
 
     private static final String ID = "id";
     private static final String NAME = "name";
-
-    @MockBean
-    private ActiveTagsItemConsumer activeTagsItemConsumer;
 
     @Autowired
     private AuthenticationDetailsService service;
@@ -66,6 +62,6 @@ public class AuthenticationDetailsServiceTest extends BaseTest {
         assertThat(result.getUsername()).isEqualTo(ID);
         assertThat(BCRYPT_PATTERN.matcher(result.getPassword()).matches()).isTrue();
         assertThat(result.getAuthorities()).isNotNull();
-        assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).containsOnlyOnce(NAME);
+        assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).containsOnly(NAME);
     }
 }
