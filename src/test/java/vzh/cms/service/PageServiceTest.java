@@ -275,6 +275,6 @@ public class PageServiceTest extends RepositoryTest {
 
         assertThat(results).isNotNull();
         assertThat(results).extracting(TitlePage::getId).containsOnly("sample");
-        assertThat(results).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(results).extracting(TitlePage::getTitle).containsOnly("sample.title");
     }
 }
