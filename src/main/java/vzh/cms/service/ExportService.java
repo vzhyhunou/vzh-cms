@@ -56,7 +56,7 @@ public class ExportService {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File path2 = new File(path, sdf.format(new Date()));
-        for (Class type : mappings.filter(ResourceMapping::isExported).map(ResourceMetadata::getDomainType)) {
+        for (Class<?> type : mappings.filter(ResourceMapping::isExported).map(ResourceMetadata::getDomainType)) {
             File dir = new File(path2, type.getCanonicalName());
             dir.mkdirs();
             for (Object entity : getEntities(type)) {
@@ -71,13 +71,12 @@ public class ExportService {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private Iterable getEntities(Class type) {
+    private <T> Iterable<T> getEntities(Class<T> type) {
         CriteriaBuilder cb = manager.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery(type);
-        Root rootEntry = cq.from(type);
-        CriteriaQuery all = cq.select(rootEntry);
-        TypedQuery allQuery = manager.createQuery(all);
+        CriteriaQuery<T> cq = cb.createQuery(type);
+        Root<T> rootEntry = cq.from(type);
+        CriteriaQuery<T> all = cq.select(rootEntry);
+        TypedQuery<T> allQuery = manager.createQuery(all);
         return allQuery.getResultList();
     }
 }
