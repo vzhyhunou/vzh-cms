@@ -25,11 +25,9 @@ export default {
                 date: 'Обновление',
                 userId: 'Пользователь',
                 tags: 'Теги',
-                properties: {
-                    ru: {
-                        title: 'Заголовок',
-                        content: 'Контент'
-                    }
+                property: {
+                    title: 'Заголовок',
+                    content: 'Контент'
                 },
                 files: 'Изображения'
             }

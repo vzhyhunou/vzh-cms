@@ -9,6 +9,7 @@ import vzh.cms.model.Page;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
+import vzh.cms.projection.TitlePageProperty;
 import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class PageServiceTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getProperty).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
 
         result = service.list(filter, page(1));
 
@@ -47,7 +48,7 @@ public class PageServiceTest extends RepositoryTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getProperty).extracting(TitlePageProperty::getTitle).containsOnly("sample.en.title");
     }
 
     @Test
@@ -64,7 +65,7 @@ public class PageServiceTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).contains("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getProperty).containsOnlyNulls();
 
         result = service.list(filter, page(1));
 
@@ -72,7 +73,7 @@ public class PageServiceTest extends RepositoryTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).contains("sample");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getProperty).containsOnlyNulls();
     }
 
     @Test
@@ -90,7 +91,7 @@ public class PageServiceTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getProperty).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
 
         result = service.list(filter, page(1));
 
@@ -115,7 +116,7 @@ public class PageServiceTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getProperty).containsOnlyNulls();
 
         result = service.list(filter, page(1));
 
@@ -140,7 +141,7 @@ public class PageServiceTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home");
-        assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
+        assertThat(content).extracting(RowPage::getProperty).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
 
         result = service.list(filter, page(1));
 
