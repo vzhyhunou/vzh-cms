@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import vzh.cms.component.ActiveTagsFunction;
-import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 
 import javax.persistence.EntityManager;
@@ -38,9 +37,7 @@ public class AuthenticationDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getId(),
                 user.getPassword(),
-                AuthorityUtils.createAuthorityList(
-                        function.apply(user.getTags()).stream().map(Tag::getName).toArray(String[]::new)
-                )
+                AuthorityUtils.createAuthorityList(function.apply(user).toArray(new String[]{}))
         );
     }
 }
