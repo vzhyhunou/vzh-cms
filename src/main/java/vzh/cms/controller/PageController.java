@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import vzh.cms.component.LangPropertiesFunction;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
 import vzh.cms.projection.RowPage;
@@ -29,9 +30,12 @@ public class PageController {
 
     private PagedResourcesAssembler<RowPage> assembler;
 
-    public PageController(PageService service, PagedResourcesAssembler<RowPage> assembler) {
+    private LangPropertiesFunction function;
+
+    public PageController(PageService service, PagedResourcesAssembler<RowPage> assembler, LangPropertiesFunction function) {
         this.service = service;
         this.assembler = assembler;
+        this.function = function;
     }
 
     @ResponseBody
@@ -48,7 +52,7 @@ public class PageController {
 
     @ResponseBody
     @GetMapping("search/one/{id}")
-    public Optional<Page> one(@PathVariable String id) {
-        return service.one(id);
+    public Optional<?> one(@PathVariable String id) {
+        return service.one(id).map(Page::getProperties).map(function);
     }
 }
