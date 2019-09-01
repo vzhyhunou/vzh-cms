@@ -3,8 +3,11 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.dto.UserFilter;
+import vzh.cms.model.Item_;
 import vzh.cms.model.Tag;
+import vzh.cms.model.Tag_;
 import vzh.cms.model.User;
+import vzh.cms.model.User_;
 import vzh.cms.projection.RowUser;
 import vzh.cms.repository.UserRepository;
 
@@ -34,7 +37,7 @@ public class UserService extends BaseService {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
             } else {
-                root.fetch("tags", JoinType.LEFT);
+                root.fetch(Item_.TAGS, JoinType.LEFT);
             }
             Subquery<User> subquery = q.subquery(User.class);
             Root<User> p = subquery.from(User.class);
@@ -43,10 +46,10 @@ public class UserService extends BaseService {
     }
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
-        Join<User, Tag> tags = root.join("tags", JoinType.LEFT);
+        Join<User, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
         return b.and(Stream.of(
-                like(b, root.get("id"), filter.getId()),
-                in(tags.get("name"), filter.getTags())
+                like(b, root.get(User_.id), filter.getId()),
+                in(tags.get(Tag_.name), filter.getTags())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }

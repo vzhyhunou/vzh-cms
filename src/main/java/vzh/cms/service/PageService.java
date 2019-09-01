@@ -3,9 +3,13 @@ package vzh.cms.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.dto.PageFilter;
+import vzh.cms.model.Item_;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
+import vzh.cms.model.PageProperty_;
+import vzh.cms.model.Page_;
 import vzh.cms.model.Tag;
+import vzh.cms.model.Tag_;
 import vzh.cms.projection.RowPage;
 import vzh.cms.repository.PageRepository;
 
@@ -34,8 +38,8 @@ public class PageService extends ContentService<Page, PageRepository> {
             if (Long.class == q.getResultType()) {
                 q.distinct(true);
             } else {
-                root.fetch("properties", JoinType.LEFT);
-                root.fetch("tags", JoinType.LEFT);
+                root.fetch(Page_.PROPERTIES, JoinType.LEFT);
+                root.fetch(Item_.TAGS, JoinType.LEFT);
             }
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
@@ -44,13 +48,13 @@ public class PageService extends ContentService<Page, PageRepository> {
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
-        MapJoin<Page, String, PageProperty> properties = root.joinMap("properties", JoinType.LEFT);
-        Join<Page, Tag> tags = root.join("tags", JoinType.LEFT);
+        MapJoin<Page, String, PageProperty> properties = root.joinMap(Page_.PROPERTIES, JoinType.LEFT);
+        Join<Page, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
         return b.and(Stream.of(
-                like(b, root.get("id"), filter.getId()),
-                in(tags.get("name"), filter.getTags()),
-                like(b, properties.value().get("title"), filter.getTitle()),
-                like(b, properties.value().get("content"), filter.getContent())
+                like(b, root.get(Page_.id), filter.getId()),
+                in(tags.get(Tag_.name), filter.getTags()),
+                like(b, properties.value().get(PageProperty_.title), filter.getTitle()),
+                like(b, properties.value().get(PageProperty_.content), filter.getContent())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }

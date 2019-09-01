@@ -2,6 +2,8 @@ package vzh.cms.service;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import vzh.cms.model.Content;
+import vzh.cms.model.Item_;
+import vzh.cms.model.Tag_;
 import vzh.cms.repository.Repository;
 
 import javax.persistence.criteria.Join;
@@ -17,14 +19,15 @@ abstract public class ContentService<T extends Content, R extends Repository<T>>
         this.repository = repository;
     }
 
-    public Optional<T> one(String id) {
+    public <E> Optional<E> one(String id, Class<E> type) {
         return repository.findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     return b.and(
                             b.equal(root.get("id"), id),
                             b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
                     );
-                }
+                },
+                type
         );
     }
 
@@ -32,10 +35,10 @@ abstract public class ContentService<T extends Content, R extends Repository<T>>
     public <E> List<E> listByActiveTags(Class<E> type, String... names) {
         return repository.findAll((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
-                    Join tags = (Join) root.fetch("tags");
+                    Join tags = (Join) root.fetch(Item_.TAGS);
                     return b.and(
-                            tags.get("name").in((Object[]) names),
-                            active(b, tags.get("start"), tags.get("end")),
+                            tags.get(Tag_.name).in((Object[]) names),
+                            active(b, tags),
                             b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
                     );
                 },
