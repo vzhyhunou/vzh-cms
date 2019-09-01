@@ -16,7 +16,7 @@ public interface PageRepository extends PagingAndSortingRepository<Page, String>
 
     @Override
     @PreAuthorize("permitAll")
-    Optional<Page> findOne(Specification<Page> specification);
+    <E> Optional<E> findOne(Specification<Page> specification, Class<E> type);
 
     @Override
     @PreAuthorize("permitAll")
