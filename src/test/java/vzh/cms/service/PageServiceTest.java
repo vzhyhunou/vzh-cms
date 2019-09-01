@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import vzh.cms.component.LangPropertiesFunction;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.Page;
 import vzh.cms.projection.NameTag;
+import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.projection.TitlePageProperty;
@@ -198,16 +198,16 @@ public class PageServiceTest extends RepositoryTest {
         persist(pageByLang("home", "en", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<Page> result = service.one("home");
+        Optional<PropertyPage> result = service.one("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
 
-        Page page = result.get();
+        PropertyPage page = result.get();
 
         assertThat(page).isNotNull();
-        assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getTitle()).isEqualTo("home.en.title");
+        assertThat(page.getContent()).isEqualTo("home.en.content");
     }
 
     @Test
@@ -215,7 +215,7 @@ public class PageServiceTest extends RepositoryTest {
 
         persist(pageByLang("sample"));
 
-        Optional<Page> result = service.one("home");
+        Optional<PropertyPage> result = service.one("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -227,7 +227,7 @@ public class PageServiceTest extends RepositoryTest {
         persist(pageByLang("home"));
         persist(pageByLang("sample"));
 
-        Optional<Page> result = service.one("home");
+        Optional<PropertyPage> result = service.one("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -239,16 +239,16 @@ public class PageServiceTest extends RepositoryTest {
         persist(pageByLang("home", "en"));
         persist(pageByLang("sample"));
 
-        Optional<Page> result = service.one("home");
+        Optional<PropertyPage> result = service.one("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
 
-        Page page = result.get();
+        PropertyPage page = result.get();
 
         assertThat(page).isNotNull();
-        assertThat(page.getId()).isEqualTo("home");
-        assertThat(page.getProperties().keySet()).containsOnly("en");
+        assertThat(page.getTitle()).isEqualTo("home.en.title");
+        assertThat(page.getContent()).isEqualTo("home.en.content");
     }
 
     @Test
@@ -257,7 +257,7 @@ public class PageServiceTest extends RepositoryTest {
         persist(pageByLang("home", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<Page> result = service.one("home");
+        Optional<PropertyPage> result = service.one("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();

@@ -11,6 +11,7 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +28,11 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
     @Autowired
     public void setBeanFactory(BeanFactory beanFactory) {
         factory.setBeanFactory(beanFactory);
+    }
+
+    @Override
+    public <E> Optional<E> findOne(Specification<T> specification, Class<E> type) {
+        return findOne(specification).map(e -> factory.createProjection(type, e));
     }
 
     @Override
