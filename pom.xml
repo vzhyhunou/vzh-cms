@@ -209,6 +209,7 @@
 								<goals>
 									<goal>npm</goal>
 								</goals>
+								<phase>compile</phase>
 								<configuration>
 									<arguments>start</arguments>
 								</configuration>
