@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends ContentService<Page, PageRepository> {
+public class PageService extends ContentService<Page, String, PageRepository> {
 
     public PageService(PageRepository repository) {
         super(repository);

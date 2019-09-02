@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements Repository<T> {
+abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T, ID> {
 
     private final SpelAwareProxyProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 

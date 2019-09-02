@@ -8,10 +8,11 @@ import vzh.cms.repository.Repository;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.MapJoin;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-abstract public class ContentService<T extends Content, R extends Repository<T>> extends BaseService {
+abstract public class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends BaseService {
 
     protected R repository;
 
