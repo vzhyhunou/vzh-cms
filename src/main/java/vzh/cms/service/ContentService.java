@@ -19,7 +19,7 @@ abstract public class ContentService<T extends Content, R extends Repository<T>>
         this.repository = repository;
     }
 
-    public <E> Optional<E> one(String id, Class<E> type) {
+    public <E> Optional<E> one(Object id, Class<E> type) {
         return repository.findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     return b.and(
