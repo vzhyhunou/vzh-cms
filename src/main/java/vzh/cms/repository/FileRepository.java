@@ -78,11 +78,11 @@ public class FileRepository {
                             .map(Base64File::getName)
                             .noneMatch(file.getFileName().toString()::equals)) {
                         delete(file);
-                        if (file.getParent().toFile().list().length == 0) {
-                            delete(file.getParent());
-                        }
                     }
                 }
+            }
+            if (dir.toFile().list().length == 0) {
+                delete(dir);
             }
         }
     }
