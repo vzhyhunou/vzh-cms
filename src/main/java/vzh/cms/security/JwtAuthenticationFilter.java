@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = Jwts.builder()
                 .setSubject(auth.getName())
                 .claim(
-                        "roles",
+                        properties.getRoles(),
                         auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())
                 )
                 .setIssuedAt(new Date(now))
