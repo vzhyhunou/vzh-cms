@@ -40,11 +40,11 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                         .parseClaimsJws(principal.replace(prefix, ""))
                         .getBody();
                 @SuppressWarnings("unchecked")
-                List<String> authorities = (List<String>) claims.get("roles");
+                List<String> authorities = (List<String>) claims.get(properties.getRoles());
                 return new org.springframework.security.core.userdetails.User(
                         claims.getSubject(),
                         "",
-                        AuthorityUtils.createAuthorityList(authorities.toArray(new String[authorities.size()]))
+                        AuthorityUtils.createAuthorityList(authorities.toArray(new String[]{}))
                 );
             }
         } catch (Exception e) {

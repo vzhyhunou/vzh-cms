@@ -51,7 +51,7 @@ public class UserServiceTest extends RepositoryTest {
         assertThat(result).isNotNull();
         List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
-        assertThat(content).extracting(RowUser::getId).containsOnly("admin");
+        assertThat(content).extracting(RowUser::getId).containsOnly("admin").containsOnlyOnce("admin");
         assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnly("a", "b");
 
         result = service.list(filter, page(1));

@@ -51,10 +51,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .antMatcher("/login")
-                .addFilter(jwtAuthenticationFilter())
-                .antMatcher("/**")
-                .addFilter(headerAuthenticationFilter())
+                .antMatcher("/login").addFilter(jwtAuthenticationFilter())
+                .antMatcher("/**").addFilter(headerAuthenticationFilter())
+                .authorizeRequests()
+                .antMatchers("/export").hasRole("ADMIN")
+                .antMatchers("/api/pages/search/one/**").permitAll()
+                .antMatchers("/api/pages/search/menu/**").permitAll()
+                .antMatchers("/api/users/**").hasRole("MANAGER")
+                .antMatchers("/api/pages/**").hasRole("EDITOR")
         ;
     }
 

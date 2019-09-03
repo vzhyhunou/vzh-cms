@@ -8,18 +8,17 @@ import vzh.cms.repository.Repository;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.MapJoin;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-abstract public class ContentService<T extends Content, R extends Repository<T>> extends BaseService {
+abstract public class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends ItemService<T, ID, R> {
 
-    protected R repository;
-
-    public ContentService(R repository) {
-        this.repository = repository;
+    protected ContentService(R repository) {
+        super(repository);
     }
 
-    public <E> Optional<E> one(String id, Class<E> type) {
+    public <E> Optional<E> one(Object id, Class<E> type) {
         return repository.findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     return b.and(

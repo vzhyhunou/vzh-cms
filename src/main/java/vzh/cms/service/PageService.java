@@ -1,5 +1,6 @@
 package vzh.cms.service;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vzh.cms.dto.PageFilter;
@@ -27,7 +28,7 @@ import java.util.stream.Stream;
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends ContentService<Page, PageRepository> {
+public class PageService extends ContentService<Page, String, PageRepository> {
 
     public PageService(PageRepository repository) {
         super(repository);
@@ -35,14 +36,19 @@ public class PageService extends ContentService<Page, PageRepository> {
 
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
-            if (Long.class == q.getResultType()) {
-                q.distinct(true);
-            } else {
-                root.fetch(Page_.PROPERTIES, JoinType.LEFT);
-                root.fetch(Item_.TAGS, JoinType.LEFT);
-            }
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
+            if (Long.class != q.getResultType()) {
+                MapJoin properties = (MapJoin) root.fetch(Page_.PROPERTIES, JoinType.LEFT);
+                root.fetch(Item_.TAGS, JoinType.LEFT);
+                return b.and(
+                        root.in(subquery.select(p).where(filter(p, b, filter))),
+                        b.or(
+                                b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage()),
+                                b.isNull(properties.key())
+                        )
+                );
+            }
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowPage.class, pageable);
     }

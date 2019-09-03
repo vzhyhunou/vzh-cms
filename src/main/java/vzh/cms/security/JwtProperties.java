@@ -17,4 +17,6 @@ public class JwtProperties {
     private int expiration;
 
     private String secret;
+
+    private String roles;
 }

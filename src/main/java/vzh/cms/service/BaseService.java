@@ -1,12 +1,10 @@
 package vzh.cms.service;
 
-import vzh.cms.model.Tag;
-import vzh.cms.model.Tag_;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -32,10 +30,10 @@ abstract public class BaseService {
                 .orElse(null);
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag) {
+    protected static Predicate active(CriteriaBuilder b, Path<Date> start, Path<Date> end) {
         return b.and(
-                b.or(b.isNull(tag.get(Tag_.start)), b.greaterThan(b.currentTimestamp(), tag.get(Tag_.start))),
-                b.or(b.isNull(tag.get(Tag_.end)), b.lessThan(b.currentTimestamp(), tag.get(Tag_.end)))
+                b.or(b.isNull(start), b.greaterThan(b.currentTimestamp(), start)),
+                b.or(b.isNull(end), b.lessThan(b.currentTimestamp(), end))
         );
     }
 }

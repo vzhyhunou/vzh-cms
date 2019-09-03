@@ -1,6 +1,5 @@
 package vzh.cms.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ import vzh.cms.service.ExportService;
  */
 @RestController
 @RequestMapping("export")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ExportController {
 
     private ExportService service;
