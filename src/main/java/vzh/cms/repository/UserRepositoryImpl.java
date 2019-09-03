@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 /**
  * @author Viktar Zhyhunou
  */
-public class UserRepositoryImpl extends RepositoryImpl<User, String> {
+class UserRepositoryImpl extends RepositoryImpl<User, String> {
 
-    public UserRepositoryImpl(EntityManager manager) {
+    UserRepositoryImpl(EntityManager manager) {
         super(User.class, manager);
     }
 }
