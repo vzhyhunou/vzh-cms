@@ -34,13 +34,11 @@ public class UserService extends BaseService {
 
     public org.springframework.data.domain.Page<RowUser> list(UserFilter filter, Pageable pageable) {
         return repository.findAll((root, q, b) -> {
-            if (Long.class == q.getResultType()) {
-                q.distinct(true);
-            } else {
-                root.fetch(Item_.TAGS, JoinType.LEFT);
-            }
             Subquery<User> subquery = q.subquery(User.class);
             Root<User> p = subquery.from(User.class);
+            if (Long.class != q.getResultType()) {
+                root.fetch(Item_.TAGS, JoinType.LEFT);
+            }
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowUser.class, pageable);
     }
