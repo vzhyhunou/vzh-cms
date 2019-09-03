@@ -44,7 +44,7 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                 return new org.springframework.security.core.userdetails.User(
                         claims.getSubject(),
                         "",
-                        AuthorityUtils.createAuthorityList(authorities.toArray(new String[authorities.size()]))
+                        AuthorityUtils.createAuthorityList(authorities.toArray(new String[]{}))
                 );
             }
         } catch (Exception e) {
