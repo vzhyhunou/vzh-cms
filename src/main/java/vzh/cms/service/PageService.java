@@ -39,7 +39,7 @@ public class PageService extends ContentService<Page, String, PageRepository> {
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
             if (Long.class != q.getResultType()) {
-                MapJoin properties = (MapJoin) root.fetch("properties", JoinType.LEFT);
+                MapJoin properties = (MapJoin) root.fetch(Page_.PROPERTIES, JoinType.LEFT);
                 root.fetch(Item_.TAGS, JoinType.LEFT);
                 return b.and(
                         root.in(subquery.select(p).where(filter(p, b, filter))),
