@@ -1,6 +1,6 @@
 package vzh.cms.service;
 
-import vzh.cms.model.Content;
+import vzh.cms.model.Item;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
 import vzh.cms.repository.Repository;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * @author Viktar Zhyhunou
  */
-abstract public class ItemService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends BaseService {
+abstract class ItemService<T extends Item, ID extends Serializable, R extends Repository<T, ID>> extends BaseService {
 
     protected R repository;
 

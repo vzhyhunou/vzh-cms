@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-abstract public class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends ItemService<T, ID, R> {
+abstract class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends ItemService<T, ID, R> {
 
     protected ContentService(R repository) {
         super(repository);

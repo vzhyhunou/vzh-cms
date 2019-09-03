@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract public class BaseService {
+abstract class BaseService {
 
     protected static Predicate equal(CriteriaBuilder b, Expression<?> expression, Object field) {
         return Optional.ofNullable(field)
