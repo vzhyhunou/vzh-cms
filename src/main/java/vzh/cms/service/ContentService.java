@@ -12,12 +12,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-abstract public class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends BaseService {
+abstract public class ContentService<T extends Content, ID extends Serializable, R extends Repository<T, ID>> extends ItemService<T, ID, R> {
 
-    protected R repository;
-
-    public ContentService(R repository) {
-        this.repository = repository;
+    protected ContentService(R repository) {
+        super(repository);
     }
 
     public <E> Optional<E> one(Object id, Class<E> type) {
