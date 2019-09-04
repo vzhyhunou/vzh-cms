@@ -13,7 +13,7 @@ import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.service.PageService;
+import vzh.cms.repository.PageRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,30 +25,30 @@ import java.util.Optional;
 @RequestMapping("pages")
 public class PageController {
 
-    private PageService service;
+    private PageRepository repository;
 
     private PagedResourcesAssembler<RowPage> assembler;
 
-    public PageController(PageService service, PagedResourcesAssembler<RowPage> assembler) {
-        this.service = service;
+    public PageController(PageRepository repository, PagedResourcesAssembler<RowPage> assembler) {
+        this.repository = repository;
         this.assembler = assembler;
     }
 
     @ResponseBody
     @GetMapping("search/list")
     public PagedResources<Resource<RowPage>> list(PageFilter filter, Pageable pageable) {
-        return assembler.toResource(service.list(filter, pageable));
+        return assembler.toResource(repository.list(filter, pageable));
     }
 
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return service.listByActiveTags(TitlePage.class, "MENU");
+        return repository.listByActiveTags(TitlePage.class, "MENU");
     }
 
     @ResponseBody
     @GetMapping("search/one/{id}")
     public Optional<?> one(@PathVariable String id) {
-        return service.one(id, PropertyPage.class);
+        return repository.one(id, PropertyPage.class);
     }
 }
