@@ -1,13 +1,11 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowUser;
-import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
 
@@ -15,11 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.user;
 
-@Import(UserService.class)
-public class UserServiceTest extends RepositoryTest {
+public class UserRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private UserService service;
+    private UserRepository repository;
 
     @Test
     public void listNoTags() {
@@ -29,7 +26,7 @@ public class UserServiceTest extends RepositoryTest {
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<RowUser> result = service.list(filter, page(0));
+        Page<RowUser> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<RowUser> content = result.getContent();
@@ -46,7 +43,7 @@ public class UserServiceTest extends RepositoryTest {
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<RowUser> result = service.list(filter, page(0));
+        Page<RowUser> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
         List<RowUser> content = result.getContent();
@@ -54,7 +51,7 @@ public class UserServiceTest extends RepositoryTest {
         assertThat(content).extracting(RowUser::getId).containsOnly("admin").containsOnlyOnce("admin");
         assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnly("a", "b");
 
-        result = service.list(filter, page(1));
+        result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
         content = result.getContent();

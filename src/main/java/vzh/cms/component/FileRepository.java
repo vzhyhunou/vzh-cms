@@ -1,9 +1,9 @@
-package vzh.cms.repository;
+package vzh.cms.component;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Content;
@@ -23,7 +23,7 @@ import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 /**
  * @author Viktar Zhyhunou
  */
-@Repository
+@Component
 public class FileRepository {
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();

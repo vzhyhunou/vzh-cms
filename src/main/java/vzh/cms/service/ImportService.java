@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Content;
-import vzh.cms.repository.FileRepository;
+import vzh.cms.component.FileRepository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;

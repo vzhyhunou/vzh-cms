@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.RowUser;
-import vzh.cms.service.UserService;
+import vzh.cms.repository.UserRepository;
 
 /**
  * @author Viktar Zhyhunou
@@ -19,18 +19,18 @@ import vzh.cms.service.UserService;
 @RequestMapping("users")
 public class UserController {
 
-    private UserService service;
+    private UserRepository repository;
 
     private PagedResourcesAssembler<RowUser> assembler;
 
-    public UserController(UserService service, PagedResourcesAssembler<RowUser> assembler) {
-        this.service = service;
+    public UserController(UserRepository repository, PagedResourcesAssembler<RowUser> assembler) {
+        this.repository = repository;
         this.assembler = assembler;
     }
 
     @ResponseBody
     @GetMapping("search/list")
     public PagedResources<Resource<RowUser>> list(UserFilter filter, Pageable pageable) {
-        return assembler.toResource(service.list(filter, pageable));
+        return assembler.toResource(repository.list(filter, pageable));
     }
 }
