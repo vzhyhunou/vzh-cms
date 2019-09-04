@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Content;
-import vzh.cms.repository.FileRepository;
+import vzh.cms.component.FileRepository;
 
 /**
  * @author Viktar Zhyhunou

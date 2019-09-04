@@ -4,7 +4,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Content;
-import vzh.cms.repository.FileRepository;
+import vzh.cms.component.FileRepository;
 
 /**
  * @author Viktar Zhyhunou
