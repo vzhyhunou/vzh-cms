@@ -42,10 +42,6 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
 
     @Override
     public <E> Page<E> findAll(Specification<T> specification, Class<E> type, Pageable pageable) {
-        return readPage(specification, pageable).map(e -> factory.createProjection(type, e));
-    }
-
-    private Page<T> readPage(Specification<T> specification, Pageable pageable) {
-        return readPage(getQuery(specification, pageable), getDomainClass(), pageable, specification);
+        return findAll(specification, pageable).map(e -> factory.createProjection(type, e));
     }
 }
