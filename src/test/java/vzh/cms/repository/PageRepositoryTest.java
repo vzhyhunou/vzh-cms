@@ -1,4 +1,4 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.projection.TitlePageProperty;
-import vzh.cms.repository.PageRepository;
-import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +20,7 @@ import static vzh.cms.fixture.PageFixture.pageByTags;
 import static vzh.cms.fixture.TagFixture.*;
 
 @Import(LangPropertiesFunction.class)
-public class PageServiceTest extends RepositoryTest {
+public class PageRepositoryTest extends RepositoryTest {
 
     @Autowired
     private PageRepository repository;

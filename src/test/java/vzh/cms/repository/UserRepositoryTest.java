@@ -1,4 +1,4 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowUser;
-import vzh.cms.repository.RepositoryTest;
-import vzh.cms.repository.UserRepository;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.user;
 
-public class UserServiceTest extends RepositoryTest {
+public class UserRepositoryTest extends RepositoryTest {
 
     @Autowired
     private UserRepository repository;
