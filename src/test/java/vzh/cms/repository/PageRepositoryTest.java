@@ -51,6 +51,31 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    public void listAnotherLanguage() {
+
+        persist(pageByLang("home", "ru"));
+        persist(pageByLang("sample", "ru"));
+
+        PageFilter filter = new PageFilter();
+
+        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+
+        assertThat(result).isNotNull();
+        List<RowPage> content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
+        assertThat(content).extracting(RowPage::getProperty).containsOnlyNulls();
+
+        result = repository.list(filter, page(1));
+
+        assertThat(result).isNotNull();
+        content = result.getContent();
+        assertThat(content).isNotNull();
+        assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
+        assertThat(content).extracting(RowPage::getProperty).containsOnlyNulls();
+    }
+
+    @Test
     public void listAllNoLanguages() {
 
         persist(pageByLang("home"));

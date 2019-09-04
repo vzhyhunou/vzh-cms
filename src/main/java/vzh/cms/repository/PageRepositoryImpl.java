@@ -1,6 +1,5 @@
 package vzh.cms.repository;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Item_;
@@ -37,15 +36,8 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
             Subquery<Page> subquery = q.subquery(Page.class);
             Root<Page> p = subquery.from(Page.class);
             if (Long.class != q.getResultType()) {
-                MapJoin properties = (MapJoin) root.fetch(Page_.PROPERTIES, JoinType.LEFT);
+                root.fetch(Page_.PROPERTIES, JoinType.LEFT);
                 root.fetch(Item_.TAGS, JoinType.LEFT);
-                return b.and(
-                        root.in(subquery.select(p).where(filter(p, b, filter))),
-                        b.or(
-                                b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage()),
-                                b.isNull(properties.key())
-                        )
-                );
             }
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowPage.class, pageable);
