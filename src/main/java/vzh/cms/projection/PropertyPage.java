@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public interface PropertyPage {
 
-    @Value("#{@langPropertiesFunction.apply(target.properties).title}")
+    @Value("#{target.properties[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].title}")
     String getTitle();
 
-    @Value("#{@langPropertiesFunction.apply(target.properties).content}")
+    @Value("#{target.properties[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].content}")
     String getContent();
 }

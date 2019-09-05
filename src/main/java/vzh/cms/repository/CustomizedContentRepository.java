@@ -10,7 +10,7 @@ import java.util.Optional;
  */
 interface CustomizedContentRepository<T extends Content> extends CustomizedRepository<T> {
 
-    <E> Optional<E> one(Object id, Class<E> type);
+    <E> Optional<E> content(Object id, Class<E> type);
 
-    <E> List<E> listByActiveTags(Class<E> type, String... names);
+    <E> List<E> contentsByActiveTags(Class<E> type, String... names);
 }

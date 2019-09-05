@@ -2,8 +2,6 @@ package vzh.cms.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import vzh.cms.component.LangPropertiesFunction;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.PropertyPage;
@@ -19,7 +17,6 @@ import static vzh.cms.fixture.PageFixture.pageByLang;
 import static vzh.cms.fixture.PageFixture.pageByTags;
 import static vzh.cms.fixture.TagFixture.*;
 
-@Import(LangPropertiesFunction.class)
 public class PageRepositoryTest extends RepositoryTest {
 
     @Autowired
@@ -222,7 +219,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "en", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -239,7 +236,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -251,7 +248,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -263,7 +260,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "en"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -281,7 +278,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -295,7 +292,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByTags("sample1", delayedTag("MENU")));
         persist(pageByTags("sample2", expiredTag("MENU")));
 
-        List<TitlePage> results = repository.listByActiveTags(TitlePage.class, "MENU");
+        List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, "MENU");
 
         assertThat(results).isNotNull();
         assertThat(results).extracting(TitlePage::getId).containsOnly("sample").containsOnlyOnce("sample");
