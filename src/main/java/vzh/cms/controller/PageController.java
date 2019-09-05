@@ -43,12 +43,12 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return repository.listByActiveTags(TitlePage.class, "MENU");
+        return repository.contentsByActiveTags(TitlePage.class, "MENU");
     }
 
     @ResponseBody
     @GetMapping("search/one/{id}")
     public Optional<?> one(@PathVariable String id) {
-        return repository.one(id, PropertyPage.class);
+        return repository.content(id, PropertyPage.class);
     }
 }

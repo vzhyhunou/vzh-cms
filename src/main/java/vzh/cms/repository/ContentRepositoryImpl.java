@@ -21,7 +21,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
         super(domainClass, manager);
     }
 
-    public <E> Optional<E> one(Object id, Class<E> type) {
+    public <E> Optional<E> content(Object id, Class<E> type) {
         return findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     return b.and(
@@ -34,7 +34,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
     }
 
     @SuppressWarnings("unchecked")
-    public <E> List<E> listByActiveTags(Class<E> type, String... names) {
+    public <E> List<E> contentsByActiveTags(Class<E> type, String... names) {
         return findAll((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     Join tags = (Join) root.fetch(Item_.TAGS);

@@ -219,7 +219,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "en", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -236,7 +236,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -248,7 +248,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -260,7 +260,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "en"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -278,7 +278,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByLang("home", "ru"));
         persist(pageByLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -292,7 +292,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(pageByTags("sample1", delayedTag("MENU")));
         persist(pageByTags("sample2", expiredTag("MENU")));
 
-        List<TitlePage> results = repository.listByActiveTags(TitlePage.class, "MENU");
+        List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, "MENU");
 
         assertThat(results).isNotNull();
         assertThat(results).extracting(TitlePage::getId).containsOnly("sample").containsOnlyOnce("sample");
