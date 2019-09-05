@@ -8,7 +8,7 @@ import vzh.cms.projection.RowPage;
 /**
  * @author Viktar Zhyhunou
  */
-interface CustomizedPageRepository extends CustomizedContentRepository<Page> {
+interface CustomizedPageRepository extends CustomizedContentRepository<Page, String> {
 
     org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable);
 }

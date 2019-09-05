@@ -15,13 +15,13 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T> {
+abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
 
     protected ContentRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 
-    public <E> Optional<E> content(Object id, Class<E> type) {
+    public <E> Optional<E> content(ID id, Class<E> type) {
         return findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     return b.and(
