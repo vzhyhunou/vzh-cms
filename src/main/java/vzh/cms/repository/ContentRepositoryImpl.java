@@ -1,8 +1,10 @@
 package vzh.cms.repository;
 
+import org.hibernate.query.criteria.internal.path.SetAttributeJoin;
 import org.springframework.context.i18n.LocaleContextHolder;
 import vzh.cms.model.Content;
 import vzh.cms.model.Item_;
+import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
 
 import javax.persistence.EntityManager;
@@ -21,6 +23,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
         super(domainClass, manager);
     }
 
+    @Override
     public <E> Optional<E> content(ID id, Class<E> type) {
         return findOne((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
@@ -33,11 +36,11 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
         );
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public <E> List<E> contentsByActiveTags(Class<E> type, String... names) {
         return findAll((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
-                    Join tags = (Join) root.fetch(Item_.TAGS);
+                    Join<T, Tag> tags = (SetAttributeJoin<T, Tag>) root.<T, Tag>fetch(Item_.TAGS);
                     return b.and(
                             tags.get(Tag_.name).in((Object[]) names),
                             active(b, tags),
