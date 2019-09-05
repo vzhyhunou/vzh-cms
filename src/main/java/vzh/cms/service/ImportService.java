@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Content;
-import vzh.cms.component.FileRepository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -26,15 +25,15 @@ public class ImportService {
 
     private CmsImportProperties properties;
 
-    private FileRepository fileRepository;
+    private FileService fileService;
 
     private EntityManager manager;
 
     private ObjectMapper mapper;
 
-    public ImportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ObjectMapper mapper) {
+    public ImportService(CmsProperties properties, FileService fileService, EntityManager manager, ObjectMapper mapper) {
         this.properties = properties.getImp();
-        this.fileRepository = fileRepository;
+        this.fileService = fileService;
         this.manager = manager;
         this.mapper = mapper;
     }
@@ -53,7 +52,7 @@ public class ImportService {
                             Object entity = mapper.readValue(file.toFile(), c);
                             manager.persist(entity);
                             if (entity instanceof Content) {
-                                fileRepository.save((Content) entity);
+                                fileService.save((Content) entity);
                             }
                         }
                     }

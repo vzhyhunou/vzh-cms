@@ -1,9 +1,9 @@
-package vzh.cms.component;
+package vzh.cms.service;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Content;
@@ -23,8 +23,8 @@ import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 /**
  * @author Viktar Zhyhunou
  */
-@Component
-public class FileRepository {
+@Service
+public class FileService {
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
@@ -33,7 +33,7 @@ public class FileRepository {
 
     private ResourceMappings mappings;
 
-    public FileRepository(CmsProperties properties, @Lazy ResourceMappings mappings) {
+    public FileService(CmsProperties properties, @Lazy ResourceMappings mappings) {
         this.path = properties.getFiles().getPath();
         this.mappings = mappings;
     }
