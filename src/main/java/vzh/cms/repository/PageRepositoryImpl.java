@@ -31,6 +31,7 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
         super(Page.class, manager);
     }
 
+    @Override
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
             Subquery<Page> subquery = q.subquery(Page.class);
@@ -47,10 +48,10 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
         MapJoin<Page, String, PageProperty> properties = root.joinMap(Page_.PROPERTIES, JoinType.LEFT);
         Join<Page, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
         return b.and(Stream.of(
-                like(b, root.get(Page_.id), filter.getId()),
+                contains(b, root.get(Page_.id), filter.getId()),
                 in(tags.get(Tag_.name), filter.getTags()),
-                like(b, properties.value().get(PageProperty_.title), filter.getTitle()),
-                like(b, properties.value().get(PageProperty_.content), filter.getContent())
+                contains(b, properties.value().get(PageProperty_.title), filter.getTitle()),
+                contains(b, properties.value().get(PageProperty_.content), filter.getContent())
         ).filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 }

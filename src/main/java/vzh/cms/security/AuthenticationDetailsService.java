@@ -1,15 +1,15 @@
 package vzh.cms.security;
 
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import vzh.cms.component.ActiveTagsFunction;
-import vzh.cms.model.User;
+import vzh.cms.model.Tag;
+import vzh.cms.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
@@ -17,27 +17,20 @@ import javax.transaction.Transactional;
 @Service
 public class AuthenticationDetailsService implements UserDetailsService {
 
-    private EntityManager manager;
+    private UserRepository repository;
 
-    private ActiveTagsFunction function;
-
-    public AuthenticationDetailsService(EntityManager manager, ActiveTagsFunction function) {
-        this.manager = manager;
-        this.function = function;
+    public AuthenticationDetailsService(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
-        User user = manager.find(User.class, id);
-        if (user == null) {
-            throw new UsernameNotFoundException(id);
-        }
-        return new org.springframework.security.core.userdetails.User(
-                user.getId(),
-                user.getPassword(),
-                AuthorityUtils.createAuthorityList(function.apply(user).toArray(new String[]{}))
-        );
+        return repository.withActiveRoles(id).map(u -> new User(
+                u.getId(),
+                u.getPassword(),
+                AuthorityUtils.createAuthorityList(u.getTags().stream()
+                        .map(Tag::getName).collect(Collectors.toSet()).toArray(new String[]{}))
+        )).orElseThrow(() -> new UsernameNotFoundException(id));
     }
 }

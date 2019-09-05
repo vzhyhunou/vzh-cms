@@ -56,7 +56,7 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
                 .orElse(null);
     }
 
-    protected static Predicate like(CriteriaBuilder b, Expression<String> expression, String field) {
+    protected static Predicate contains(CriteriaBuilder b, Expression<String> expression, String field) {
         return Optional.ofNullable(field)
                 .map(f -> b.like(b.lower(expression), String.format("%%%s%%", f.toLowerCase())))
                 .orElse(null);
