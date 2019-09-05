@@ -1,10 +1,10 @@
-package vzh.cms.processor;
+package vzh.cms.component;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Content;
-import vzh.cms.component.FileRepository;
+import vzh.cms.service.FileService;
 
 /**
  * @author Viktar Zhyhunou
@@ -12,16 +12,16 @@ import vzh.cms.component.FileRepository;
 @Component
 public class ContentResourceProcessor implements ResourceProcessor<Resource<Content>> {
 
-    private FileRepository fileRepository;
+    private FileService fileService;
 
-    public ContentResourceProcessor(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
+    public ContentResourceProcessor(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @Override
     public Resource<Content> process(Resource<Content> resource) {
         try {
-            fileRepository.fill(resource.getContent(), false);
+            fileService.fill(resource.getContent(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

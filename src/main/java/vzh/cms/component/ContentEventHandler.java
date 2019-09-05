@@ -1,4 +1,4 @@
-package vzh.cms.handler;
+package vzh.cms.component;
 
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Content;
-import vzh.cms.component.FileRepository;
+import vzh.cms.service.FileService;
 
 /**
  * @author Viktar Zhyhunou
@@ -15,21 +15,21 @@ import vzh.cms.component.FileRepository;
 @RepositoryEventHandler(Content.class)
 public class ContentEventHandler {
 
-    private FileRepository repository;
+    private FileService fileService;
 
-    public ContentEventHandler(FileRepository repository) {
-        this.repository = repository;
+    public ContentEventHandler(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @HandleBeforeCreate
     @HandleBeforeSave
     public void save(Content content) throws Exception {
-        repository.save(content);
+        fileService.save(content);
     }
 
     @HandleBeforeDelete
     public void delete(Content content) throws Exception {
         content.getFiles().clear();
-        repository.clean(content);
+        fileService.clean(content);
     }
 }

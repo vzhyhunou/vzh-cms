@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Content;
-import vzh.cms.component.FileRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -33,7 +32,7 @@ public class ExportService {
 
     private CmsExportProperties properties;
 
-    private FileRepository fileRepository;
+    private FileService fileService;
 
     private EntityManager manager;
 
@@ -41,9 +40,9 @@ public class ExportService {
 
     private ObjectMapper mapper;
 
-    public ExportService(CmsProperties properties, FileRepository fileRepository, EntityManager manager, ResourceMappings mappings, ObjectMapper mapper) {
+    public ExportService(CmsProperties properties, FileService fileService, EntityManager manager, ResourceMappings mappings, ObjectMapper mapper) {
         this.properties = properties.getExp();
-        this.fileRepository = fileRepository;
+        this.fileService = fileService;
         this.manager = manager;
         this.mappings = mappings;
         this.mapper = mapper;
@@ -61,7 +60,7 @@ public class ExportService {
             dir.mkdirs();
             for (Object entity : getEntities(type)) {
                 if (entity instanceof Content) {
-                    fileRepository.fill((Content) entity, true);
+                    fileService.fill((Content) entity, true);
                 }
                 String id = BeanUtils.getProperty(entity, "id");
                 File out = new File(dir, String.format("%s.json", id));
