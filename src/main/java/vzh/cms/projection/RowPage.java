@@ -13,6 +13,6 @@ public interface RowPage {
 
     Set<NameTag> getTags();
 
-    @Value("#{@langPropertiesFunction.apply(target.properties)}")
+    @Value("#{target.properties[T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
     TitlePageProperty getProperty();
 }

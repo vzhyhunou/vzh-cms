@@ -2,8 +2,6 @@ package vzh.cms.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import vzh.cms.component.LangPropertiesFunction;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.PropertyPage;
@@ -19,7 +17,6 @@ import static vzh.cms.fixture.PageFixture.pageByLang;
 import static vzh.cms.fixture.PageFixture.pageByTags;
 import static vzh.cms.fixture.TagFixture.*;
 
-@Import(LangPropertiesFunction.class)
 public class PageRepositoryTest extends RepositoryTest {
 
     @Autowired
