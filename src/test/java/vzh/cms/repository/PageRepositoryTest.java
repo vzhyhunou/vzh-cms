@@ -33,6 +33,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -41,6 +42,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
@@ -58,6 +60,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -66,6 +69,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
@@ -83,6 +87,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -91,6 +96,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(2);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
@@ -109,6 +115,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -117,6 +124,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
@@ -134,6 +142,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -142,6 +151,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
@@ -159,6 +169,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -167,6 +178,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
@@ -183,6 +195,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(0);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
@@ -200,6 +213,7 @@ public class PageRepositoryTest extends RepositoryTest {
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -208,6 +222,7 @@ public class PageRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();

@@ -29,6 +29,7 @@ public class UserRepositoryTest extends RepositoryTest {
         Page<RowUser> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(0);
         List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
@@ -46,6 +47,7 @@ public class UserRepositoryTest extends RepositoryTest {
         Page<RowUser> result = repository.list(filter, page(0));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowUser::getId).containsOnly("admin").containsOnlyOnce("admin");
@@ -54,6 +56,7 @@ public class UserRepositoryTest extends RepositoryTest {
         result = repository.list(filter, page(1));
 
         assertThat(result).isNotNull();
+        assertThat(result.getTotalPages()).isEqualTo(1);
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).isEmpty();
