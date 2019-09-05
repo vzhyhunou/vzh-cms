@@ -1,4 +1,4 @@
-package vzh.cms.handler;
+package vzh.cms.component;
 
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
