@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static vzh.cms.fixture.TagFixture.tag;
-import static vzh.cms.fixture.UserFixture.user;
+import static vzh.cms.fixture.UserFixture.withTags;
 import static vzh.cms.model.User.BCRYPT_PATTERN;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,7 +55,7 @@ public class AuthenticationDetailsServiceTest {
     @Test
     public void emptyTags() {
 
-        when(repository.withActiveRoles(any())).thenReturn(Optional.of(user(ID)));
+        when(repository.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID)));
 
         UserDetails result = service.loadUserByUsername(ID);
 
@@ -69,7 +69,7 @@ public class AuthenticationDetailsServiceTest {
     @Test
     public void tags() {
 
-        when(repository.withActiveRoles(any())).thenReturn(Optional.of(user(ID, tag(NAME))));
+        when(repository.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID, tag(NAME))));
 
         UserDetails result = service.loadUserByUsername(ID);
 

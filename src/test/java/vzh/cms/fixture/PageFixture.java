@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class PageFixture {
 
-    public static Page pageByTags(String id, Tag... tags) {
+    public static Page withTags(String id, Tag... tags) {
         Page page = new Page();
         page.setId(id);
         page.getTags().addAll(Arrays.asList(tags));
@@ -20,7 +20,7 @@ public class PageFixture {
         return page;
     }
 
-    public static Page pageByLang(String id, String... langs) {
+    public static Page withLang(String id, String... langs) {
         Page page = new Page();
         page.setId(id);
         Arrays.stream(langs).forEach(l -> {

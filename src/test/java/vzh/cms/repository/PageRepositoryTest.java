@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static vzh.cms.fixture.PageFixture.pageByLang;
-import static vzh.cms.fixture.PageFixture.pageByTags;
+import static vzh.cms.fixture.PageFixture.withLang;
+import static vzh.cms.fixture.PageFixture.withTags;
 import static vzh.cms.fixture.TagFixture.*;
 
 public class PageRepositoryTest extends RepositoryTest {
@@ -25,8 +25,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listAllLanguages() {
 
-        persist(pageByLang("home", "en", "ru"));
-        persist(pageByLang("sample", "en", "ru"));
+        persist(withLang("home", "en", "ru"));
+        persist(withLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
 
@@ -52,8 +52,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listAnotherLanguage() {
 
-        persist(pageByLang("home", "ru"));
-        persist(pageByLang("sample", "ru"));
+        persist(withLang("home", "ru"));
+        persist(withLang("sample", "ru"));
 
         PageFilter filter = new PageFilter();
 
@@ -79,8 +79,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listAllNoLanguages() {
 
-        persist(pageByLang("home"));
-        persist(pageByLang("sample"));
+        persist(withLang("home"));
+        persist(withLang("sample"));
 
         PageFilter filter = new PageFilter();
 
@@ -106,8 +106,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listIdLanguages() {
 
-        persist(pageByLang("home", "en", "ru"));
-        persist(pageByLang("sample"));
+        persist(withLang("home", "en", "ru"));
+        persist(withLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -133,8 +133,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listIdNoLanguages() {
 
-        persist(pageByLang("home"));
-        persist(pageByLang("sample"));
+        persist(withLang("home"));
+        persist(withLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
@@ -160,8 +160,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listTitle() {
 
-        persist(pageByLang("home", "en", "ru"));
-        persist(pageByLang("sample", "en", "ru"));
+        persist(withLang("home", "en", "ru"));
+        persist(withLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.E");
@@ -187,7 +187,7 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listNoTags() {
 
-        persist(pageByTags("home"));
+        persist(withTags("home"));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
@@ -204,8 +204,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listAllTags() {
 
-        persist(pageByTags("home", tag("a"), tag("b")));
-        persist(pageByTags("sample", tag("c"), tag("d")));
+        persist(withTags("home", tag("a"), tag("b")));
+        persist(withTags("sample", tag("c"), tag("d")));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
@@ -231,8 +231,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneAllLanguages() {
 
-        persist(pageByLang("home", "en", "ru"));
-        persist(pageByLang("sample"));
+        persist(withLang("home", "en", "ru"));
+        persist(withLang("sample"));
 
         Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
@@ -249,7 +249,7 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneNone() {
 
-        persist(pageByLang("sample"));
+        persist(withLang("sample"));
 
         Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
@@ -260,8 +260,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneNoLanguages() {
 
-        persist(pageByLang("home"));
-        persist(pageByLang("sample"));
+        persist(withLang("home"));
+        persist(withLang("sample"));
 
         Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
@@ -272,8 +272,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneLanguage() {
 
-        persist(pageByLang("home", "en"));
-        persist(pageByLang("sample"));
+        persist(withLang("home", "en"));
+        persist(withLang("sample"));
 
         Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
@@ -290,8 +290,8 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneNoLanguage() {
 
-        persist(pageByLang("home", "ru"));
-        persist(pageByLang("sample"));
+        persist(withLang("home", "ru"));
+        persist(withLang("sample"));
 
         Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
 
@@ -302,10 +302,10 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void listByActiveTags() {
 
-        persist(pageByTags("home"));
-        persist(pageByTags("sample", tag("MENU")));
-        persist(pageByTags("sample1", delayedTag("MENU")));
-        persist(pageByTags("sample2", expiredTag("MENU")));
+        persist(withTags("home"));
+        persist(withTags("sample", tag("MENU")));
+        persist(withTags("sample1", delayedTag("MENU")));
+        persist(withTags("sample2", expiredTag("MENU")));
 
         List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, "MENU");
 
