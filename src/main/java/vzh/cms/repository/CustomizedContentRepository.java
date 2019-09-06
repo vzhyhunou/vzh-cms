@@ -13,5 +13,5 @@ interface CustomizedContentRepository<T extends Content, ID extends Serializable
 
     <E> Optional<E> content(ID id, Class<E> type);
 
-    <E> List<E> contentsByActiveTags(Class<E> type, String... names);
+    <E> List<E> contentsByActiveTags(Class<E> type, Object... names);
 }

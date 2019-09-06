@@ -19,8 +19,6 @@ import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
@@ -47,11 +45,11 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
         MapJoin<Page, String, PageProperty> properties = root.joinMap(Page_.PROPERTIES, JoinType.LEFT);
         Join<Page, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
-        return b.and(Stream.of(
+        return b.and(nonNull(
                 contains(b, root.get(Page_.id), filter.getId()),
                 in(tags.get(Tag_.name), filter.getTags()),
                 contains(b, properties.value().get(PageProperty_.title), filter.getTitle()),
                 contains(b, properties.value().get(PageProperty_.content), filter.getContent())
-        ).filter(Objects::nonNull).toArray(Predicate[]::new));
+        ));
     }
 }

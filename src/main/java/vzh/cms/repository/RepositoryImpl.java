@@ -16,8 +16,10 @@ import javax.persistence.criteria.Predicate;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
@@ -73,5 +75,9 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
                 b.or(b.isNull(start), b.greaterThan(b.currentTimestamp(), start)),
                 b.or(b.isNull(end), b.lessThan(b.currentTimestamp(), end))
         );
+    }
+
+    protected static Predicate[] nonNull(Predicate... predicates) {
+        return Stream.of(predicates).filter(Objects::nonNull).toArray(Predicate[]::new);
     }
 }

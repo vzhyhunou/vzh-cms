@@ -37,12 +37,12 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
     }
 
     @Override
-    public <E> List<E> contentsByActiveTags(Class<E> type, String... names) {
+    public <E> List<E> contentsByActiveTags(Class<E> type, Object... names) {
         return findAll((root, q, b) -> {
                     MapJoin properties = (MapJoin) root.fetch("properties");
                     Join<T, Tag> tags = (SetAttributeJoin<T, Tag>) root.<T, Tag>fetch(Item_.TAGS);
                     return b.and(
-                            tags.get(Tag_.name).in((Object[]) names),
+                            tags.get(Tag_.name).in(names),
                             active(b, tags),
                             b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
                     );
