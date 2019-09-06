@@ -3,7 +3,6 @@ package vzh.cms.security;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,7 +23,6 @@ import static vzh.cms.model.User.PASSWORD_ENCODER;
  * @author Viktar Zhyhunou
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(JwtProperties.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
