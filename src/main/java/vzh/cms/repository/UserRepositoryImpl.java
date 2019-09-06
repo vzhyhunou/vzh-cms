@@ -17,9 +17,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Viktar Zhyhunou
@@ -62,9 +60,9 @@ class UserRepositoryImpl extends ItemRepositoryImpl<User, String> implements Cus
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
         Join<User, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
-        return b.and(Stream.of(
+        return b.and(nonNull(
                 contains(b, root.get(User_.id), filter.getId()),
                 in(tags.get(Tag_.name), filter.getTags())
-        ).filter(Objects::nonNull).toArray(Predicate[]::new));
+        ));
     }
 }

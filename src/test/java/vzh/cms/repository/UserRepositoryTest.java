@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.*;
-import static vzh.cms.fixture.UserFixture.user;
+import static vzh.cms.fixture.UserFixture.withTags;
 
 public class UserRepositoryTest extends RepositoryTest {
 
@@ -24,7 +24,7 @@ public class UserRepositoryTest extends RepositoryTest {
     @Test
     public void listNoTags() {
 
-        persist(user("admin"));
+        persist(withTags("admin"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
@@ -41,8 +41,8 @@ public class UserRepositoryTest extends RepositoryTest {
     @Test
     public void listAllTags() {
 
-        persist(user("admin", tag("a"), tag("b")));
-        persist(user("manager", tag("c"), tag("d")));
+        persist(withTags("admin", tag("a"), tag("b")));
+        persist(withTags("manager", tag("c"), tag("d")));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
@@ -68,7 +68,7 @@ public class UserRepositoryTest extends RepositoryTest {
     @Test
     public void withActiveRolesNoTags() {
 
-        persist(user("admin"));
+        persist(withTags("admin"));
 
         Optional<User> result = repository.withActiveRoles("admin");
 
@@ -85,8 +85,8 @@ public class UserRepositoryTest extends RepositoryTest {
     @Test
     public void withActiveRolesAllTags() {
 
-        persist(user("admin", delayedTag("ROLE_A"), tag("ROLE_B"), tag("A"), expiredTag("ROLE_C")));
-        persist(user("manager", tag("ROLE_D")));
+        persist(withTags("admin", delayedTag("ROLE_A"), tag("ROLE_B"), tag("A"), expiredTag("ROLE_C")));
+        persist(withTags("manager", tag("ROLE_D")));
 
         Optional<User> result = repository.withActiveRoles("admin");
 
