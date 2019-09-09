@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 interface CustomizedContentRepository<T extends Content, ID extends Serializable> extends CustomizedRepository<T> {
 
-    <E> Optional<E> content(ID id, Class<E> type);
+    <E> Optional<E> contentByActiveTags(ID id, Class<E> type, Object... names);
 
-    <E> List<E> contentsByActiveTags(Class<E> type, Object... names);
+    <E> List<E> contentsByActiveTags(Class<E> type, String order, Object... names);
 }

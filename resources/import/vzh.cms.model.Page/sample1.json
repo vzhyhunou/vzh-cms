@@ -3,6 +3,9 @@
   "tags": [
     {
       "name": "MENU"
+    },
+    {
+      "name": "PUBLISHED"
     }
   ],
   "properties": {

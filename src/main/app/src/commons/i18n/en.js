@@ -19,7 +19,8 @@ export default {
         pages: {
             name: 'Pages',
             tags: {
-                'MENU': 'Menu'
+                'MENU': 'Menu',
+                'PUBLISHED': 'Published'
             },
             fields: {
                 date: 'Update',

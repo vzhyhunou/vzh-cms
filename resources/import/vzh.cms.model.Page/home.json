@@ -1,5 +1,10 @@
 {
   "id": "home",
+  "tags": [
+    {
+      "name": "PUBLISHED"
+    }
+  ],
   "properties": {
     "ru": {
       "title": "Домашняя страница",
