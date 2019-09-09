@@ -3,6 +3,7 @@ package vzh.cms.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import vzh.cms.dto.PageFilter;
+import vzh.cms.model.PageProperty_;
 import vzh.cms.projection.NameTag;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
@@ -234,7 +235,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "en", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -251,7 +252,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -263,7 +264,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -275,7 +276,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "en"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -293,7 +294,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.content("home", PropertyPage.class);
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -303,14 +304,16 @@ public class PageRepositoryTest extends RepositoryTest {
     public void listByActiveTags() {
 
         persist(withTags("home"));
-        persist(withTags("sample", tag("MENU")));
-        persist(withTags("sample1", delayedTag("MENU")));
-        persist(withTags("sample2", expiredTag("MENU")));
+        persist(withTags("test", tag("tag")));
+        persist(withTags("sample", tag("tag")));
+        persist(withTags("sample1", delayedTag("tag")));
+        persist(withTags("sample2", expiredTag("tag")));
 
-        List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, "MENU");
+        List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, "tag");
 
         assertThat(results).isNotNull();
-        assertThat(results).extracting(TitlePage::getId).containsOnly("sample").containsOnlyOnce("sample");
-        assertThat(results).extracting(TitlePage::getTitle).containsOnly("sample.title");
+        assertThat(results).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
+        assertThat(results).extracting(TitlePage::getTitle).containsOnly("test.title", "sample.title");
+        assertThat(results).extracting(TitlePage::getTitle).isSorted();
     }
 }

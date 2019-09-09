@@ -19,7 +19,8 @@ export default {
         pages: {
             name: 'Страницы',
             tags: {
-                'MENU': 'Меню'
+                'MENU': 'Меню',
+                'PUBLISHED': 'Опубликовано'
             },
             fields: {
                 date: 'Обновление',
