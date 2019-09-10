@@ -289,7 +289,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneNoLanguage() {
+    public void oneAnotherLanguage() {
 
         persist(withLang("home", "ru"));
         persist(withLang("sample"));
@@ -298,6 +298,34 @@ public class PageRepositoryTest extends RepositoryTest {
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
+    public void oneAnotherTag() {
+
+        persist(withLang("home", "en"));
+
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
+    public void oneAllTags() {
+
+        persist(withLang("home", "en"));
+
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "0.tag", "1.tag");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isTrue();
+
+        PropertyPage page = result.get();
+
+        assertThat(page).isNotNull();
+        assertThat(page.getTitle()).isEqualTo("home.en.title");
+        assertThat(page.getContent()).isEqualTo("home.en.content");
     }
 
     @Test
@@ -313,7 +341,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         assertThat(results).isNotNull();
         assertThat(results).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
-        assertThat(results).extracting(TitlePage::getTitle).containsOnly("test.title", "sample.title");
+        assertThat(results).extracting(TitlePage::getTitle).containsOnly("test.en.title", "sample.en.title");
         assertThat(results).extracting(TitlePage::getTitle).isSorted();
     }
 }
