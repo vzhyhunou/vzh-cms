@@ -4,6 +4,7 @@ import vzh.cms.model.Page;
 import vzh.cms.model.Tag;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static vzh.cms.fixture.PagePropertyFixture.property;
@@ -22,9 +23,7 @@ public class PageFixture {
     public static Page withLang(String id, String... langs) {
         Page page = new Page();
         page.setId(id);
-        Stream.of(0, 1).forEach(i ->
-                page.getTags().add(tag(String.format("%d.tag", i)))
-        );
+        page.getTags().addAll(Stream.of(0, 1).map(i -> tag(String.format("%d.tag", i))).collect(Collectors.toSet()));
         createProperties(page, langs);
         return page;
     }
