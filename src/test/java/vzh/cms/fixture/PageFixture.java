@@ -15,9 +15,7 @@ public class PageFixture {
         Page page = new Page();
         page.setId(id);
         page.getTags().addAll(Arrays.asList(tags));
-        Stream.of("en", "ru").forEach(l ->
-                page.getProperties().put(l, property(String.format("%s.%s.title", id, l), String.format("%s.%s.content", id, l)))
-        );
+        createProperties(page, "en", "ru");
         return page;
     }
 
@@ -27,9 +25,16 @@ public class PageFixture {
         Stream.of(0, 1).forEach(i ->
                 page.getTags().add(tag(String.format("%d.tag", i)))
         );
-        Arrays.stream(langs).forEach(l ->
-                page.getProperties().put(l, property(String.format("%s.%s.title", id, l), String.format("%s.%s.content", id, l)))
-        );
+        createProperties(page, langs);
         return page;
+    }
+
+    private static void createProperties(Page page, String... langs) {
+        Arrays.stream(langs).forEach(l ->
+                page.getProperties().put(l, property(
+                        String.format("%s.%s.title", page.getId(), l),
+                        String.format("%s.%s.content", page.getId(), l)
+                ))
+        );
     }
 }
