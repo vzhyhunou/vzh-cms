@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import vzh.cms.security.JwtDetailsService;
 import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.service.ExportService;
+import vzh.cms.service.ImportService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @Import({SecurityConfiguration.class, JwtDetailsService.class})
 public class WebConfigurationTest {
+
+    @MockBean
+    private ImportService importService;
 
     @MockBean
     private ExportService exportService;
