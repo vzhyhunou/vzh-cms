@@ -52,6 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatcher("/login").addFilter(jwtAuthenticationFilter())
                 .antMatcher("/**").addFilter(headerAuthenticationFilter())
                 .authorizeRequests()
+                .antMatchers("/import").hasRole("ADMIN")
                 .antMatchers("/export").hasRole("ADMIN")
                 .antMatchers("/api/pages/search/one/**").permitAll()
                 .antMatchers("/api/pages/search/menu/**").permitAll()
