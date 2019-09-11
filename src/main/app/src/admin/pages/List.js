@@ -3,9 +3,10 @@ import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-ad
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
+import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
-const PageFilter = props => (
-    <Filter {...props}>
+const PageFilter = ({locale, ...rest}) => (
+    <Filter {...rest}>
         <TextInput
             source="id"
             alwaysOn
@@ -13,11 +14,11 @@ const PageFilter = props => (
         <TagsFilter/>
         <TextInput
             source="title"
-            label={`resources.pages.fields.property.title`}
+            label={`resources.pages.fields.properties.${locale}.title`}
         />
         <TextInput
             source="content"
-            label={`resources.pages.fields.property.content`}
+            label={`resources.pages.fields.properties.${locale}.content`}
         />
     </Filter>
 );
@@ -26,14 +27,14 @@ const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-export default props =>
-    <List {...props} filters={<PageFilter/>}>
+const PageList = ({locale, ...rest}) =>
+    <List {...rest} filters={<PageFilter locale={locale}/>}>
         <Datagrid>
             <LinkField
                 source="id"
             />
             <TextField
-                source={`property.title`}
+                source={`properties.${locale}.title`}
                 sortable={false}
             />
             <TagsField
@@ -43,3 +44,5 @@ export default props =>
         </Datagrid>
     </List>
 ;
+
+export default withSanitizedTranslation(PageList);

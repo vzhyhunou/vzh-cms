@@ -15,7 +15,7 @@ import TagsInput from '../input/TagsInput';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
-const PageEdit = ({locales, ...rest}) =>
+const PageEdit = ({locale, locales, ...rest}) =>
     <Edit {...rest}>
         <TabbedForm>
             <FormTab label="pos.general">
@@ -38,11 +38,11 @@ const PageEdit = ({locales, ...rest}) =>
                 <FormTab key={l} label={l}>
                     <TextInput
                         source={`properties.${l}.title`}
-                        label={`resources.pages.fields.property.title`}
+                        label={`resources.pages.fields.properties.${locale}.title`}
                     />
                     <LongTextInput
                         source={`properties.${l}.content`}
-                        label={`resources.pages.fields.property.content`}
+                        label={`resources.pages.fields.properties.${locale}.content`}
                     />
                     <ContentImageInput
                         multiple
