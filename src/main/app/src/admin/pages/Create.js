@@ -5,7 +5,7 @@ import TagsInput from '../input/TagsInput';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
-const PageCreate = ({locales, ...rest}) =>
+const PageCreate = ({locale, locales, ...rest}) =>
     <Create {...rest}>
         <TabbedForm>
             <FormTab label="pos.general">
@@ -20,11 +20,11 @@ const PageCreate = ({locales, ...rest}) =>
                 <FormTab key={l} label={l}>
                     <TextInput
                         source={`properties.${l}.title`}
-                        label={`resources.pages.fields.property.title`}
+                        label={`resources.pages.fields.properties.${locale}.title`}
                     />
                     <LongTextInput
                         source={`properties.${l}.content`}
-                        label={`resources.pages.fields.property.content`}
+                        label={`resources.pages.fields.properties.${locale}.content`}
                     />
                     <ContentImageInput
                         multiple

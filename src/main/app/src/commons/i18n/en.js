@@ -26,9 +26,11 @@ export default {
                 date: 'Update',
                 userId: 'User',
                 tags: 'Tags',
-                property: {
-                    title: 'Title',
-                    content: 'Content'
+                properties: {
+                    en: {
+                        title: 'Title',
+                        content: 'Content'
+                    }
                 },
                 files: 'Pictures'
             }
