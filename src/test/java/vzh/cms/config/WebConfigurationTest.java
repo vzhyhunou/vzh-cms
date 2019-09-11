@@ -5,11 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import vzh.cms.security.JwtDetailsService;
-import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 
@@ -24,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest
-@Import({SecurityConfiguration.class, JwtDetailsService.class})
+@ActiveProfiles(profiles = "dev")
 public class WebConfigurationTest {
 
     @MockBean
