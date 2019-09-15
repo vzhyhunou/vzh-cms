@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -17,8 +18,6 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
-
-import static vzh.cms.model.User.PASSWORD_ENCODER;
 
 /**
  * @author Viktar Zhyhunou
@@ -34,12 +33,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JwtProperties properties;
 
+    private PasswordEncoder encoder;
+
     public SecurityConfiguration(UserDetailsService userDetailsService,
                                  AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService,
-                                 JwtProperties properties) {
+                                 JwtProperties properties,
+                                 PasswordEncoder encoder) {
         this.userDetailsService = userDetailsService;
         this.jwtDetailsService = jwtDetailsService;
         this.properties = properties;
+        this.encoder = encoder;
     }
 
     @Override
@@ -65,17 +68,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(PASSWORD_ENCODER);
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
         auth.authenticationProvider(jwtAuthenticationProvider());
     }
 
-    private Filter jwtAuthenticationFilter() throws Exception {
+    protected Filter jwtAuthenticationFilter() throws Exception {
         AbstractAuthenticationProcessingFilter filter = new JwtAuthenticationFilter(properties);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
 
-    private Filter headerAuthenticationFilter() throws Exception {
+    protected Filter headerAuthenticationFilter() throws Exception {
         RequestHeaderAuthenticationFilter filter = new RequestHeaderAuthenticationFilter();
         filter.setPrincipalRequestHeader(properties.getHeader());
         filter.setAuthenticationManager(authenticationManager());
