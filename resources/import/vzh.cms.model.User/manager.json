@@ -1,6 +1,6 @@
 {
   "id": "manager",
-  "password": "manager",
+  "password": "$2a$10$SwFp37RWQgOpF9W8fs9sv.kSlFbYfovwZO3tsPLcJRqxmn/gmj2Oy",
   "tags": [
     {
       "name": "ROLE_MANAGER"

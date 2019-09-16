@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.withTags;
-import static vzh.cms.model.User.BCRYPT_PATTERN;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationDetailsServiceTest {
@@ -61,7 +60,7 @@ public class AuthenticationDetailsServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getUsername()).isEqualTo(ID);
-        assertThat(BCRYPT_PATTERN.matcher(result.getPassword()).matches()).isTrue();
+        assertThat(result.getPassword()).isEqualTo(ID);
         assertThat(result.getAuthorities()).isNotNull();
         assertThat(result.getAuthorities()).isEmpty();
     }
@@ -75,7 +74,7 @@ public class AuthenticationDetailsServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getUsername()).isEqualTo(ID);
-        assertThat(BCRYPT_PATTERN.matcher(result.getPassword()).matches()).isTrue();
+        assertThat(result.getUsername()).isEqualTo(ID);
         assertThat(result.getAuthorities()).isNotNull();
         assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).containsOnly(NAME);
     }

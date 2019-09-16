@@ -3,7 +3,7 @@ package vzh.cms.model;
 import lombok.Data;
 
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Date;
 @Embeddable
 public class Tag {
 
-    @NotEmpty
+    @NotBlank
     private String name;
 
     private Date start;
