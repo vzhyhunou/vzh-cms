@@ -1,23 +1,19 @@
 package vzh.cms.repository;
 
-import org.hibernate.query.criteria.internal.path.SetAttributeJoin;
 import org.springframework.context.i18n.LocaleContextHolder;
 import vzh.cms.model.Content;
 import vzh.cms.model.Item_;
-import vzh.cms.model.Tag;
-import vzh.cms.model.Tag_;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
@@ -33,8 +29,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
         return findOne((root, q, b) -> {
             MapJoin properties = (MapJoin) root.fetch("properties");
             return b.and(
-                    b.equal(root.get("id"), id),
-                    filter(root, b, names),
+                    filter(root, q, b, b.equal(root.get("id"), id), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
             );
         }, type);
@@ -46,21 +41,26 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
             MapJoin properties = (MapJoin) root.fetch("properties");
             q.orderBy(b.asc(properties.value().get(order)));
             return b.and(
-                    filter(root, b, names),
+                    filter(root, q, b, b.and(), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
             );
         }, type);
     }
 
-    private Predicate filter(Root<T> root, CriteriaBuilder b, Object... names) {
-        return b.and(
-                b.and(Arrays.stream(names).map(n -> {
-                    Join<T, Tag> tags = (SetAttributeJoin<T, Tag>) root.<T, Tag>fetch(Item_.TAGS);
-                    return b.and(
-                            b.equal(tags.get(Tag_.name), n),
-                            active(b, tags)
-                    );
-                }).collect(Collectors.toSet()).toArray(new Predicate[]{}))
+    private Predicate filter(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
+        if (names.length == 0) {
+            return p;
+        }
+        Subquery<T> subquery = q.subquery(getDomainClass());
+        Root<T> r = subquery.from(getDomainClass());
+        return root.in(
+                subquery.select(r)
+                        .where(b.and(
+                                p,
+                                active(b, r.join(Item_.TAGS), names)
+                        ))
+                        .groupBy(r.get("id"))
+                        .having(b.equal(b.count(r.get("id")), names.length))
         );
     }
 }
