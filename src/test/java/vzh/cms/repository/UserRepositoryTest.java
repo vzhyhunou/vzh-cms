@@ -54,7 +54,7 @@ public class UserRepositoryTest extends RepositoryTest {
         List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowUser::getId).containsOnly("admin").containsOnlyOnce("admin");
-        assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnly("a", "b");
+        assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
 
         result = repository.list(filter, page(1));
 
@@ -97,6 +97,6 @@ public class UserRepositoryTest extends RepositoryTest {
 
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo("admin");
-        assertThat(user.getTags()).extracting(Tag::getName).containsOnly("ROLE_B");
+        assertThat(user.getTags()).extracting(Tag::getName).containsOnly("ROLE_B").containsOnlyOnce("ROLE_B");
     }
 }
