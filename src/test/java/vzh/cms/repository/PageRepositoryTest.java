@@ -222,7 +222,7 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(RowPage::getTags).extracting(NameTag::getName).containsOnly("a", "b");
+        assertThat(content).flatExtracting(RowPage::getTags).extracting(NameTag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
 
         result = repository.list(filter, page(1));
 

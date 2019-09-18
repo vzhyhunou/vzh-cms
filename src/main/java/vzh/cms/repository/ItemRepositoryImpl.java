@@ -22,4 +22,11 @@ abstract class ItemRepositoryImpl<T extends Item, ID extends Serializable> exten
     protected static Predicate active(CriteriaBuilder b, Path<Tag> tag) {
         return active(b, tag.get(Tag_.start), tag.get(Tag_.end));
     }
+
+    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag, Object... names) {
+        return b.and(
+                tag.get(Tag_.name).in(names),
+                active(b, tag)
+        );
+    }
 }
