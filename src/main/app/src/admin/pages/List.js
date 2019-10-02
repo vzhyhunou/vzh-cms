@@ -5,7 +5,7 @@ import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
 
-const PageFilter = ({locale, ...rest}) => (
+const PageFilter = ({locale, ...rest}) =>
     <Filter {...rest}>
         <TextInput
             source="id"
@@ -21,7 +21,7 @@ const PageFilter = ({locale, ...rest}) => (
             label={`resources.pages.fields.properties.${locale}.content`}
         />
     </Filter>
-);
+;
 
 const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>

@@ -38,7 +38,7 @@ const Loading = ({
                      translate,
                      loadingPrimary = 'ra.page.loading',
                      loadingSecondary = 'ra.message.loading',
-                 }) => (
+                 }) =>
     <div className={classnames(classes.container, className)}>
         <div className={classes.message}>
             <CircularProgress className={classes.icon} color="primary"/>
@@ -46,7 +46,7 @@ const Loading = ({
             <div>{translate(loadingSecondary)}.</div>
         </div>
     </div>
-);
+;
 
 Loading.propTypes = {
     classes: PropTypes.object,

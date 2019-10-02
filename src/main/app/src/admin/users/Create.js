@@ -3,7 +3,7 @@ import {Create, FormTab, TabbedForm, TextInput} from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
 
-export default (props) =>
+export default props =>
     <Create {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
