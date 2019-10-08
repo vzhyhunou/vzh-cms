@@ -10,6 +10,10 @@ export default {
     },
     resources: {
         tags: {
+            actions: {
+                add: 'Add Tag',
+                remove: 'Remove Tag'
+            },
             fields: {
                 name: 'Tag',
                 start: 'Active after',

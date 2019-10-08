@@ -1,9 +1,11 @@
-import React from 'react';
-import {Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
+import React, {createRef, Fragment} from 'react';
+import {BulkDeleteButton, Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
+import BulkAddTagButton from '../button/BulkAddTagButton';
+import BulkRemoveTagButton from '../button/BulkRemoveTagButton';
 
 const PageFilter = ({locale, ...rest}) =>
     <Filter {...rest}>
@@ -23,13 +25,33 @@ const PageFilter = ({locale, ...rest}) =>
     </Filter>
 ;
 
+const PostBulkActionButtons = props =>
+    <Fragment>
+        <BulkAddTagButton {...props} />
+        <BulkRemoveTagButton {...props} />
+        <BulkDeleteButton {...props} />
+    </Fragment>
+;
+
 const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-const PageList = ({locale, ...rest}) =>
-    <List {...rest} filters={<PageFilter locale={locale}/>}>
-        <Datagrid>
+const PageList = ({locale, ...rest}) => {
+
+    const myDataGrid = createRef();
+
+    const getSelectedRecords = () => {
+        const gridProps = myDataGrid.current.props;
+        return gridProps.selectedIds.map(id => gridProps.data[id]);
+    };
+
+    return <List
+        {...rest}
+        filters={<PageFilter locale={locale}/>}
+        bulkActionButtons={<PostBulkActionButtons getSelectedRecords={getSelectedRecords}/>}
+    >
+        <Datagrid ref={myDataGrid}>
             <LinkField
                 source="id"
             />
@@ -42,7 +64,7 @@ const PageList = ({locale, ...rest}) =>
             />
             <EditButton/>
         </Datagrid>
-    </List>
-;
+    </List>;
+};
 
 export default withSanitizedTranslation(PageList);

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Tag;
 import vzh.cms.model.User;
-import vzh.cms.projection.NameTag;
 import vzh.cms.projection.RowUser;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class UserRepositoryTest extends RepositoryTest {
         List<RowUser> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowUser::getId).containsOnly("admin").containsOnlyOnce("admin");
-        assertThat(content).flatExtracting(RowUser::getTags).extracting(NameTag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
+        assertThat(content).flatExtracting(RowUser::getTags).extracting(Tag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
 
         result = repository.list(filter, page(1));
 

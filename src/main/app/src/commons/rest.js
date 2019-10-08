@@ -127,10 +127,10 @@ export default (apiUrl = '/api', httpClient = client) => {
         // simple-rest doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
         if (type === UPDATE_MANY) {
             return Promise.all(
-                params.ids.map(id =>
-                    httpClient(`${apiUrl}/${resource}/${id}`, {
-                        method: 'PUT',
-                        body: JSON.stringify(params.data),
+                params.data.map(json =>
+                    httpClient(`${apiUrl}/${resource}/${json.id}`, {
+                        method: 'PATCH',
+                        body: JSON.stringify(json),
                     })
                 )
             ).then(responses => ({

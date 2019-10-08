@@ -1,5 +1,7 @@
 package vzh.cms.projection;
 
+import vzh.cms.model.Tag;
+
 import java.util.Set;
 
 /**
@@ -9,5 +11,5 @@ public interface RowUser {
 
     String getId();
 
-    Set<NameTag> getTags();
+    Set<Tag> getTags();
 }
