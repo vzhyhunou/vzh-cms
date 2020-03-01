@@ -19,7 +19,6 @@
 		<java.version>1.8</java.version>
 		<commons-io.version>2.6</commons-io.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
-		<jaxb.version>2.3.0</jaxb.version>
 		<frontend.version>1.6</frontend.version>
 		<node.version>v9.11.1</node.version>
 		<jjwt.version>0.9.1</jjwt.version>
@@ -72,22 +71,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb.version}</version>
 		</dependency>
 	</dependencies>
 
