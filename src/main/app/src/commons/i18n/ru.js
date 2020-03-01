@@ -10,6 +10,10 @@ export default {
     },
     resources: {
         tags: {
+            actions: {
+                add: 'Добавить тэг',
+                remove: 'Удалить тэг'
+            },
             fields: {
                 name: 'Тег',
                 start: 'Активно с',
