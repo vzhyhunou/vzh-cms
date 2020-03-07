@@ -1,5 +1,5 @@
 # ReactJS and Spring Data REST - CMS
-[![Build Status](https://travis-ci.org/vzhyhunou/vzh-cms.svg?branch=master)](https://travis-ci.org/vzhyhunou/vzh-cms)
+![Java CI](https://github.com/vzhyhunou/vzh-cms/workflows/Java%20CI/badge.svg)
 ## Tech stack and libraries
 ### Backend
 - Spring Boot
