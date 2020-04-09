@@ -5,3 +5,8 @@ coverage
 dist
 node
 node_modules
+*.ipr
+*.iml
+*.iws
+.shelf
+target
