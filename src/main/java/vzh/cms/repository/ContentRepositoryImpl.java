@@ -27,7 +27,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
     @Override
     public <E> Optional<E> contentByActiveTags(ID id, Class<E> type, Object... names) {
         return findOne((root, q, b) -> {
-            MapJoin properties = (MapJoin) root.fetch("properties");
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch("properties");
             return b.and(
                     filter(root, q, b, b.equal(root.get("id"), id), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
@@ -38,7 +38,7 @@ abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable>
     @Override
     public <E> List<E> contentsByActiveTags(Class<E> type, String order, Object... names) {
         return findAll((root, q, b) -> {
-            MapJoin properties = (MapJoin) root.fetch("properties");
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch("properties");
             q.orderBy(b.asc(properties.value().get(order)));
             return b.and(
                     filter(root, q, b, b.and(), names),
