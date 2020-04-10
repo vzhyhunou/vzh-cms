@@ -1,6 +1,5 @@
 package vzh.cms.repository;
 
-import org.hibernate.query.criteria.internal.path.SetAttributeJoin;
 import org.springframework.data.domain.Pageable;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Item_;
@@ -14,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
@@ -41,9 +41,10 @@ class UserRepositoryImpl extends ItemRepositoryImpl<User, String> implements Cus
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Optional<User> withActiveRoles(String id) {
         return findOne((root, q, b) -> {
-                    Join<User, Tag> tags = (SetAttributeJoin<User, Tag>) root.<User, Tag>fetch(Item_.TAGS, JoinType.LEFT);
+                    Path<Tag> tags = (Path<Tag>) root.fetch(Item_.TAGS, JoinType.LEFT);
                     return b.and(
                             b.equal(root.get("id"), id),
                             b.or(
