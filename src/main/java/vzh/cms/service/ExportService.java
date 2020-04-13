@@ -8,14 +8,20 @@ import org.springframework.data.rest.core.mapping.ResourceMapping;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Content;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
@@ -53,6 +59,22 @@ public class ExportService extends MaintainService {
                 File out = new File(dir, String.format("%s.json", id));
                 LOG.info("Export: {}", out);
                 mapper.writeValue(out, entity);
+            }
+        }
+
+        clean();
+    }
+
+    private void clean() throws IOException {
+
+        Path path = Paths.get(properties.getPath());
+        if (Files.exists(path)) {
+            long limitDelete = Files.list(path).count() - properties.getLimit();
+            if (limitDelete < 1) {
+                return;
+            }
+            for (Path p : Files.list(path).sorted().limit(limitDelete).collect(Collectors.toSet())) {
+                FileSystemUtils.deleteRecursively(p);
             }
         }
     }

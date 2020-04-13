@@ -11,4 +11,6 @@ public class CmsExportProperties {
     private String path;
 
     private String pattern;
+
+    private long limit;
 }
