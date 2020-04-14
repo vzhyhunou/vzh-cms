@@ -158,7 +158,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <workingDirectory>src/main/app</workingDirectory>
+                            <workingDirectory>app</workingDirectory>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -199,7 +199,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<workingDirectory>src/main/app</workingDirectory>
+							<workingDirectory>app</workingDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
