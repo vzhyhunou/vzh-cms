@@ -2,15 +2,22 @@ import React, {memo, useEffect, useState} from 'react';
 import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
+import parse from 'html-react-parser';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 import {withTranslation} from '../commons/TranslationContext';
 
 import './App.css';
 
-const Area = ({title, content}) =>
+const Area = ({locale, title, content}) =>
     <DocumentTitle title={title}>
-        <div dangerouslySetInnerHTML={{__html: content}}/>
+        {parse(content, {
+            replace: domNode => {
+                if (domNode.name === 'page') {
+                    return <App locale={locale} id={domNode.attribs.id}/>;
+                }
+            }
+        })}
     </DocumentTitle>
 ;
 
@@ -38,7 +45,7 @@ const App = ({locale, id}) => {
     if (!page)
         return <div/>;
 
-    return <EnhancedArea {...page}/>;
+    return <EnhancedArea locale={locale} {...page}/>;
 };
 
 const ReducedApp = ({locale, match}) => <App locale={locale} id={match.params.id}/>;
