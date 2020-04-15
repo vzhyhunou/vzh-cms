@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Viktar Zhyhunou
  */
 @Component
-@RepositoryEventHandler(Item.class)
+@RepositoryEventHandler
 public class ItemEventHandler {
 
     @HandleBeforeCreate
