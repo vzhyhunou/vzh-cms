@@ -16,6 +16,7 @@ import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class PageController {
 
     private static final String PUBLISHED = "PUBLISHED";
     private static final String MENU = "MENU";
+    private static final String EDITOR = "EDITOR";
 
     private PageRepository repository;
 
@@ -52,7 +54,9 @@ public class PageController {
 
     @ResponseBody
     @GetMapping("search/one/{id}")
-    public Optional<?> one(@PathVariable String id) {
-        return repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED);
+    public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
+        return request.isUserInRole(EDITOR)
+                ? repository.contentByActiveTags(id, PropertyPage.class)
+                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED);
     }
 }
