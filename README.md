@@ -14,7 +14,6 @@
 - AssertJ
 - Lombok
 - Maven
-
 ### Frontend
 - ReactJS
 - React-admin
@@ -23,7 +22,11 @@
 - Create React App
 
 ## Getting Started
+### Running
 - Download and install JDK 1.8
 - Build the project: `./mvnw clean install`
 - Run created JAR: `java -jar target/vzh-cms-0.0.1-SNAPSHOT-exec.jar`
-- Open link in browser: http://localhost:8090
+### Usage
+- Open in browser home page: http://localhost:8090
+- Open admin console: http://localhost:8090/admin
+- Use `admin`:`admin`, `editor`:`editor`, `manager`:`manager` to log in
