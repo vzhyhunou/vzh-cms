@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 @Component
 @Validated
-@RepositoryEventHandler(User.class)
+@RepositoryEventHandler
 public class UserEventHandler {
 
     private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");

@@ -12,7 +12,7 @@ import vzh.cms.service.FileService;
  * @author Viktar Zhyhunou
  */
 @Component
-@RepositoryEventHandler(Content.class)
+@RepositoryEventHandler
 public class ContentEventHandler {
 
     private FileService fileService;
