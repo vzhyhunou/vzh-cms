@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState, Fragment} from 'react';
 import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
@@ -11,13 +11,15 @@ import './App.css';
 
 const Area = ({locale, title, content}) =>
     <DocumentTitle title={title}>
-        {parse(content, {
-            replace: domNode => {
-                if (domNode.name === 'page') {
-                    return <App locale={locale} id={domNode.attribs.id}/>;
+        <Fragment>
+            {parse(content, {
+                replace: domNode => {
+                    if (domNode.name === 'page') {
+                        return <App locale={locale} id={domNode.attribs.id}/>;
+                    }
                 }
-            }
-        })}
+            })}
+        </Fragment>
     </DocumentTitle>
 ;
 
