@@ -16,13 +16,11 @@ const Area = ({title, content}) =>
 
 const EnhancedArea = memo(Area);
 
-const App = ({locale, match}) => {
+const App = ({locale, id}) => {
 
     const [page, setPage] = useState();
 
     useEffect(() => {
-
-        const {id} = match.params;
 
         dataProvider()(GET_ONE_LOCALE, 'pages', {id}).then(response => {
 
@@ -35,7 +33,7 @@ const App = ({locale, match}) => {
 
             dataProvider()(GET_ONE_LOCALE, 'pages', {id: 'none'}).then(response => setPage(response.data));
         });
-    }, locale);
+    }, [locale, id]);
 
     if (!page)
         return <div/>;
@@ -43,7 +41,9 @@ const App = ({locale, match}) => {
     return <EnhancedArea {...page}/>;
 };
 
+const ReducedApp = ({locale, match}) => <App locale={locale} id={match.params.id}/>;
+
 export default compose(
     withRouter,
     withTranslation
-)(App);
+)(ReducedApp);
