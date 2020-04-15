@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -29,6 +30,7 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication) throws UsernameNotFoundException {
 
         String principal = (String) authentication.getPrincipal();
@@ -39,12 +41,12 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                         .setSigningKey(properties.getSecret().getBytes())
                         .parseClaimsJws(principal.replace(prefix, ""))
                         .getBody();
-                @SuppressWarnings("unchecked")
-                List<String> authorities = (List<String>) claims.get(properties.getRoles());
-                return new org.springframework.security.core.userdetails.User(
+                return new User(
                         claims.getSubject(),
                         "",
-                        AuthorityUtils.createAuthorityList(authorities.toArray(new String[]{}))
+                        AuthorityUtils.createAuthorityList(
+                                ((List<String>) claims.get(properties.getRoles())).toArray(new String[]{})
+                        )
                 );
             }
         } catch (Exception e) {
