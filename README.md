@@ -21,3 +21,9 @@
 - React Router
 - Material-UI
 - Create React App
+
+## Getting Started
+- Download and install JDK 1.8
+- Build the project: `./mvnw clean install`
+- Run created JAR: `java -jar target/vzh-cms-0.0.1-SNAPSHOT-exec.jar`
+- Open link in browser: http://localhost:8090
