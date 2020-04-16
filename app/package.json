@@ -34,7 +34,7 @@
     "start": "PORT=3010 react-scripts start",
     "build": "react-scripts build && mkdir -p ../target/classes && mv build ../target/classes/static",
     "test": "CI=true react-scripts test --coverage",
-    "transpile": "rm -rf dist && NODE_ENV=production babel src -d dist --copy-files && echo '{\"name\":\"vzh-cms\",\"version\":\"0.0.1\"}' > dist/package.json"
+    "transpile": "rm -rf dist && NODE_ENV=production babel src -d dist --copy-files && rm -r dist/__mocks__ && find dist -name *.test.js -delete -o -name setupTests.js -delete && echo '{\"name\":\"vzh-cms\",\"version\":\"0.0.1\"}' > dist/package.json"
   },
   "proxy": "http://localhost:8090",
   "browserslist": [

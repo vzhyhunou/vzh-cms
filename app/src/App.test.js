@@ -1,10 +1,8 @@
 import React from 'react';
 import {BrowserRouter, MemoryRouter} from 'react-router-dom';
-import {cleanup, render, waitForElement} from 'react-testing-library';
+import {render, waitForElement} from 'react-testing-library';
 
 import App from './App';
-
-afterEach(cleanup);
 
 describe('App', () => {
 
