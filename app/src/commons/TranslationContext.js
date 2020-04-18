@@ -10,7 +10,25 @@ export default ({locales, i18n, children}) => {
     const [contextValues, setContextValues] = useState();
     const contextValuesRef = useRef();
 
-    const update = (locale, messages) => {
+    useEffect(() => {
+
+        i18nLoader(i18n).then(({locale, messages}) => {
+
+            const polyglot = new Polyglot({
+                    locale,
+                    phrases: messages
+            });
+            contextValuesRef.current = {
+                locale,
+                messages,
+                translate: polyglot.t.bind(polyglot),
+                locales
+            };
+            setContextValues(contextValuesRef.current);
+        });
+    }, [i18n, locales]);
+
+    const updateLocale = locale => i18nWriter(i18n, locale).then(messages => {
 
         const polyglot = new Polyglot({
             locale,
@@ -23,15 +41,6 @@ export default ({locales, i18n, children}) => {
             locales
         };
         setContextValues(contextValuesRef.current);
-    };
-
-    useEffect(() => {
-
-        i18nLoader(i18n).then(({locale, messages}) => update(locale, messages));
-    }, []);
-
-    const updateLocale = locale => i18nWriter(i18n, locale).then(messages => {
-        update(locale, messages);
         return locale;
     });
 
