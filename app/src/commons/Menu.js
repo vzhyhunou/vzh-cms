@@ -71,7 +71,7 @@ const Menu = ({open, handleDrawerClose, locale}) => {
     useEffect(() => {
 
         dataProvider()(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
-    }, locale);
+    }, [locale]);
 
     if (!items)
         return <div/>;

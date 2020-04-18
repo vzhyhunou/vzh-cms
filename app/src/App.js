@@ -1,5 +1,5 @@
 import React, {lazy, Suspense} from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 import TranslationProvider from './commons/TranslationContext';
 import Loading from './admin/layout/Loading';
@@ -16,7 +16,6 @@ export default () => {
         locales={locales}
         i18n={locale => import(`./commons/i18n/${locale}`)}
     >
-        <BrowserRouter>
             <Suspense fallback={<Loading/>}>
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
@@ -24,6 +23,5 @@ export default () => {
                     <Route component={Layout}/>
                 </Switch>
             </Suspense>
-        </BrowserRouter>
     </TranslationProvider>;
 };

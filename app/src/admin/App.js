@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 import {Admin, createAdminStore, Login} from 'react-admin';
 import {createMuiTheme} from '@material-ui/core/styles';
-import DocumentTitle from 'react-document-title';
 import createHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 
@@ -30,30 +29,30 @@ const App = ({locale, translate, getMessages, resources}) => {
     const dataProvider = addUploadFeature(restProvider());
     const history = createHistory({basename: '/admin'});
 
-    return <DocumentTitle title={translate('pos.title')}>
-        <Provider
-            store={createAdminStore({
-                authProvider,
-                dataProvider,
-                i18nProvider: getMessages,
-                history,
-                locale
-            })}
-        >
-            <EditionProvider>
-                <Admin
-                    theme={theme}
-                    customRoutes={routes}
-                    menu={Menu}
-                    authProvider={authProvider}
-                    history={history}
-                    loginPage={() => <Login backgroundImage={background}/>}
-                >
-                    {permissions => resources(permissions)}
-                </Admin>
-            </EditionProvider>
-        </Provider>
-    </DocumentTitle>;
+    document.title = translate('pos.title');
+
+    return <Provider
+        store={createAdminStore({
+            authProvider,
+            dataProvider,
+            i18nProvider: getMessages,
+            history,
+            locale
+        })}
+    >
+        <EditionProvider>
+            <Admin
+                theme={theme}
+                customRoutes={routes}
+                menu={Menu}
+                authProvider={authProvider}
+                history={history}
+                loginPage={() => <Login backgroundImage={background}/>}
+            >
+                {permissions => resources(permissions)}
+            </Admin>
+        </EditionProvider>
+    </Provider>;
 };
 
 export default withTranslation(memo(App, () => true));
