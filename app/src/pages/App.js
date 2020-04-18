@@ -1,5 +1,4 @@
 import React, {memo, useEffect, useState, Fragment} from 'react';
-import DocumentTitle from 'react-document-title';
 import {withRouter} from 'react-router-dom';
 import compose from 'recompose/compose';
 import parse from 'html-react-parser';
@@ -9,19 +8,20 @@ import {withTranslation} from '../commons/TranslationContext';
 
 import './App.css';
 
-const Area = ({locale, title, content}) =>
-    <DocumentTitle title={title}>
-        <Fragment>
-            {parse(content, {
-                replace: domNode => {
-                    if (domNode.name === 'page') {
-                        return <App locale={locale} id={domNode.attribs.id}/>;
-                    }
+const Area = ({locale, title, content}) => {
+
+    if (!document.title) document.title = title;
+
+    return <Fragment>
+        {parse(content, {
+            replace: domNode => {
+                if (domNode.name === 'page') {
+                    return <App locale={locale} id={domNode.attribs.id}/>;
                 }
-            })}
-        </Fragment>
-    </DocumentTitle>
-;
+            }
+        })}
+    </Fragment>
+};
 
 const EnhancedArea = memo(Area);
 
