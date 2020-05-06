@@ -1,5 +1,11 @@
 import React from 'react';
-import {Create, FormTab, ImageField, LongTextInput, TabbedForm, TextInput} from 'react-admin';
+import {
+    Create,
+    FormTab,
+    ImageField,
+    TabbedForm,
+    TextInput
+} from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
 import {withSanitizedTranslation} from '../../commons/TranslationContext';
@@ -22,7 +28,9 @@ const PageCreate = ({locale, locales, ...rest}) =>
                         source={`properties.${l}.title`}
                         label={`resources.pages.fields.properties.${locale}.title`}
                     />
-                    <LongTextInput
+                    <TextInput
+                        multiline
+                        fullWidth
                         source={`properties.${l}.content`}
                         label={`resources.pages.fields.properties.${locale}.content`}
                     />

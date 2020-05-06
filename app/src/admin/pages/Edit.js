@@ -4,7 +4,6 @@ import {
     Edit,
     FormTab,
     ImageField,
-    LongTextInput,
     ReferenceField,
     TabbedForm,
     TextField,
@@ -40,7 +39,9 @@ const PageEdit = ({locale, locales, ...rest}) =>
                         source={`properties.${l}.title`}
                         label={`resources.pages.fields.properties.${locale}.title`}
                     />
-                    <LongTextInput
+                    <TextInput
+                        multiline
+                        fullWidth
                         source={`properties.${l}.content`}
                         label={`resources.pages.fields.properties.${locale}.content`}
                     />

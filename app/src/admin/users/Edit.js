@@ -1,5 +1,13 @@
 import React from 'react';
-import {DateField, Edit, FormTab, ReferenceField, TabbedForm, TextField, TextInput} from 'react-admin';
+import {
+    DateField,
+    Edit,
+    FormTab,
+    ReferenceField,
+    TabbedForm,
+    TextField,
+    TextInput
+} from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
 

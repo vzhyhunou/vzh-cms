@@ -60,7 +60,7 @@ export default ({locales, i18n, children}) => {
 
 export const withSanitizedTranslation = Component => props =>
     <TranslationContext.Consumer>
-        {({updateLocale, getMessages, ...state}) => <Component {...props} {...state}/>}
+        {({updateLocale, getMessages, translate, ...state}) => <Component {...props} {...state}/>}
     </TranslationContext.Consumer>
 ;
 

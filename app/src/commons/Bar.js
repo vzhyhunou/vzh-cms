@@ -59,7 +59,7 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
                 <HomeIcon/>
             </IconButton>
             <Typography
-                variant="title"
+                variant="h6"
                 color="inherit"
                 className={classes.flex}
             >

@@ -7,10 +7,10 @@ export default props =>
     <BulkTagButton
         {...props}
         label="resources.tags.actions.add"
-        data={(selected, tag) => selected.map(r => ({
-            ...r,
-            tags: r.tags ? [...r.tags, {name: tag}] : [{name: tag}]
-        }))}
+        data={(record, tag) => ({
+            id: record.id,
+            tags: record.tags ? [...record.tags, {name: tag}] : [{name: tag}]
+        })}
     >
         <AddCircleIcon/>
     </BulkTagButton>

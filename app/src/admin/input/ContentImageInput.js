@@ -1,55 +1,59 @@
-import compose from 'recompose/compose';
-import {withStyles} from '@material-ui/core/styles';
-import {addField, translate} from 'react-admin';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-import {ContentFileInput} from './ContentFileInput';
-import {withEdition} from '../EditionContext';
+import ContentFileInput from './ContentFileInput';
 
-const styles = {
-    root: {width: '100%'},
-    dropZone: {
-        background: '#efefef',
-        cursor: 'pointer',
-        padding: '1rem',
-        textAlign: 'center',
-        color: '#999',
-    },
-    preview: {},
-    buttons: {
-        display: 'inline-block',
-        position: 'relative',
-        float: 'left',
-        '& .add': {
-            position: 'absolute',
-            top: '0.5rem',
-            right: '2.5rem',
-            minWidth: '2rem',
-            opacity: 0,
+const useStyles = makeStyles(
+    theme => ({
+        root: { width: '100%' },
+        dropZone: {
+            background: theme.palette.background.default,
+            cursor: 'pointer',
+            padding: theme.spacing(1),
+            textAlign: 'center',
+            color: theme.palette.getContrastText(
+                theme.palette.background.default
+            ),
         },
-        '& .remove': {
-            position: 'absolute',
-            top: '0.5rem',
-            right: '0.5rem',
-            minWidth: '2rem',
-            opacity: 0,
+        preview: {
+            display: 'inline-block',
         },
-        '&:hover button': {
-            opacity: 1,
+        button: {
+            display: 'inline-block',
+            position: 'relative',
+            float: 'left',
+            '& .add': {
+                position: 'absolute',
+                top: theme.spacing(1),
+                right: theme.spacing(6),
+                minWidth: theme.spacing(2),
+                opacity: 0,
+            },
+            '& .remove': {
+                position: 'absolute',
+                top: theme.spacing(1),
+                right: theme.spacing(1),
+                minWidth: theme.spacing(2),
+                opacity: 0,
+            },
+            '&:hover button': {
+                opacity: 1,
+            },
         },
-    },
+    })
+);
+
+const ContentImageInput = props => {
+    const classes = useStyles(props);
+
+    return (
+        <ContentFileInput
+            labelMultiple="ra.input.image.upload_several"
+            labelSingle="ra.input.image.upload_single"
+            classes={classes}
+            {...props}
+        />
+    );
 };
 
-export class ContentImageInput extends ContentFileInput {
-    static defaultProps = {
-        ...ContentFileInput.defaultProps,
-        labelMultiple: 'ra.input.image.upload_several',
-        labelSingle: 'ra.input.image.upload_single',
-    };
-}
-
-export default compose(
-    addField,
-    translate,
-    withStyles(styles),
-    withEdition
-)(ContentImageInput);
+export default ContentImageInput;

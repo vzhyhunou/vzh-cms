@@ -7,10 +7,10 @@ export default props =>
     <BulkTagButton
         {...props}
         label="resources.tags.actions.remove"
-        data={(selected, tag) => selected.map(r => r.tags ? ({
-            ...r,
-            tags: r.tags.filter(t => t.name !== tag)
-        }) : r)}
+        data={(record, tag) => ({
+            id: record.id,
+            tags: record.tags ? record.tags.filter(t => t.name !== tag) : []
+        })}
     >
         <RemoveCircleIcon/>
     </BulkTagButton>

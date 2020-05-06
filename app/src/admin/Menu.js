@@ -1,13 +1,16 @@
 import React from 'react';
-import {getResources, MenuItemLink, Responsive} from 'react-admin';
-import {connect} from 'react-redux';
+import {getResources, MenuItemLink} from 'react-admin';
+import {useSelector} from 'react-redux';
+import {useMediaQuery} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-import compose from 'recompose/compose';
 
 import {withTranslation} from '../commons/TranslationContext';
 
-const Menu = ({resources, onMenuClick, translate, logout}) =>
-    <div>
+const Menu = ({onMenuClick, translate, logout}) => {
+    const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
+    const open = useSelector(state => state.admin.ui.sidebarOpen);
+    const resources = useSelector(getResources);
+    return <div>
         {resources.map(resource =>
             <MenuItemLink
                 key={resource.name}
@@ -15,6 +18,7 @@ const Menu = ({resources, onMenuClick, translate, logout}) =>
                 primaryText={translate(`resources.${resource.name}.name`)}
                 leftIcon={<resource.icon/>}
                 onClick={onMenuClick}
+                sidebarIsOpen={open}
             />
         )}
         <MenuItemLink
@@ -22,17 +26,10 @@ const Menu = ({resources, onMenuClick, translate, logout}) =>
             primaryText={translate('pos.configuration')}
             leftIcon={<SettingsIcon/>}
             onClick={onMenuClick}
+            sidebarIsOpen={open}
         />
-        <Responsive xsmall={logout} medium={null}/>
-    </div>
-;
+        {isXSmall && logout}
+    </div>;
+}
 
-export default compose(
-    connect(
-        state => ({
-            resources: getResources(state)
-        }),
-        {}
-    ),
-    withTranslation
-)(Menu);
+export default withTranslation(Menu);

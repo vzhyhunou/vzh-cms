@@ -1,10 +1,9 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {changeLocale, Title} from 'react-admin';
+import {useSetLocale, Title} from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import compose from 'recompose/compose';
 
@@ -17,9 +16,10 @@ const styles = {
     }
 };
 
-const Configuration = ({changeLocale, updateLocale, classes, locale, translate, locales}) => {
+const Configuration = ({updateLocale, classes, locale, translate, locales}) => {
 
-    const update = locale => updateLocale(locale).then(l => changeLocale(l));
+    const setLocale = useSetLocale();
+    const update = locale => updateLocale(locale).then(l => setLocale(l));
 
     return <Card>
         <Title title={'pos.configuration'}/>
@@ -38,10 +38,6 @@ const Configuration = ({changeLocale, updateLocale, classes, locale, translate, 
 };
 
 export default compose(
-    connect(
-        undefined,
-        {changeLocale}
-    ),
     withTranslation,
     withStyles(styles)
 )(Configuration);

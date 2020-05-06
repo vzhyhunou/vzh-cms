@@ -1,129 +1,81 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+    Children,
+    cloneElement,
+    isValidElement
+} from 'react';
 import { shallowEqual } from 'recompose';
-import Dropzone from 'react-dropzone';
-import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
+import { useDropzone } from 'react-dropzone';
+import { makeStyles } from '@material-ui/core/styles';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import classnames from 'classnames';
-import {Labeled, addField, translate} from 'react-admin';
+import { useInput, useTranslate, Labeled, InputHelperText } from 'react-admin';
+import { useForm, useFormState } from 'react-final-form';
+import { useLocation } from 'react-router-dom';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
+import {withTranslation} from '../../commons/TranslationContext';
 
-const styles = {
-    dropZone: {
-        background: '#efefef',
-        cursor: 'pointer',
-        padding: '1rem',
-        textAlign: 'center',
-        color: '#999',
-    },
-    preview: {},
-    removeButton: {},
-    root: { width: '100%' },
-};
+const useStyles = makeStyles(
+    theme => ({
+        dropZone: {
+            background: theme.palette.background.default,
+            cursor: 'pointer',
+            padding: theme.spacing(1),
+            textAlign: 'center',
+            color: theme.palette.getContrastText(
+                theme.palette.background.default
+            ),
+        },
+        preview: {},
+        button: {},
+        root: { width: '100%' },
+    })
+);
 
-export class ContentFileInput extends Component {
-    static propTypes = {
-        accept: PropTypes.string,
-        children: PropTypes.element,
-        classes: PropTypes.object,
-        className: PropTypes.string,
-        disableClick: PropTypes.bool,
-        id: PropTypes.string,
-        input: PropTypes.object,
-        isRequired: PropTypes.bool,
-        label: PropTypes.string,
-        labelMultiple: PropTypes.string,
-        labelSingle: PropTypes.string,
-        maxSize: PropTypes.number,
-        minSize: PropTypes.number,
-        multiple: PropTypes.bool,
-        options: PropTypes.object,
-        resource: PropTypes.string,
-        source: PropTypes.string,
-        translate: PropTypes.func.isRequired,
-        placeholder: PropTypes.node,
-        addImageToContent: PropTypes.func.isRequired
-    };
+const ContentFileInput = props => {
+    const {
+        accept,
+        children,
+        className,
+        classes: classesOverride,
+        format,
+        helperText,
+        label,
+        labelMultiple = 'ra.input.file.upload_several',
+        labelSingle = 'ra.input.file.upload_single',
+        maxSize,
+        minSize,
+        multiple = false,
+        options: {
+            inputProps: inputPropsOptions,
+            ...options
+        } = {},
+        parse,
+        placeholder,
+        resource,
+        source,
+        validate,
+        locales,
+        ...rest
+    } = props;
+    const translate = useTranslate();
+    const classes = useStyles(props);
+    const form = useForm();
+    const formState = useFormState();
+    const location = useLocation();
 
-    static defaultProps = {
-        labelMultiple: 'ra.input.file.upload_several',
-        labelSingle: 'ra.input.file.upload_single',
-        multiple: false,
-        onUpload: () => {},
-    };
-
-    constructor(props) {
-        super(props);
-        let files = props.input.value || [];
-        if (!Array.isArray(files)) {
-            files = [files];
-        }
-
-        this.state = {
-            files: files.map(this.transformFile),
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        let files = nextProps.input.value || [];
-        if (!Array.isArray(files)) {
-            files = [files];
-        }
-
-        this.setState({ files: files.map(this.transformFile) });
-    }
-
-    onDrop = files => {
-        const updatedFiles = this.props.multiple
-            ? [...this.state.files, ...files.map(this.transformFile)]
-            : [...files.map(this.transformFile)];
-
-        this.setState({ files: updatedFiles });
-
-        if (this.props.multiple) {
-            this.props.input.onChange(updatedFiles);
-        } else {
-            this.props.input.onChange(updatedFiles[0]);
-        }
-    };
-
-    onAdd = file => () => {
-        const {source} = React.Children.toArray(
-            this.props.children
-        )[0].props;
-
-        this.props.addImageToContent(`<img src="${file[source]}"/>`);
-    };
-
-    onRemove = file => () => {
-        const filteredFiles = this.state.files.filter(
-            stateFile => !shallowEqual(stateFile, file)
-        );
-
-        this.setState({ files: filteredFiles });
-
-        if (this.props.multiple) {
-            this.props.input.onChange(filteredFiles);
-        } else {
-            this.props.input.onChange(null);
-        }
-    };
-
-    // turn a browser dropped file structure into expected structure
-    transformFile = file => {
+    const transformFile = file => {
         if (!(file instanceof File)) {
             return file;
         }
 
-        const { source, title } = React.Children.toArray(
-            this.props.children
-        )[0].props;
+        const { source, title } = Children.only(children).props;
 
+        const preview = URL.createObjectURL(file);
         const transformedFile = {
             rawFile: file,
-            [source]: file.preview,
+            [source]: preview,
         };
 
         if (title) {
@@ -133,94 +85,143 @@ export class ContentFileInput extends Component {
         return transformedFile;
     };
 
-    label() {
-        const {
-            translate,
-            placeholder,
-            labelMultiple,
-            labelSingle,
-        } = this.props;
-
-        if (placeholder) {
-            return placeholder;
+    const transformFiles = (files: any[]) => {
+        if (!files) {
+            return multiple ? [] : null;
         }
 
-        if (this.props.multiple) {
-            return <p>{translate(labelMultiple)}</p>;
+        if (Array.isArray(files)) {
+            return files.map(transformFile);
         }
 
-        return <p>{translate(labelSingle)}</p>;
-    }
+        return transformFile(files);
+    };
 
-    render() {
-        const {
-            accept,
-            children,
-            classes = {},
-            className,
-            disableClick,
-            id,
-            isRequired,
-            label,
-            maxSize,
-            minSize,
-            multiple,
-            resource,
-            source,
-            options = {},
-            ...rest
-        } = this.props;
+    const {
+        id,
+        input: { onChange, value, ...inputProps },
+        meta,
+        isRequired,
+    } = useInput({
+        format: format || transformFiles,
+        parse: parse || transformFiles,
+        source,
+        type: 'file',
+        validate,
+        ...rest,
+    });
+    const { touched, error } = meta;
+    const files = value ? (Array.isArray(value) ? value : [value]) : [];
 
-        return (
-            <Labeled
-                id={id}
-                label={label}
-                className={classnames(classes.root, className)}
-                source={source}
-                resource={resource}
-                isRequired={isRequired}
-                {...sanitizeRestProps(rest)}
-            >
-                <span>
-                    <Dropzone
-                        onDrop={this.onDrop}
-                        accept={accept}
-                        disableClick={disableClick}
-                        maxSize={maxSize}
-                        minSize={minSize}
-                        multiple={multiple}
-                        className={classes.dropZone}
-                        {...options}
-                        inputProps={{ id, ...options.inputProps }}
-                    >
-                        {this.label()}
-                    </Dropzone>
-                    {children && (
-                        <div className="previews">
-                            {this.state.files.map((file, index) => (
-                                <ContentFileInputPreview
-                                    key={index}
-                                    file={file}
-                                    onAdd={this.onAdd(file)}
-                                    onRemove={this.onRemove(file)}
-                                    className={classes.buttons}
-                                >
-                                    {React.cloneElement(children, {
-                                        record: file,
-                                        className: classes.preview,
-                                    })}
-                                </ContentFileInputPreview>
-                            ))}
-                        </div>
+    const onDrop = (newFiles, rejectedFiles, event) => {
+        const updatedFiles = multiple ? [...files, ...newFiles] : [...newFiles];
+
+        if (multiple) {
+            onChange(updatedFiles);
+        } else {
+            onChange(updatedFiles[0]);
+        }
+
+        if (options.onDrop) {
+            options.onDrop(newFiles, rejectedFiles, event);
+        }
+    };
+
+    const onAdd = file => () => {
+        const { source } = Children.only(children).props;
+        const locale = Object.keys(locales)[location.pathname.split('/')[3] - 2];
+
+        form.change(`properties.${locale}.content`, `${formState.values.properties[locale].content}\n<img src="${file[source]}"/>`);
+    };
+
+    const onRemove = file => () => {
+        if (multiple) {
+            const filteredFiles = files.filter(
+                stateFile => !shallowEqual(stateFile, file)
+            );
+            onChange(filteredFiles);
+        } else {
+            onChange(null);
+        }
+
+        if (options.onRemove) {
+            options.onRemove(file);
+        }
+    };
+
+    const childrenElement = isValidElement(Children.only(children))
+        ? Children.only(children)
+        : undefined;
+
+    const { getRootProps, getInputProps } = useDropzone({
+        ...options,
+        accept,
+        maxSize,
+        minSize,
+        multiple,
+        onDrop,
+    });
+
+    return (
+        <Labeled
+            id={id}
+            label={label}
+            className={classnames(classes.root, className)}
+            source={source}
+            resource={resource}
+            isRequired={isRequired}
+            meta={meta}
+            {...sanitizeRestProps(rest)}
+        >
+            <>
+                <div
+                    data-testid="dropzone"
+                    className={classes.dropZone}
+                    {...getRootProps()}
+                >
+                    <input
+                        id={id}
+                        {...getInputProps({
+                            ...inputProps,
+                            ...inputPropsOptions,
+                        })}
+                    />
+                    {placeholder ? (
+                        placeholder
+                    ) : multiple ? (
+                        <p>{translate(labelMultiple)}</p>
+                    ) : (
+                        <p>{translate(labelSingle)}</p>
                     )}
-                </span>
-            </Labeled>
-        );
-    }
-}
+                </div>
+                <FormHelperText>
+                    <InputHelperText
+                        touched={touched}
+                        error={error}
+                        helperText={helperText}
+                    />
+                </FormHelperText>
+                {children && (
+                    <div className="previews">
+                        {files.map((file, index) => (
+                            <ContentFileInputPreview
+                                key={index}
+                                file={file}
+                                onAdd={onAdd(file)}
+                                onRemove={onRemove(file)}
+                                className={classes.button}
+                            >
+                                {cloneElement(childrenElement, {
+                                    record: file,
+                                    className: classes.preview,
+                                })}
+                            </ContentFileInputPreview>
+                        ))}
+                    </div>
+                )}
+            </>
+        </Labeled>
+    );
+};
 
-export default compose(
-    addField,
-    translate,
-    withStyles(styles)
-)(ContentFileInput);
+export default withTranslation(ContentFileInput);
