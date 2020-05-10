@@ -10,8 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
-import {withRouter} from 'react-router-dom';
-import compose from 'recompose/compose';
+import {useLocation} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
 import WithPermissions from './WithPermissions';
@@ -46,8 +45,10 @@ const styles = theme => ({
     },
 });
 
-const Bar = ({classes, open, handleDrawerOpen, location}) =>
-    <AppBar position="static"
+const Bar = ({classes, open, handleDrawerOpen}) => {
+    const location = useLocation();
+
+    return <AppBar position="static"
             className={classNames(classes.appBar, {
                 [classes.appBarShift]: open,
             })}>
@@ -97,10 +98,7 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
                 <MenuIcon/>
             </IconButton>
         </Toolbar>
-    </AppBar>
-;
+    </AppBar>;
+};
 
-export default compose(
-    withRouter,
-    withStyles(styles, {withTheme: true})
-)(Bar);
+export default withStyles(styles, {withTheme: true})(Bar);

@@ -1,6 +1,4 @@
 import React, {memo, useEffect, useState, Fragment} from 'react';
-import {withRouter} from 'react-router-dom';
-import compose from 'recompose/compose';
 import parse from 'html-react-parser';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
@@ -50,9 +48,4 @@ const App = ({locale, id}) => {
     return <EnhancedArea locale={locale} {...page}/>;
 };
 
-const ReducedApp = ({locale, match}) => <App locale={locale} id={match.params.id}/>;
-
-export default compose(
-    withRouter,
-    withTranslation
-)(ReducedApp);
+export default withTranslation(App);
