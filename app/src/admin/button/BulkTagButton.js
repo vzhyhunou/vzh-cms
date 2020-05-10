@@ -1,29 +1,22 @@
 import React, {Fragment, useState} from 'react';
-import {connect} from 'react-redux';
-import {Button, crudUpdateMany} from 'react-admin';
+import {Button} from 'react-admin';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import compose from 'recompose/compose';
 
 import {withTranslation} from '../../commons/TranslationContext';
+import useUpdateTag from './useUpdateTag';
 
 const BulkTagButton = ({
-                           basePath,
-                           crudUpdateMany,
                            resource,
                            selectedIds,
                            messages,
                            label,
                            children,
-                           data,
-                           getSelectedRecords
+                           data
                        }) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const update = tag => {
-        crudUpdateMany(resource, selectedIds, data(getSelectedRecords(), tag), basePath);
-        setAnchorEl(null);
-    };
+    const updateTag = useUpdateTag(resource, selectedIds, data);
     const {tags} = messages.resources[resource];
 
     return <Fragment>
@@ -44,7 +37,7 @@ const BulkTagButton = ({
             {Object.keys(tags).map(tag =>
                 <MenuItem
                     key={tag}
-                    onClick={() => update(tag)}
+                    onClick={() => updateTag(tag)}
                 >
                     {tags[tag]}
                 </MenuItem>
@@ -53,10 +46,4 @@ const BulkTagButton = ({
     </Fragment>;
 };
 
-export default compose(
-    connect(
-        undefined,
-        {crudUpdateMany}
-    ),
-    withTranslation
-)(BulkTagButton);
+export default withTranslation(BulkTagButton);

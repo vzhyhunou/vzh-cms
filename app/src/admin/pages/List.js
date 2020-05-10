@@ -1,4 +1,4 @@
-import React, {createRef, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {BulkDeleteButton, Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
@@ -37,21 +37,13 @@ const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-const PageList = ({locale, ...rest}) => {
-
-    const myDataGrid = createRef();
-
-    const getSelectedRecords = () => {
-        const gridProps = myDataGrid.current.props;
-        return gridProps.selectedIds.map(id => gridProps.data[id]);
-    };
-
-    return <List
+const PageList = ({locale, ...rest}) =>
+    <List
         {...rest}
         filters={<PageFilter locale={locale}/>}
-        bulkActionButtons={<PostBulkActionButtons getSelectedRecords={getSelectedRecords}/>}
+        bulkActionButtons={<PostBulkActionButtons/>}
     >
-        <Datagrid ref={myDataGrid}>
+        <Datagrid>
             <LinkField
                 source="id"
             />
@@ -64,7 +56,7 @@ const PageList = ({locale, ...rest}) => {
             />
             <EditButton/>
         </Datagrid>
-    </List>;
-};
+    </List>
+;
 
 export default withSanitizedTranslation(PageList);

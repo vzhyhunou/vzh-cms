@@ -1,64 +1,67 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import {withStyles} from '@material-ui/core/styles';
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core';
 import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
+import IconButton from '@material-ui/core/IconButton';
+import { useTranslate } from 'react-admin';
 
-const styles = theme => ({
-    icon: {
-        color: theme.palette.accent1Color,
-    },
-});
+const useStyles = makeStyles(
+    theme => ({
+        button: {},
+        icon: {
+            color: theme.palette.error.main,
+        },
+    })
+);
 
-export class ContentFileInputPreview extends Component {
+const ContentFileInputPreview = props => {
+    const {
+        children,
+        classes: classesOverride,
+        className,
+        onAdd,
+        onRemove,
+        file,
+        ...rest
+    } = props;
+    const classes = useStyles(props);
+    const translate = useTranslate();
 
-    componentWillUnmount() {
-        const {file, revokeObjectURL} = this.props;
+    useEffect(() => {
+        return () => {
+            const preview = file.rawFile ? file.rawFile.preview : file.preview;
 
-        if (file.preview) {
-            revokeObjectURL
-                ? revokeObjectURL(file.preview)
-                : window.URL.revokeObjectURL(file.preview);
-        }
-    }
+            if (preview) {
+                window.URL.revokeObjectURL(preview);
+            }
+        };
+    }, [file]);
 
-    render() {
-        const {
-            children,
-            classes = {},
-            className,
-            onAdd,
-            onRemove,
-            ...rest
-        } = this.props;
-
-        return (
-            <div className={className} {...rest}>
-                <IconButton className="add" onClick={onAdd}>
-                    <AddCircle className={classes.icon}/>
-                </IconButton>
-                <IconButton className="remove" onClick={onRemove}>
-                    <RemoveCircle className={classes.icon}/>
-                </IconButton>
-                {children}
-            </div>
-        );
-    }
-}
-
-ContentFileInputPreview.propTypes = {
-    children: PropTypes.element.isRequired,
-    classes: PropTypes.object,
-    className: PropTypes.string,
-    file: PropTypes.object,
-    onAdd: PropTypes.func.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    revokeObjectURL: PropTypes.func,
+    return (
+        <div className={className} {...rest}>
+            <IconButton
+                className="add"
+                onClick={onAdd}
+                aria-label={translate('ra.action.add')}
+                title={translate('ra.action.add')}
+            >
+                <AddCircle className={classes.icon} />
+            </IconButton>
+            <IconButton
+                className="remove"
+                onClick={onRemove}
+                aria-label={translate('ra.action.delete')}
+                title={translate('ra.action.delete')}
+            >
+                <RemoveCircle className={classes.icon} />
+            </IconButton>
+            {children}
+        </div>
+    );
 };
 
 ContentFileInputPreview.defaultProps = {
     file: undefined,
 };
 
-export default withStyles(styles)(ContentFileInputPreview);
+export default ContentFileInputPreview;

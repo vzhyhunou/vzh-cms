@@ -1,14 +1,14 @@
 import React, {memo} from 'react';
 import {Admin, createAdminStore, Login} from 'react-admin';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
-import createHistory from 'history/createBrowserHistory';
+import {createBrowserHistory as createHistory} from 'history';
 import {Provider} from 'react-redux';
 
 import authProvider from '../commons/auth';
 import {withTranslation} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
-import EditionProvider from './EditionContext';
 import routes from './routes';
 import Menu from './Menu';
 import background from './background.png';
@@ -35,23 +35,21 @@ const App = ({locale, translate, getMessages, resources}) => {
         store={createAdminStore({
             authProvider,
             dataProvider,
-            i18nProvider: getMessages,
-            history,
-            locale
+            history
         })}
     >
-        <EditionProvider>
-            <Admin
-                theme={theme}
-                customRoutes={routes}
-                menu={Menu}
-                authProvider={authProvider}
-                history={history}
-                loginPage={() => <Login backgroundImage={background}/>}
-            >
-                {permissions => resources(permissions)}
-            </Admin>
-        </EditionProvider>
+        <Admin
+            theme={theme}
+            customRoutes={routes}
+            menu={Menu}
+            authProvider={authProvider}
+            dataProvider={dataProvider}
+            history={history}
+            loginPage={() => <Login backgroundImage={background}/>}
+            i18nProvider={polyglotI18nProvider(getMessages)}
+        >
+            {permissions => resources(permissions)}
+        </Admin>
     </Provider>;
 };
 

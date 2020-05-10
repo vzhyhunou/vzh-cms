@@ -1,4 +1,4 @@
-import React, {createRef, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {BulkDeleteButton, Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
 
 import TagsField from '../field/TagsField';
@@ -24,21 +24,13 @@ const PostBulkActionButtons = props =>
     </Fragment>
 ;
 
-export default props => {
-
-    const myDataGrid = createRef();
-
-    const getSelectedRecords = () => {
-        const gridProps = myDataGrid.current.props;
-        return gridProps.selectedIds.map(id => gridProps.data[id]);
-    };
-
-    return <List
+export default props =>
+    <List
         {...props}
         filters={<UserFilter/>}
-        bulkActionButtons={<PostBulkActionButtons getSelectedRecords={getSelectedRecords}/>}
+        bulkActionButtons={<PostBulkActionButtons/>}
     >
-        <Datagrid ref={myDataGrid}>
+        <Datagrid>
             <TextField
                 source="id"
             />
@@ -47,5 +39,5 @@ export default props => {
             />
             <EditButton/>
         </Datagrid>
-    </List>;
-};
+    </List>
+;

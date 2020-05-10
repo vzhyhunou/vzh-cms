@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,20 +10,15 @@ import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
-import {withRouter} from 'react-router-dom';
-import compose from 'recompose/compose';
+import {useLocation} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
 import WithPermissions from './WithPermissions';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
-    flex: {
-        flex: 1
-    },
+const useStyles = makeStyles(theme => ({
     appBar: {
-        position: 'absolute',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -37,20 +32,24 @@ const styles = theme => ({
         }),
         marginRight: drawerWidth,
     },
-    menuButton: {
-        marginLeft: 12,
-        marginRight: 20,
+    title: {
+        flexGrow: 1,
     },
     hide: {
         display: 'none',
     },
-});
+}));
 
-const Bar = ({classes, open, handleDrawerOpen, location}) =>
-    <AppBar position="static"
-            className={classNames(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}>
+export default ({open, handleDrawerOpen}) => {
+    const classes = useStyles();
+    const location = useLocation();
+
+    return <AppBar
+                position="fixed"
+                className={classNames(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
         <Toolbar>
             <IconButton
                 color="inherit"
@@ -59,9 +58,8 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
                 <HomeIcon/>
             </IconButton>
             <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
+                variant="h6"
+                className={classes.title}
             >
                 Project
             </Typography>
@@ -92,15 +90,10 @@ const Bar = ({classes, open, handleDrawerOpen, location}) =>
             <IconButton
                 color="inherit"
                 onClick={handleDrawerOpen}
-                className={classNames(classes.menuButton, open && classes.hide)}
+                className={classNames(open && classes.hide)}
             >
                 <MenuIcon/>
             </IconButton>
         </Toolbar>
-    </AppBar>
-;
-
-export default compose(
-    withRouter,
-    withStyles(styles, {withTheme: true})
-)(Bar);
+    </AppBar>;
+};
