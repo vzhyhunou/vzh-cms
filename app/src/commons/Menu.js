@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,29 +7,34 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import compose from 'recompose/compose';
 
 import dataProvider, {GET_MENU_LOCALE} from './rest';
 import {withTranslation} from './TranslationContext';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
     drawerPaper: {
-        position: 'relative',
         width: drawerWidth,
     },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
+        padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
+        justifyContent: 'flex-start',
     },
-});
+}));
 
-const Area = ({classes, open, handleDrawerClose, items}) =>
-    <Drawer
+const Area = ({open, handleDrawerClose, items}) => {
+    const classes = useStyles();
+
+    return <Drawer
+        className={classes.drawer}
         variant="persistent"
         anchor="right"
         open={open}
@@ -56,13 +61,10 @@ const Area = ({classes, open, handleDrawerClose, items}) =>
                 </ListItem>
             )}
         </List>
-    </Drawer>
-;
+    </Drawer>;
+};
 
-const EnhancedArea = compose(
-    memo,
-    withStyles(styles, {withTheme: true})
-)(Area);
+const EnhancedArea = memo(Area);
 
 const Menu = ({open, handleDrawerClose, locale}) => {
 

@@ -1,6 +1,6 @@
 import React, {cloneElement, useState} from 'react';
 import classNames from 'classnames';
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 import Bar from './Bar';
 import Menu from './Menu';
@@ -8,17 +8,12 @@ import routes from './routes';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
-    appFrame: {
-        zIndex: 1,
-        overflow: 'hidden',
-        position: 'relative',
+const useStyles = makeStyles(theme => ({
+    root: {
         display: 'flex',
-        width: '100%',
     },
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -33,13 +28,14 @@ const styles = theme => ({
         }),
         marginRight: 0,
     },
-});
+}));
 
-const Layout = ({classes}) => {
+export default () => {
 
+    const classes = useStyles();
     const [open, setOpen] = useState(false);
 
-    return <div className={classes.appFrame}>
+    return <div className={classes.root}>
         <Bar
             open={open}
             handleDrawerOpen={() => setOpen(true)}
@@ -55,5 +51,3 @@ const Layout = ({classes}) => {
         />
     </div>;
 };
-
-export default withStyles(styles, {withTheme: true})(Layout);
