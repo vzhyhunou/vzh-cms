@@ -2,19 +2,19 @@ import React, {memo, useEffect, useState, Fragment} from 'react';
 import parse from 'html-react-parser';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
-import {withTranslation} from '../commons/TranslationContext';
+import {useLocale} from '../commons/TranslationContext';
 
 import './App.css';
 
-const Area = ({locale, title, content}) => {
+const Area = ({title, content, internal}) => {
 
-    if (!document.title) document.title = title;
+    if (!internal) document.title = title;
 
     return <Fragment>
         {parse(content, {
             replace: domNode => {
                 if (domNode.name === 'page') {
-                    return <App locale={locale} id={domNode.attribs.id}/>;
+                    return <App id={domNode.attribs.id} internal/>;
                 }
             }
         })}
@@ -23,8 +23,9 @@ const Area = ({locale, title, content}) => {
 
 const EnhancedArea = memo(Area);
 
-const App = ({locale, id}) => {
+const App = ({id, internal}) => {
 
+    const locale = useLocale();
     const [page, setPage] = useState();
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const App = ({locale, id}) => {
     if (!page)
         return <div/>;
 
-    return <EnhancedArea locale={locale} {...page}/>;
+    return <EnhancedArea {...page} internal={internal}/>;
 };
 
-export default withTranslation(App);
+export default App;

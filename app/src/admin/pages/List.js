@@ -3,7 +3,7 @@ import {BulkDeleteButton, Datagrid, EditButton, Filter, List, TextField, TextInp
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
-import {withSanitizedTranslation} from '../../commons/TranslationContext';
+import {useLocale} from '../../commons/TranslationContext';
 import BulkAddTagButton from '../button/BulkAddTagButton';
 import BulkRemoveTagButton from '../button/BulkRemoveTagButton';
 
@@ -37,9 +37,12 @@ const LinkField = ({source, record = {}}) =>
     <a href={`/pages/${record[source]}`}>{record[source]}</a>
 ;
 
-const PageList = ({locale, ...rest}) =>
-    <List
-        {...rest}
+export default props => {
+
+    const locale = useLocale();
+
+    return <List
+        {...props}
         filters={<PageFilter locale={locale}/>}
         bulkActionButtons={<PostBulkActionButtons/>}
     >
@@ -56,7 +59,5 @@ const PageList = ({locale, ...rest}) =>
             />
             <EditButton/>
         </Datagrid>
-    </List>
-;
-
-export default withSanitizedTranslation(PageList);
+    </List>;
+};

@@ -6,7 +6,7 @@ import {createBrowserHistory as createHistory} from 'history';
 import {Provider} from 'react-redux';
 
 import authProvider from '../commons/auth';
-import {withTranslation} from '../commons/TranslationContext';
+import {useTranslate, useGetMessages} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import routes from './routes';
@@ -24,12 +24,10 @@ const theme = createMuiTheme({
     }
 });
 
-const App = ({locale, translate, getMessages, resources}) => {
+const Area = ({getMessages, resources}) => {
 
     const dataProvider = addUploadFeature(restProvider());
     const history = createHistory({basename: '/admin'});
-
-    document.title = translate('pos.title');
 
     return <Provider
         store={createAdminStore({
@@ -53,4 +51,17 @@ const App = ({locale, translate, getMessages, resources}) => {
     </Provider>;
 };
 
-export default withTranslation(memo(App, () => true));
+const EnhancedArea = memo(Area, () => true);
+
+export default props => {
+
+    const translate = useTranslate();
+    const getMessages = useGetMessages();
+
+    document.title = translate('pos.title');
+
+    return <EnhancedArea
+        getMessages={getMessages}
+        {...props}
+    />;
+};

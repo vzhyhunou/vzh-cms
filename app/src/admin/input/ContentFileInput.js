@@ -14,7 +14,7 @@ import { useLocation } from 'react-router-dom';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
-import {withTranslation} from '../../commons/TranslationContext';
+import {useLocales} from '../../commons/TranslationContext';
 
 const useStyles = makeStyles(
     theme => ({
@@ -56,9 +56,9 @@ const ContentFileInput = props => {
         resource,
         source,
         validate,
-        locales,
         ...rest
     } = props;
+    const locales = useLocales();
     const translate = useTranslate();
     const classes = useStyles(props);
     const form = useForm();
@@ -224,4 +224,4 @@ const ContentFileInput = props => {
     );
 };
 
-export default withTranslation(ContentFileInput);
+export default ContentFileInput;

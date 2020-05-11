@@ -11,11 +11,15 @@ import {
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {withSanitizedTranslation} from '../../commons/TranslationContext';
+import {useLocale, useLocales} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
-const PageEdit = ({locale, locales, ...rest}) =>
-    <Edit {...rest}>
+export default props => {
+
+    const locale = useLocale();
+    const locales = useLocales();
+
+    return <Edit {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
                 <DateField
@@ -58,7 +62,5 @@ const PageEdit = ({locale, locales, ...rest}) =>
                 </FormTab>
             )}
         </TabbedForm>
-    </Edit>
-;
-
-export default withSanitizedTranslation(PageEdit);
+    </Edit>;
+};

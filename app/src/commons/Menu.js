@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import dataProvider, {GET_MENU_LOCALE} from './rest';
-import {withTranslation} from './TranslationContext';
+import {useLocale} from './TranslationContext';
 
 const drawerWidth = 240;
 
@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Area = ({open, handleDrawerClose, items}) => {
+
     const classes = useStyles();
 
     return <Drawer
@@ -66,8 +67,9 @@ const Area = ({open, handleDrawerClose, items}) => {
 
 const EnhancedArea = memo(Area);
 
-const Menu = ({open, handleDrawerClose, locale}) => {
+export default ({open, handleDrawerClose}) => {
 
+    const locale = useLocale();
     const [items, setItems] = useState();
 
     useEffect(() => {
@@ -84,5 +86,3 @@ const Menu = ({open, handleDrawerClose, locale}) => {
         items={items}
     />;
 };
-
-export default withTranslation(Menu);

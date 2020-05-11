@@ -6,7 +6,12 @@ import Select from '@material-ui/core/Select';
 import {useSetLocale, Title} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {withTranslation} from '../commons/TranslationContext';
+import {
+    useTranslate,
+    useLocales,
+    useLocale,
+    useUpdateLocale
+} from '../commons/TranslationContext';
 
 const useStyles = makeStyles({
     label: {
@@ -15,8 +20,12 @@ const useStyles = makeStyles({
     }
 });
 
-const Configuration = ({updateLocale, locale, translate, locales}) => {
+export default () => {
 
+    const translate = useTranslate();
+    const locales = useLocales();
+    const locale = useLocale();
+    const updateLocale = useUpdateLocale();
     const setLocale = useSetLocale();
     const classes = useStyles();
     const update = locale => updateLocale(locale).then(l => setLocale(l));
@@ -36,5 +45,3 @@ const Configuration = ({updateLocale, locale, translate, locales}) => {
         </CardContent>
     </Card>;
 };
-
-export default withTranslation(Configuration);
