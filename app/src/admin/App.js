@@ -24,7 +24,7 @@ const theme = createMuiTheme({
     }
 });
 
-const App = ({locale, translate, getMessages, resources}) => {
+const App = ({translate, getMessages, resources}) => {
 
     const dataProvider = addUploadFeature(restProvider());
     const history = createHistory({basename: '/admin'});
