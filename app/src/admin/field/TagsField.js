@@ -1,33 +1,41 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
+import {makeStyles} from '@material-ui/core';
 
-import {withTranslation} from '../../commons/TranslationContext';
+import {useTranslate} from '../../commons/TranslationContext';
 
-const styles = {
-    main: {display: 'flex', flexWrap: 'wrap'},
-    chip: {margin: 4}
-};
+const useStyles = makeStyles({
+    main: {
+        display: 'flex',
+        flexWrap: 'wrap'
+    },
+    chip: {
+        margin: 4
+    }
+});
 
-const TagsField = ({record, translate, resource}) =>
-    <span style={styles.main}>
+const TagsField = ({record, resource}) => {
+
+    const translate = useTranslate();
+    const classes = useStyles();
+
+    return <span className={classes.main}>
         {record.tags && record.tags.map(tag => {
 
             const {name} = tag;
 
             return <Chip
                 key={name}
-                style={styles.chip}
+                className={classes.chip}
                 label={translate(`resources.${resource}.tags.${name}`)}
             />;
         })}
-    </span>
-;
+    </span>;
+};
 
-const TranslatedTagsField = withTranslation(TagsField);
-
-TranslatedTagsField.defaultProps = {
+TagsField.defaultProps = {
     addLabel: true,
     source: 'tags',
 };
 
-export default TranslatedTagsField;
+export default TagsField;

@@ -4,12 +4,15 @@ import {useSelector} from 'react-redux';
 import {useMediaQuery} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import {withTranslation} from '../commons/TranslationContext';
+import {useTranslate} from '../commons/TranslationContext';
 
-const Menu = ({onMenuClick, translate, logout}) => {
+export default ({onMenuClick, logout}) => {
+
+    const translate = useTranslate();
     const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const resources = useSelector(getResources);
+
     return <div>
         {resources.map(resource =>
             <MenuItemLink
@@ -31,5 +34,3 @@ const Menu = ({onMenuClick, translate, logout}) => {
         {isXSmall && logout}
     </div>;
 }
-
-export default withTranslation(Menu);

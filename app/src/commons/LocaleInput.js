@@ -3,13 +3,15 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {withTranslation} from './TranslationContext';
+import {useLocale, useLocales, useUpdateLocale} from './TranslationContext';
 
-const LocaleInput = ({locale, locales, updateLocale}) => {
+export default () => {
 
+    const locale = useLocale();
+    const locales = useLocales();
+    const updateLocale = useUpdateLocale();
     const [anchorEl, setAnchorEl] = useState(null);
     const update = locale => {
-
         updateLocale(locale);
         setAnchorEl(null);
     };
@@ -41,5 +43,3 @@ const LocaleInput = ({locale, locales, updateLocale}) => {
         </Menu>
     </div>;
 };
-
-export default withTranslation(LocaleInput);

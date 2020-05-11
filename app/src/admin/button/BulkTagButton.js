@@ -3,18 +3,12 @@ import {Button} from 'react-admin';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {withTranslation} from '../../commons/TranslationContext';
+import {useMessages} from '../../commons/TranslationContext';
 import useUpdateTag from './useUpdateTag';
 
-const BulkTagButton = ({
-                           resource,
-                           selectedIds,
-                           messages,
-                           label,
-                           children,
-                           data
-                       }) => {
+export default ({resource, selectedIds, label, children, data}) => {
 
+    const messages = useMessages();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(resource, selectedIds, data);
     const {tags} = messages.resources[resource];
@@ -45,5 +39,3 @@ const BulkTagButton = ({
         </Menu>
     </Fragment>;
 };
-
-export default withTranslation(BulkTagButton);

@@ -8,11 +8,15 @@ import {
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {withSanitizedTranslation} from '../../commons/TranslationContext';
+import {useLocale, useLocales} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
-const PageCreate = ({locale, locales, ...rest}) =>
-    <Create {...rest}>
+export default props => {
+
+    const locale = useLocale();
+    const locales = useLocales();
+
+    return <Create {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
                 <TextInput
@@ -47,7 +51,5 @@ const PageCreate = ({locale, locales, ...rest}) =>
                 </FormTab>
             )}
         </TabbedForm>
-    </Create>
-;
-
-export default withSanitizedTranslation(PageCreate);
+    </Create>;
+};

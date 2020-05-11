@@ -1,10 +1,13 @@
 import React from 'react';
 import {ArrayInput, DateTimeInput, SelectInput, SimpleFormIterator} from 'react-admin';
 
-import {withSanitizedTranslation} from '../../commons/TranslationContext';
+import {useMessages} from '../../commons/TranslationContext';
 
-const TagsInput = ({addField, messages, resource, ...rest}) =>
-    <ArrayInput
+const TagsInput = ({addField, resource, ...rest}) => {
+
+    const messages = useMessages();
+
+    return <ArrayInput
         {...rest}
         label=""
     >
@@ -26,14 +29,12 @@ const TagsInput = ({addField, messages, resource, ...rest}) =>
                 label={`resources.tags.fields.end`}
             />
         </SimpleFormIterator>
-    </ArrayInput>
-;
+    </ArrayInput>;
+};
 
-const TranslatedTagsInput = withSanitizedTranslation(TagsInput);
-
-TranslatedTagsInput.defaultProps = {
+TagsInput.defaultProps = {
     addField: true,
     source: 'tags',
 };
 
-export default TranslatedTagsInput;
+export default TagsInput;

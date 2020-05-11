@@ -2,7 +2,7 @@ import React, {lazy, Suspense} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 
 import TranslationProvider from './commons/TranslationContext';
-import Loading from './admin/layout/Loading';
+import Loading from './commons/Loading';
 
 import locales from './commons/locales';
 import Layout from './commons/Layout';

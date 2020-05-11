@@ -1,4 +1,11 @@
-import React, {createContext, useEffect, useRef, useState} from 'react';
+import React, {
+    createContext,
+    useEffect,
+    useRef,
+    useState,
+    useContext,
+    useCallback
+} from 'react';
 import Polyglot from 'node-polyglot';
 
 import {i18nLoader, i18nWriter} from './locale';
@@ -58,14 +65,38 @@ export default ({locales, i18n, children}) => {
     </TranslationContext.Provider>;
 };
 
-export const withSanitizedTranslation = Component => props =>
-    <TranslationContext.Consumer>
-        {({updateLocale, getMessages, translate, ...state}) => <Component {...props} {...state}/>}
-    </TranslationContext.Consumer>
-;
+export const useTranslate = () => {
+    const { translate } = useContext(TranslationContext);
+    return useCallback(
+        (key, options) => translate(key, options),
+        [translate]
+    );
+};
 
-export const withTranslation = Component => props =>
-    <TranslationContext.Consumer>
-        {state => <Component {...props} {...state}/>}
-    </TranslationContext.Consumer>
-;
+export const useLocales = () => {
+    return useContext(TranslationContext).locales;
+};
+
+export const useLocale = () => {
+    return useContext(TranslationContext).locale;
+};
+
+export const useUpdateLocale = () => {
+    const { updateLocale } = useContext(TranslationContext);
+    return useCallback(
+        locale => updateLocale(locale),
+        [updateLocale]
+    );
+};
+
+export const useMessages = () => {
+    return useContext(TranslationContext).messages;
+};
+
+export const useGetMessages = () => {
+    const { getMessages } = useContext(TranslationContext);
+    return useCallback(
+        () => getMessages(),
+        [getMessages]
+    );
+};
