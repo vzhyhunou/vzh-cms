@@ -1,0 +1,18 @@
+{
+  "id": "fragment2",
+  "tags": [
+    {
+      "name": "PUBLISHED"
+    }
+  ],
+  "properties": {
+    "ru": {
+      "title": "Фрагмент 2",
+      "content": "<p>Фрагмент 2</p>"
+    },
+    "en": {
+      "title": "Fragment 2",
+      "content": "<p>Fragment 2</p>"
+    }
+  }
+}

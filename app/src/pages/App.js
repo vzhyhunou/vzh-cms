@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useState, Fragment} from 'react';
-import parse from 'html-react-parser';
+import parse, {domToReact} from 'html-react-parser';
 
 import dataProvider, {GET_ONE_LOCALE} from '../commons/rest';
 import {useLocale} from '../commons/TranslationContext';
@@ -10,15 +10,19 @@ const Area = ({title, content, internal}) => {
 
     if (!internal) document.title = title;
 
-    return <Fragment>
-        {parse(content, {
-            replace: domNode => {
-                if (domNode.name === 'page') {
-                    return <App id={domNode.attribs.id} internal/>;
+    const options = {
+        replace: ({name, attribs, children}) => {
+            if (name === 'page') {
+                return <Fragment>
+                    <App id={attribs.id} internal/>
+                    {domToReact(children, options)}
+                    </Fragment>;
                 }
             }
-        })}
-    </Fragment>
+        };
+    return <Fragment>
+        {parse(content, options)}
+    </Fragment>;
 };
 
 const EnhancedArea = memo(Area);
