@@ -53,7 +53,7 @@ public class PageController {
     }
 
     @ResponseBody
-    @GetMapping("search/one/{id}")
+    @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
         return request.isUserInRole(EDITOR)
                 ? repository.contentByActiveTags(id, PropertyPage.class)

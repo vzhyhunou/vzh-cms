@@ -77,7 +77,7 @@ const analyze = (resource, item) => {
 
 const analyzeFiles = (resource, files, data) => {
     files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
-        src: `/static/origin/${resource}/${data.id}/${name}`,
+        src: `/static/origin/${resource}/${pathById(data.id)}/${name}`,
         title: name
     })));
     return data;
@@ -92,7 +92,7 @@ const replaceSrc = (resource, {data, id}, files) => {
     let s = JSON.stringify(data);
     files.forEach(({name, previews}) => previews.forEach(preview => s = s.replace(
         new RegExp(preview, 'g'),
-        `/static/origin/${resource}/${id}/${name}`
+        `/static/origin/${resource}/${pathById(id)}/${name}`
     )));
     return JSON.parse(s);
 };
@@ -114,3 +114,5 @@ const process = files => {
     });
     return Array.from(map.values());
 };
+
+const pathById = s => s.replace(/\./g, '/');

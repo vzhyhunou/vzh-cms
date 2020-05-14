@@ -34,19 +34,27 @@ public class ImportService extends MaintainService {
 
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
-            try (DirectoryStream<Path> pathStream = Files.newDirectoryStream(path)) {
-                for (Path dir : pathStream) {
+            try (DirectoryStream<Path> paths = Files.newDirectoryStream(path)) {
+                for (Path dir : paths) {
                     Class<Object> type = (Class<Object>) Class.forName(dir.toFile().getName());
                     CrudRepository<Object, ?> crudRepository = repository(type);
-                    try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir)) {
-                        for (Path file : dirStream) {
-                            LOG.info("Import: {}", file);
-                            Object entity = mapper.readValue(file.toFile(), type);
-                            crudRepository.save(entity);
-                            if (entity instanceof Content) {
-                                fileService.save((Content) entity);
-                            }
-                        }
+                    imp(crudRepository, type, dir);
+                }
+            }
+        }
+    }
+
+    private void imp(CrudRepository<Object, ?> crudRepository, Class<Object> type, Path dir) throws Exception {
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
+            for (Path path : paths) {
+                if (path.toFile().isDirectory()) {
+                    imp(crudRepository, type, path);
+                } else {
+                    LOG.info("Import: {}", path);
+                    Object entity = mapper.readValue(path.toFile(), type);
+                    crudRepository.save(entity);
+                    if (entity instanceof Content) {
+                        fileService.save((Content) entity);
                     }
                 }
             }
