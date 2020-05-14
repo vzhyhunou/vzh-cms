@@ -93,7 +93,7 @@ describe('upload', () => {
         window.FileReader = MockFileReader
 
         const request = {
-            id: 'sample',
+            id: 'sample.1',
             data: {
                 files: [
                     {
@@ -112,7 +112,7 @@ describe('upload', () => {
             }
         }
         const expectedRequest = {
-            id: 'sample',
+            id: 'sample.1',
             data: {
                 files: [
                     {
@@ -121,9 +121,9 @@ describe('upload', () => {
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
-                content: "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         }
 
@@ -164,7 +164,7 @@ describe('upload', () => {
 
         const response = {
             data: {
-                id: 'sample',
+                id: 'sample.1',
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -175,15 +175,15 @@ describe('upload', () => {
         }
         const expectedResponse = {
             data: {
-                id: 'sample',
+                id: 'sample.1',
                 files: [
                     {
-                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
-                    src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 }
             }
@@ -204,7 +204,7 @@ describe('upload', () => {
 
         const response = {
             data: [{
-                id: 'sample',
+                id: 'sample.1',
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -215,15 +215,15 @@ describe('upload', () => {
         }
         const expectedResponse = {
             data: [{
-                id: 'sample',
+                id: 'sample.1',
                 files: [
                     {
-                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
-                    src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 }
             }]

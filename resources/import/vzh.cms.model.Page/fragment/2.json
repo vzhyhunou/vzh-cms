@@ -1,5 +1,5 @@
 {
-  "id": "fragment2",
+  "id": "fragment.2",
   "tags": [
     {
       "name": "PUBLISHED"
@@ -8,11 +8,11 @@
   "properties": {
     "ru": {
       "title": "Фрагмент 2",
-      "content": "<img src=\"/static/origin/pages/fragment2/a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Фрагмент 2</p>"
+      "content": "<img src=\"/static/origin/pages/fragment/2/a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Фрагмент 2</p>"
     },
     "en": {
       "title": "Fragment 2",
-      "content": "<img src=\"/static/origin/pages/fragment2/a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Fragment 2</p>"
+      "content": "<img src=\"/static/origin/pages/fragment/2/a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Fragment 2</p>"
     }
   },
   "files": [

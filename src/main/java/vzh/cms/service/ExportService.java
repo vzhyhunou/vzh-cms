@@ -1,6 +1,5 @@
 package vzh.cms.service;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -22,6 +21,8 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import static vzh.cms.service.ServiceHelper.pathById;
 
 /**
  * @author Viktar Zhyhunou
@@ -50,13 +51,12 @@ public class ExportService extends MaintainService {
         for (Class<?> type : mappings.filter(ResourceMapping::isExported).map(ResourceMetadata::getDomainType)) {
             CrudRepository<?, ?> crudRepository = repository(type);
             File dir = new File(p, type.getCanonicalName());
-            dir.mkdirs();
             for (Object entity : crudRepository.findAll()) {
                 if (entity instanceof Content) {
                     fileService.fill((Content) entity, true);
                 }
-                String id = BeanUtils.getProperty(entity, "id");
-                File out = new File(dir, String.format("%s.json", id));
+                File out = new File(dir, String.format("%s.json", pathById(entity)));
+                out.getParentFile().mkdirs();
                 LOG.info("Export: {}", out);
                 mapper.writeValue(out, entity);
             }
