@@ -85,7 +85,7 @@ const ContentFileInput = props => {
         return transformedFile;
     };
 
-    const transformFiles = (files: any[]) => {
+    const transformFiles = files => {
         if (!files) {
             return multiple ? [] : null;
         }
