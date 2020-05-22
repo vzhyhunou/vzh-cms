@@ -1,7 +1,7 @@
 import React from 'react'
 import {waitFor} from '@testing-library/react'
 
-import renderWithRouter from './test/renderWithRouter'
+import renderWithRouter from './commons/renderWithRouter'
 import App from './App'
 
 describe('App', () => {
