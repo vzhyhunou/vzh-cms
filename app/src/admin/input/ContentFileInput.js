@@ -10,7 +10,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import classnames from 'classnames';
 import { useInput, useTranslate, Labeled, InputHelperText } from 'react-admin';
 import { useForm, useFormState } from 'react-final-form';
-import { useLocation } from 'react-router-dom';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
@@ -63,7 +62,6 @@ const ContentFileInput = props => {
     const classes = useStyles(props);
     const form = useForm();
     const formState = useFormState();
-    const location = useLocation();
 
     const transformFile = file => {
         if (!(file instanceof File)) {
@@ -129,7 +127,7 @@ const ContentFileInput = props => {
 
     const onAdd = file => () => {
         const { source } = Children.only(children).props;
-        const locale = Object.keys(locales)[location.pathname.split('/')[3] - 2];
+        const locale = Object.keys(locales)[window.location.pathname.split('/')[3] - 2];
 
         form.change(`properties.${locale}.content`, `${formState.values.properties[locale].content}\n<img src="${file[source]}"/>`);
     };

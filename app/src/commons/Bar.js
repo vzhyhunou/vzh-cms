@@ -10,7 +10,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
-import {useLocation} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
 import WithPermissions from './WithPermissions';
@@ -41,8 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({open, handleDrawerOpen}) => {
+
     const classes = useStyles();
-    const location = useLocation();
 
     return <AppBar
                 position="fixed"
@@ -69,7 +68,7 @@ export default ({open, handleDrawerOpen}) => {
                     ? permissions.includes('ROLE_EDITOR')
                         ? <IconButton
                             color="inherit"
-                            href={`/admin${location.pathname}`}
+                            href={`/admin${window.location.pathname}`}
                         >
                             <EditIcon/>
                         </IconButton>
