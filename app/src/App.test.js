@@ -22,6 +22,15 @@ describe('App', () => {
         expect(document.title).toEqual('Control Panel')
     })
 
+    it('should render none page', async () => {
+        const {getByText} = renderWithRouter(<App/>, {route: '/pages/no-exist'})
+        let container = await waitFor(() => getByText('menu title'))
+        expect(container).toBeDefined()
+        container = await waitFor(() => getByText('none content'))
+        expect(container).toBeDefined()
+        expect(document.title).toEqual('none title')
+    })
+
     it('should render sample page', async () => {
         const {getByText} = renderWithRouter(<App/>, {route: '/pages/sample1'})
         let container = await waitFor(() => getByText('menu title'))
