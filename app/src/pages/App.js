@@ -16,10 +16,10 @@ const Area = ({title, content, internal}) => {
                 return <Fragment>
                     <App id={attribs.id} internal/>
                     {domToReact(children, options)}
-                    </Fragment>;
-                }
+                </Fragment>;
             }
-        };
+        }
+    };
     return <Fragment>
         {parse(content, options)}
     </Fragment>;

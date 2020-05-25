@@ -1,8 +1,11 @@
-const ra = require('react-admin');
+const ra = require('react-admin')
 
 ra.fetchUtils.fetchJson = (url, options) => {
-    const p = url.split(/\/|\?/);
-    return import(`./${p[2]}/${p[4]}.json`);
-};
+    console.log(url, options)
+    const path = url.split(/\/|\?/)
+    const name = `./${path[2]}/${path.slice(4).join('/').replace(/\./g, '/')}.json`
+    console.log(name)
+    return import(name)
+}
 
-module.exports = ra;
+module.exports = ra
