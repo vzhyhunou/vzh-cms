@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ContentRepositoryImpl<T extends Item, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
+public abstract class ContentRepositoryImpl<T extends Item, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
 
     protected ContentRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
