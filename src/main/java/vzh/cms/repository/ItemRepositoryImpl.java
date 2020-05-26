@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ItemRepositoryImpl<T extends Item, ID extends Serializable> extends RepositoryImpl<T, ID> {
+public abstract class ItemRepositoryImpl<T extends Item, ID extends Serializable> extends RepositoryImpl<T, ID> {
 
     protected ItemRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);

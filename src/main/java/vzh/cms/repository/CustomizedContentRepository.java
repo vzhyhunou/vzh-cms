@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-interface CustomizedContentRepository<T extends Item, ID extends Serializable> extends CustomizedRepository<T> {
+public interface CustomizedContentRepository<T extends Item, ID extends Serializable> extends CustomizedRepository<T> {
 
     <E> Optional<E> contentByActiveTags(ID id, Class<E> type, Object... names);
 

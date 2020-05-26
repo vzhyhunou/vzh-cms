@@ -12,7 +12,7 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @NoRepositoryBean
-interface Repository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface Repository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T> {
 
     List<T> findByIdIn(@Param("ids") ID[] ids);
 }

@@ -1,5 +1,6 @@
 package vzh.cms.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Item_;
@@ -29,7 +30,7 @@ class UserRepositoryImpl extends ItemRepositoryImpl<User, String> implements Cus
     }
 
     @Override
-    public org.springframework.data.domain.Page<RowUser> list(UserFilter filter, Pageable pageable) {
+    public Page<RowUser> list(UserFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
             Subquery<User> subquery = q.subquery(User.class);
             Root<User> p = subquery.from(User.class);
