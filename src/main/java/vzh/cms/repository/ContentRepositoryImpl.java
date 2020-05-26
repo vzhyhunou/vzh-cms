@@ -1,7 +1,7 @@
 package vzh.cms.repository;
 
 import org.springframework.context.i18n.LocaleContextHolder;
-import vzh.cms.model.Content;
+import vzh.cms.model.Item;
 import vzh.cms.model.Item_;
 
 import javax.persistence.EntityManager;
@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class ContentRepositoryImpl<T extends Content, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
+abstract class ContentRepositoryImpl<T extends Item, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
 
     protected ContentRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);

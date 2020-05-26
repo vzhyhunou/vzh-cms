@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.model.Content;
+import vzh.cms.model.Storage;
 
 import javax.transaction.Transactional;
 import java.nio.file.DirectoryStream;
@@ -53,8 +53,8 @@ public class ImportService extends MaintainService {
                     LOG.info("Import: {}", path);
                     Object entity = mapper.readValue(path.toFile(), type);
                     crudRepository.save(entity);
-                    if (entity instanceof Content) {
-                        fileService.save((Content) entity);
+                    if (entity instanceof Storage) {
+                        fileService.save((Storage) entity);
                     }
                 }
             }

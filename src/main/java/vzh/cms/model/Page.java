@@ -17,7 +17,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-public class Page extends Content {
+public class Page extends Storage {
 
     @Id
     private String id;

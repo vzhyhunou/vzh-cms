@@ -3,25 +3,25 @@ package vzh.cms.component;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
-import vzh.cms.model.Content;
+import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Component
-public class ContentResourceProcessor implements ResourceProcessor<Resource<Content>> {
+public class StorageResourceProcessor implements ResourceProcessor<Resource<Storage>> {
 
-    private FileService fileService;
+    private FileService service;
 
-    public ContentResourceProcessor(FileService fileService) {
-        this.fileService = fileService;
+    public StorageResourceProcessor(FileService service) {
+        this.service = service;
     }
 
     @Override
-    public Resource<Content> process(Resource<Content> resource) {
+    public Resource<Storage> process(Resource<Storage> resource) {
         try {
-            fileService.fill(resource.getContent(), false);
+            service.fill(resource.getContent(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

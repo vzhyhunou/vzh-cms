@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
-import vzh.cms.model.Content;
+import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
 
 /**
@@ -13,23 +13,23 @@ import vzh.cms.service.FileService;
  */
 @Component
 @RepositoryEventHandler
-public class ContentEventHandler {
+public class StorageEventHandler {
 
-    private FileService fileService;
+    private FileService service;
 
-    public ContentEventHandler(FileService fileService) {
-        this.fileService = fileService;
+    public StorageEventHandler(FileService service) {
+        this.service = service;
     }
 
     @HandleBeforeCreate
     @HandleBeforeSave
-    public void save(Content content) throws Exception {
-        fileService.save(content);
+    public void save(Storage storage) throws Exception {
+        service.save(storage);
     }
 
     @HandleBeforeDelete
-    public void delete(Content content) throws Exception {
-        content.getFiles().clear();
-        fileService.clean(content);
+    public void delete(Storage storage) throws Exception {
+        storage.getFiles().clear();
+        service.clean(storage);
     }
 }
