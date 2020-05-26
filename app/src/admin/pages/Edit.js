@@ -7,7 +7,8 @@ import {
     ReferenceField,
     TabbedForm,
     TextField,
-    TextInput
+    TextInput,
+    usePermissions
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
@@ -18,6 +19,7 @@ export default props => {
 
     const locale = useLocale();
     const locales = useLocales();
+    const {permissions} = usePermissions();
 
     return <Edit {...props}>
         <TabbedForm>
@@ -26,13 +28,15 @@ export default props => {
                     source="date"
                     showTime
                 />
-                <ReferenceField
-                    source="userId"
-                    reference="users"
-                    allowEmpty={true}
-                >
-                    <TextField source="id"/>
-                </ReferenceField>
+                {permissions && permissions.includes('ROLE_MANAGER') &&
+                    <ReferenceField
+                        source="userId"
+                        reference="users"
+                        allowEmpty={true}
+                    >
+                        <TextField source="id"/>
+                    </ReferenceField>
+                }
             </FormTab>
             <FormTab label="resources.pages.fields.tags">
                 <TagsInput/>
