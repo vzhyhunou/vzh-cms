@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.model.Content;
+import vzh.cms.model.Storage;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -52,8 +52,8 @@ public class ExportService extends MaintainService {
             CrudRepository<?, ?> crudRepository = repository(type);
             File dir = new File(p, type.getCanonicalName());
             for (Object entity : crudRepository.findAll()) {
-                if (entity instanceof Content) {
-                    fileService.fill((Content) entity, true);
+                if (entity instanceof Storage) {
+                    fileService.fill((Storage) entity, true);
                 }
                 File out = new File(dir, String.format("%s.json", pathById(entity)));
                 out.getParentFile().mkdirs();

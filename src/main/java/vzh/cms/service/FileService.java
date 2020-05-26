@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Base64File;
-import vzh.cms.model.Content;
+import vzh.cms.model.Storage;
 
 import java.io.File;
 import java.nio.file.DirectoryStream;
@@ -42,10 +42,10 @@ public class FileService {
         this.mappings = mappings;
     }
 
-    public void save(Content content) throws Exception {
-        clean(content);
-        File dir = location(content);
-        for (Base64File file : content.getFiles()) {
+    public void save(Storage storage) throws Exception {
+        clean(storage);
+        File dir = location(storage);
+        for (Base64File file : storage.getFiles()) {
             if (file.getData() != null) {
                 File out = new File(dir, file.getName());
                 byte[] data = DECODER.decode(file.getData());
@@ -55,7 +55,7 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> fill(Content content, boolean addFiles) throws Exception {
+    public Set<Base64File> fill(Storage content, boolean addFiles) throws Exception {
         Path dir = Paths.get(location(content).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
@@ -75,12 +75,12 @@ public class FileService {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void clean(Content content) throws Exception {
-        Path dir = Paths.get(location(content).getPath());
+    public void clean(Storage storage) throws Exception {
+        Path dir = Paths.get(location(storage).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
                 for (Path file : paths) {
-                    if (content.getFiles().stream()
+                    if (storage.getFiles().stream()
                             .map(Base64File::getName)
                             .noneMatch(file.getFileName().toString()::equals)) {
                         delete(file);

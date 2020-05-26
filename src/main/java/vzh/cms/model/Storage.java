@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-abstract public class Content extends Item {
+abstract public class Storage extends Item {
 
     private Set<Base64File> files = new HashSet<>();
 }
