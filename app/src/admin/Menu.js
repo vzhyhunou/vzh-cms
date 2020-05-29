@@ -1,10 +1,8 @@
 import React from 'react';
-import {getResources, MenuItemLink} from 'react-admin';
+import {getResources, MenuItemLink, useTranslate} from 'react-admin';
 import {useSelector} from 'react-redux';
 import {useMediaQuery} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-
-import {useTranslate} from '../commons/TranslationContext';
 
 export default ({onMenuClick, logout}) => {
 

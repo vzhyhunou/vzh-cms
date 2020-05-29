@@ -11,10 +11,7 @@ export default () => {
     const locales = useLocales();
     const updateLocale = useUpdateLocale();
     const [anchorEl, setAnchorEl] = useState(null);
-    const update = locale => {
-        updateLocale(locale);
-        setAnchorEl(null);
-    };
+    const update = locale => updateLocale(locale).then(() => setAnchorEl(null));
 
     return <div>
         <Button

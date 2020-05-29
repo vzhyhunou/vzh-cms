@@ -4,11 +4,12 @@ import {
     FormTab,
     ImageField,
     TabbedForm,
-    TextInput
+    TextInput,
+    useLocale
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {useLocale, useLocales} from '../../commons/TranslationContext';
+import {useLocales} from '../../commons/TranslationContext';
 import ContentImageInput from '../input/ContentImageInput';
 
 export default props => {
