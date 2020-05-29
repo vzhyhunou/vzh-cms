@@ -5,7 +5,7 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import {createBrowserHistory as createHistory} from 'history';
 
 import authProvider from '../commons/auth';
-import {useTranslate, useGetMessages} from '../commons/TranslationContext';
+import {useTranslate, useGetMessages, useLocale} from '../commons/TranslationContext';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import routes from './routes';
@@ -23,7 +23,7 @@ const theme = createMuiTheme({
     }
 });
 
-const Area = ({getMessages, resources}) =>
+const Area = ({getMessages, locale, resources}) =>
     <Admin
         theme={theme}
         customRoutes={routes}
@@ -32,7 +32,7 @@ const Area = ({getMessages, resources}) =>
         dataProvider={addUploadFeature(restProvider())}
         history={createHistory({basename: '/admin'})}
         loginPage={() => <Login backgroundImage={background}/>}
-        i18nProvider={polyglotI18nProvider(getMessages)}
+        i18nProvider={polyglotI18nProvider(getMessages, locale)}
     >
         {permissions => resources(permissions)}
     </Admin>
@@ -44,11 +44,13 @@ export default props => {
 
     const translate = useTranslate();
     const getMessages = useGetMessages();
+    const locale = useLocale();
 
     document.title = translate('pos.title');
 
     return <EnhancedArea
         getMessages={getMessages}
+        locale={locale}
         {...props}
     />;
 };

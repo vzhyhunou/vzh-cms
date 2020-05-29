@@ -3,15 +3,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {useSetLocale, Title} from 'react-admin';
+import {useSetLocale, Title, useTranslate, useLocale} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {
-    useTranslate,
-    useLocales,
-    useLocale,
-    useUpdateLocale
-} from '../commons/TranslationContext';
+import {useLocales, useUpdateLocale} from '../commons/TranslationContext';
 
 const useStyles = makeStyles({
     label: {

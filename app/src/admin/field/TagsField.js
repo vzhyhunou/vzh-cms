@@ -1,8 +1,7 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 import {makeStyles} from '@material-ui/core';
-
-import {useTranslate} from '../../commons/TranslationContext';
+import {useTranslate} from 'react-admin';
 
 const useStyles = makeStyles({
     main: {

@@ -1,5 +1,13 @@
 import React, {Fragment} from 'react';
-import {BulkDeleteButton, Datagrid, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
+import {
+    BulkDeleteButton,
+    Datagrid,
+    EditButton,
+    Filter,
+    List,
+    TextField,
+    TextInput
+} from 'react-admin';
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';

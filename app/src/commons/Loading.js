@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
+import {makeStyles} from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {useTranslate} from './TranslationContext';
@@ -32,26 +31,16 @@ const useStyles = makeStyles(
     })
 );
 
-const Loading = props => {
-    const {
-        className,
-        loadingPrimary = 'ra.page.loading',
-        loadingSecondary = 'ra.message.loading',
-    } = props;
-    const classes = useStyles(props);
+export default () => {
+
+    const classes = useStyles();
     const translate = useTranslate();
-    return <div className={classnames(classes.container, className)}>
+
+    return <div className={classes.container}>
         <div className={classes.message}>
             <CircularProgress className={classes.icon} color="primary"/>
-            <h1>{translate(loadingPrimary)}</h1>
-            <div>{translate(loadingSecondary)}.</div>
+            <h1>{translate('ra.page.loading')}</h1>
+            <div>{translate('ra.message.loading')}.</div>
         </div>
     </div>;
 };
-
-Loading.defaultProps = {
-    loadingPrimary: 'ra.page.loading',
-    loadingSecondary: 'ra.message.loading',
-};
-
-export default Loading;
