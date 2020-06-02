@@ -1,17 +1,18 @@
 import React from 'react';
 import {SelectArrayInput} from 'react-admin';
 
-import {useMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/TranslationContext';
 
 const TagsFilter = ({addField, resource, ...rest}) => {
 
-    const messages = useMessages();
+    const getMessages = useGetMessages();
+    const {tags} = getMessages().resources[resource];
 
     return <SelectArrayInput
         {...rest}
-        choices={Object.keys(messages.resources[resource].tags).map(tag => ({
+        choices={Object.keys(tags).map(tag => ({
             id: tag,
-            name: `resources.${resource}.tags.${tag}`
+            name: tags[tag]
         }))}
         label={`resources.${resource}.fields.tags`}
     />;

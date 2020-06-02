@@ -3,15 +3,15 @@ import {Button} from 'react-admin';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {useMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/TranslationContext';
 import useUpdateTag from './useUpdateTag';
 
 export default ({resource, selectedIds, label, children, data}) => {
 
-    const messages = useMessages();
+    const getMessages = useGetMessages();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(resource, selectedIds, data);
-    const {tags} = messages.resources[resource];
+    const {tags} = getMessages().resources[resource];
 
     return <Fragment>
         <Button

@@ -2,7 +2,7 @@ import React from 'react';
 import {ArrayInput, DateTimeInput, SelectInput, SimpleFormIterator} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {useMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/TranslationContext';
 
 const useStyles = makeStyles({
     form: {
@@ -18,9 +18,10 @@ const useControlStyles = makeStyles(theme => ({
 
 const TagsInput = ({addField, resource, ...rest}) => {
 
-    const messages = useMessages();
+    const getMessages = useGetMessages();
     const classes = useStyles();
     const controlClasses = useControlStyles();
+    const {tags} = getMessages().resources[resource];
 
     return <ArrayInput
         {...rest}
@@ -30,9 +31,9 @@ const TagsInput = ({addField, resource, ...rest}) => {
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
-                choices={Object.keys(messages.resources[resource].tags).map(tag => ({
+                choices={Object.keys(tags).map(tag => ({
                     id: tag,
-                    name: `resources.${resource}.tags.${tag}`
+                    name: tags[tag]
                 }))}
             />
             <DateTimeInput
