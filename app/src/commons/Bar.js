@@ -13,6 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import LocaleInput from './LocaleInput';
 import WithPermissions from './WithPermissions';
+import {useLocale, useLocales} from './TranslationContext';
 
 const drawerWidth = 240;
 
@@ -41,6 +42,8 @@ const useStyles = makeStyles(theme => ({
 
 export default ({open, handleDrawerOpen}) => {
 
+    const locales = useLocales();
+    const locale = useLocale();
     const classes = useStyles();
 
     return <AppBar
@@ -68,7 +71,7 @@ export default ({open, handleDrawerOpen}) => {
                     ? permissions.includes('ROLE_EDITOR')
                         ? <IconButton
                             color="inherit"
-                            href={`/admin${window.location.pathname}`}
+                            href={`/admin/pages/${window.location.pathname.split('/')[2]}/${Object.keys(locales).indexOf(locale) + 2}`}
                         >
                             <EditIcon/>
                         </IconButton>

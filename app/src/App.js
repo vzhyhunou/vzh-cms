@@ -18,7 +18,7 @@ export default () => {
     >
             <Suspense fallback={<Loading/>}>
                 <Switch>
-                    <Route exact path="/" render={() => <Redirect to={{pathname: 'pages/home'}}/>}/>
+                    <Route exact path="/" render={() => <Redirect to={{pathname: 'page/home'}}/>}/>
                     <Route path="/admin" render={() => <Admin resources={resources}/>}/>
                     <Route component={Layout}/>
                 </Switch>

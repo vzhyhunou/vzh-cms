@@ -23,7 +23,7 @@ describe('App', () => {
     })
 
     it('should render none page', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/pages/no-exist'})
+        const {getByText} = renderWithRouter(<App/>, {route: '/page/no-exist'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('none content'))
@@ -32,7 +32,7 @@ describe('App', () => {
     })
 
     it('should render sample page', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/pages/sample1'})
+        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample1'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample1 content'))
@@ -41,7 +41,7 @@ describe('App', () => {
     })
 
     it('should render sample page with fragment', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/pages/sample2'})
+        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample2'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample2 content'))
@@ -52,7 +52,7 @@ describe('App', () => {
     })
 
     it('should render sample page with two fragments', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/pages/sample3'})
+        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample3'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample3 content'))

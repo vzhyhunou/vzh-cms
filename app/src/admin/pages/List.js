@@ -42,7 +42,7 @@ const PostBulkActionButtons = props =>
 ;
 
 const LinkField = ({source, record = {}}) =>
-    <a href={`/pages/${record[source]}`}>{record[source]}</a>
+    <a href={`/page/${record[source]}`}>{record[source]}</a>
 ;
 
 export default props => {
