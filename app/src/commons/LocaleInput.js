@@ -2,16 +2,17 @@ import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {useLocale, useSetLocale} from 'react-admin';
 
-import {useLocale, useLocales, useUpdateLocale} from './TranslationContext';
+import {useLocales} from './AppContext';
 
 export default () => {
 
     const locale = useLocale();
     const locales = useLocales();
-    const updateLocale = useUpdateLocale();
+    const setLocale = useSetLocale();
     const [anchorEl, setAnchorEl] = useState(null);
-    const update = locale => updateLocale(locale).then(() => setAnchorEl(null));
+    const update = locale => setLocale(locale).then(() => setAnchorEl(null));
 
     return <div>
         <Button

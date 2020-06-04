@@ -1,5 +1,4 @@
-import React from 'react'
-import {Router} from 'react-router-dom'
+import {cloneElement} from 'react'
 import {render} from '@testing-library/react'
 import {createMemoryHistory} from 'history'
 
@@ -10,6 +9,6 @@ export default (
         history = createMemoryHistory({initialEntries: [route]})
     } = {}
 ) => ({
-    ...render(<Router history={history}>{ui}</Router>),
+    ...render(cloneElement(ui, {history})),
     history
 })

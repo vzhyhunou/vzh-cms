@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {getResources, MenuItemLink, useTranslate} from 'react-admin';
 import {useSelector} from 'react-redux';
 import {useMediaQuery} from '@material-ui/core';
@@ -11,7 +11,9 @@ export default ({onMenuClick, logout}) => {
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const resources = useSelector(getResources);
 
-    return <div>
+    document.title = translate('pos.title');
+
+    return <Fragment>
         {resources.map(resource =>
             <MenuItemLink
                 key={resource.name}
@@ -30,5 +32,5 @@ export default ({onMenuClick, logout}) => {
             sidebarIsOpen={open}
         />
         {isXSmall && logout}
-    </div>;
+    </Fragment>;
 }

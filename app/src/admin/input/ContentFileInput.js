@@ -13,7 +13,7 @@ import { useForm, useFormState } from 'react-final-form';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
-import {useLocales} from '../../commons/TranslationContext';
+import {useLocales} from '../../commons/AppContext';
 
 const useStyles = makeStyles(
     theme => ({

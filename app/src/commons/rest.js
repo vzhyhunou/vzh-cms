@@ -13,12 +13,11 @@ import {
 } from 'react-admin';
 
 import {getToken} from './auth';
-import {getLocale} from './locale';
 
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
-const client = (url, options = {}) => {
+const client = getLocale => (url, options = {}) => {
 
     if (!options.headers) {
         options.headers = new Headers();
@@ -34,7 +33,7 @@ const client = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (apiUrl = '/api', httpClient = client) => {
+export default (getLocale, apiUrl = '/api', httpClient = client(getLocale)) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';

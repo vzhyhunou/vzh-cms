@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Resource} from 'react-admin';
 import PageIcon from '@material-ui/icons/LibraryBooks';
 import UserIcon from '@material-ui/icons/People';
@@ -11,7 +11,7 @@ import UserEdit from './users/Edit';
 import UserList from './users/List';
 
 export default permissions => [
-    permissions.includes('ROLE_EDITOR') &&
+    permissions && permissions.includes('ROLE_EDITOR') &&
         <Resource
             name="pages"
             list={PageList}
@@ -19,12 +19,13 @@ export default permissions => [
             create={PageCreate}
             icon={PageIcon}
         />,
-    permissions.includes('ROLE_MANAGER') &&
+    permissions && permissions.includes('ROLE_MANAGER') &&
         <Resource
             name="users"
             list={UserList}
             edit={UserEdit}
             create={UserCreate}
             icon={UserIcon}
-        />
+        />,
+    <Fragment/>
 ];

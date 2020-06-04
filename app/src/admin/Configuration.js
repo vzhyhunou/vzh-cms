@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import {useSetLocale, Title, useTranslate, useLocale} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {useLocales, useUpdateLocale} from '../commons/TranslationContext';
+import {useLocales} from '../commons/AppContext';
 
 const useStyles = makeStyles({
     label: {
@@ -20,10 +20,8 @@ export default () => {
     const translate = useTranslate();
     const locales = useLocales();
     const locale = useLocale();
-    const updateLocale = useUpdateLocale();
     const setLocale = useSetLocale();
     const classes = useStyles();
-    const update = locale => updateLocale(locale).then(l => setLocale(l));
 
     return <Card>
         <Title title={'pos.configuration'}/>
@@ -31,7 +29,7 @@ export default () => {
             <div className={classes.label}>{translate('pos.language')}</div>
             <Select
                 value={locale}
-                onChange={e => update(e.target.value)}
+                onChange={e => setLocale(e.target.value)}
             >
                 {Object.keys(locales).map(l =>
                     <MenuItem key={l} value={l}>{locales[l]}</MenuItem>

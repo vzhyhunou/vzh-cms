@@ -8,11 +8,12 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
+import {useLocale, usePermissions} from 'react-admin';
 
 import LocaleInput from './LocaleInput';
-import WithPermissions from './WithPermissions';
+import {useLocales} from './AppContext';
 
 const drawerWidth = 240;
 
@@ -41,6 +42,9 @@ const useStyles = makeStyles(theme => ({
 
 export default ({open, handleDrawerOpen}) => {
 
+    const locales = useLocales();
+    const locale = useLocale();
+    const {permissions} = usePermissions();
     const classes = useStyles();
 
     return <AppBar
@@ -63,29 +67,27 @@ export default ({open, handleDrawerOpen}) => {
                 Project
             </Typography>
             <LocaleInput/>
-            <WithPermissions>
-                {permissions => permissions
-                    ? permissions.includes('ROLE_EDITOR')
-                        ? <IconButton
-                            color="inherit"
-                            href={`/admin${window.location.pathname}`}
-                        >
-                            <EditIcon/>
-                        </IconButton>
-                        : <IconButton
-                            color="inherit"
-                            href="/admin"
-                        >
-                            <DashboardIcon/>
-                        </IconButton>
+            {permissions
+                ? permissions.includes('ROLE_EDITOR')
+                    ? <IconButton
+                        color="inherit"
+                        href={`/pages/${window.location.pathname.split('/')[2]}/${Object.keys(locales).indexOf(locale) + 2}`}
+                    >
+                        <EditIcon/>
+                    </IconButton>
                     : <IconButton
                         color="inherit"
-                        href="/admin"
+                        href="/configuration"
                     >
-                        <AccountCircleIcon/>
+                        <SettingsIcon/>
                     </IconButton>
-                }
-            </WithPermissions>
+                : <IconButton
+                    color="inherit"
+                    href="/login"
+                >
+                    <AccountCircleIcon/>
+                </IconButton>
+            }
             <IconButton
                 color="inherit"
                 onClick={handleDrawerOpen}
