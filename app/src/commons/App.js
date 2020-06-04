@@ -1,10 +1,10 @@
 import React from 'react';
 
-import TranslationProvider from './AppContext';
+import AppProvider from './AppContext';
 import App from '../admin/App';
 
 export default ({locales, i18n, routes, resources, history}) =>
-    <TranslationProvider
+    <AppProvider
         locales={locales}
         i18n={i18n}
     >
@@ -13,5 +13,5 @@ export default ({locales, i18n, routes, resources, history}) =>
             resources={resources}
             history={history}
         />
-    </TranslationProvider>
+    </AppProvider>
 ;
