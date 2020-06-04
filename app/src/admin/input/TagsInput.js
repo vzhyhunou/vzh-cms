@@ -2,7 +2,7 @@ import React from 'react';
 import {ArrayInput, DateTimeInput, SelectInput, SimpleFormIterator} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {useGetMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/AppContext';
 
 const useStyles = makeStyles({
     form: {

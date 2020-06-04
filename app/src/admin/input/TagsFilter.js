@@ -1,7 +1,7 @@
 import React from 'react';
 import {SelectArrayInput} from 'react-admin';
 
-import {useGetMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/AppContext';
 
 const TagsFilter = ({addField, resource, ...rest}) => {
 

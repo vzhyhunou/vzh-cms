@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TranslationProvider from './TranslationContext';
+import TranslationProvider from './AppContext';
 import App from '../admin/App';
 
 export default ({locales, i18n, routes, resources, history}) =>

@@ -8,7 +8,7 @@ import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import Menu from './Menu';
 import background from './background.png';
-import {useGetLocale, useGetMessages} from '../commons/TranslationContext';
+import {useGetLocale, useGetMessages} from '../commons/AppContext';
 
 const theme = createMuiTheme({
     palette: {

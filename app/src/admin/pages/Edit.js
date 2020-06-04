@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {useLocales} from '../../commons/TranslationContext';
+import {useLocales} from '../../commons/AppContext';
 import ContentImageInput from '../input/ContentImageInput';
 
 export default props => {

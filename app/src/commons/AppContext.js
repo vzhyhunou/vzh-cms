@@ -7,7 +7,7 @@ import React, {
 
 import {i18nLoader, i18nWriter} from './locale';
 
-const TranslationContext = createContext();
+const AppContext = createContext();
 
 export default ({locales, i18n, children}) => {
 
@@ -31,17 +31,17 @@ export default ({locales, i18n, children}) => {
         return m;
     }) : messages;
 
-    return <TranslationContext.Provider value={{
+    return <AppContext.Provider value={{
         locales,
         getLocale,
         getMessages
     }}>
         {children}
-    </TranslationContext.Provider>;
+    </AppContext.Provider>;
 };
 
-export const useLocales = () => useContext(TranslationContext).locales;
+export const useLocales = () => useContext(AppContext).locales;
 
-export const useGetLocale = () => useContext(TranslationContext).getLocale;
+export const useGetLocale = () => useContext(AppContext).getLocale;
 
-export const useGetMessages = () => useContext(TranslationContext).getMessages;
+export const useGetMessages = () => useContext(AppContext).getMessages;

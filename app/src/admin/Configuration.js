@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import {useSetLocale, Title, useTranslate, useLocale} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {useLocales} from '../commons/TranslationContext';
+import {useLocales} from '../commons/AppContext';
 
 const useStyles = makeStyles({
     label: {

@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useLocale, useSetLocale} from 'react-admin';
 
-import {useLocales} from './TranslationContext';
+import {useLocales} from './AppContext';
 
 export default () => {
 

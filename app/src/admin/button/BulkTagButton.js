@@ -3,7 +3,7 @@ import {Button} from 'react-admin';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {useGetMessages} from '../../commons/TranslationContext';
+import {useGetMessages} from '../../commons/AppContext';
 import useUpdateTag from './useUpdateTag';
 
 export default ({resource, selectedIds, label, children, data}) => {

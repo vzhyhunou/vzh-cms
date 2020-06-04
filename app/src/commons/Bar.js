@@ -13,7 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {useLocale, usePermissions} from 'react-admin';
 
 import LocaleInput from './LocaleInput';
-import {useLocales} from './TranslationContext';
+import {useLocales} from './AppContext';
 
 const drawerWidth = 240;
 
