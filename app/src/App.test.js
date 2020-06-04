@@ -1,13 +1,13 @@
 import React from 'react'
 import {waitFor} from '@testing-library/react'
 
-import renderWithRouter from './commons/renderWithRouter'
+import renderWithHistory from './commons/renderWithHistory'
 import App from './App'
 
 describe('App', () => {
 
     it('should render home page', async () => {
-        const {getByText} = renderWithRouter(<App/>)
+        const {getByText} = renderWithHistory(<App/>)
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('home content'))
@@ -16,14 +16,13 @@ describe('App', () => {
     })
 
     it('should render login page', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/admin'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/login'})
         const container = await waitFor(() => getByText('Sign in'))
         expect(container).toBeDefined()
-        expect(document.title).toEqual('Control Panel')
     })
 
     it('should render none page', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/page/no-exist'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/page/no-exist'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('none content'))
@@ -32,7 +31,7 @@ describe('App', () => {
     })
 
     it('should render sample page', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample1'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample1'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample1 content'))
@@ -41,7 +40,7 @@ describe('App', () => {
     })
 
     it('should render sample page with fragment', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample2'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample2'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample2 content'))
@@ -52,7 +51,7 @@ describe('App', () => {
     })
 
     it('should render sample page with two fragments', async () => {
-        const {getByText} = renderWithRouter(<App/>, {route: '/page/sample3'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample3'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample3 content'))

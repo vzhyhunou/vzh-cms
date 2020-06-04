@@ -45,7 +45,7 @@ export default (type, params) => {
     }
     if (type === AUTH_GET_PERMISSIONS) {
         const roles = localStorage.getItem(ROLES);
-        return roles ? Promise.resolve(roles) : Promise.reject();
+        return Promise.resolve(roles);
     }
     return Promise.reject('Unknown method');
 }
