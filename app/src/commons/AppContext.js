@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 
 import {i18nLoader, i18nWriter} from './locale';
+import rest from './rest';
 
 const AppContext = createContext();
 
@@ -23,25 +24,25 @@ export default ({locales, i18n, children}) => {
 
     let {locale, messages} = contextValues;
 
-    const getLocale = () => locale;
-
     const getMessages = l => l && l !== locale ? i18nWriter(i18n, l).then(m => {
         locale = l;
         messages = m;
         return m;
     }) : messages;
 
+    const dataProvider = rest(() => locale);
+
     return <AppContext.Provider value={{
         locales,
-        getLocale,
-        getMessages
+        locale,
+        getMessages,
+        dataProvider
     }}>
         {children}
     </AppContext.Provider>;
 };
 
 export const useLocales = () => useContext(AppContext).locales;
-
-export const useGetLocale = () => useContext(AppContext).getLocale;
-
+export const useLocale = () => useContext(AppContext).locale;
 export const useGetMessages = () => useContext(AppContext).getMessages;
+export const useDataProvider = () => useContext(AppContext).dataProvider;

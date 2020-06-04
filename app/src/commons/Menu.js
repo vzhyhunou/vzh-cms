@@ -9,7 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {useLocale} from 'react-admin';
 
-import dataProvider, {GET_MENU_LOCALE} from './rest';
+import {GET_MENU_LOCALE} from './rest';
+import {useDataProvider} from './AppContext';
 
 const drawerWidth = 240;
 
@@ -70,12 +71,13 @@ const EnhancedArea = memo(Area);
 export default ({open, handleDrawerClose}) => {
 
     const locale = useLocale();
+    const dataProvider = useDataProvider();
     const [items, setItems] = useState();
 
     useEffect(() => {
 
-        dataProvider()(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
-    }, [locale]);
+        dataProvider(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
+    }, [locale, dataProvider]);
 
     if (!items)
         return <div/>;
