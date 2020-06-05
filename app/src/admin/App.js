@@ -4,10 +4,11 @@ import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
 
 import authProvider from '../commons/auth';
+import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import Menu from './Menu';
 import background from './background.png';
-import {useLocale, useGetMessages, useDataProvider} from '../commons/AppContext';
+import {useGetLocale, useGetMessages} from '../commons/AppContext';
 
 const theme = createMuiTheme({
     palette: {
@@ -22,19 +23,18 @@ const theme = createMuiTheme({
 
 export default ({routes, resources, history}) => {
 
-    const locale = useLocale();
+    const getLocale = useGetLocale();
     const getMessages = useGetMessages();
-    const dataProvider = useDataProvider();
 
     return <Admin
         theme={theme}
         customRoutes={routes}
         menu={Menu}
         authProvider={authProvider}
-        dataProvider={addUploadFeature(dataProvider)}
+        dataProvider={addUploadFeature(restProvider(getLocale))}
         history={history}
         loginPage={() => <Login backgroundImage={background}/>}
-        i18nProvider={polyglotI18nProvider(getMessages, locale)}
+        i18nProvider={polyglotI18nProvider(getMessages, getLocale())}
     >
         {permissions => resources(permissions)}
     </Admin>

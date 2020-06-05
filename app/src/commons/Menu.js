@@ -7,10 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {useLocale} from 'react-admin';
+import {useLocale, useDataProvider} from 'react-admin';
 
 import {GET_MENU_LOCALE} from './rest';
-import {useDataProvider} from './AppContext';
 
 const drawerWidth = 240;
 

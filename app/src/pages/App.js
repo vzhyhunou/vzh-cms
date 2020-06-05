@@ -1,9 +1,8 @@
 import React, {memo, useEffect, useState, Fragment} from 'react';
 import parse, {domToReact} from 'html-react-parser';
-import {useLocale} from 'react-admin';
+import {useLocale, useDataProvider} from 'react-admin';
 
 import {GET_ONE_LOCALE} from '../commons/rest';
-import {useDataProvider} from '../commons/AppContext';
 
 import './App.css';
 
