@@ -3,7 +3,7 @@ import {Admin, Login} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
 
-import authProvider from '../commons/auth';
+import authProvider, {getToken} from '../commons/auth';
 import restProvider from '../commons/rest';
 import addUploadFeature from './upload';
 import Menu from './Menu';
@@ -31,7 +31,7 @@ export default ({routes, resources, history}) => {
         customRoutes={routes}
         menu={Menu}
         authProvider={authProvider}
-        dataProvider={addUploadFeature(restProvider(getLocale))}
+        dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
         history={history}
         loginPage={() => <Login backgroundImage={background}/>}
         i18nProvider={polyglotI18nProvider(getMessages, getLocale())}

@@ -12,12 +12,10 @@ import {
     UPDATE_MANY
 } from 'react-admin';
 
-import {getToken} from './auth';
-
 export const GET_ONE_LOCALE = 'GET_ONE_LOCALE';
 export const GET_MENU_LOCALE = 'GET_MENU_LOCALE';
 
-const client = getLocale => (url, options = {}) => {
+const client = (getLocale, getToken) => (url, options = {}) => {
 
     if (!options.headers) {
         options.headers = new Headers();
@@ -33,7 +31,7 @@ const client = getLocale => (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (getLocale, apiUrl = '/api', httpClient = client(getLocale)) => {
+export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLocale, getToken)) => {
 
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
