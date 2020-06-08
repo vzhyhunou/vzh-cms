@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {useLocale, useDataProvider} from 'react-admin';
 
-import {GET_MENU_LOCALE} from './rest';
+import {GET_MENU_LOCALE} from '../admin/rest';
 
 const drawerWidth = 240;
 

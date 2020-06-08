@@ -3,8 +3,8 @@ import {Admin, Login} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
 
-import authProvider, {getToken} from '../commons/auth';
-import restProvider from '../commons/rest';
+import authProvider, {getToken} from './auth';
+import restProvider from './rest';
 import addUploadFeature from './upload';
 import Menu from './Menu';
 import background from './background.png';

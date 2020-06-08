@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState, Fragment} from 'react';
 import parse, {domToReact} from 'html-react-parser';
 import {useLocale, useDataProvider} from 'react-admin';
 
-import {GET_ONE_LOCALE} from '../commons/rest';
+import {GET_ONE_LOCALE} from '../admin/rest';
 
 import './App.css';
 
