@@ -22,9 +22,7 @@ const client = (getLocale, getToken) => (url, options = {}) => {
     }
 
     const token = getToken();
-    if (token) {
-        options.headers.set('Authorization', `Bearer ${token}`);
-    }
+    token && options.headers.set('Authorization', `Bearer ${token}`);
 
     options.headers.set('Accept-Language', getLocale());
 
