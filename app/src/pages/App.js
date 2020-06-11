@@ -1,9 +1,6 @@
 import React, {memo, useEffect, useState, Fragment} from 'react';
 import parse, {domToReact} from 'html-react-parser';
-import {useLocale} from 'react-admin';
-
-import {GET_ONE_LOCALE} from '../commons/rest';
-import {useDataProvider} from '../commons/AppContext';
+import {useLocale, useDataProvider} from 'react-admin';
 
 import './App.css';
 
@@ -36,7 +33,7 @@ const App = ({id, internal}) => {
 
     useEffect(() => {
 
-        dataProvider(GET_ONE_LOCALE, 'pages', {id}).then(response => {
+        dataProvider.getOneLocale('pages', {id}).then(response => {
 
             const {data} = response;
 
@@ -45,7 +42,7 @@ const App = ({id, internal}) => {
                 return;
             }
 
-            dataProvider(GET_ONE_LOCALE, 'pages', {id: 'none'}).then(response => setPage(response.data));
+            dataProvider.getOneLocale('pages', {id: 'none'}).then(response => setPage(response.data));
         });
     }, [locale, id, dataProvider]);
 

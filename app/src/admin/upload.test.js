@@ -1,5 +1,3 @@
-import {CREATE, GET_LIST, GET_ONE} from 'react-admin'
-
 import addUploadFeature from './upload'
 
 class MockFileReader {
@@ -30,10 +28,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -67,10 +68,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -78,18 +82,6 @@ describe('upload', () => {
     it('should modify request data', () => {
         expect.assertions(2)
 
-        const rawFile1 = new File([], null, {
-            type: "image/png"
-        })
-        rawFile1.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
-        const rawFile2 = new File([], null, {
-            type: "image/png"
-        })
-        rawFile2.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
-        const rawFile3 = new File([], null, {
-            type: "image/png"
-        })
-        rawFile3.preview = "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
         window.FileReader = MockFileReader
 
         const request = {
@@ -97,14 +89,23 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        rawFile: rawFile1
+                        rawFile: new File([], null, {
+                            type: "image/png"
+                        }),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
                     },
                     {
-                        rawFile: rawFile2
+                        rawFile: new File([], null, {
+                            type: "image/png"
+                        }),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
                     }
                 ],
                 file: {
-                    rawFile: rawFile3
+                    rawFile: new File([], null, {
+                        type: "image/png"
+                    }),
+                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
                 },
                 content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
                 "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
@@ -129,10 +130,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -149,10 +153,13 @@ describe('upload', () => {
             data: {}
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_ONE, 'items', request).then(r => {
+        return addUploadFeature({
+            getOne: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getOne('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })
@@ -189,10 +196,13 @@ describe('upload', () => {
             }
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_ONE, 'items', request).then(r => {
+        return addUploadFeature({
+            getOne: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getOne('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })
@@ -229,10 +239,13 @@ describe('upload', () => {
             }]
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_LIST, 'items', request).then(r => {
+        return addUploadFeature({
+            getList: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getList('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })

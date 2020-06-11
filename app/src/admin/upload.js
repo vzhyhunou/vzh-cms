@@ -1,4 +1,3 @@
-import {CREATE, GET_LIST, GET_ONE, UPDATE} from 'react-admin';
 import {dumpKeysRecursively} from 'recursive-keys';
 import get from 'lodash/get';
 import set from 'lodash/set';
@@ -11,53 +10,65 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
     reader.readAsDataURL(file.rawFile);
 });
 
-export default requestHandler => (type, resource, params) => {
-    if (type === UPDATE || type === CREATE) {
+export default dataProvider => ({
 
-        const formerFiles = params.data.files ? params.data.files.filter(({rawFile}) => !rawFile) : [];
-        const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`));
+    ...dataProvider,
 
-        return Promise.all(keys.map(key => convertFileToBase64(get(params.data, key))))
-            .then(base64Files => base64Files.map((picture64, index) => ({
-                data: picture64.match(/,(.*)/)[1],
-                type: picture64.match(/\/(.*);/)[1],
-                key: keys[index]
-            })))
-            .then(base64Files => base64Files.map(({type, ...rest}) => ({
-                ...rest,
-                name: `${md5(rest.data)}.${type}`,
-                preview: get(params.data, `${rest.key}.rawFile.preview`)
-            })))
-            .then(process)
-            .then(transformedNewFiles =>
-                requestHandler(type, resource, {
-                    ...params,
-                    data: {
-                        ...replaceFiles(params.data, transformedNewFiles),
-                        ...replaceSrc(resource, params, transformedNewFiles),
-                        files: [
-                            ...transformedNewFiles.map(({data, name}) => ({data, name})),
-                            ...formerFiles.map(({title}) => ({name: title}))
-                        ],
-                    },
-                })
-            );
-    } else if (type === GET_ONE) {
+    create: (resource, params) =>
+        upd(resource, params, dataProvider.create),
 
-        return requestHandler(type, resource, params).then(response => ({
+    update: (resource, params) =>
+        upd(resource, params, dataProvider.update),
+
+    getOne: (resource, params) =>
+        dataProvider.getOne(resource, params).then(response => ({
             ...response,
             data: analyze(resource, response.data)
-        }));
-    } else if (type === GET_LIST) {
+        })),
 
-        return requestHandler(type, resource, params).then(response => ({
+    getList: (resource, params) =>
+        dataProvider.getList(resource, params).then(response => ({
             ...response,
             data: response.data.map(item => analyze(resource, item))
-        }));
-    }
+        }))
+});
 
-    return requestHandler(type, resource, params);
-};
+const upd = (resource, params, call) => {
+
+    const formerFiles = params.data.files ? params.data.files.filter(({rawFile}) => !rawFile) : [];
+    const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`));
+
+    return Promise.all(
+        keys.map(key => convertFileToBase64(get(params.data, key)))
+    ).then(
+        base64Files => base64Files.map((picture64, index) => ({
+            data: picture64.match(/,(.*)/)[1],
+            type: picture64.match(/\/(.*);/)[1],
+            key: keys[index]
+        }))
+    ).then(
+        base64Files => base64Files.map(({type, ...rest}) => ({
+            ...rest,
+            name: `${md5(rest.data)}.${type}`,
+            preview: get(params.data, `${rest.key}.src`)
+        }))
+    ).then(
+        process
+    ).then(
+        transformedNewFiles =>
+            call(resource, {
+                ...params,
+                data: {
+                    ...replaceFiles(params.data, transformedNewFiles),
+                    ...replaceSrc(resource, params, transformedNewFiles),
+                    files: [
+                        ...transformedNewFiles.map(({data, name}) => ({data, name})),
+                        ...formerFiles.map(({title}) => ({name: title}))
+                    ],
+                },
+            })
+    );
+}
 
 const analyze = (resource, item) => {
 

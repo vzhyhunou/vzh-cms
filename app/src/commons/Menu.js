@@ -7,10 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {useLocale} from 'react-admin';
-
-import {GET_MENU_LOCALE} from './rest';
-import {useDataProvider} from './AppContext';
+import {useLocale, useDataProvider} from 'react-admin';
 
 const drawerWidth = 240;
 
@@ -76,7 +73,7 @@ export default ({open, handleDrawerClose}) => {
 
     useEffect(() => {
 
-        dataProvider(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
+        dataProvider.getMenuLocale('pages').then(response => setItems(response.data));
     }, [locale, dataProvider]);
 
     if (!items)
