@@ -9,8 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {useLocale, useDataProvider} from 'react-admin';
 
-import {GET_MENU_LOCALE} from '../admin/rest';
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -75,7 +73,7 @@ export default ({open, handleDrawerClose}) => {
 
     useEffect(() => {
 
-        dataProvider(GET_MENU_LOCALE, 'pages').then(response => setItems(response.data));
+        dataProvider.getMenuLocale('pages').then(response => setItems(response.data));
     }, [locale, dataProvider]);
 
     if (!items)

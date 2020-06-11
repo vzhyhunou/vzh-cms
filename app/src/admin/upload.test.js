@@ -1,5 +1,3 @@
-import {CREATE, GET_LIST, GET_ONE} from 'react-admin'
-
 import addUploadFeature from './upload'
 
 class MockFileReader {
@@ -30,10 +28,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -67,10 +68,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -129,10 +133,13 @@ describe('upload', () => {
 
         const response = {}
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(expectedRequest)
-            resolve(response)
-        }))(CREATE, 'items', request).then(r => {
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
             expect(r).toEqual(response)
         })
     })
@@ -149,10 +156,13 @@ describe('upload', () => {
             data: {}
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_ONE, 'items', request).then(r => {
+        return addUploadFeature({
+            getOne: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getOne('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })
@@ -189,10 +199,13 @@ describe('upload', () => {
             }
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_ONE, 'items', request).then(r => {
+        return addUploadFeature({
+            getOne: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getOne('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })
@@ -229,10 +242,13 @@ describe('upload', () => {
             }]
         }
 
-        return addUploadFeature((type, resource, params) => new Promise(resolve => {
-            expect(params).toEqual(request)
-            resolve(response)
-        }))(GET_LIST, 'items', request).then(r => {
+        return addUploadFeature({
+            getList: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(request)
+                    resolve(response)
+                })
+        }).getList('items', request).then(r => {
             expect(r).toEqual(expectedResponse)
         })
     })
