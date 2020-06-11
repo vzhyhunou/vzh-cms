@@ -26,7 +26,7 @@ export default requestHandler => (type, resource, params) => {
             .then(base64Files => base64Files.map(({type, ...rest}) => ({
                 ...rest,
                 name: `${md5(rest.data)}.${type}`,
-                preview: get(params.data, `${rest.key}.rawFile.preview`)
+                preview: get(params.data, `${rest.key}.src`)
             })))
             .then(process)
             .then(transformedNewFiles =>
