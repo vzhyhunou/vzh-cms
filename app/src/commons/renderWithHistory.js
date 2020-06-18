@@ -1,6 +1,6 @@
-import {cloneElement} from 'react'
-import {render} from '@testing-library/react'
-import {createMemoryHistory} from 'history'
+import { cloneElement } from 'react'
+import { render } from '@testing-library/react'
+import { createMemoryHistory } from 'history'
 
 export default (
     ui,
@@ -11,4 +11,4 @@ export default (
 ) => ({
     ...render(cloneElement(ui, {history})),
     history
-})
+});

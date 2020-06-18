@@ -1,8 +1,6 @@
 export
 static
 build
-coverage
-dist
 node
 node_modules
 *.ipr
