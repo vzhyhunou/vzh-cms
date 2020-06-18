@@ -1,12 +1,16 @@
 package vzh.cms.component;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Viktar Zhyhunou
@@ -21,10 +25,15 @@ public class StorageEventHandler {
         this.service = service;
     }
 
+    @Autowired
+    private HttpServletRequest request;
+
     @HandleBeforeCreate
     @HandleBeforeSave
     public void save(Storage storage) throws Exception {
-        service.save(storage);
+        if (!HttpMethod.PATCH.matches(request.getMethod())) {
+            service.save(storage);
+        }
     }
 
     @HandleBeforeDelete
