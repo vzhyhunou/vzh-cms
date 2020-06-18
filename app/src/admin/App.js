@@ -1,14 +1,15 @@
 import React from 'react';
-import {Admin, Login} from 'react-admin';
+import { Admin, Login, Layout as AdminLayout } from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import {createMuiTheme} from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 
-import authProvider, {getToken} from './auth';
+import authProvider, { getToken } from './auth';
 import restProvider from './rest';
 import addUploadFeature from './upload';
 import Menu from './Menu';
 import background from './background.png';
-import {useGetLocale, useGetMessages} from '../commons/AppContext';
+import { useGetLocale, useGetMessages } from '../commons/AppContext';
+import routes from './routes';
 
 const theme = createMuiTheme({
     palette: {
@@ -21,15 +22,15 @@ const theme = createMuiTheme({
     }
 });
 
-export default ({routes, resources, history}) => {
+export default ({layout, resources, history}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
 
     return <Admin
         theme={theme}
-        customRoutes={routes}
-        menu={Menu}
+        customRoutes={routes(layout)}
+        layout={props => <AdminLayout {...props} menu={Menu}/>}
         authProvider={authProvider}
         dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
         history={history}
