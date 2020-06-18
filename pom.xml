@@ -146,16 +146,6 @@
 									<arguments>test</arguments>
 								</configuration>
 							</execution>
-							<execution>
-								<id>npm transpile</id>
-								<goals>
-									<goal>npm</goal>
-								</goals>
-								<phase>install</phase>
-								<configuration>
-									<arguments>run transpile</arguments>
-								</configuration>
-							</execution>
 						</executions>
 						<configuration>
 							<workingDirectory>app</workingDirectory>
