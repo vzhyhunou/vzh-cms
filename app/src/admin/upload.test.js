@@ -13,13 +13,11 @@ describe('upload', () => {
         expect.assertions(2)
 
         const request = {
-            id: 'sample',
             data: {
                 content: ""
             }
         }
         const expectedRequest = {
-            id: 'sample',
             data: {
                 content: "",
                 files: []
@@ -43,7 +41,6 @@ describe('upload', () => {
         expect.assertions(2)
 
         const request = {
-            id: 'sample',
             data: {
                 files: [
                     {
@@ -55,7 +52,6 @@ describe('upload', () => {
             }
         }
         const expectedRequest = {
-            id: 'sample',
             data: {
                 content: "",
                 files: [
@@ -85,8 +81,8 @@ describe('upload', () => {
         window.FileReader = MockFileReader
 
         const request = {
-            id: 'sample.1',
             data: {
+                id: 'sample.1',
                 files: [
                     {
                         rawFile: new File([], null, {
@@ -113,8 +109,8 @@ describe('upload', () => {
             }
         }
         const expectedRequest = {
-            id: 'sample.1',
             data: {
+                id: 'sample.1',
                 files: [
                     {
                         data: "abc",
