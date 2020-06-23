@@ -53,7 +53,7 @@ public class ExportService extends MaintainService {
             File dir = new File(p, type.getCanonicalName());
             for (Object entity : crudRepository.findAll()) {
                 if (entity instanceof Storage) {
-                    fileService.fill((Storage) entity, true);
+                    ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
                 }
                 File out = new File(dir, String.format("%s.json", pathById(entity)));
                 out.getParentFile().mkdirs();
