@@ -15,6 +15,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.nio.file.Files.*;
@@ -55,8 +56,9 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> fill(Storage content, boolean addFiles) throws Exception {
-        Path dir = Paths.get(location(content).getPath());
+    public Set<Base64File> collect(Object entity, boolean addFiles) throws Exception {
+        Path dir = Paths.get(location(entity).getPath());
+        Set<Base64File> files = new HashSet<>();
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
                 for (Path file : paths) {
@@ -67,11 +69,11 @@ public class FileService {
                         byte[] data = readFileToByteArray(file.toFile());
                         f.setData(new String(ENCODER.encode(data)));
                     }
-                    content.getFiles().add(f);
+                    files.add(f);
                 }
             }
         }
-        return content.getFiles();
+        return files;
     }
 
     @SuppressWarnings("ConstantConditions")

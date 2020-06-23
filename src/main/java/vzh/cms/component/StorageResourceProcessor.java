@@ -20,8 +20,9 @@ public class StorageResourceProcessor implements ResourceProcessor<Resource<Stor
 
     @Override
     public Resource<Storage> process(Resource<Storage> resource) {
+        Storage storage = resource.getContent();
         try {
-            service.fill(resource.getContent(), false);
+            storage.getFiles().addAll(service.collect(storage, false));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
