@@ -2,7 +2,6 @@ package vzh.cms.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class FileService {
 
     private ResourceMappings mappings;
 
-    public FileService(CmsProperties properties, @Lazy ResourceMappings mappings) {
+    public FileService(CmsProperties properties, ResourceMappings mappings) {
         this.path = properties.getFiles().getPath();
         this.mappings = mappings;
     }
