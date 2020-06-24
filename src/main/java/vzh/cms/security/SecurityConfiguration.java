@@ -2,7 +2,6 @@ package vzh.cms.security;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,13 +17,13 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Configuration
 @EnableConfigurationProperties(JwtProperties.class)
-@Profile("!dev")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
@@ -35,14 +34,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder encoder;
 
+    private List<ServiceConfiguration> configurations;
+
     public SecurityConfiguration(UserDetailsService userDetailsService,
                                  AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService,
                                  JwtProperties properties,
-                                 PasswordEncoder encoder) {
+                                 PasswordEncoder encoder,
+                                 List<ServiceConfiguration> configurations) {
         this.userDetailsService = userDetailsService;
         this.jwtDetailsService = jwtDetailsService;
         this.properties = properties;
         this.encoder = encoder;
+        this.configurations = configurations;
     }
 
     @Override
@@ -56,14 +59,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .antMatcher("/login").addFilter(jwtAuthenticationFilter())
                 .antMatcher("/**").addFilter(headerAuthenticationFilter())
-                .authorizeRequests()
-                .antMatchers("/import").hasRole("ADMIN")
-                .antMatchers("/export").hasRole("ADMIN")
-                .antMatchers("/api/pages/search/one/**").permitAll()
-                .antMatchers("/api/pages/search/menu/**").permitAll()
-                .antMatchers("/api/users/**").hasRole("MANAGER")
-                .antMatchers("/api/pages/**").hasRole("EDITOR")
         ;
+        for (ServiceConfiguration configuration : configurations) {
+            configuration.configure(http);
+        }
     }
 
     @Override
