@@ -6,8 +6,8 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vzh.cms.model.Page;
-import vzh.cms.model.User;
+
+import javax.persistence.EntityManager;
 
 /**
  * @author Viktar Zhyhunou
@@ -15,9 +15,15 @@ import vzh.cms.model.User;
 @Configuration
 public class RestConfiguration implements RepositoryRestConfigurer {
 
+    private EntityManager entityManager;
+
+    public RestConfiguration(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Page.class, User.class);
+        entityManager.getMetamodel().getEntities().forEach(e -> config.exposeIdsFor(e.getJavaType()));
     }
 
     @Bean
