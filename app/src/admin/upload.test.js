@@ -19,8 +19,8 @@ describe('upload', () => {
         }
         const expectedRequest = {
             data: {
-                content: "",
-                files: []
+                files: [],
+                content: ""
             }
         }
 
@@ -48,17 +48,22 @@ describe('upload', () => {
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
+                file: {
+                    src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    title: "900150983cd24fb0d6963f7d28e17f72.png"
+                },
                 content: ""
             }
         }
         const expectedRequest = {
             data: {
-                content: "",
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
-                ]
+                ],
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: ""
             }
         }
 
@@ -82,7 +87,7 @@ describe('upload', () => {
 
         const request = {
             data: {
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         rawFile: new File([], null, {
@@ -110,7 +115,7 @@ describe('upload', () => {
         }
         const expectedRequest = {
             data: {
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         data: "abc",
@@ -167,7 +172,7 @@ describe('upload', () => {
 
         const response = {
             data: {
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -178,7 +183,7 @@ describe('upload', () => {
         }
         const expectedResponse = {
             data: {
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
@@ -210,7 +215,7 @@ describe('upload', () => {
 
         const response = {
             data: [{
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -221,7 +226,7 @@ describe('upload', () => {
         }
         const expectedResponse = {
             data: [{
-                id: 'sample.1',
+                id: "sample.1",
                 files: [
                     {
                         src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",

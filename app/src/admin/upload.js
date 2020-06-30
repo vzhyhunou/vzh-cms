@@ -1,4 +1,4 @@
-import {dumpKeysRecursively} from 'recursive-keys';
+import { dumpKeysRecursively } from 'recursive-keys';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import md5 from 'js-md5';
@@ -60,6 +60,7 @@ const upd = (resource, params, call) => {
                 ...params,
                 data: {
                     ...replaceFiles(params.data, transformedNewFiles),
+                    ...replaceFields(params.data, formerFiles),
                     ...replaceSrc(resource, params.data, transformedNewFiles),
                     files: [
                         ...transformedNewFiles.map(({data, name}) => ({data, name})),
@@ -106,6 +107,11 @@ const replaceSrc = (resource, data, files) => {
         `/static/origin/${resource}/${pathById(data.id)}/${name}`
     )));
     return JSON.parse(s);
+};
+
+const replaceFields = (data, formerFiles) => {
+    formerFiles.forEach(({title}) => dumpKeysRecursively(data).filter(key => get(data, key).title === title).forEach(key => set(data, key, title)));
+    return data;
 };
 
 const process = files => {
