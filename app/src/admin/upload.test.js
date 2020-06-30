@@ -14,13 +14,11 @@ describe('upload', () => {
 
         const request = {
             data: {
-                content: ""
             }
         }
         const expectedRequest = {
             data: {
-                files: [],
-                content: ""
+                files: []
             }
         }
 
@@ -51,8 +49,7 @@ describe('upload', () => {
                 file: {
                     src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
-                },
-                content: ""
+                }
             }
         }
         const expectedRequest = {
@@ -62,8 +59,7 @@ describe('upload', () => {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png",
-                content: ""
+                file: "900150983cd24fb0d6963f7d28e17f72.png"
             }
         }
 
