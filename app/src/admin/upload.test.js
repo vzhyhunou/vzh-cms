@@ -44,6 +44,10 @@ describe('upload', () => {
                     {
                         src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {

@@ -35,8 +35,14 @@ export default dataProvider => ({
 
 const upd = (resource, params, call) => {
 
-    const formerFiles = params.data.files ? params.data.files.filter(({rawFile}) => !rawFile) : [];
-    const keys = dumpKeysRecursively(params.data).filter(key => get(params.data, `${key}.rawFile`));
+    const formerFiles = params.data.files ? params.data.files
+        .filter(({rawFile}) => !rawFile)
+        .filter(({title}) => JSON.stringify({
+            ...params.data,
+            files: []
+        }).includes(title)) : [];
+    const keys = dumpKeysRecursively(params.data)
+        .filter(key => get(params.data, `${key}.rawFile`));
 
     return Promise.all(
         keys.map(key => convertFileToBase64(get(params.data, key)))
@@ -110,7 +116,10 @@ const replaceSrc = (resource, data, files) => {
 };
 
 const replaceFields = (data, formerFiles) => {
-    formerFiles.forEach(({title}) => dumpKeysRecursively(data).filter(key => get(data, key).title === title).forEach(key => set(data, key, title)));
+    formerFiles.forEach(({title}) => dumpKeysRecursively(data)
+        .filter(key => get(data, key).title === title)
+        .forEach(key => set(data, key, title))
+    );
     return data;
 };
 
