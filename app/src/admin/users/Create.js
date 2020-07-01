@@ -3,7 +3,8 @@ import {
     Create,
     FormTab,
     TabbedForm,
-    TextInput
+    TextInput,
+    required
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
@@ -14,6 +15,7 @@ export default props =>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
+                    validate={[required()]}
                 />
                 <TextInput
                     source="password"
