@@ -5,7 +5,8 @@ import {
     ImageField,
     TabbedForm,
     TextInput,
-    useLocale
+    useLocale,
+    required
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
@@ -22,6 +23,7 @@ export default props => {
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
+                    validate={[required()]}
                 />
             </FormTab>
             <FormTab label="resources.pages.fields.tags">
