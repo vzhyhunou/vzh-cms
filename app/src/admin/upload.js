@@ -41,23 +41,28 @@ const upd = (resource, params, call) => {
             ...params.data,
             files: []
         }).includes(title)) : [];
-    const keys = dumpKeysRecursively(params.data)
-        .filter(key => get(params.data, `${key}.rawFile`));
 
     return Promise.all(
-        keys.map(key => convertFileToBase64(get(params.data, key)))
-    ).then(
-        base64Files => base64Files.map((picture64, index) => ({
-            data: picture64.match(/,(.*)/)[1],
-            type: picture64.match(/\/(.*);/)[1],
-            key: keys[index]
-        }))
-    ).then(
-        base64Files => base64Files.map(({type, ...rest}) => ({
-            ...rest,
-            name: `${md5(rest.data)}.${type}`,
-            preview: get(params.data, `${rest.key}.src`)
-        }))
+        dumpKeysRecursively(params.data)
+            .filter(key => get(params.data, `${key}.rawFile`))
+            .map(key =>
+                convertFileToBase64(
+                    get(params.data, key)
+                ).then(
+                    picture64 => ({
+                        data: picture64.match(/,(.*)/)[1],
+                        type: picture64.match(/\/(.*);/)[1]
+                    })
+                ).then(
+                    ({data, type}) => ({
+                        data,
+                        type,
+                        key,
+                        name: `${md5(data)}.${type}`,
+                        preview: get(params.data, `${key}.src`)
+                    })
+                )
+            )
     ).then(
         process
     ).then(
