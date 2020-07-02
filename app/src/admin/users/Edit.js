@@ -6,7 +6,7 @@ import {
     ReferenceField,
     TabbedForm,
     TextField,
-    TextInput
+    PasswordInput
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
@@ -26,9 +26,8 @@ export default props =>
                 >
                     <TextField source="id"/>
                 </ReferenceField>
-                <TextInput
+                <PasswordInput
                     source="password"
-                    type="password"
                 />
             </FormTab>
             <FormTab label="resources.users.fields.tags">
