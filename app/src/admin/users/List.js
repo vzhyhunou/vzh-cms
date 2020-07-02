@@ -37,6 +37,7 @@ export default props =>
         {...props}
         filters={<UserFilter/>}
         bulkActionButtons={<PostBulkActionButtons/>}
+        exporter={false}
     >
         <Datagrid>
             <TextField

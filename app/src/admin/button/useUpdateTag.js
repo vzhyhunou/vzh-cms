@@ -17,6 +17,7 @@ export default (resource, selectedIds, data) => {
     const unselectAll = useUnselectAll();
     const refresh = useRefresh();
     const [mutate] = useMutation();
+
     return tag => mutate(
         {
             type: 'updateMany',

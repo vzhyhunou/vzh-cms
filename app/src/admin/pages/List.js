@@ -53,6 +53,7 @@ export default props => {
         {...props}
         filters={<PageFilter locale={locale}/>}
         bulkActionButtons={<PostBulkActionButtons/>}
+        exporter={false}
     >
         <Datagrid>
             <LinkField
