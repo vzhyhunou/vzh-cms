@@ -3,8 +3,8 @@ package vzh.cms.controller;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +42,8 @@ public class PageController {
 
     @ResponseBody
     @GetMapping("search/list")
-    public PagedResources<Resource<RowPage>> list(PageFilter filter, Pageable pageable) {
-        return assembler.toResource(repository.list(filter, pageable));
+    public PagedModel<EntityModel<RowPage>> list(PageFilter filter, Pageable pageable) {
+        return assembler.toModel(repository.list(filter, pageable));
     }
 
     @ResponseBody

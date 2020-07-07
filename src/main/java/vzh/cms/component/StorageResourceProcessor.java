@@ -1,7 +1,7 @@
 package vzh.cms.component;
 
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceProcessor;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
@@ -10,7 +10,7 @@ import vzh.cms.service.FileService;
  * @author Viktar Zhyhunou
  */
 @Component
-public class StorageResourceProcessor implements ResourceProcessor<Resource<Storage>> {
+public class StorageResourceProcessor implements RepresentationModelProcessor<EntityModel<Storage>> {
 
     private FileService service;
 
@@ -19,13 +19,14 @@ public class StorageResourceProcessor implements ResourceProcessor<Resource<Stor
     }
 
     @Override
-    public Resource<Storage> process(Resource<Storage> resource) {
-        Storage storage = resource.getContent();
+    @SuppressWarnings("ConstantConditions")
+    public EntityModel<Storage> process(EntityModel<Storage> model) {
+        Storage storage = model.getContent();
         try {
             storage.getFiles().addAll(service.collect(storage, false));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return resource;
+        return model;
     }
 }

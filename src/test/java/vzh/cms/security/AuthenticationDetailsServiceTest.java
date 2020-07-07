@@ -1,9 +1,7 @@
 package vzh.cms.security;
 
 import org.junit.After;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +14,7 @@ import vzh.cms.repository.UserRepository;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static vzh.cms.fixture.TagFixture.tag;
@@ -33,9 +32,6 @@ public class AuthenticationDetailsServiceTest {
     @InjectMocks
     private AuthenticationDetailsService service;
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
-
     @After
     public void after() {
         verify(repository).withActiveRoles(ID);
@@ -45,10 +41,9 @@ public class AuthenticationDetailsServiceTest {
     @Test
     public void noUser() {
 
-        exceptionRule.expect(UsernameNotFoundException.class);
-        exceptionRule.expectMessage(ID);
+        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> service.loadUserByUsername(ID));
 
-        service.loadUserByUsername(ID);
+        assertThat(exception.getMessage()).isEqualTo(ID);
     }
 
     @Test

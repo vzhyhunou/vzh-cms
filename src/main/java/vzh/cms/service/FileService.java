@@ -96,7 +96,7 @@ public class FileService {
 
     private File location(Object entity) throws Exception {
         ResourceMetadata meta = mappings.getMetadataFor(entity.getClass());
-        File dir = new File(meta.getRel(), pathById(entity));
+        File dir = new File(meta.getRel().value(), pathById(entity));
         return new File(path, dir.getPath());
     }
 }
