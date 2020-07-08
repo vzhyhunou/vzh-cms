@@ -2,11 +2,11 @@ package vzh.cms.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Storage;
+import vzh.cms.model.Wrapper;
 
 import javax.transaction.Transactional;
 import java.nio.file.DirectoryStream;
@@ -29,30 +29,23 @@ public class ImportService extends MaintainService {
     }
 
     @Transactional
-    @SuppressWarnings("unchecked")
     public void imp() throws Exception {
 
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
-            try (DirectoryStream<Path> paths = Files.newDirectoryStream(path)) {
-                for (Path dir : paths) {
-                    Class<Object> type = (Class<Object>) Class.forName(dir.toFile().getName());
-                    CrudRepository<Object, ?> crudRepository = repository(type);
-                    imp(crudRepository, type, dir);
-                }
-            }
+            imp(path);
         }
     }
 
-    private void imp(CrudRepository<Object, ?> crudRepository, Class<Object> type, Path dir) throws Exception {
+    private void imp(Path dir) throws Exception {
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
             for (Path path : paths) {
                 if (path.toFile().isDirectory()) {
-                    imp(crudRepository, type, path);
+                    imp(path);
                 } else {
                     LOG.info("Import: {}", path);
-                    Object entity = mapper.readValue(path.toFile(), type);
-                    crudRepository.save(entity);
+                    Object entity = mapper.readValue(path.toFile(), Wrapper.class).getData();
+                    repository(entity.getClass()).save(entity);
                     if (entity instanceof Storage) {
                         fileService.save((Storage) entity);
                     }

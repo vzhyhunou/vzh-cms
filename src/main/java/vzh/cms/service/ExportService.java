@@ -2,7 +2,6 @@ package vzh.cms.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.mapping.ResourceMapping;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
@@ -11,6 +10,7 @@ import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Storage;
+import vzh.cms.model.Wrapper;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -48,17 +48,18 @@ public class ExportService extends MaintainService {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File p = new File(path, sdf.format(new Date()));
-        for (Class<?> type : mappings.filter(ResourceMapping::isExported).map(ResourceMetadata::getDomainType)) {
-            CrudRepository<?, ?> crudRepository = repository(type);
-            File dir = new File(p, type.getCanonicalName());
-            for (Object entity : crudRepository.findAll()) {
+        Wrapper wrapper = new Wrapper();
+        for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
+            File dir = new File(p, meta.getRel().value());
+            for (Object entity : repository(meta.getDomainType()).findAll()) {
                 if (entity instanceof Storage) {
                     ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
                 }
                 File out = new File(dir, String.format("%s.json", pathById(entity)));
                 out.getParentFile().mkdirs();
+                wrapper.setData(entity);
                 LOG.info("Export: {}", out);
-                mapper.writeValue(out, entity);
+                mapper.writeValue(out, wrapper);
             }
         }
 

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
 
-import java.io.Serializable;
-
 /**
  * @author Viktar Zhyhunou
  */
@@ -27,8 +25,8 @@ abstract class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    protected <T, ID extends Serializable> CrudRepository<T, ID> repository(Class<T> type) {
-        return (CrudRepository<T, ID>) repositories.getRepositoryFor(type)
+    protected CrudRepository<Object, ?> repository(Class<?> type) {
+        return (CrudRepository<Object, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 }
