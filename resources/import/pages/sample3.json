@@ -1,0 +1,24 @@
+{
+  "@class" : "vzh.cms.model.Page",
+  "data" : {
+    "id": "sample3",
+    "tags": [
+      {
+        "name": "MENU"
+      },
+      {
+        "name": "PUBLISHED"
+      }
+    ],
+    "properties": {
+      "ru": {
+        "title": "Пример страницы 3",
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 3</h1>\n\t<page id=\"fragment.1\"/>\n\t<page id=\"fragment.2\"/>\n</div>"
+      },
+      "en": {
+        "title": "Sample page 3",
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 3</h1>\n\t<page id=\"fragment.1\"/>\n\t<page id=\"fragment.2\"/>\n</div>"
+      }
+    }
+  }
+}

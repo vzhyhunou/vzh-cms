@@ -1,0 +1,21 @@
+{
+  "@class" : "vzh.cms.model.Page",
+  "data" : {
+    "id": "fragment.1",
+    "tags": [
+      {
+        "name": "PUBLISHED"
+      }
+    ],
+    "properties": {
+      "ru": {
+        "title": "Фрагмент 1",
+        "content": "<p>Фрагмент 1</p>"
+      },
+      "en": {
+        "title": "Fragment 1",
+        "content": "<p>Fragment 1</p>"
+      }
+    }
+  }
+}

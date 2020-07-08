@@ -1,9 +1,0 @@
-{
-  "id": "editor",
-  "password": "$2a$10$7bypJJwW7hYiqsbwDATdvObbdOtsa7InJcjqj5svMictI12euAu/i",
-  "tags": [
-    {
-      "name": "ROLE_EDITOR"
-    }
-  ]
-}

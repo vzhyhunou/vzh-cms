@@ -18,9 +18,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.nio.file.Files.*;
+import static org.apache.commons.beanutils.BeanUtils.getProperty;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
-import static vzh.cms.service.ServiceHelper.pathById;
 
 /**
  * @author Viktar Zhyhunou
@@ -96,7 +96,11 @@ public class FileService {
 
     private File location(Object entity) throws Exception {
         ResourceMetadata meta = mappings.getMetadataFor(entity.getClass());
-        File dir = new File(meta.getRel(), pathById(entity));
+        File dir = new File(meta.getRel().value(), pathById(entity));
         return new File(path, dir.getPath());
+    }
+
+    static String pathById(Object entity) throws Exception {
+        return getProperty(entity, "id").replace('.', File.separatorChar);
     }
 }
