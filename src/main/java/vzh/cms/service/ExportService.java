@@ -49,7 +49,7 @@ public class ExportService extends MaintainService {
         File p = new File(path, sdf.format(new Date()));
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
             File dir = new File(p, meta.getRel().value());
-            for (Object entity : repository(meta.getDomainType()).findAll()) {
+            for (Object entity : getRepository(meta.getDomainType()).findAll()) {
                 write(new File(dir, String.format("%s.json", pathById(entity))), entity);
             }
         }

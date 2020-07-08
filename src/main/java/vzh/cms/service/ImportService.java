@@ -54,7 +54,7 @@ public class ImportService extends MaintainService {
 
         LOG.info("Read: {}", file);
         Object entity = mapper.readValue(file, Wrapper.class).getData();
-        repository(entity.getClass()).save(entity);
+        getRepository(entity.getClass()).save(entity);
         if (entity instanceof Storage) {
             fileService.save((Storage) entity);
         }

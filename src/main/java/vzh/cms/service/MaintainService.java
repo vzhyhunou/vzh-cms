@@ -25,7 +25,7 @@ abstract class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    protected CrudRepository<Object, ?> repository(Class<?> type) {
+    protected CrudRepository<Object, ?> getRepository(Class<?> type) {
         return (CrudRepository<Object, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
