@@ -44,19 +44,20 @@ public class ImportService extends MaintainService {
                 if (path.toFile().isDirectory()) {
                     imp(path);
                 } else {
-                    read(path.toFile());
+                    Object entity = read(path.toFile());
+                    getRepository(entity.getClass()).save(entity);
                 }
             }
         }
     }
 
-    private void read(File file) throws Exception {
+    private Object read(File file) throws Exception {
 
         LOG.info("Read: {}", file);
         Object entity = mapper.readValue(file, Wrapper.class).getData();
-        getRepository(entity.getClass()).save(entity);
         if (entity instanceof Storage) {
             fileService.save((Storage) entity);
         }
+        return entity;
     }
 }
