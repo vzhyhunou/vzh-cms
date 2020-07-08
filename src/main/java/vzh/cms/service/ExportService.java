@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static vzh.cms.service.ServiceHelper.pathById;
+import static vzh.cms.service.FileService.pathById;
 
 /**
  * @author Viktar Zhyhunou
