@@ -9,6 +9,7 @@ import vzh.cms.model.Storage;
 import vzh.cms.model.Wrapper;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,14 +44,19 @@ public class ImportService extends MaintainService {
                 if (path.toFile().isDirectory()) {
                     imp(path);
                 } else {
-                    LOG.info("Import: {}", path);
-                    Object entity = mapper.readValue(path.toFile(), Wrapper.class).getData();
-                    repository(entity.getClass()).save(entity);
-                    if (entity instanceof Storage) {
-                        fileService.save((Storage) entity);
-                    }
+                    read(path.toFile());
                 }
             }
+        }
+    }
+
+    private void read(File file) throws Exception {
+
+        LOG.info("Read: {}", file);
+        Object entity = mapper.readValue(file, Wrapper.class).getData();
+        repository(entity.getClass()).save(entity);
+        if (entity instanceof Storage) {
+            fileService.save((Storage) entity);
         }
     }
 }

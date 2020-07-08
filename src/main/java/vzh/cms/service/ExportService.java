@@ -42,24 +42,15 @@ public class ExportService extends MaintainService {
     }
 
     @Transactional
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void export() throws Exception {
 
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File p = new File(path, sdf.format(new Date()));
-        Wrapper wrapper = new Wrapper();
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
             File dir = new File(p, meta.getRel().value());
             for (Object entity : repository(meta.getDomainType()).findAll()) {
-                if (entity instanceof Storage) {
-                    ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
-                }
-                File out = new File(dir, String.format("%s.json", pathById(entity)));
-                out.getParentFile().mkdirs();
-                wrapper.setData(entity);
-                LOG.info("Export: {}", out);
-                mapper.writeValue(out, wrapper);
+                write(new File(dir, String.format("%s.json", pathById(entity))), entity);
             }
         }
 
@@ -78,5 +69,18 @@ public class ExportService extends MaintainService {
                 FileSystemUtils.deleteRecursively(p);
             }
         }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void write(File file, Object entity) throws Exception {
+
+        LOG.info("Write: {}", file);
+        if (entity instanceof Storage) {
+            ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
+        }
+        file.getParentFile().mkdirs();
+        Wrapper wrapper = new Wrapper();
+        wrapper.setData(entity);
+        mapper.writeValue(file, wrapper);
     }
 }
