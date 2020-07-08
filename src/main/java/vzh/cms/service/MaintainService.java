@@ -1,6 +1,8 @@
 package vzh.cms.service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -8,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Storage;
-import vzh.cms.model.Wrapper;
 
 import java.io.File;
 
@@ -59,5 +60,12 @@ public class MaintainService {
         Wrapper wrapper = new Wrapper();
         wrapper.setData(entity);
         mapper.writeValue(file, wrapper);
+    }
+
+    @Data
+    private static class Wrapper {
+
+        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
+        private Object data;
     }
 }
