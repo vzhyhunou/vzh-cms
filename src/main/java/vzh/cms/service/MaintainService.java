@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
+import org.springframework.stereotype.Service;
 import vzh.cms.model.Storage;
 import vzh.cms.model.Wrapper;
 
@@ -15,30 +15,30 @@ import java.io.File;
 /**
  * @author Viktar Zhyhunou
  */
-abstract class MaintainService {
+@Service
+public class MaintainService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MaintainService.class);
 
-    @Autowired
-    private FileService fileService;
-
-    @Autowired
-    private ObjectMapper mapper;
-
     private Repositories repositories;
 
-    @Autowired
-    public void setFactory(ListableBeanFactory factory) {
+    private FileService fileService;
+
+    private ObjectMapper mapper;
+
+    public MaintainService(ListableBeanFactory factory, FileService fileService, ObjectMapper mapper) {
         repositories = new Repositories(factory);
+        this.fileService = fileService;
+        this.mapper = mapper;
     }
 
     @SuppressWarnings("unchecked")
-    protected CrudRepository<Object, ?> getRepository(Class<?> type) {
+    public CrudRepository<Object, ?> getRepository(Class<?> type) {
         return (CrudRepository<Object, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    protected Object read(File file) throws Exception {
+    public Object read(File file) throws Exception {
 
         LOG.info("Read: {}", file);
         Object entity = mapper.readValue(file, Wrapper.class).getData();
@@ -49,7 +49,7 @@ abstract class MaintainService {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    protected void write(File file, Object entity) throws Exception {
+    public void write(File file, Object entity) throws Exception {
 
         LOG.info("Write: {}", file);
         if (entity instanceof Storage) {

@@ -24,15 +24,18 @@ import static vzh.cms.service.FileService.pathById;
  * @author Viktar Zhyhunou
  */
 @Service
-public class ExportService extends MaintainService {
+public class ExportService {
 
     private CmsExportProperties properties;
 
     private ResourceMappings mappings;
 
-    public ExportService(CmsProperties properties, ResourceMappings mappings) {
+    private MaintainService maintainService;
+
+    public ExportService(CmsProperties properties, ResourceMappings mappings, MaintainService maintainService) {
         this.properties = properties.getExp();
         this.mappings = mappings;
+        this.maintainService = maintainService;
     }
 
     @Transactional
@@ -43,8 +46,8 @@ public class ExportService extends MaintainService {
         File p = new File(path, sdf.format(new Date()));
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
             File dir = new File(p, meta.getRel().value());
-            for (Object entity : getRepository(meta.getDomainType()).findAll()) {
-                write(new File(dir, String.format("%s.json", pathById(entity))), entity);
+            for (Object entity : maintainService.getRepository(meta.getDomainType()).findAll()) {
+                maintainService.write(new File(dir, String.format("%s.json", pathById(entity))), entity);
             }
         }
 

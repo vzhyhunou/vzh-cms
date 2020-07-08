@@ -14,12 +14,15 @@ import java.nio.file.Paths;
  * @author Viktar Zhyhunou
  */
 @Service
-public class ImportService extends MaintainService {
+public class ImportService {
 
     private CmsImportProperties properties;
 
-    public ImportService(CmsProperties properties) {
+    private MaintainService maintainService;
+
+    public ImportService(CmsProperties properties, MaintainService maintainService) {
         this.properties = properties.getImp();
+        this.maintainService = maintainService;
     }
 
     @Transactional
@@ -37,8 +40,8 @@ public class ImportService extends MaintainService {
                 if (path.toFile().isDirectory()) {
                     imp(path);
                 } else {
-                    Object entity = read(path.toFile());
-                    getRepository(entity.getClass()).save(entity);
+                    Object entity = maintainService.read(path.toFile());
+                    maintainService.getRepository(entity.getClass()).save(entity);
                 }
             }
         }
