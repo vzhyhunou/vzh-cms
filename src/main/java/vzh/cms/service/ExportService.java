@@ -1,7 +1,5 @@
 package vzh.cms.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.core.mapping.ResourceMapping;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
@@ -9,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.model.Storage;
-import vzh.cms.model.Wrapper;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -29,8 +25,6 @@ import static vzh.cms.service.FileService.pathById;
  */
 @Service
 public class ExportService extends MaintainService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ExportService.class);
 
     private CmsExportProperties properties;
 
@@ -69,18 +63,5 @@ public class ExportService extends MaintainService {
                 FileSystemUtils.deleteRecursively(p);
             }
         }
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void write(File file, Object entity) throws Exception {
-
-        LOG.info("Write: {}", file);
-        if (entity instanceof Storage) {
-            ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
-        }
-        file.getParentFile().mkdirs();
-        Wrapper wrapper = new Wrapper();
-        wrapper.setData(entity);
-        mapper.writeValue(file, wrapper);
     }
 }

@@ -1,15 +1,10 @@
 package vzh.cms.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.model.Storage;
-import vzh.cms.model.Wrapper;
 
 import javax.transaction.Transactional;
-import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,8 +15,6 @@ import java.nio.file.Paths;
  */
 @Service
 public class ImportService extends MaintainService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ImportService.class);
 
     private CmsImportProperties properties;
 
@@ -49,15 +42,5 @@ public class ImportService extends MaintainService {
                 }
             }
         }
-    }
-
-    private Object read(File file) throws Exception {
-
-        LOG.info("Read: {}", file);
-        Object entity = mapper.readValue(file, Wrapper.class).getData();
-        if (entity instanceof Storage) {
-            fileService.save((Storage) entity);
-        }
-        return entity;
     }
 }
