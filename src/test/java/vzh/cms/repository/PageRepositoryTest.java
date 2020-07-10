@@ -8,7 +8,6 @@ import vzh.cms.model.Tag;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.projection.TitlePageProperty;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
+        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(RowPage.Property::getTitle).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
@@ -49,7 +48,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(TitlePageProperty::getTitle).containsOnly("sample.en.title");
+        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(RowPage.Property::getTitle).containsOnly("sample.en.title");
     }
 
     @Test
@@ -123,7 +122,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
+        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(RowPage.Property::getTitle).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
@@ -178,7 +177,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).flatExtracting(p -> p.getProperties().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(TitlePageProperty::getTitle).containsOnly("home.en.title");
+        assertThat(content).flatExtracting(p -> p.getProperties().values()).extracting(RowPage.Property::getTitle).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
