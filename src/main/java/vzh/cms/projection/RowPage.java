@@ -16,5 +16,9 @@ public interface RowPage {
     Set<Tag> getTags();
 
     @Value("#{target.properties.?[key == T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
-    Map<String, TitlePageProperty> getProperties();
+    Map<String, Property> getProperties();
+
+    interface Property {
+        String getTitle();
+    }
 }
