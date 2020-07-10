@@ -1,6 +1,6 @@
 {
-  "@class" : "vzh.cms.model.Page",
-  "data" : {
+  "@class": "vzh.cms.model.Page",
+  "data": {
     "id": "fragment.1",
     "tags": [
       {
