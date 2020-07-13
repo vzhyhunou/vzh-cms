@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
 
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * @author Viktar Zhyhunou
  */
@@ -19,12 +22,11 @@ public class StorageResourceProcessor implements RepresentationModelProcessor<En
     }
 
     @Override
-    @SuppressWarnings("ConstantConditions")
     public EntityModel<Storage> process(EntityModel<Storage> model) {
         Storage storage = model.getContent();
         try {
-            storage.getFiles().addAll(service.collect(storage, false));
-        } catch (Exception e) {
+            Objects.requireNonNull(storage).getFiles().addAll(service.collect(storage, false));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return model;

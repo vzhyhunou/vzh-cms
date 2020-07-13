@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import vzh.cms.model.Storage;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Viktar Zhyhunou
@@ -39,7 +40,7 @@ public class MaintainService {
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Object read(File file) throws Exception {
+    public Object read(File file) throws IOException {
 
         LOG.info("Read: {}", file);
         Object entity = mapper.readValue(file, Wrapper.class).getData();
@@ -50,7 +51,7 @@ public class MaintainService {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void write(File file, Object entity) throws Exception {
+    public void write(File file, Object entity) throws IOException {
 
         LOG.info("Write: {}", file);
         if (entity instanceof Storage) {
