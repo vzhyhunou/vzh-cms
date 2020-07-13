@@ -51,7 +51,7 @@ public class ImportService {
         }
     }
 
-    private Object getInstanceWithId(Object entity) throws Exception {
+    private static Object getInstanceWithId(Object entity) throws Exception {
         Object object = entity.getClass().newInstance();
         new BeanWrapperImpl(object).setPropertyValue(ID, new BeanWrapperImpl(entity).getPropertyValue(ID));
         return object;
