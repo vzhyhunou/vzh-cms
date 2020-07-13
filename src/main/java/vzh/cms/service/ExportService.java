@@ -39,7 +39,7 @@ public class ExportService {
     }
 
     @Transactional
-    public void export() throws Exception {
+    public void export() throws IOException {
 
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());

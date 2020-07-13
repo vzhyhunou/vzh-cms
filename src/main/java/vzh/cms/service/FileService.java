@@ -2,6 +2,7 @@ package vzh.cms.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
@@ -10,15 +11,16 @@ import vzh.cms.model.Base64File;
 import vzh.cms.model.Storage;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static java.nio.file.Files.*;
-import static org.apache.commons.beanutils.BeanUtils.getProperty;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 
@@ -42,7 +44,7 @@ public class FileService {
         this.mappings = mappings;
     }
 
-    public void save(Storage storage) throws Exception {
+    public void save(Storage storage) throws IOException {
         clean(storage);
         File dir = location(storage);
         for (Base64File file : storage.getFiles()) {
@@ -55,7 +57,7 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> collect(Object entity, boolean addFiles) throws Exception {
+    public Set<Base64File> collect(Object entity, boolean addFiles) throws IOException {
         Path dir = Paths.get(location(entity).getPath());
         Set<Base64File> files = new HashSet<>();
         if (exists(dir)) {
@@ -76,7 +78,7 @@ public class FileService {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void clean(Storage storage) throws Exception {
+    public void clean(Storage storage) throws IOException {
         Path dir = Paths.get(location(storage).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
@@ -94,13 +96,14 @@ public class FileService {
         }
     }
 
-    private File location(Object entity) throws Exception {
+    private File location(Object entity) {
         ResourceMetadata meta = mappings.getMetadataFor(entity.getClass());
         File dir = new File(meta.getRel().value(), pathById(entity));
         return new File(path, dir.getPath());
     }
 
-    static String pathById(Object entity) throws Exception {
-        return getProperty(entity, "id").replace('.', File.separatorChar);
+    static String pathById(Object entity) {
+        return Objects.requireNonNull(new BeanWrapperImpl(entity).getPropertyValue("id")).toString()
+                .replace('.', File.separatorChar);
     }
 }

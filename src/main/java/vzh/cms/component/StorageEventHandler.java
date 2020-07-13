@@ -11,6 +11,7 @@ import vzh.cms.model.Storage;
 import vzh.cms.service.FileService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @author Viktar Zhyhunou
@@ -30,14 +31,14 @@ public class StorageEventHandler {
 
     @HandleBeforeCreate
     @HandleBeforeSave
-    public void save(Storage storage) throws Exception {
+    public void save(Storage storage) throws IOException {
         if (!HttpMethod.PATCH.matches(request.getMethod())) {
             service.save(storage);
         }
     }
 
     @HandleBeforeDelete
-    public void delete(Storage storage) throws Exception {
+    public void delete(Storage storage) throws IOException {
         storage.getFiles().clear();
         service.clean(storage);
     }
