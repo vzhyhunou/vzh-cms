@@ -25,6 +25,8 @@ import java.util.Optional;
  */
 class UserRepositoryImpl extends ItemRepositoryImpl<User, String> implements CustomizedUserRepository {
 
+    private static final String ID = "id";
+
     UserRepositoryImpl(EntityManager manager) {
         super(User.class, manager);
     }
@@ -47,7 +49,7 @@ class UserRepositoryImpl extends ItemRepositoryImpl<User, String> implements Cus
         return findOne((root, q, b) -> {
                     Path<Tag> tags = (Path<Tag>) root.fetch(Item_.TAGS, JoinType.LEFT);
                     return b.and(
-                            b.equal(root.get("id"), id),
+                            b.equal(root.get(ID), id),
                             b.or(
                                     b.and(
                                             b.like(tags.get(Tag_.name), "ROLE_%"),

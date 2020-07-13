@@ -1,10 +1,12 @@
 package vzh.cms.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.Valid;
 import java.util.Date;
@@ -20,7 +22,18 @@ abstract public class Item {
 
     private Date date;
 
-    private String userId;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
+
+    public String getUserId() {
+        return user == null ? null : user.getId();
+    }
+
+    public void setUserId(String userId) {
+        user = new User();
+        user.setId(userId);
+    }
 
     @ElementCollection
     @Column(name = "tag")

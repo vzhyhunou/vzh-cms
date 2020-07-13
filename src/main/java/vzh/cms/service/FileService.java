@@ -34,6 +34,7 @@ public class FileService {
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
+    private static final String ID = "id";
 
     private String path;
 
@@ -103,7 +104,7 @@ public class FileService {
     }
 
     static String pathById(Object entity) {
-        return Objects.requireNonNull(new BeanWrapperImpl(entity).getPropertyValue("id")).toString()
+        return Objects.requireNonNull(new BeanWrapperImpl(entity).getPropertyValue(ID)).toString()
                 .replace('.', File.separatorChar);
     }
 }
