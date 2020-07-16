@@ -35,21 +35,21 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public CrudRepository<Item, ?> getRepository(Class<?> type) {
-        return (CrudRepository<Item, ?>) repositories.getRepositoryFor(type)
+    public CrudRepository<Item<?>, ?> getRepository(Class<?> type) {
+        return (CrudRepository<Item<?>, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Item read(File file) throws IOException {
+    public Item<?> read(File file) throws IOException {
 
         LOG.info("Read: {}", file);
-        Item item = mapper.readValue(file, Wrapper.class).getItem();
+        Item<?> item = mapper.readValue(file, Wrapper.class).getItem();
         fileService.save(item);
         return item;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void write(File file, Item item) throws IOException {
+    public void write(File file, Item<?> item) throws IOException {
 
         LOG.info("Write: {}", file);
         item.getFiles().addAll(fileService.collect(item, true));
@@ -63,6 +63,6 @@ public class MaintainService {
     private static class Wrapper {
 
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
-        private Item item;
+        private Item<?> item;
     }
 }

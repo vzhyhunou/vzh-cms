@@ -2,7 +2,6 @@ package vzh.cms.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,6 @@ public class FileService {
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
-    private static final String ID = "id";
 
     private String path;
 
@@ -45,7 +43,7 @@ public class FileService {
         this.mappings = mappings;
     }
 
-    public void save(Item item) throws IOException {
+    public void save(Item<?> item) throws IOException {
         clean(item);
         File dir = location(item);
         for (Base64File file : item.getFiles()) {
@@ -58,7 +56,7 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> collect(Item item, boolean addFiles) throws IOException {
+    public Set<Base64File> collect(Item<?> item, boolean addFiles) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         Set<Base64File> files = new HashSet<>();
         if (exists(dir)) {
@@ -78,7 +76,7 @@ public class FileService {
         return files;
     }
 
-    public void clean(Item item) throws IOException {
+    public void clean(Item<?> item) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
@@ -96,14 +94,13 @@ public class FileService {
         }
     }
 
-    private File location(Item item) {
+    private File location(Item<?> item) {
         ResourceMetadata meta = mappings.getMetadataFor(item.getClass());
         File dir = new File(meta.getRel().value(), pathById(item));
         return new File(path, dir.getPath());
     }
 
-    static String pathById(Item item) {
-        return Objects.requireNonNull(new BeanWrapperImpl(item).getPropertyValue(ID)).toString()
-                .replace('.', File.separatorChar);
+    static String pathById(Item<?> item) {
+        return item.getId().toString().replace('.', File.separatorChar);
     }
 }

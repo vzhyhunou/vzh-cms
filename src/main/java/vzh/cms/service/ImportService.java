@@ -1,12 +1,12 @@
 package vzh.cms.service;
 
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Item;
 
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +17,6 @@ import java.nio.file.Paths;
  */
 @Service
 public class ImportService {
-
-    private static final String ID = "id";
 
     private CmsImportProperties properties;
 
@@ -45,16 +43,17 @@ public class ImportService {
                 if (path.toFile().isDirectory()) {
                     imp(path, full);
                 } else {
-                    Item item = maintainService.read(path.toFile());
+                    Item<?> item = maintainService.read(path.toFile());
                     maintainService.getRepository(item.getClass()).save(full ? item : getInstanceWithId(item));
                 }
             }
         }
     }
 
-    private static Item getInstanceWithId(Item item) throws Exception {
-        Item instance = item.getClass().newInstance();
-        new BeanWrapperImpl(instance).setPropertyValue(ID, new BeanWrapperImpl(item).getPropertyValue(ID));
+    @SuppressWarnings("unchecked")
+    private static <ID extends Serializable, T extends Item<ID>> T getInstanceWithId(T item) throws Exception {
+        T instance = ((Class<T>) item.getClass()).newInstance();
+        instance.setId(item.getId());
         return instance;
     }
 }

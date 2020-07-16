@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class ContentRepositoryImpl<T extends Item, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
+public abstract class ContentRepositoryImpl<T extends Item<ID>, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
 
     private static final String ID = "id";
     private static final String PROPERTIES = "properties";

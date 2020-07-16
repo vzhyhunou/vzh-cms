@@ -47,7 +47,7 @@ public class ExportService {
         File p = new File(path, sdf.format(new Date()));
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
             File dir = new File(p, meta.getRel().value());
-            for (Item item : maintainService.getRepository(meta.getDomainType()).findAll()) {
+            for (Item<?> item : maintainService.getRepository(meta.getDomainType()).findAll()) {
                 maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
             }
         }

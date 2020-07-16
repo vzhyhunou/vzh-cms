@@ -34,7 +34,7 @@ public class ItemEventHandler {
 
     @HandleBeforeCreate
     @HandleBeforeSave
-    public void save(Item item) throws IOException {
+    public void save(Item<?> item) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
         item.setUserId(id);
@@ -45,7 +45,7 @@ public class ItemEventHandler {
     }
 
     @HandleBeforeDelete
-    public void delete(Item item) throws IOException {
+    public void delete(Item<?> item) throws IOException {
         item.getFiles().clear();
         service.clean(item);
     }

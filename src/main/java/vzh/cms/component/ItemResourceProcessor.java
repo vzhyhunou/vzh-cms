@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author Viktar Zhyhunou
  */
 @Component
-public class ItemResourceProcessor implements RepresentationModelProcessor<EntityModel<Item>> {
+public class ItemResourceProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
 
     private FileService service;
 
@@ -22,8 +22,8 @@ public class ItemResourceProcessor implements RepresentationModelProcessor<Entit
     }
 
     @Override
-    public EntityModel<Item> process(EntityModel<Item> model) {
-        Item item = model.getContent();
+    public EntityModel<Item<?>> process(EntityModel<Item<?>> model) {
+        Item<?> item = model.getContent();
         try {
             Objects.requireNonNull(item).getFiles().addAll(service.collect(item, false));
         } catch (IOException e) {

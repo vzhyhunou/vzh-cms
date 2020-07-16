@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Data
 @ToString(exclude = "password")
 @Entity
-public class User extends Item {
+public class User extends Item<String> {
 
     @Id
     private String id;
