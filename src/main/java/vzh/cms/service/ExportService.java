@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
+import vzh.cms.model.Item;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -46,8 +47,8 @@ public class ExportService {
         File p = new File(path, sdf.format(new Date()));
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
             File dir = new File(p, meta.getRel().value());
-            for (Object entity : maintainService.getRepository(meta.getDomainType()).findAll()) {
-                maintainService.write(new File(dir, String.format("%s.json", pathById(entity))), entity);
+            for (Item<?> item : maintainService.getRepository(meta.getDomainType()).findAll()) {
+                maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
             }
         }
 

@@ -1,6 +1,6 @@
 {
   "@class": "vzh.cms.model.Page",
-  "data": {
+  "item": {
     "id": "sample1",
     "tags": [
       {

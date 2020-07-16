@@ -8,7 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +20,11 @@ import java.util.Set;
  */
 @Data
 @MappedSuperclass
-abstract public class Item {
+abstract public class Item<ID extends Serializable> {
+
+    abstract public ID getId();
+
+    abstract public void setId(ID id);
 
     private Date date;
 
@@ -40,4 +46,7 @@ abstract public class Item {
     @CollectionTable
     @Valid
     private Set<Tag> tags = new HashSet<>();
+
+    @Transient
+    private Set<Base64File> files = new HashSet<>();
 }

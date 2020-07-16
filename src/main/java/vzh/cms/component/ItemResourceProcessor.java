@@ -3,7 +3,7 @@ package vzh.cms.component;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
-import vzh.cms.model.Storage;
+import vzh.cms.model.Item;
 import vzh.cms.service.FileService;
 
 import java.io.IOException;
@@ -13,19 +13,19 @@ import java.util.Objects;
  * @author Viktar Zhyhunou
  */
 @Component
-public class StorageResourceProcessor implements RepresentationModelProcessor<EntityModel<Storage>> {
+public class ItemResourceProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
 
     private FileService service;
 
-    public StorageResourceProcessor(FileService service) {
+    public ItemResourceProcessor(FileService service) {
         this.service = service;
     }
 
     @Override
-    public EntityModel<Storage> process(EntityModel<Storage> model) {
-        Storage storage = model.getContent();
+    public EntityModel<Item<?>> process(EntityModel<Item<?>> model) {
+        Item<?> item = model.getContent();
         try {
-            Objects.requireNonNull(storage).getFiles().addAll(service.collect(storage, false));
+            Objects.requireNonNull(item).getFiles().addAll(service.collect(item, false));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
