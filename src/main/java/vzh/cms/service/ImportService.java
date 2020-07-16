@@ -4,6 +4,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsImportProperties;
 import vzh.cms.config.property.CmsProperties;
+import vzh.cms.model.Item;
 
 import javax.transaction.Transactional;
 import java.nio.file.DirectoryStream;
@@ -44,16 +45,16 @@ public class ImportService {
                 if (path.toFile().isDirectory()) {
                     imp(path, full);
                 } else {
-                    Object entity = maintainService.read(path.toFile());
-                    maintainService.getRepository(entity.getClass()).save(full ? entity : getInstanceWithId(entity));
+                    Item item = maintainService.read(path.toFile());
+                    maintainService.getRepository(item.getClass()).save(full ? item : getInstanceWithId(item));
                 }
             }
         }
     }
 
-    private static Object getInstanceWithId(Object entity) throws Exception {
-        Object object = entity.getClass().newInstance();
-        new BeanWrapperImpl(object).setPropertyValue(ID, new BeanWrapperImpl(entity).getPropertyValue(ID));
-        return object;
+    private static Item getInstanceWithId(Item item) throws Exception {
+        Item instance = item.getClass().newInstance();
+        new BeanWrapperImpl(instance).setPropertyValue(ID, new BeanWrapperImpl(item).getPropertyValue(ID));
+        return instance;
     }
 }

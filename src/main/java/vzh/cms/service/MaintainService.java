@@ -9,7 +9,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
-import vzh.cms.model.Storage;
+import vzh.cms.model.Item;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,31 +35,27 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public CrudRepository<Object, ?> getRepository(Class<?> type) {
-        return (CrudRepository<Object, ?>) repositories.getRepositoryFor(type)
+    public CrudRepository<Item, ?> getRepository(Class<?> type) {
+        return (CrudRepository<Item, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Object read(File file) throws IOException {
+    public Item read(File file) throws IOException {
 
         LOG.info("Read: {}", file);
-        Object entity = mapper.readValue(file, Wrapper.class).getData();
-        if (entity instanceof Storage) {
-            fileService.save((Storage) entity);
-        }
-        return entity;
+        Item item = mapper.readValue(file, Wrapper.class).getItem();
+        fileService.save(item);
+        return item;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void write(File file, Object entity) throws IOException {
+    public void write(File file, Item item) throws IOException {
 
         LOG.info("Write: {}", file);
-        if (entity instanceof Storage) {
-            ((Storage) entity).getFiles().addAll(fileService.collect(entity, true));
-        }
+        item.getFiles().addAll(fileService.collect(item, true));
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
-        wrapper.setData(entity);
+        wrapper.setItem(item);
         mapper.writeValue(file, wrapper);
     }
 
@@ -67,6 +63,6 @@ public class MaintainService {
     private static class Wrapper {
 
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
-        private Object data;
+        private Item item;
     }
 }

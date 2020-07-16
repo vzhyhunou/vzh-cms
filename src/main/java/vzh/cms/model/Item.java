@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,4 +41,7 @@ abstract public class Item {
     @CollectionTable
     @Valid
     private Set<Tag> tags = new HashSet<>();
+
+    @Transient
+    private Set<Base64File> files = new HashSet<>();
 }
