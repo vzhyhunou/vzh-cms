@@ -1,8 +1,8 @@
 package vzh.cms.repository;
 
 import org.springframework.context.i18n.LocaleContextHolder;
-import vzh.cms.model.Item;
-import vzh.cms.model.Item_;
+import vzh.cms.model.Tagged;
+import vzh.cms.model.Tagged_;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class ContentRepositoryImpl<T extends Item<ID>, ID extends Serializable> extends ItemRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
+public abstract class ContentRepositoryImpl<T extends Tagged<ID>, ID extends Serializable> extends TaggedRepositoryImpl<T, ID> implements CustomizedContentRepository<T, ID> {
 
     private static final String ID = "id";
     private static final String PROPERTIES = "properties";
@@ -60,7 +60,7 @@ public abstract class ContentRepositoryImpl<T extends Item<ID>, ID extends Seria
                 subquery.select(r)
                         .where(b.and(
                                 p,
-                                active(b, r.join(Item_.TAGS), names)
+                                active(b, r.join(Tagged_.TAGS), names)
                         ))
                         .groupBy(r.get(ID))
                         .having(b.equal(b.count(r.get(ID)), names.length))

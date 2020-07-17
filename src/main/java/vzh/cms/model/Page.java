@@ -17,7 +17,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-public class Page extends Item<String> {
+public class Page extends Tagged<String> {
 
     @Id
     private String id;

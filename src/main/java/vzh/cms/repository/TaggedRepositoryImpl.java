@@ -1,8 +1,8 @@
 package vzh.cms.repository;
 
-import vzh.cms.model.Item;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
+import vzh.cms.model.Tagged;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,9 +13,9 @@ import java.io.Serializable;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class ItemRepositoryImpl<T extends Item<ID>, ID extends Serializable> extends RepositoryImpl<T, ID> {
+public abstract class TaggedRepositoryImpl<T extends Tagged<ID>, ID extends Serializable> extends RepositoryImpl<T, ID> {
 
-    protected ItemRepositoryImpl(Class<T> domainClass, EntityManager manager) {
+    protected TaggedRepositoryImpl(Class<T> domainClass, EntityManager manager) {
         super(domainClass, manager);
     }
 
