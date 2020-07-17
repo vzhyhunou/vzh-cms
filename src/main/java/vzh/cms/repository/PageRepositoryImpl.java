@@ -2,7 +2,7 @@ package vzh.cms.repository;
 
 import org.springframework.data.domain.Pageable;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.Item_;
+import vzh.cms.model.Tagged_;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
 import vzh.cms.model.PageProperty_;
@@ -36,7 +36,7 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
             Root<Page> p = subquery.from(Page.class);
             if (Long.class != q.getResultType()) {
                 root.fetch(Page_.PROPERTIES, JoinType.LEFT);
-                root.fetch(Item_.TAGS, JoinType.LEFT);
+                root.fetch(Tagged_.TAGS, JoinType.LEFT);
             }
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowPage.class, pageable);
@@ -44,7 +44,7 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
         MapJoin<Page, String, PageProperty> properties = root.joinMap(Page_.PROPERTIES, JoinType.LEFT);
-        Join<Page, Tag> tags = root.join(Item_.TAGS, JoinType.LEFT);
+        Join<Page, Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);
         return b.and(nonNull(
                 contains(b, root.get(Page_.id), filter.getId()),
                 in(tags.get(Tag_.name), filter.getTags()),
