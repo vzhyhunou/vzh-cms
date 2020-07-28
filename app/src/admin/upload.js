@@ -122,6 +122,7 @@ const replaceSrc = (resource, data, files) => {
 
 const replaceFields = (data, formerFiles) => {
     formerFiles.forEach(({title}) => dumpKeysRecursively(data)
+        .filter(key => get(data, key))
         .filter(key => get(data, key).title === title)
         .forEach(key => set(data, key, title))
     );
