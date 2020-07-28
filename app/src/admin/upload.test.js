@@ -53,7 +53,8 @@ describe('upload', () => {
                 file: {
                     src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
-                }
+                },
+                extra: undefined
             }
         }
         const expectedRequest = {
