@@ -9,7 +9,6 @@ import addUploadFeature from './upload';
 import Menu from './Menu';
 import background from './background.png';
 import { useGetLocale, useGetMessages } from '../commons/AppContext';
-import routes from './routes';
 
 const theme = createMuiTheme({
     palette: {
@@ -22,14 +21,14 @@ const theme = createMuiTheme({
     }
 });
 
-export default ({layout, resources, history}) => {
+export default ({routes, resources, history}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
 
     return <Admin
         theme={theme}
-        customRoutes={routes(layout)}
+        customRoutes={routes}
         layout={props => <AdminLayout {...props} menu={Menu}/>}
         authProvider={authProvider}
         dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
