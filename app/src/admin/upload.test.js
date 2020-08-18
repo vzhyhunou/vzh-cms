@@ -54,6 +54,12 @@ describe('upload', () => {
                     src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
+                collection: [
+                    {
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ],
                 extra: undefined
             }
         }
@@ -64,7 +70,10 @@ describe('upload', () => {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                collection: [
+                    "900150983cd24fb0d6963f7d28e17f72.png"
+                ]
             }
         }
 
