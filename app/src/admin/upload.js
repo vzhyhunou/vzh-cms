@@ -113,10 +113,10 @@ const replaceFiles = (data, files) => {
 
 const replaceSrc = (resource, data, files) => {
     let s = JSON.stringify(data);
-    files.forEach(({name, previews}) => previews.forEach(preview => s = s.replace(
+    files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
         new RegExp(preview, 'g'),
         `/static/origin/${resource}/${pathById(data.id)}/${name}`
-    )));
+    ))));
     return JSON.parse(s);
 };
 

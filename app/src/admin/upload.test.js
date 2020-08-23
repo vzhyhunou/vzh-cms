@@ -115,8 +115,7 @@ describe('upload', () => {
                 file: {
                     rawFile: new File([], null, {
                         type: "image/png"
-                    }),
-                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
+                    })
                 },
                 content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
                 "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
