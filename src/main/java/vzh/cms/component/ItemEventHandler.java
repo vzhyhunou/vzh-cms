@@ -1,8 +1,8 @@
 package vzh.cms.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.annotation.HandleAfterDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
-import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.HttpMethod;
@@ -44,7 +44,7 @@ public class ItemEventHandler {
         }
     }
 
-    @HandleBeforeDelete
+    @HandleAfterDelete
     public void delete(Item<?> item) throws IOException {
         item.getFiles().clear();
         service.clean(item);
