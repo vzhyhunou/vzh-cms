@@ -1,14 +1,12 @@
 import React from 'react';
-import { Admin, Login, Layout as AdminLayout } from 'react-admin';
+import {Admin, Login, Layout as AdminLayout} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
-import authProvider, { getToken } from './auth';
-import restProvider from './rest';
-import addUploadFeature from './upload';
+import authProvider from './auth';
 import Menu from './Menu';
 import background from './background.png';
-import { useGetLocale, useGetMessages } from '../commons/AppContext';
+import {useGetLocale, useGetMessages} from '../commons/AppContext';
 
 const theme = createMuiTheme({
     palette: {
@@ -21,18 +19,16 @@ const theme = createMuiTheme({
     }
 });
 
-export default ({routes, resources, history}) => {
+export default ({routes, resources, history, data}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
 
     return <Admin
-        theme={theme}
+        {...{theme, authProvider, history}}
         customRoutes={routes}
         layout={props => <AdminLayout {...props} menu={Menu}/>}
-        authProvider={authProvider}
-        dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
-        history={history}
+        dataProvider={data(getLocale)}
         loginPage={() => <Login backgroundImage={background}/>}
         i18nProvider={polyglotI18nProvider(getMessages, getLocale())}
     >
