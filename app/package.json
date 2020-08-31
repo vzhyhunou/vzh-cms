@@ -5,7 +5,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-admin": "^3.6.1",
-    "ra-language-russian": "^3.2.1",
+    "ra-language-russian": "^3.3.0",
     "history": "^4.10.1",
     "query-string": "^6.1.0",
     "recompose": "^0.27.1",
