@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("!dev")
-public class BaseConfiguration implements ServiceConfiguration {
+public class CmsConfiguration implements ServiceConfiguration {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
