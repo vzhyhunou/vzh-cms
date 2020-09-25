@@ -13,7 +13,6 @@ public class InitConfiguration {
 
     @Bean
     public CommandLineRunner init(ImportService service) {
-
         return args -> service.imp();
     }
 }

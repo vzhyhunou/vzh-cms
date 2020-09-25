@@ -20,7 +20,6 @@ public class ExportConfiguration {
 
     @Scheduled(cron = "${cms.exp.cron}")
     public void export() throws Exception {
-
         service.export();
     }
 }
