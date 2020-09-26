@@ -21,14 +21,14 @@ import java.util.Date;
  */
 @Component
 @RepositoryEventHandler
-public class ItemEventHandler {
+public class ItemHandler {
 
     @Autowired
     private HttpServletRequest request;
 
     private FileService service;
 
-    public ItemEventHandler(FileService service) {
+    public ItemHandler(FileService service) {
         this.service = service;
     }
 

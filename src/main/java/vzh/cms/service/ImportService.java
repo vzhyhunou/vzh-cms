@@ -29,7 +29,6 @@ public class ImportService {
 
     @Transactional
     public void imp() throws Exception {
-
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
             imp(path, false);

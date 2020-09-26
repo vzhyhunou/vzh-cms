@@ -34,18 +34,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder encoder;
 
-    private List<ServiceConfiguration> configurations;
+    private List<SecurityConfigurer> configs;
 
     public SecurityConfiguration(UserDetailsService userDetailsService,
                                  AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService,
                                  JwtProperties properties,
                                  PasswordEncoder encoder,
-                                 List<ServiceConfiguration> configurations) {
+                                 List<SecurityConfigurer> configs) {
         this.userDetailsService = userDetailsService;
         this.jwtDetailsService = jwtDetailsService;
         this.properties = properties;
         this.encoder = encoder;
-        this.configurations = configurations;
+        this.configs = configs;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatcher("/login").addFilter(jwtAuthenticationFilter())
                 .antMatcher("/**").addFilter(headerAuthenticationFilter())
         ;
-        for (ServiceConfiguration configuration : configurations) {
+        for (SecurityConfigurer configuration : configs) {
             configuration.configure(http);
         }
     }
