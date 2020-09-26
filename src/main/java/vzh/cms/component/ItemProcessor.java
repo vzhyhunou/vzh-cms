@@ -13,11 +13,11 @@ import java.util.Objects;
  * @author Viktar Zhyhunou
  */
 @Component
-public class ItemResourceProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
+public class ItemProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
 
     private FileService service;
 
-    public ItemResourceProcessor(FileService service) {
+    public ItemProcessor(FileService service) {
         this.service = service;
     }
 

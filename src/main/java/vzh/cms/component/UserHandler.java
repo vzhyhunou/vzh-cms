@@ -17,13 +17,13 @@ import java.util.regex.Pattern;
 @Component
 @Validated
 @RepositoryEventHandler
-public class UserEventHandler {
+public class UserHandler {
 
     private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
 
     private PasswordEncoder encoder;
 
-    public UserEventHandler(PasswordEncoder encoder) {
+    public UserHandler(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
 
