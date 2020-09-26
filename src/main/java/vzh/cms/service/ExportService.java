@@ -1,5 +1,8 @@
 package vzh.cms.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.mapping.ResourceMapping;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
@@ -41,22 +44,28 @@ public class ExportService {
 
     @Transactional
     public void export() throws IOException {
-
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File p = new File(path, sdf.format(new Date()));
         for (ResourceMetadata meta : mappings.filter(ResourceMapping::isExported)) {
-            File dir = new File(p, meta.getRel().value());
-            for (Item<?> item : maintainService.getRepository(meta.getDomainType()).findAll()) {
-                maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
+            Class<?> type = meta.getDomainType();
+            if (Item.class.isAssignableFrom(type)) {
+                File dir = new File(p, meta.getRel().value());
+                PagingAndSortingRepository<Item<?>, ?> repository = maintainService.getRepository(type);
+                int i = 0;
+                Page<Item<?>> page;
+                do {
+                    page = repository.findAll(PageRequest.of(i++, 10));
+                    for (Item<?> item : page) {
+                        maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
+                    }
+                } while (page.hasNext());
             }
         }
-
         clean();
     }
 
     private void clean() throws IOException {
-
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
             long limitDelete = Files.list(path).count() - properties.getLimit();
