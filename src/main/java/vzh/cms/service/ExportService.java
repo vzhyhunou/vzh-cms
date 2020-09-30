@@ -1,6 +1,5 @@
 package vzh.cms.service;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
@@ -11,7 +10,6 @@ import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Item;
 
-import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,7 +39,6 @@ public class ExportService {
         this.maintainService = maintainService;
     }
 
-    @Transactional
     public void export() throws IOException {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
@@ -49,14 +46,11 @@ public class ExportService {
         for (ResourceMetadata meta : mappings.filter(m -> Item.class.isAssignableFrom(m.getDomainType()))) {
             File dir = new File(p, meta.getRel().value());
             PagingAndSortingRepository<Item<?>, ?> repository = maintainService.getRepository(meta.getDomainType());
-            int i = 0;
-            Page<Item<?>> page;
-            do {
-                page = repository.findAll(PageRequest.of(i++, 10));
-                for (Item<?> item : page) {
+            for (int i = 0; i < repository.count(); i++) {
+                for (Item<?> item : repository.findAll(PageRequest.of(i, 1))) {
                     maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
                 }
-            } while (page.hasNext());
+            }
         }
         clean();
     }
