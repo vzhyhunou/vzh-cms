@@ -10,6 +10,7 @@ import vzh.cms.config.property.CmsExportProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Item;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,6 +40,7 @@ public class ExportService {
         this.maintainService = maintainService;
     }
 
+    @Transactional
     public void export() throws IOException {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
