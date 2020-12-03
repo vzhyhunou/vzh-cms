@@ -3,14 +3,16 @@ import { fetchUtils } from 'react-admin';
 
 const client = (getLocale, getToken) => (url, options = {}) => {
 
-    if (!options.headers) {
-        options.headers = new Headers();
-    }
+    options.headers = new Headers({
+        Accept: 'application/json',
+        'Accept-Language': options.locale || getLocale()
+    });
 
     const token = getToken();
-    token && options.headers.set('Authorization', `Bearer ${token}`);
-
-    options.headers.set('Accept-Language', getLocale());
+    token && (options.user = {
+        authenticated: true,
+        token: `Bearer ${token}`
+    });
 
     return fetchUtils.fetchJson(url, options);
 };
@@ -29,14 +31,14 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
         };
         const url = `${apiUrl}/${resource}/search/list?${stringify(query)}`;
 
-        return httpClient(url).then(({ json }) => ({
+        return httpClient(url, params.options).then(({ json }) => ({
             data: json._embedded ? json._embedded[resource] : [],
             total: json.page.totalElements
         }));
     },
 
     getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+        httpClient(`${apiUrl}/${resource}/${params.id}`, params.options).then(({ json }) => ({
             data: json
         })),
 
@@ -46,7 +48,7 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             ids: params.ids
         };
 
-        return httpClient(`${apiUrl}/${resource}/search/findByIdIn?${stringify(query)}`).then(({ json }) => ({
+        return httpClient(`${apiUrl}/${resource}/search/findByIdIn?${stringify(query)}`, params.options).then(({ json }) => ({
             data: json._embedded ? json._embedded[resource] : []
         }));
     },
@@ -64,7 +66,7 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             })
         };
 
-        return httpClient(`${apiUrl}/${resource}?${stringify(query)}`).then(({ json }) => ({
+        return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, params.options).then(({ json }) => ({
             data: json._embedded ? json._embedded[resource] : [],
             total: json.page.totalElements
         }));
@@ -73,7 +75,8 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
     update: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
-            body: JSON.stringify(params.data)
+            body: JSON.stringify(params.data),
+            ...params.options
         }).then(({ json }) => ({
             data: json
         })),
@@ -83,7 +86,8 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             params.data.map(json =>
                 httpClient(`${apiUrl}/${resource}/${json.id}`, {
                     method: 'PATCH',
-                    body: JSON.stringify(json)
+                    body: JSON.stringify(json),
+                    ...params.options
                 })
             )
         ).then(responses => ({
@@ -94,6 +98,7 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
         httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
+            ...params.options
         }).then(({ json }) => ({
             data: { ...params.data, id: json.id },
         })),
@@ -101,6 +106,7 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
+            ...params.options
         }).then(({ json }) => ({
             data: json
         })),
@@ -110,19 +116,15 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             params.ids.map(id =>
                 httpClient(`${apiUrl}/${resource}/${id}`, {
                     method: 'DELETE',
+                    ...params.options
                 })
             )
         ).then(responses => ({
                 data: responses.map(response => response.json),
         })),
 
-    getOneLocale: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/search/one/${params.id}`).then(({ json }) => ({
-            data: json
-        })),
-
-    getMenuLocale: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/search/menu`).then(({ json }) => ({
+    search: (resource, params) =>
+        httpClient(`${apiUrl}/${resource}/search/${params.path}`, params.options).then(({ json }) => ({
             data: json
         }))
 });

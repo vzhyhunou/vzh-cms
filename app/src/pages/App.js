@@ -33,7 +33,7 @@ const App = ({id, internal}) => {
 
     useEffect(() => {
 
-        dataProvider.getOneLocale('pages', {id}).then(response => {
+        dataProvider.search('pages', {path: `one/${id}`}).then(response => {
 
             const {data} = response;
 
@@ -42,7 +42,7 @@ const App = ({id, internal}) => {
                 return;
             }
 
-            dataProvider.getOneLocale('pages', {id: 'none'}).then(response => setPage(response.data));
+            dataProvider.search('pages', {path: 'one/none'}).then(response => setPage(response.data));
         });
     }, [locale, id, dataProvider]);
 
