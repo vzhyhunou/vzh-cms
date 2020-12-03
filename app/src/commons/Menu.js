@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {useLocale, useDataProvider} from 'react-admin';
+import {useLocale, useQuery} from 'react-admin';
 
 const drawerWidth = 240;
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Area = ({open, handleDrawerClose, items}) => {
+const Area = ({open, handleDrawerClose, data}) => {
 
     const classes = useStyles();
 
@@ -48,7 +48,7 @@ const Area = ({open, handleDrawerClose, items}) => {
         </div>
         <Divider/>
         <List>
-            {items.map(item =>
+            {data.map(item =>
                 <ListItem
                     key={item.id}
                     component="a"
@@ -68,20 +68,14 @@ const EnhancedArea = memo(Area);
 export default ({open, handleDrawerClose}) => {
 
     const locale = useLocale();
-    const dataProvider = useDataProvider();
-    const [items, setItems] = useState();
+    const {data} = useQuery({
+        type: 'search',
+        resource: 'pages',
+        payload: {path: 'menu', options: {locale}}
+    });
 
-    useEffect(() => {
-
-        dataProvider.search('pages', {path: 'menu'}).then(response => setItems(response.data));
-    }, [locale, dataProvider]);
-
-    if (!items)
+    if (!data)
         return <div/>;
 
-    return <EnhancedArea
-        open={open}
-        handleDrawerClose={handleDrawerClose}
-        items={items}
-    />;
+    return <EnhancedArea {...{open, handleDrawerClose, data}}/>;
 };
