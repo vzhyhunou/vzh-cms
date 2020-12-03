@@ -1,6 +1,6 @@
-import React, {memo, useEffect, useState, Fragment} from 'react';
+import React, {memo, Fragment} from 'react';
 import parse, {domToReact} from 'html-react-parser';
-import {useLocale, useDataProvider} from 'react-admin';
+import {useLocale, useQuery} from 'react-admin';
 
 import './App.css';
 
@@ -25,31 +25,37 @@ const Area = ({title, content, internal}) => {
 
 const EnhancedArea = memo(Area);
 
+const None = ({internal}) => {
+
+    const locale = useLocale();
+    const {data} = useQuery({
+        type: 'search',
+        resource: 'pages',
+        payload: {path: 'one/none', options: {locale}}
+    });
+
+    if (!data)
+        return <div/>;
+
+    return <EnhancedArea {...{...data, internal}}/>;
+};
+
 const App = ({id, internal}) => {
 
     const locale = useLocale();
-    const dataProvider = useDataProvider();
-    const [page, setPage] = useState();
+    const {data, loading} = useQuery({
+        type: 'search',
+        resource: 'pages',
+        payload: {path: `one/${id}`, options: {locale}}
+    });
 
-    useEffect(() => {
-
-        dataProvider.search('pages', {path: `one/${id}`}).then(response => {
-
-            const {data} = response;
-
-            if (data) {
-                setPage(data);
-                return;
-            }
-
-            dataProvider.search('pages', {path: 'one/none'}).then(response => setPage(response.data));
-        });
-    }, [locale, id, dataProvider]);
-
-    if (!page)
+    if (loading)
         return <div/>;
 
-    return <EnhancedArea {...page} internal={internal}/>;
+    if (!data)
+        return <None {...{internal}}/>;
+
+    return <EnhancedArea {...{...data, internal}}/>;
 };
 
 export default App;
