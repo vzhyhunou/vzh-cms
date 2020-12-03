@@ -73,7 +73,7 @@ export default ({open, handleDrawerClose}) => {
 
     useEffect(() => {
 
-        dataProvider.getMenuLocale('pages').then(response => setItems(response.data));
+        dataProvider.search('pages', {path: 'menu'}).then(response => setItems(response.data));
     }, [locale, dataProvider]);
 
     if (!items)
