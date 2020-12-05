@@ -1,6 +1,6 @@
 package vzh.cms.repository;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.PageProperty_;
