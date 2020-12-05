@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private JwtProperties properties;
 
-    public JwtAuthenticationFilter(JwtProperties properties) {
+    JwtAuthenticationFilter(JwtProperties properties) {
         this.properties = properties;
     }
 

@@ -6,7 +6,6 @@ import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Item;
@@ -35,9 +34,7 @@ public class ItemHandler {
     @HandleBeforeCreate
     @HandleBeforeSave
     public void save(Item<?> item) throws IOException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String id = authentication.getName();
-        item.setUserId(id);
+        item.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         item.setDate(new Date());
         if (!HttpMethod.PATCH.matches(request.getMethod())) {
             service.save(item);
