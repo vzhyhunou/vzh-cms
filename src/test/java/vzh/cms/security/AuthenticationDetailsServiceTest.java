@@ -1,11 +1,11 @@
 package vzh.cms.security;
 
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,13 +14,13 @@ import vzh.cms.repository.UserRepository;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.withTags;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AuthenticationDetailsServiceTest {
 
     private static final String ID = "id";
@@ -32,7 +32,7 @@ public class AuthenticationDetailsServiceTest {
     @InjectMocks
     private AuthenticationDetailsService service;
 
-    @After
+    @AfterEach
     public void after() {
         verify(repository).withActiveRoles(ID);
         verifyNoMoreInteractions(repository);
