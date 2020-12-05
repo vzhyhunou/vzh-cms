@@ -33,8 +33,10 @@ abstract public class Item<ID extends Serializable> {
     }
 
     public void setUserId(String userId) {
-        user = new User();
-        user.setId(userId);
+        if (userId != null) {
+            user = new User();
+            user.setId(userId);
+        }
     }
 
     @Transient
