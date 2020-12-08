@@ -14,7 +14,7 @@ export default ({onMenuClick, logout}) => {
     document.title = translate('pos.title');
 
     return <Fragment>
-        {resources.map(resource =>
+        {resources.filter(resource => resource.hasList).map(resource =>
             <MenuItemLink
                 key={resource.name}
                 to={`/${resource.name}`}
