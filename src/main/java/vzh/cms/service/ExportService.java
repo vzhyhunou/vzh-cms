@@ -13,6 +13,7 @@ import vzh.cms.model.Item;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,7 +46,7 @@ public class ExportService {
         String path = properties.getPath();
         SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
         File p = new File(path, sdf.format(new Date()));
-        for (ResourceMetadata meta : mappings.filter(m -> Item.class.isAssignableFrom(m.getDomainType()))) {
+        for (ResourceMetadata meta : mappings.filter(m -> Serializable.class.isAssignableFrom(m.getDomainType()))) {
             File dir = new File(p, meta.getRel().value());
             PagingAndSortingRepository<Item<?>, ?> repository = maintainService.getRepository(meta.getDomainType());
             for (int i = 0; i < repository.count(); i++) {

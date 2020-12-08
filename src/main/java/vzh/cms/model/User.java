@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author Viktar Zhyhunou
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @Data
 @ToString(exclude = "password")
 @Entity
-public class User extends Tagged<String> {
+public class User extends Tagged<String> implements Serializable {
 
     @Id
     private String id;

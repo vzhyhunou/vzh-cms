@@ -50,8 +50,8 @@ public class ImportService {
     }
 
     @SuppressWarnings("unchecked")
-    private static <ID extends Serializable, T extends Item<ID>> T getInstanceWithId(T item) throws Exception {
-        T instance = ((Class<T>) item.getClass()).newInstance();
+    private static <ID extends Serializable> Item<ID> getInstanceWithId(Item<ID> item) throws Exception {
+        Item<ID> instance = item.getClass().newInstance();
         instance.setId(item.getId());
         return instance;
     }
