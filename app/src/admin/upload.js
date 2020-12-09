@@ -128,22 +128,12 @@ const replaceFields = (data, formerFiles) => {
     return data;
 };
 
-const process = files => {
-    const map = new Map();
-    files.forEach(file => {
-        let f = map.get(file.name);
-        if (!f) {
-            f = {
-                ...file,
-                keys: [],
-                previews: []
-            };
-            map.set(file.name, f);
-        }
-        f.keys.push(file.key);
-        f.previews.push(file.preview);
-    });
-    return Array.from(map.values());
-};
+const process = files => [...new Set(files.map(f => f.name))]
+    .map(n => files.filter(({name}) => name === n))
+    .map(f => ({
+        ...f[0],
+        keys: f.map(f => f.key),
+        previews: f.map(f => f.preview)
+    }));
 
 const pathById = s => s.replace(/\./g, '/');
