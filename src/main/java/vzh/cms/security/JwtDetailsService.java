@@ -2,8 +2,7 @@ package vzh.cms.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -19,9 +18,8 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @Service
+@Log4j2
 public class JwtDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(JwtDetailsService.class);
 
     private JwtProperties properties;
 
@@ -50,10 +48,10 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                 );
             }
         } catch (Exception e) {
-            LOG.warn("User won't be authenticated: {}", e.getMessage());
+            log.warn("User won't be authenticated: {}", e.getMessage());
         }
 
-        LOG.warn("Principal '{}' won't be authenticated", principal);
+        log.warn("Principal '{}' won't be authenticated", principal);
         throw new BadCredentialsException(principal);
     }
 }

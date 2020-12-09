@@ -1,7 +1,6 @@
 package vzh.cms.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,8 @@ import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
  * @author Viktar Zhyhunou
  */
 @Service
+@Log4j2
 public class FileService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(FileService.class);
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
@@ -50,7 +48,7 @@ public class FileService {
             if (file.getData() != null) {
                 File out = new File(dir, file.getName());
                 byte[] data = DECODER.decode(file.getData());
-                LOG.debug("Write: {}", out);
+                log.debug("Write: {}", out);
                 writeByteArrayToFile(out, data);
             }
         }
@@ -65,7 +63,7 @@ public class FileService {
                     Base64File f = new Base64File();
                     f.setName(file.getFileName().toString());
                     if (addFiles) {
-                        LOG.debug("Read: {}", file);
+                        log.debug("Read: {}", file);
                         byte[] data = readFileToByteArray(file.toFile());
                         f.setData(new String(ENCODER.encode(data)));
                     }
