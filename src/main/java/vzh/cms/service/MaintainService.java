@@ -3,8 +3,7 @@ package vzh.cms.service;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.support.Repositories;
@@ -18,9 +17,8 @@ import java.io.IOException;
  * @author Viktar Zhyhunou
  */
 @Service
+@Log4j2
 public class MaintainService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MaintainService.class);
 
     private Repositories repositories;
 
@@ -41,7 +39,7 @@ public class MaintainService {
     }
 
     public Item<?> read(File file) throws IOException {
-        LOG.info("Read: {}", file);
+        log.info("Read: {}", file);
         Item<?> item = mapper.readValue(file, Wrapper.class).getItem();
         fileService.save(item);
         return item;
@@ -49,7 +47,7 @@ public class MaintainService {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void write(File file, Item<?> item) throws IOException {
-        LOG.info("Write: {}", file);
+        log.info("Write: {}", file);
         item.getFiles().addAll(fileService.collect(item, true));
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
