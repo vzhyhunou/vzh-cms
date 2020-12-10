@@ -114,6 +114,6 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
 
     search: (resource, {path, query, options}) =>
         httpClient(`${apiUrl}/${resource}/search/${path}${query ? '?' + stringify(query) : ''}`, options).then(({json}) => ({
-            data: json
+            data: json && json._embedded ? json._embedded[resource] : json
         }))
 });
