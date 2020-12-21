@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {
     BulkDeleteButton,
     Datagrid,
@@ -25,11 +25,11 @@ const UserFilter = props =>
 ;
 
 const PostBulkActionButtons = props =>
-    <Fragment>
+    <>
         <BulkAddTagButton {...props} />
         <BulkRemoveTagButton {...props} />
         <BulkDeleteButton {...props} />
-    </Fragment>
+    </>
 ;
 
 export default props =>

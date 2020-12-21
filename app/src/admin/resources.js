@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Resource} from 'react-admin';
 import PageIcon from '@material-ui/icons/LibraryBooks';
 import UserIcon from '@material-ui/icons/People';
@@ -27,5 +27,5 @@ export default permissions => [
             create={UserCreate}
             icon={UserIcon}
         />,
-    <Fragment/>
+    <></>
 ];

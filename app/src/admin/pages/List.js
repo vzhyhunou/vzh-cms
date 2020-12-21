@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {
     BulkDeleteButton,
     Datagrid,
@@ -35,11 +35,11 @@ const PageFilter = ({locale, ...rest}) =>
 ;
 
 const PostBulkActionButtons = props =>
-    <Fragment>
+    <>
         <BulkAddTagButton {...props} />
         <BulkRemoveTagButton {...props} />
         <BulkDeleteButton {...props} />
-    </Fragment>
+    </>
 ;
 
 const LinkField = ({source, record = {}}) =>

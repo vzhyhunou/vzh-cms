@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {Button} from 'react-admin';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,7 +13,7 @@ export default ({resource, selectedIds, label, children, data}) => {
     const updateTag = useUpdateTag(resource, selectedIds, data);
     const {tags} = getMessages().resources[resource];
 
-    return <Fragment>
+    return <>
         <Button
             label={label}
             aria-owns={anchorEl ? 'simple-menu' : null}
@@ -37,5 +37,5 @@ export default ({resource, selectedIds, label, children, data}) => {
                 </MenuItem>
             )}
         </Menu>
-    </Fragment>;
+    </>;
 };
