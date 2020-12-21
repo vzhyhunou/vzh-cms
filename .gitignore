@@ -1,5 +1,5 @@
 export
-static
+resources/static
 build
 node
 node_modules

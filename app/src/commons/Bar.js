@@ -11,6 +11,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
 import {useLocale, usePermissions} from 'react-admin';
+import {Link} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
 import {useLocales} from './AppContext';
@@ -56,7 +57,8 @@ export default ({open, handleDrawerOpen}) => {
         <Toolbar>
             <IconButton
                 color="inherit"
-                href="/"
+                component={Link}
+                to="/"
             >
                 <HomeIcon/>
             </IconButton>
@@ -71,19 +73,22 @@ export default ({open, handleDrawerOpen}) => {
                 ? permissions.includes('ROLE_EDITOR')
                     ? <IconButton
                         color="inherit"
-                        href={`/pages/${window.location.pathname.split('/')[2]}/${Object.keys(locales).indexOf(locale) + 2}`}
+                        component={Link}
+                        to={`/pages/${window.location.pathname.split('/')[2]}/${Object.keys(locales).indexOf(locale) + 2}`}
                     >
                         <EditIcon/>
                     </IconButton>
                     : <IconButton
                         color="inherit"
-                        href="/configuration"
+                        component={Link}
+                        to="/configuration"
                     >
                         <SettingsIcon/>
                     </IconButton>
                 : <IconButton
                     color="inherit"
-                    href="/login"
+                    component={Link}
+                    to="/login"
                 >
                     <AccountCircleIcon/>
                 </IconButton>
