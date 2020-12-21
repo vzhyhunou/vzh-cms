@@ -1,29 +1,29 @@
-import React, {memo, Fragment} from 'react';
+import React from 'react';
 import parse, {domToReact} from 'html-react-parser';
 import {useLocale, useQuery} from 'react-admin';
 
 import './App.css';
 
-const Area = ({title, content, internal}) => {
+const Page = ({title, content, internal}) => {
 
-    if (!internal) document.title = title;
+    if (!internal) {
+        document.title = title;
+    }
 
     const options = {
         replace: ({name, attribs, children}) => {
             if (name === 'page') {
-                return <Fragment>
+                return <>
                     <App id={attribs.id} internal/>
                     {domToReact(children, options)}
-                </Fragment>;
+                </>;
             }
         }
     };
-    return <Fragment>
+    return <>
         {parse(content, options)}
-    </Fragment>;
+    </>;
 };
-
-const EnhancedArea = memo(Area);
 
 const None = ({internal}) => {
 
@@ -34,10 +34,11 @@ const None = ({internal}) => {
         payload: {path: 'one/none', options: {locale}}
     });
 
-    if (!data)
+    if (!data) {
         return <div/>;
+    }
 
-    return <EnhancedArea {...{...data, internal}}/>;
+    return <Page {...{...data, internal}}/>;
 };
 
 const App = ({id, internal}) => {
@@ -49,13 +50,15 @@ const App = ({id, internal}) => {
         payload: {path: `one/${id}`, options: {locale}}
     });
 
-    if (loading)
+    if (loading) {
         return <div/>;
+    }
 
-    if (!data)
+    if (!data) {
         return <None {...{internal}}/>;
+    }
 
-    return <EnhancedArea {...{...data, internal}}/>;
+    return <Page {...{...data, internal}}/>;
 };
 
 export default App;

@@ -18,8 +18,9 @@ export default ({locales, i18n, children}) => {
         i18nLoader(i18n).then(props => setContextValues(props));
     }, [i18n]);
 
-    if (!contextValues)
+    if (!contextValues) {
         return <div/>;
+    }
 
     let {locale, messages} = contextValues;
 

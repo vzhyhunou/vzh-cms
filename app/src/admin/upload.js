@@ -84,7 +84,9 @@ const upd = (resource, params, call) => {
 
 const analyze = (resource, item) => {
 
-    if (!item.files) return item;
+    if (!item.files) {
+        return item;
+    }
 
     const files = item.files.map(({name}) => ({
         name,

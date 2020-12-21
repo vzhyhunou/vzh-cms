@@ -14,6 +14,7 @@ import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
 import BulkAddTagButton from '../button/BulkAddTagButton';
 import BulkRemoveTagButton from '../button/BulkRemoveTagButton';
+import {Link} from 'react-router-dom';
 
 const PageFilter = ({locale, ...rest}) =>
     <Filter {...rest}>
@@ -42,7 +43,7 @@ const PostBulkActionButtons = props =>
 ;
 
 const LinkField = ({source, record = {}}) =>
-    <a href={`/page/${record[source]}`}>{record[source]}</a>
+    <Link to={`/page/${record[source]}`}>{record[source]}</Link>
 ;
 
 export default props => {

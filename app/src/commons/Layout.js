@@ -1,4 +1,4 @@
-import React, {cloneElement, useState} from 'react';
+import React, {cloneElement, useState, memo} from 'react';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default () => {
+const Body = memo(() => <>{routes.map((route, key) => cloneElement(route, {key}))}</>);
+
+export default (() => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -43,11 +45,11 @@ export default () => {
         <div className={classNames(classes.content, {
             [classes.contentShift]: open,
         })}>
-            {routes.map((route, key) => cloneElement(route, {key}))}
+            <Body/>
         </div>
         <Menu
             open={open}
             handleDrawerClose={() => setOpen(false)}
         />
     </div>;
-};
+});
