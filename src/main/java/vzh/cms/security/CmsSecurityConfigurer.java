@@ -8,16 +8,18 @@ import org.springframework.stereotype.Component;
 @Profile("!dev")
 public class CmsSecurityConfigurer implements SecurityConfigurer {
 
+    private static final String ADMIN = "ADMIN";
+    private static final String MANAGER = "MANAGER";
+    private static final String EDITOR = "EDITOR";
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/import").hasRole("ADMIN")
-                .antMatchers("/export").hasRole("ADMIN")
-                .antMatchers("/api/pages/search/one/**").permitAll()
-                .antMatchers("/api/pages/search/menu/**").permitAll()
-                .antMatchers("/api/users/**").hasRole("MANAGER")
-                .antMatchers("/api/pages/**").hasRole("EDITOR")
+                .antMatchers("/import", "/export").hasRole(ADMIN)
+                .antMatchers("/api/pages/search/one/**", "/api/pages/search/menu/**").permitAll()
+                .antMatchers("/api/users/**").hasRole(MANAGER)
+                .antMatchers("/api/pages/**").hasRole(EDITOR)
         ;
     }
 }
