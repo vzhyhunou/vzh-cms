@@ -1,15 +1,9 @@
 package vzh.cms.projection;
 
-import vzh.cms.model.Tag;
-
-import java.util.Set;
-
 /**
  * @author Viktar Zhyhunou
  */
-public interface RowUser {
+public interface RowUser extends RowTagged {
 
     String getId();
-
-    Set<Tag> getTags();
 }
