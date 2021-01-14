@@ -20,16 +20,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+import static vzh.cms.model.Page.Tag.MENU;
+import static vzh.cms.model.Page.Tag.PUBLISHED;
+import static vzh.cms.model.User.Role.EDITOR;
+
 /**
  * @author Viktar Zhyhunou
  */
 @RepositoryRestController
 @RequestMapping("pages")
 public class PageController {
-
-    private static final String PUBLISHED = "PUBLISHED";
-    private static final String MENU = "MENU";
-    private static final String EDITOR = "EDITOR";
 
     private PageRepository repository;
 
@@ -49,14 +49,14 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, PUBLISHED, MENU);
+        return repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, PUBLISHED.name(), MENU.name());
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return request.isUserInRole(EDITOR)
+        return request.isUserInRole(EDITOR.name())
                 ? repository.contentByActiveTags(id, PropertyPage.class)
-                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED);
+                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED.name());
     }
 }
