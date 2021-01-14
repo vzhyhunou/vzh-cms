@@ -18,12 +18,6 @@ import java.io.Serializable;
 @Entity
 public class User extends Tagged<String> implements Serializable {
 
-    public enum Role {
-        ADMIN,
-        MANAGER,
-        EDITOR
-    }
-
     @Id
     private String id;
 

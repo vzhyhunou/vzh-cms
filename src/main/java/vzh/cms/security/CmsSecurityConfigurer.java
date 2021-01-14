@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Component;
 
-import static vzh.cms.model.User.Role.*;
+import static vzh.cms.model.UserRole.*;
 
 @Component
 @Profile("!dev")
