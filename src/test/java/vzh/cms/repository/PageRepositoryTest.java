@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.PageProperty_;
-import vzh.cms.model.Tag;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
+import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.TitlePage;
 
 import java.util.List;
@@ -221,7 +221,7 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(RowPage::getTags).extracting(Tag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
+        assertThat(content).flatExtracting(RowTagged::getTags).extracting(RowTagged.Tag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
 
         result = repository.list(filter, page(1));
 
