@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    BulkDeleteButton,
     Datagrid,
     EditButton,
     Filter,
@@ -12,8 +11,7 @@ import {
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
-import BulkAddTagButton from '../button/BulkAddTagButton';
-import BulkRemoveTagButton from '../button/BulkRemoveTagButton';
+import BulkActionButtons from '../button/BulkActionButtons';
 import {Link} from 'react-router-dom';
 
 const PageFilter = ({locale, ...rest}) =>
@@ -34,14 +32,6 @@ const PageFilter = ({locale, ...rest}) =>
     </Filter>
 ;
 
-const PostBulkActionButtons = props =>
-    <>
-        <BulkAddTagButton {...props} />
-        <BulkRemoveTagButton {...props} />
-        <BulkDeleteButton {...props} />
-    </>
-;
-
 const LinkField = ({source, record = {}}) =>
     <Link to={`/page/${record[source]}`}>{record[source]}</Link>
 ;
@@ -53,7 +43,7 @@ export default props => {
     return <List
         {...props}
         filters={<PageFilter locale={locale}/>}
-        bulkActionButtons={<PostBulkActionButtons/>}
+        bulkActionButtons={<BulkActionButtons/>}
         exporter={false}
     >
         <Datagrid>
