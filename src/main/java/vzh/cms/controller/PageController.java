@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-import static vzh.cms.model.Page.Tag.MENU;
-import static vzh.cms.model.Page.Tag.PUBLISHED;
-import static vzh.cms.model.User.Role.EDITOR;
+import static vzh.cms.model.PageTag.MENU;
+import static vzh.cms.model.PageTag.PUBLISHED;
+import static vzh.cms.model.UserRole.EDITOR;
 
 /**
  * @author Viktar Zhyhunou
