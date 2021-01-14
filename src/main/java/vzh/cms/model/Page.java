@@ -20,6 +20,11 @@ import java.util.Map;
 @Entity
 public class Page extends Tagged<String> implements Serializable {
 
+    public enum Tag {
+        PUBLISHED,
+        MENU
+    }
+
     @Id
     private String id;
 
