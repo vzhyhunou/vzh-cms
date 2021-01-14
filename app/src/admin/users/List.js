@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    BulkDeleteButton,
     Datagrid,
     EditButton,
     Filter,
@@ -11,8 +10,7 @@ import {
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
-import BulkAddTagButton from '../button/BulkAddTagButton';
-import BulkRemoveTagButton from '../button/BulkRemoveTagButton';
+import BulkActionButtons from '../button/BulkActionButtons';
 
 const UserFilter = props =>
     <Filter {...props}>
@@ -24,19 +22,11 @@ const UserFilter = props =>
     </Filter>
 ;
 
-const PostBulkActionButtons = props =>
-    <>
-        <BulkAddTagButton {...props} />
-        <BulkRemoveTagButton {...props} />
-        <BulkDeleteButton {...props} />
-    </>
-;
-
 export default props =>
     <List
         {...props}
         filters={<UserFilter/>}
-        bulkActionButtons={<PostBulkActionButtons/>}
+        bulkActionButtons={<BulkActionButtons/>}
         exporter={false}
     >
         <Datagrid>
