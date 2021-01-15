@@ -5,6 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Bar from './Bar';
 import Menu from './Menu';
 import routes from './routes';
+import components from '../pages/components';
 
 const drawerWidth = 240;
 
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Body = memo(() => <>{routes.map((route, key) => cloneElement(route, {key}))}</>);
+const Body = memo(() => <>{routes(components).map((route, key) => cloneElement(route, {key}))}</>);
 
 export default (() => {
 
