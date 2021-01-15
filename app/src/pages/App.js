@@ -14,7 +14,7 @@ const Page = ({title, content, internal}) => {
         replace: ({name, attribs, children}) => {
             if (name === 'page') {
                 return <>
-                    <App id={attribs.id} internal/>
+                    <App {...attribs} internal/>
                     {domToReact(children, options)}
                 </>;
             }
