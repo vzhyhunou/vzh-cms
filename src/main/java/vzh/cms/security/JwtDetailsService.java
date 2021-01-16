@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static vzh.cms.security.AuthenticationDetailsService.PREFIX;
+
 /**
  * @author Viktar Zhyhunou
  */
 @Service
 @Log4j2
 public class JwtDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
-
-    public static final String PREFIX = "ROLE_";
 
     private JwtProperties properties;
 

@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static vzh.cms.security.JwtDetailsService.PREFIX;
+import static vzh.cms.security.AuthenticationDetailsService.PREFIX;
+
 
 /**
  * @author Viktar Zhyhunou

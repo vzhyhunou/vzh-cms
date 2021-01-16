@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticationDetailsService implements UserDetailsService {
 
+    public static final String PREFIX = "ROLE_";
+
     private UserRepository repository;
 
     public AuthenticationDetailsService(UserRepository repository) {
@@ -29,8 +31,13 @@ public class AuthenticationDetailsService implements UserDetailsService {
         return repository.withActiveRoles(id).map(u -> new User(
                 u.getId(),
                 u.getPassword(),
-                AuthorityUtils.createAuthorityList(u.getTags().stream()
-                        .map(Tag::getName).collect(Collectors.toSet()).toArray(new String[]{}))
+                AuthorityUtils.createAuthorityList(
+                        u.getTags().stream()
+                                .map(Tag::getName)
+                                .filter(n -> n.startsWith(PREFIX))
+                                .collect(Collectors.toSet())
+                                .toArray(new String[]{})
+                )
         )).orElseThrow(() -> new UsernameNotFoundException(id));
     }
 }
