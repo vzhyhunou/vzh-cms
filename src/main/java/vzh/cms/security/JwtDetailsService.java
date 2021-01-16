@@ -13,9 +13,6 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static vzh.cms.security.AuthenticationDetailsService.PREFIX;
 
 /**
  * @author Viktar Zhyhunou
@@ -46,9 +43,7 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                         claims.getSubject(),
                         "",
                         AuthorityUtils.createAuthorityList(
-                                ((List<String>) claims.get(properties.getRoles())).stream()
-                                        .map(a -> PREFIX + a)
-                                        .collect(Collectors.toList()).toArray(new String[]{})
+                                ((List<String>) claims.get(properties.getRoles())).toArray(new String[]{})
                         )
                 );
             }

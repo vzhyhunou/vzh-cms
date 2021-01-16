@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticationDetailsService implements UserDetailsService {
 
-    public static final String PREFIX = "ROLE_";
+    private static final String PREFIX = "ROLE_";
 
     private UserRepository repository;
 
