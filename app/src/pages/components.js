@@ -1,5 +1,7 @@
-import {lazy} from 'react';
+import App from './App';
+import Auth from './Auth';
 
 export default {
-    page: lazy(() => import('./App'))
+    page: App,
+    auth: Auth
 };

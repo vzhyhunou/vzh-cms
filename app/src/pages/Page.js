@@ -1,5 +1,6 @@
-import React, {createElement, Suspense} from 'react';
+import React, {createElement} from 'react';
 import parse, {domToReact} from 'html-react-parser';
+import App from './App';
 
 export default ({title, content, internal, components}) => {
 
@@ -11,13 +12,14 @@ export default ({title, content, internal, components}) => {
         replace: ({name, attribs, children}) => {
             const Component = components[name];
             if (Component) {
-                return <Suspense fallback={<div>Loading...</div>}>
-                    {createElement(Component, {...attribs, internal: true, components})}
-                    {domToReact(children, options)}
-                </Suspense>;
+                return <>
+                    {createElement(Component, {...attribs, internal: true, components}, domToReact(children, options))}
+                    {Component === App && domToReact(children, options)}
+                </>;
             }
         }
     };
+
     return <>
         {parse(content, options)}
     </>;
