@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static vzh.cms.security.AuthenticationDetailsService.PREFIX;
+
+
 /**
  * @author Viktar Zhyhunou
  */
@@ -34,7 +37,10 @@ class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setSubject(auth.getName())
                 .claim(
                         properties.getRoles(),
-                        auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())
+                        auth.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .map(a -> a.substring(PREFIX.length()))
+                                .collect(Collectors.toList())
                 )
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + properties.getExpiration() * 1000))
