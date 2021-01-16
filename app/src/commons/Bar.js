@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
 import {useLocales} from './AppContext';
+import {EDITOR} from './roles';
 
 const drawerWidth = 240;
 
@@ -70,7 +71,7 @@ export default ({open, handleDrawerOpen}) => {
             </Typography>
             <LocaleInput/>
             {permissions
-                ? permissions.includes('EDITOR')
+                ? permissions.includes(EDITOR)
                     ? <IconButton
                         color="inherit"
                         component={Link}

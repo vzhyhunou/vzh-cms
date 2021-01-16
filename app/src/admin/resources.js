@@ -9,9 +9,10 @@ import PageList from './pages/List';
 import UserCreate from './users/Create';
 import UserEdit from './users/Edit';
 import UserList from './users/List';
+import {EDITOR, MANAGER} from '../commons/roles';
 
 export default permissions => [
-    ...(permissions && permissions.includes('EDITOR') ? [
+    ...(permissions && permissions.includes(EDITOR) ? [
         <Resource
             name="pages"
             list={PageList}
@@ -20,7 +21,7 @@ export default permissions => [
             icon={PageIcon}
         />
     ] : []),
-    ...(permissions && permissions.includes('MANAGER') ? [
+    ...(permissions && permissions.includes(MANAGER) ? [
         <Resource
             name="users"
             list={UserList}
