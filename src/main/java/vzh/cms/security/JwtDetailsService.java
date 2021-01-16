@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
@@ -20,6 +21,8 @@ import java.util.List;
 @Service
 @Log4j2
 public class JwtDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
+
+    public static final String PREFIX = "ROLE_";
 
     private JwtProperties properties;
 
@@ -43,7 +46,9 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
                         claims.getSubject(),
                         "",
                         AuthorityUtils.createAuthorityList(
-                                ((List<String>) claims.get(properties.getRoles())).toArray(new String[]{})
+                                ((List<String>) claims.get(properties.getRoles())).stream()
+                                        .map(a -> PREFIX + a)
+                                        .collect(Collectors.toList()).toArray(new String[]{})
                         )
                 );
             }

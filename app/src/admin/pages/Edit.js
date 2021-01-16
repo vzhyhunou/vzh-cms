@@ -29,7 +29,7 @@ export default props => {
                     source="date"
                     showTime
                 />
-                {permissions && permissions.includes('ROLE_MANAGER') &&
+                {permissions && permissions.includes('MANAGER') &&
                     <ReferenceField
                         source="userId"
                         reference="users"

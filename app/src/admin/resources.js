@@ -11,21 +11,23 @@ import UserEdit from './users/Edit';
 import UserList from './users/List';
 
 export default permissions => [
-    permissions && permissions.includes('ROLE_EDITOR') &&
+    ...(permissions && permissions.includes('EDITOR') ? [
         <Resource
             name="pages"
             list={PageList}
             edit={PageEdit}
             create={PageCreate}
             icon={PageIcon}
-        />,
-    permissions && permissions.includes('ROLE_MANAGER') &&
+        />
+    ] : []),
+    ...(permissions && permissions.includes('MANAGER') ? [
         <Resource
             name="users"
             list={UserList}
             edit={UserEdit}
             create={UserCreate}
             icon={UserIcon}
-        />,
+        />
+    ] : []),
     <></>
 ];

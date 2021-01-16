@@ -70,7 +70,7 @@ export default ({open, handleDrawerOpen}) => {
             </Typography>
             <LocaleInput/>
             {permissions
-                ? permissions.includes('ROLE_EDITOR')
+                ? permissions.includes('EDITOR')
                     ? <IconButton
                         color="inherit"
                         component={Link}
