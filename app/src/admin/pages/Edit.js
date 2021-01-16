@@ -15,6 +15,7 @@ import {
 import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import ContentImageInput from '../input/ContentImageInput';
+import {MANAGER} from '../../commons/roles';
 
 export default props => {
 
@@ -29,7 +30,7 @@ export default props => {
                     source="date"
                     showTime
                 />
-                {permissions && permissions.includes('MANAGER') &&
+                {permissions && permissions.includes(MANAGER) &&
                     <ReferenceField
                         source="userId"
                         reference="users"

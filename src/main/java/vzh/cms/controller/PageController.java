@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import static vzh.cms.model.PageTag.MENU;
 import static vzh.cms.model.PageTag.PUBLISHED;
-import static vzh.cms.model.UserRole.EDITOR;
+import static vzh.cms.security.Role.EDITOR;
 
 /**
  * @author Viktar Zhyhunou
