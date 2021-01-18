@@ -10,11 +10,11 @@
     "properties": {
       "ru": {
         "title": "Фрагмент 2",
-        "content": "<p>Фрагмент 2</p>\n\t<page id=\"fragment.3\"/>"
+        "content": "<p>Фрагмент 2</p>\n\t<page id=\"fragment.3\"></page>"
       },
       "en": {
         "title": "Fragment 2",
-        "content": "<p>Fragment 2</p>\n\t<page id=\"fragment.3\"/>"
+        "content": "<p>Fragment 2</p>\n\t<page id=\"fragment.3\"></page>"
       }
     }
   }
