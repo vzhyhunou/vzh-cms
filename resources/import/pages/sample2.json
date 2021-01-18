@@ -13,11 +13,11 @@
     "properties": {
       "ru": {
         "title": "Пример страницы 2",
-        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 2</h1>\n\t<page id=\"fragment.1\"/>\n</div>"
+        "content": "<div class=\"starter\">\n\t<h1>Пример страницы 2</h1>\n\t<page id=\"fragment.1\"></page>\n</div>"
       },
       "en": {
         "title": "Sample page 2",
-        "content": "<div class=\"starter\">\n\t<h1>Sample page 2</h1>\n\t<page id=\"fragment.1\"/>\n</div>"
+        "content": "<div class=\"starter\">\n\t<h1>Sample page 2</h1>\n\t<page id=\"fragment.1\"></page>\n</div>"
       }
     }
   }
