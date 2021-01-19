@@ -49,14 +49,14 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, PUBLISHED.name(), MENU.name());
+        return repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, PUBLISHED, MENU);
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return request.isUserInRole(EDITOR.name())
+        return request.isUserInRole(EDITOR)
                 ? repository.contentByActiveTags(id, PropertyPage.class)
-                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED.name());
+                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED);
     }
 }

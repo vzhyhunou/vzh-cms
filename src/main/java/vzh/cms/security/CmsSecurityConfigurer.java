@@ -14,10 +14,10 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/import", "/export").hasRole(ADMIN.name())
+                .antMatchers("/import", "/export").hasRole(ADMIN)
                 .antMatchers("/api/pages/search/one/**", "/api/pages/search/menu/**").permitAll()
-                .antMatchers("/api/users/**").hasRole(MANAGER.name())
-                .antMatchers("/api/pages/**").hasRole(EDITOR.name())
+                .antMatchers("/api/users/**").hasRole(MANAGER)
+                .antMatchers("/api/pages/**").hasRole(EDITOR)
         ;
     }
 }
