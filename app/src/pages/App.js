@@ -1,7 +1,6 @@
 import React from 'react';
 import {useLocale, useQuery} from 'react-admin';
 
-import './App.css';
 import Page from './Page';
 import None from './None';
 

@@ -1,11 +1,10 @@
-import React, {cloneElement, useState, memo} from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 
+import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
-import routes from './routes';
-import components from '../pages/components';
 
 const drawerWidth = 240;
 
@@ -30,8 +29,6 @@ const useStyles = makeStyles(theme => ({
         marginRight: 0,
     },
 }));
-
-const Body = memo(() => <>{routes(components).map((route, key) => cloneElement(route, {key}))}</>);
 
 export default (() => {
 
