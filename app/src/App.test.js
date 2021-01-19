@@ -62,4 +62,13 @@ describe('App', () => {
         expect(container).toBeDefined()
         expect(document.title).toEqual('sample3 title')
     })
+
+    it('should render sample page with auth content', async () => {
+        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample4'})
+        let container = await waitFor(() => getByText('menu title'))
+        expect(container).toBeDefined()
+        container = await waitFor(() => getByText('sample4 content for editor'))
+        expect(container).toBeDefined()
+        expect(document.title).toEqual('sample4 title')
+    })
 })

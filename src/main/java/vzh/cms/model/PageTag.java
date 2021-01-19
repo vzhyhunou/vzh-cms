@@ -1,6 +1,6 @@
 package vzh.cms.model;
 
-public enum PageTag {
-    PUBLISHED,
-    MENU
+public class PageTag {
+    public static final String PUBLISHED = "PUBLISHED";
+    public static final String MENU = "MENU";
 }
