@@ -45,8 +45,6 @@ public class WebConfigurationTest {
         mockMvc.perform(get("/index.html"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("/static/css/")))
-                .andExpect(content().string(containsString(".chunk.css")))
                 .andExpect(content().string(containsString("/static/js/")))
                 .andExpect(content().string(containsString(".chunk.js")))
         ;
