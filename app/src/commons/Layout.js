@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 
+import './App.css';
 import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
+import routes from './routes';
+import components from '../pages/components';
 
 const drawerWidth = 240;
 
@@ -30,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default (() => {
+export default () => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -43,11 +46,11 @@ export default (() => {
         <div className={classNames(classes.content, {
             [classes.contentShift]: open,
         })}>
-            <Body/>
+            <Body routes={routes(components)}/>
         </div>
         <Menu
             open={open}
             handleDrawerClose={() => setOpen(false)}
         />
     </div>;
-});
+};

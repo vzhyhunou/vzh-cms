@@ -1,11 +1,7 @@
 import React, {cloneElement, memo} from 'react';
 
-import './App.css';
-import routes from './routes';
-import components from '../pages/components';
-
-export default memo(() =>
+export default memo(({routes}) =>
     <>
-        {routes(components).map((route, key) => cloneElement(route, {key}))}
+        {routes.map((route, key) => cloneElement(route, {key}))}
     </>
 );
