@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 
-import './App.css';
 import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
@@ -12,8 +11,14 @@ import components from '../pages/components';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+    '@global': {
+        '.starter': {
+            padding: '3rem 1.5rem',
+            'text-align': 'center'
+        }
+    },
     root: {
-        display: 'flex',
+        display: 'flex'
     },
     content: {
         flexGrow: 1,
@@ -22,15 +27,15 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginRight: -drawerWidth,
+        marginRight: -drawerWidth
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
-        marginRight: 0,
-    },
+        marginRight: 0
+    }
 }));
 
 export default () => {
