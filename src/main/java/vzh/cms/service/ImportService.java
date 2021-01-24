@@ -1,7 +1,7 @@
 package vzh.cms.service;
 
 import org.springframework.stereotype.Service;
-import vzh.cms.config.property.CmsImportProperties;
+import vzh.cms.config.property.ImportCmsProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Item;
 
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @Service
 public class ImportService {
 
-    private CmsImportProperties properties;
+    private ImportCmsProperties properties;
 
     private MaintainService maintainService;
 
