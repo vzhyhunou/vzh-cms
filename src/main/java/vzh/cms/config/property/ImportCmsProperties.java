@@ -6,11 +6,7 @@ import lombok.Data;
  * @author Viktar Zhyhunou
  */
 @Data
-public class CmsExportProperties {
+public class ImportCmsProperties {
 
     private String path;
-
-    private String pattern;
-
-    private long limit;
 }
