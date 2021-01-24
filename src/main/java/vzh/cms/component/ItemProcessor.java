@@ -7,7 +7,6 @@ import vzh.cms.model.Item;
 import vzh.cms.service.FileService;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * @author Viktar Zhyhunou
@@ -15,17 +14,17 @@ import java.util.Objects;
 @Component
 public class ItemProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
 
-    private FileService service;
+    private FileService fileService;
 
-    public ItemProcessor(FileService service) {
-        this.service = service;
+    public ItemProcessor(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @Override
     public EntityModel<Item<?>> process(EntityModel<Item<?>> model) {
         Item<?> item = model.getContent();
         try {
-            Objects.requireNonNull(item).getFiles().addAll(service.collect(item, false));
+            fileService.collect(item, false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

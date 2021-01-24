@@ -14,9 +14,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static java.nio.file.Files.*;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
@@ -54,9 +53,8 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> collect(Item<?> item, boolean addFiles) throws IOException {
+    public void collect(Item<?> item, boolean addFiles) throws IOException {
         Path dir = Paths.get(location(item).getPath());
-        Set<Base64File> files = new HashSet<>();
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
                 for (Path file : paths) {
@@ -67,26 +65,27 @@ public class FileService {
                         byte[] data = readFileToByteArray(file.toFile());
                         f.setData(new String(ENCODER.encode(data)));
                     }
-                    files.add(f);
+                    item.getFiles().add(f);
                 }
             }
         }
-        return files;
     }
 
     public void clean(Item<?> item) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         if (exists(dir)) {
+            boolean matched = false;
+            Collection<String> names = item.getFiles().stream().map(Base64File::getName).collect(Collectors.toSet());
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
                 for (Path file : paths) {
-                    if (item.getFiles().stream()
-                            .map(Base64File::getName)
-                            .noneMatch(file.getFileName().toString()::equals)) {
+                    if (names.contains(file.getFileName().toString())) {
+                        matched = true;
+                    } else {
                         delete(file);
                     }
                 }
             }
-            if (Objects.requireNonNull(dir.toFile().list()).length == 0) {
+            if (!matched) {
                 delete(dir);
             }
         }

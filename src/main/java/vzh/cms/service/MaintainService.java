@@ -48,7 +48,7 @@ public class MaintainService {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void write(File file, Item<?> item) throws IOException {
         log.info("Write: {}", file);
-        item.getFiles().addAll(fileService.collect(item, true));
+        fileService.collect(item, true);
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
         wrapper.setItem(item);
