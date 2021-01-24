@@ -25,10 +25,10 @@ public class ItemHandler {
     @Autowired
     private HttpServletRequest request;
 
-    private FileService service;
+    private FileService fileService;
 
-    public ItemHandler(FileService service) {
-        this.service = service;
+    public ItemHandler(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @HandleBeforeCreate
@@ -37,13 +37,13 @@ public class ItemHandler {
         item.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         item.setDate(new Date());
         if (!HttpMethod.PATCH.matches(request.getMethod())) {
-            service.save(item);
+            fileService.save(item);
         }
     }
 
     @HandleAfterDelete
     public void delete(Item<?> item) throws IOException {
         item.getFiles().clear();
-        service.clean(item);
+        fileService.clean(item);
     }
 }
