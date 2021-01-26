@@ -90,6 +90,6 @@ public class FileService {
     }
 
     private File location(Item<?> item) {
-        return new File(path, locationService.location(item).getPath());
+        return new File(path, locationService.location(item));
     }
 }
