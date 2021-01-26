@@ -21,9 +21,9 @@ public class LocationService {
         this.mappings = mappings;
     }
 
-    public File location(Item<?> item) {
+    public String location(Item<?> item) {
         ResourceMetadata meta = mappings.getMetadataFor(item.getClass());
-        return new File(meta.getRel().value(), pathById(item));
+        return new File(meta.getRel().value(), pathById(item)).getPath();
     }
 
     static String pathById(Item<?> item) {
