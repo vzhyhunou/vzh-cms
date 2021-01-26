@@ -1,8 +1,6 @@
 package vzh.cms.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.rest.core.mapping.ResourceMappings;
-import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Base64File;
@@ -33,11 +31,11 @@ public class FileService {
 
     private String path;
 
-    private ResourceMappings mappings;
+    private LocationService locationService;
 
-    public FileService(CmsProperties properties, ResourceMappings mappings) {
+    public FileService(CmsProperties properties, LocationService locationService) {
         this.path = properties.getFiles().getPath();
-        this.mappings = mappings;
+        this.locationService = locationService;
     }
 
     public void save(Item<?> item) throws IOException {
@@ -92,12 +90,6 @@ public class FileService {
     }
 
     private File location(Item<?> item) {
-        ResourceMetadata meta = mappings.getMetadataFor(item.getClass());
-        File dir = new File(meta.getRel().value(), pathById(item));
-        return new File(path, dir.getPath());
-    }
-
-    static String pathById(Item<?> item) {
-        return item.getId().toString().replace('.', File.separatorChar);
+        return new File(path, locationService.location(item).getPath());
     }
 }
