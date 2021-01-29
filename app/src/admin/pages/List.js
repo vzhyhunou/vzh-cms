@@ -8,11 +8,11 @@ import {
     TextInput,
     useLocale
 } from 'react-admin';
+import {Link} from 'react-router-dom';
 
 import TagsField from '../field/TagsField';
 import TagsFilter from '../input/TagsFilter';
 import BulkActionButtons from '../button/BulkActionButtons';
-import {Link} from 'react-router-dom';
 
 const PageFilter = ({locale, ...rest}) =>
     <Filter {...rest}>
