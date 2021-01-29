@@ -75,7 +75,7 @@ export default ({open, handleDrawerOpen}) => {
                     ? <IconButton
                         color="inherit"
                         component={Link}
-                        to={`/pages/${window.location.pathname.split('/')[2]}/${Object.keys(locales).indexOf(locale) + 2}`}
+                        to={`/pages/${window.location.pathname.split('/')[3]}/${Object.keys(locales).indexOf(locale) + 2}`}
                     >
                         <EditIcon/>
                     </IconButton>
