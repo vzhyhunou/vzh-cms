@@ -33,7 +33,7 @@ const PageFilter = ({locale, ...rest}) =>
 ;
 
 const LinkField = ({source, record = {}}) =>
-    <Link to={`/page/${record[source]}`}>{record[source]}</Link>
+    <Link to={`/cms/pages/${record[source]}`}>{record[source]}</Link>
 ;
 
 export default props => {

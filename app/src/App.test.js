@@ -22,7 +22,7 @@ describe('App', () => {
     })
 
     it('should render none page', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/page/no-exist'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/no-exist'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('none content'))
@@ -31,7 +31,7 @@ describe('App', () => {
     })
 
     it('should render sample page', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample1'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample1'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample1 content'))
@@ -40,7 +40,7 @@ describe('App', () => {
     })
 
     it('should render sample page with fragment', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample2'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample2'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample2 content'))
@@ -51,7 +51,7 @@ describe('App', () => {
     })
 
     it('should render sample page with two fragments', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample3'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample3'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample3 content'))
@@ -64,7 +64,7 @@ describe('App', () => {
     })
 
     it('should render sample page with auth content', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/page/sample4'})
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample4 content for editor'))
