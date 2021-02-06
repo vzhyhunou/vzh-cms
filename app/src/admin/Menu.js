@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {getResources, MenuItemLink, useTranslate} from 'react-admin';
 import {useSelector} from 'react-redux';
 import {useMediaQuery} from '@material-ui/core';
@@ -11,7 +11,9 @@ export default ({onMenuClick, logout}) => {
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const resources = useSelector(getResources);
 
-    document.title = translate('pos.title');
+    useEffect(() => {
+        document.title = translate('pos.title');
+    }, [translate]);
 
     return <>
         {resources.filter(resource => resource.hasList).map(resource =>
