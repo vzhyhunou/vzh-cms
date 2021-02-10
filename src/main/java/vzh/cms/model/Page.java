@@ -15,12 +15,13 @@ import java.util.Map;
 /**
  * @author Viktar Zhyhunou
  */
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 public class Page extends Tagged<String> implements Serializable {
 
     @Id
+    @EqualsAndHashCode.Include
     private String id;
 
     @ElementCollection
