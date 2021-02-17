@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.FetchType.LAZY;
+
 /**
  * @author Viktar Zhyhunou
  */
@@ -24,7 +26,7 @@ abstract public class Item<ID extends Serializable> {
 
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JsonIgnore
     private User user;
 
