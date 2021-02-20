@@ -17,13 +17,14 @@
     "html-react-parser": "^0.10.3"
   },
   "devDependencies": {
-    "react-scripts": "^4.0.2",
-    "@testing-library/react": "^11.2.5"
+    "react-scripts": "^3.4.4",
+    "@testing-library/react": "^11.2.5",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   },
   "scripts": {
     "start": "CI=true PORT=3010 react-scripts start",
     "build": "react-scripts build && mkdir -p ../target/classes && mv build ../target/classes/static",
-    "test": "CI=true react-scripts test"
+    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen"
   },
   "proxy": "http://localhost:8090",
   "browserslist": [
