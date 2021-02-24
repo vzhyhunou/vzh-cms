@@ -12,18 +12,20 @@ import {
 import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import ContentImageInput from '../input/ContentImageInput';
+import {useIdValidation} from '../validation';
 
 export default props => {
 
     const locale = useLocale();
     const locales = useLocales();
+    const validateId = useIdValidation(props);
 
     return <Create {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
-                    validate={[required()]}
+                    validate={[required(), validateId]}
                 />
             </FormTab>
             <FormTab label="resources.pages.fields.tags">

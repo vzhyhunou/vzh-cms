@@ -9,6 +9,9 @@ export default {
         general: 'General'
     },
     resources: {
+        validation: {
+            id: 'Id already exists'
+        },
         tags: {
             actions: {
                 add: 'Add Tag',

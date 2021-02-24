@@ -9,6 +9,9 @@ export default {
         general: 'Общие'
     },
     resources: {
+        validation: {
+            id: 'Id уже существует'
+        },
         tags: {
             actions: {
                 add: 'Добавить тэг',
