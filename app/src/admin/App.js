@@ -1,10 +1,10 @@
 import React from 'react';
-import {Admin, Layout} from 'react-admin';
+import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
 
 import authProvider from './auth';
-import Menu from './Menu';
+import Layout from './Layout';
 import {useGetLocale, useGetMessages} from '../commons/AppContext';
 
 const theme = createMuiTheme({
@@ -26,7 +26,7 @@ export default ({routes, resources, history, data}) => {
     return <Admin
         {...{theme, authProvider, history}}
         customRoutes={routes}
-        layout={props => <Layout {...props} menu={Menu}/>}
+        layout={Layout}
         dataProvider={data(getLocale)}
         i18nProvider={polyglotI18nProvider(getMessages, getLocale())}
     >
