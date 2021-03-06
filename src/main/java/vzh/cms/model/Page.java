@@ -8,7 +8,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
 @Entity
-public class Page extends Tagged<String> implements Serializable {
+public class Page extends Tagged<String> {
 
     @Id
     @EqualsAndHashCode.Include

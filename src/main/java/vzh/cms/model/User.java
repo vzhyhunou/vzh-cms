@@ -7,7 +7,6 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
  * @author Viktar Zhyhunou
@@ -16,7 +15,7 @@ import java.io.Serializable;
 @Data
 @ToString
 @Entity
-public class User extends Tagged<String> implements Serializable {
+public class User extends Tagged<String> {
 
     @Id
     @EqualsAndHashCode.Include
