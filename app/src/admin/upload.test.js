@@ -129,10 +129,6 @@ describe('upload', () => {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
                     },
                     {
-                        data: "abe",
-                        name: "7888d65a43501d992cc38638b59964d6.png"
-                    },
-                    {
                         data: "abf",
                         name: "ff905c528ce7ce9e64c0758b54855b50.png"
                     }
