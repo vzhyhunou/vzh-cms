@@ -1,8 +1,8 @@
 import addUploadFeature from './upload'
 
 class MockFileReader {
-    readAsDataURL() {
-        this.result = 'data:image/png;base64,abc'
+    readAsDataURL(blob) {
+        this.result = `data:image/png;base64,${blob.name}`
         this.onload()
     }
 }
@@ -100,22 +100,20 @@ describe('upload', () => {
                 id: "sample.1",
                 files: [
                     {
-                        rawFile: new File([], null, {
-                            type: "image/png"
-                        }),
+                        rawFile: new File([], "abc"),
                         src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
                     },
                     {
-                        rawFile: new File([], null, {
-                            type: "image/png"
-                        }),
+                        rawFile: new File([], "abc"),
                         src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
+                    },
+                    {
+                        rawFile: new File([], "abe"),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
                     }
                 ],
                 file: {
-                    rawFile: new File([], null, {
-                        type: "image/png"
-                    })
+                    rawFile: new File([], "abf")
                 },
                 content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
                 "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
@@ -129,9 +127,13 @@ describe('upload', () => {
                     {
                         data: "abc",
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        data: "abf",
+                        name: "ff905c528ce7ce9e64c0758b54855b50.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                file: "ff905c528ce7ce9e64c0758b54855b50.png",
                 content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
                 "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
                 "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"

@@ -43,26 +43,34 @@ const upd = (resource, params, call) => {
         }).includes(title)) : [];
 
     return Promise.all(
-        dumpKeysRecursively(params.data)
-            .filter(key => get(params.data, `${key}.rawFile`))
-            .map(key =>
-                convertFileToBase64(
-                    get(params.data, key)
-                ).then(
-                    picture64 => ({
-                        data: picture64.match(/,(.*)/)[1],
-                        type: picture64.match(/\/(.*);/)[1]
-                    })
-                ).then(
-                    ({data, type}) => ({
-                        data,
-                        type,
-                        key,
-                        name: `${md5(data)}.${type}`,
-                        preview: get(params.data, `${key}.src`)
-                    })
-                )
+        dumpKeysRecursively({
+            ...params.data,
+            files: params.data.files ? params.data.files
+               .filter(({rawFile}) => rawFile)
+               .filter(({src}) => JSON.stringify({
+                   ...params.data,
+                   files: []
+               }).includes(src)) : []
+        })
+        .filter(key => get(params.data, `${key}.rawFile`))
+        .map(key =>
+            convertFileToBase64(
+                get(params.data, key)
+            ).then(
+                picture64 => ({
+                    data: picture64.match(/,(.*)/)[1],
+                    type: picture64.match(/\/(.*);/)[1]
+                })
+            ).then(
+                ({data, type}) => ({
+                    data,
+                    type,
+                    key,
+                    name: `${md5(data)}.${type}`,
+                    preview: get(params.data, `${key}.src`)
+                })
             )
+        )
     ).then(
         process
     ).then(
