@@ -315,6 +315,17 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    public void oneAllTagsFalse() {
+
+        persist(withTags("home", tag("a")));
+
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a", "b");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
     public void oneAllTags() {
 
         persist(withTags("home", tag("a"), tag("b")));
