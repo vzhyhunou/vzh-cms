@@ -306,9 +306,9 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneAnotherTag() {
 
-        persist(withLang("home", "en"));
+        persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a");
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "c");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -317,9 +317,9 @@ public class PageRepositoryTest extends RepositoryTest {
     @Test
     public void oneAllTags() {
 
-        persist(withLang("home", "en"));
+        persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "0.tag", "1.tag");
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a", "b");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
