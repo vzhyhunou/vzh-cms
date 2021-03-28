@@ -25,7 +25,7 @@ public abstract class ContentRepositoryImpl<T extends Tagged<ID>, ID extends Ser
         return findOne((root, q, b) -> {
             MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
             return b.and(
-                    filter(root, q, b, b.equal(root.get(ID), id), names),
+                    filterAny(root, q, b, b.equal(root.get(ID), id), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
             );
         }, type);
@@ -37,7 +37,7 @@ public abstract class ContentRepositoryImpl<T extends Tagged<ID>, ID extends Ser
             MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
             q.orderBy(b.asc(properties.value().get(order)));
             return b.and(
-                    filter(root, q, b, b.and(), names),
+                    filterAll(root, q, b, b.and(), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
             );
         }, type);

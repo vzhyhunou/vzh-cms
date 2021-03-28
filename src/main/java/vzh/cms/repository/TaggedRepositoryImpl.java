@@ -36,7 +36,22 @@ public abstract class TaggedRepositoryImpl<T extends Tagged<ID>, ID extends Seri
         );
     }
 
-    protected Predicate filter(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
+    protected Predicate filterAny(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
+        if (names.length == 0) {
+            return p;
+        }
+        Subquery<T> subquery = q.subquery(getDomainClass());
+        Root<T> r = subquery.from(getDomainClass());
+        return root.in(
+                subquery.select(r)
+                        .where(b.and(
+                                p,
+                                active(b, r.join(Tagged_.TAGS), names)
+                        ))
+        );
+    }
+
+    protected Predicate filterAll(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
         if (names.length == 0) {
             return p;
         }
