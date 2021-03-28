@@ -1,15 +1,18 @@
 package vzh.cms.repository;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.Tagged_;
 import vzh.cms.model.Page;
 import vzh.cms.model.PageProperty;
 import vzh.cms.model.PageProperty_;
 import vzh.cms.model.Page_;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
+import vzh.cms.model.Tagged_;
+import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
+import vzh.cms.projection.TitlePage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,11 +22,15 @@ import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Viktar Zhyhunou
  */
-class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements CustomizedPageRepository {
+class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements CustomizedPageRepository {
+
+    private static final String PROPERTIES = "properties";
 
     PageRepositoryImpl(EntityManager manager) {
         super(Page.class, manager);
@@ -40,6 +47,29 @@ class PageRepositoryImpl extends ContentRepositoryImpl<Page, String> implements 
             }
             return root.in(subquery.select(p).where(filter(p, b, filter)));
         }, RowPage.class, pageable);
+    }
+
+    @Override
+    public Optional<PropertyPage> one(String id, Object... names) {
+        return findOne((root, q, b) -> {
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
+            return b.and(
+                    filterAny(root, q, b, b.equal(root.get(ID), id), names),
+                    b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
+            );
+        }, PropertyPage.class);
+    }
+
+    @Override
+    public List<TitlePage> menu(Object... names) {
+        return findAll((root, q, b) -> {
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
+            q.orderBy(b.asc(properties.value().get(PageProperty_.TITLE)));
+            return b.and(
+                    filterAll(root, q, b, b.and(), names),
+                    b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
+            );
+        }, TitlePage.class);
     }
 
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {

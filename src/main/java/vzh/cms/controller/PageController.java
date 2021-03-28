@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.PageProperty_;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
@@ -49,14 +48,14 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, PUBLISHED, MENU);
+        return repository.menu(PUBLISHED, MENU);
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
         return request.isUserInRole(EDITOR)
-                ? repository.contentByActiveTags(id, PropertyPage.class)
-                : repository.contentByActiveTags(id, PropertyPage.class, PUBLISHED);
+                ? repository.one(id)
+                : repository.one(id, PUBLISHED);
     }
 }
