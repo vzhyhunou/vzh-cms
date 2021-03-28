@@ -233,7 +233,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneAllLanguages() {
+    public void contentAllLanguages() {
 
         persist(withLang("home", "en", "ru"));
         persist(withLang("sample"));
@@ -251,7 +251,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneNone() {
+    public void contentNone() {
 
         persist(withLang("sample"));
 
@@ -262,7 +262,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneNoLanguages() {
+    public void contentNoLanguages() {
 
         persist(withLang("home"));
         persist(withLang("sample"));
@@ -274,7 +274,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneLanguage() {
+    public void contentLanguage() {
 
         persist(withLang("home", "en"));
         persist(withLang("sample"));
@@ -292,7 +292,7 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneAnotherLanguage() {
+    public void contentAnotherLanguage() {
 
         persist(withLang("home", "ru"));
         persist(withLang("sample"));
@@ -304,33 +304,11 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void oneAnotherTag() {
+    public void contentTag() {
 
         persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "c");
-
-        assertThat(result).isNotNull();
-        assertThat(result.isPresent()).isFalse();
-    }
-
-    @Test
-    public void oneAllTagsFalse() {
-
-        persist(withTags("home", tag("a")));
-
-        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a", "b");
-
-        assertThat(result).isNotNull();
-        assertThat(result.isPresent()).isFalse();
-    }
-
-    @Test
-    public void oneAllTags() {
-
-        persist(withTags("home", tag("a"), tag("b")));
-
-        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a", "b");
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "a");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -343,7 +321,41 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void listByActiveTags() {
+    public void contentAnotherTag() {
+
+        persist(withTags("home", tag("a"), tag("b")));
+
+        Optional<PropertyPage> result = repository.contentByActiveTags("home", PropertyPage.class, "c");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
+    public void contentsNotAllTags() {
+
+        persist(withTags("home", tag("a")));
+
+        List<TitlePage> result = repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, "a", "b");
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void contentsAllTags() {
+
+        persist(withTags("home", tag("a"), tag("b")));
+
+        List<TitlePage> result = repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, "a", "b");
+
+        assertThat(result).isNotNull();
+        assertThat(result).extracting(TitlePage::getId).containsOnly("home").containsOnlyOnce("home");
+        assertThat(result).extracting(TitlePage::getTitle).containsOnly("home.en.title").containsOnlyOnce("home.en.title");
+    }
+
+    @Test
+    public void contentsActiveTags() {
 
         persist(withTags("home"));
         persist(withTags("test", tag("tag")));
@@ -351,11 +363,11 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withTags("sample1", delayedTag("tag")));
         persist(withTags("sample2", expiredTag("tag")));
 
-        List<TitlePage> results = repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, "tag");
+        List<TitlePage> result = repository.contentsByActiveTags(TitlePage.class, PageProperty_.TITLE, "tag");
 
-        assertThat(results).isNotNull();
-        assertThat(results).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
-        assertThat(results).extracting(TitlePage::getTitle).containsOnly("test.en.title", "sample.en.title");
-        assertThat(results).extracting(TitlePage::getTitle).isSorted();
+        assertThat(result).isNotNull();
+        assertThat(result).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
+        assertThat(result).extracting(TitlePage::getTitle).containsOnly("test.en.title", "sample.en.title").containsOnlyOnce("test.en.title", "sample.en.title");
+        assertThat(result).extracting(TitlePage::getTitle).isSorted();
     }
 }
