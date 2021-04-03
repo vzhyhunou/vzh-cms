@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.nio.file.Files.*;
@@ -51,7 +52,7 @@ public class FileService {
         }
     }
 
-    public void collect(Item<?> item, boolean addFiles) throws IOException {
+    public Set<Base64File> collect(Item<?> item, boolean addFiles) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
@@ -67,6 +68,7 @@ public class FileService {
                 }
             }
         }
+        return item.getFiles();
     }
 
     public void clean(Item<?> item) throws IOException {
