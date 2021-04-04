@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-interface CustomizedUserRepository extends CustomizedRepository<User> {
+interface CustomizedUserRepository extends CustomizedRepository<User, String> {
 
     Page<RowUser> list(UserFilter filter, Pageable pageable);
 

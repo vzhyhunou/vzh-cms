@@ -10,7 +10,9 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-public interface CustomizedRepository<T> {
+public interface CustomizedRepository<T, ID> {
+
+    <E> Optional<E> findById(ID id, Class<E> type);
 
     <E> Optional<E> findOne(Specification<T> specification, Class<E> type);
 
