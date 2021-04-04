@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-interface CustomizedPageRepository extends CustomizedRepository<Page> {
+interface CustomizedPageRepository extends CustomizedRepository<Page, String> {
 
     org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable);
 

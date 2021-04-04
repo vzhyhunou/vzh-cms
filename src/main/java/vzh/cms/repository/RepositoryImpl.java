@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T> {
+public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T, ID> {
 
     private final SpelAwareProxyProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
@@ -35,6 +35,11 @@ public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJ
     @Autowired
     public void setBeanFactory(BeanFactory beanFactory) {
         factory.setBeanFactory(beanFactory);
+    }
+
+    @Override
+    public <E> Optional<E> findById(ID id, Class<E> type) {
+        return findById(id).map(e -> factory.createProjection(type, e));
     }
 
     @Override
