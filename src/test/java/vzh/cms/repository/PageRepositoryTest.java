@@ -3,7 +3,6 @@ package vzh.cms.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.PageProperty_;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.RowTagged;
@@ -353,10 +352,22 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a")));
 
-        List<TitlePage> result = repository.menu(PageProperty_.TITLE, "a", "b");
+        List<TitlePage> result = repository.menu("a", "b");
 
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void menuNoTag() {
+
+        persist(withTags("home"));
+
+        List<TitlePage> result = repository.menu();
+
+        assertThat(result).isNotNull();
+        assertThat(result).extracting(TitlePage::getId).containsOnly("home").containsOnlyOnce("home");
+        assertThat(result).extracting(TitlePage::getTitle).containsOnly("home.en.title").containsOnlyOnce("home.en.title");
     }
 
     @Test
@@ -386,5 +397,16 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(result).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
         assertThat(result).extracting(TitlePage::getTitle).containsOnly("test.en.title", "sample.en.title").containsOnlyOnce("test.en.title", "sample.en.title");
         assertThat(result).extracting(TitlePage::getTitle).isSorted();
+    }
+
+    @Test
+    public void menuAnotherLanguage() {
+
+        persist(withLang("home", "ru"));
+
+        List<TitlePage> result = repository.menu();
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEmpty();
     }
 }
