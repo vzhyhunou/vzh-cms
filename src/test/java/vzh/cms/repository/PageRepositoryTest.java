@@ -3,7 +3,6 @@ package vzh.cms.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import vzh.cms.dto.PageFilter;
-import vzh.cms.model.PageProperty_;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.RowTagged;
@@ -353,7 +352,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a")));
 
-        List<TitlePage> result = repository.menu(PageProperty_.TITLE, "a", "b");
+        List<TitlePage> result = repository.menu("a", "b");
 
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
