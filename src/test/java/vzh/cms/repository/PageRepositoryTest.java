@@ -359,6 +359,18 @@ public class PageRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    public void menuNoTag() {
+
+        persist(withTags("home"));
+
+        List<TitlePage> result = repository.menu();
+
+        assertThat(result).isNotNull();
+        assertThat(result).extracting(TitlePage::getId).containsOnly("home").containsOnlyOnce("home");
+        assertThat(result).extracting(TitlePage::getTitle).containsOnly("home.en.title").containsOnlyOnce("home.en.title");
+    }
+
+    @Test
     public void menuByAllTags() {
 
         persist(withTags("home", tag("a"), tag("b")));
@@ -385,5 +397,16 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(result).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
         assertThat(result).extracting(TitlePage::getTitle).containsOnly("test.en.title", "sample.en.title").containsOnlyOnce("test.en.title", "sample.en.title");
         assertThat(result).extracting(TitlePage::getTitle).isSorted();
+    }
+
+    @Test
+    public void menuAnotherLanguage() {
+
+        persist(withLang("home", "ru"));
+
+        List<TitlePage> result = repository.menu();
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEmpty();
     }
 }
