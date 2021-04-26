@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<frontend.version>1.9.1</frontend.version>
 		<node.version>v12.16.2</node.version>
 		<jjwt.version>0.9.1</jjwt.version>
