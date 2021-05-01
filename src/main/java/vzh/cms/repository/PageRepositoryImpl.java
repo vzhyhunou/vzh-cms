@@ -30,8 +30,6 @@ import java.util.Optional;
  */
 class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements CustomizedPageRepository {
 
-    private static final String PROPERTIES = "properties";
-
     PageRepositoryImpl(EntityManager manager) {
         super(Page.class, manager);
     }
@@ -52,7 +50,7 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
     @Override
     public Optional<PropertyPage> one(String id, Object... names) {
         return findOne((root, q, b) -> {
-            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(Page_.PROPERTIES);
             return b.and(
                     filterAny(root, q, b, b.equal(root.get(ID), id), names),
                     b.equal(properties.key(), LocaleContextHolder.getLocale().getLanguage())
@@ -63,7 +61,7 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
     @Override
     public List<TitlePage> menu(Object... names) {
         return findAll((root, q, b) -> {
-            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(PROPERTIES);
+            MapJoin<?, ?, ?> properties = (MapJoin<?, ?, ?>) root.fetch(Page_.PROPERTIES);
             q.orderBy(b.asc(properties.value().get(PageProperty_.TITLE)));
             return b.and(
                     filterAll(root, q, b, b.and(), names),
