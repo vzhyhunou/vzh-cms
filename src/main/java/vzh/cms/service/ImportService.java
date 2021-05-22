@@ -1,10 +1,12 @@
 package vzh.cms.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.ImportCmsProperties;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Item;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.nio.file.DirectoryStream;
@@ -16,15 +18,18 @@ import java.nio.file.Paths;
  * @author Viktar Zhyhunou
  */
 @Service
+@RequiredArgsConstructor
 public class ImportService {
+
+    private final CmsProperties cmsProperties;
+
+    private final MaintainService maintainService;
 
     private ImportCmsProperties properties;
 
-    private MaintainService maintainService;
-
-    public ImportService(CmsProperties properties, MaintainService maintainService) {
-        this.properties = properties.getImp();
-        this.maintainService = maintainService;
+    @PostConstruct
+    private void postConstruct() {
+        properties = cmsProperties.getImp();
     }
 
     @Transactional

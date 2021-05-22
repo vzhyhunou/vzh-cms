@@ -3,6 +3,7 @@ package vzh.cms.service;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,18 +20,20 @@ import java.io.IOException;
  */
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class MaintainService {
+
+    private final ListableBeanFactory factory;
+
+    private final FileService fileService;
+
+    private final ObjectMapper mapper;
 
     private Repositories repositories;
 
-    private FileService fileService;
-
-    private ObjectMapper mapper;
-
-    public MaintainService(ListableBeanFactory factory, FileService fileService, ObjectMapper mapper) {
+    @PostConstruct
+    private void postConstruct() {
         repositories = new Repositories(factory);
-        this.fileService = fileService;
-        this.mapper = mapper;
     }
 
     @SuppressWarnings("unchecked")

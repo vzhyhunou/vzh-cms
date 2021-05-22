@@ -1,5 +1,6 @@
 package vzh.cms.component;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
@@ -12,13 +13,10 @@ import java.io.IOException;
  * @author Viktar Zhyhunou
  */
 @Component
+@RequiredArgsConstructor
 public class ItemProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
 
-    private FileService fileService;
-
-    public ItemProcessor(FileService fileService) {
-        this.fileService = fileService;
-    }
+    private final FileService fileService;
 
     @Override
     public EntityModel<Item<?>> process(EntityModel<Item<?>> model) {

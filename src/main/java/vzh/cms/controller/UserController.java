@@ -1,5 +1,6 @@
 package vzh.cms.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -17,16 +18,12 @@ import vzh.cms.repository.UserRepository;
  */
 @RepositoryRestController
 @RequestMapping("users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserRepository repository;
+    private final UserRepository repository;
 
-    private PagedResourcesAssembler<RowUser> assembler;
-
-    public UserController(UserRepository repository, PagedResourcesAssembler<RowUser> assembler) {
-        this.repository = repository;
-        this.assembler = assembler;
-    }
+    private final PagedResourcesAssembler<RowUser> assembler;
 
     @ResponseBody
     @GetMapping("search/list")

@@ -1,11 +1,13 @@
 package vzh.cms.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -25,18 +27,21 @@ import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
  */
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class FileService {
 
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
 
+    private final CmsProperties cmsProperties;
+
+    private final LocationService locationService;
+
     private String path;
 
-    private LocationService locationService;
-
-    public FileService(CmsProperties properties, LocationService locationService) {
-        this.path = properties.getFiles().getPath();
-        this.locationService = locationService;
+    @PostConstruct
+    private void postConstruct() {
+        path = cmsProperties.getFiles().getPath();
     }
 
     public void save(Item<?> item) throws IOException {

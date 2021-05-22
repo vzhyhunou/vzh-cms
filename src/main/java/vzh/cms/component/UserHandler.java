@@ -1,5 +1,6 @@
 package vzh.cms.component;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
@@ -17,15 +18,12 @@ import java.util.regex.Pattern;
 @Component
 @Validated
 @RepositoryEventHandler
+@RequiredArgsConstructor
 public class UserHandler {
 
     private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
 
-    private PasswordEncoder encoder;
-
-    public UserHandler(PasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
+    private final PasswordEncoder encoder;
 
     @HandleBeforeCreate
     @HandleBeforeSave

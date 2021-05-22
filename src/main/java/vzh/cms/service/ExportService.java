@@ -1,5 +1,6 @@
 package vzh.cms.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
@@ -10,6 +11,7 @@ import vzh.cms.config.property.CmsProperties;
 import vzh.cms.config.property.ExportCmsProperties;
 import vzh.cms.model.Item;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -22,23 +24,24 @@ import java.util.stream.Collectors;
 
 import static vzh.cms.service.LocationService.pathById;
 
-
 /**
  * @author Viktar Zhyhunou
  */
 @Service
+@RequiredArgsConstructor
 public class ExportService {
+
+    private final CmsProperties cmsProperties;
+
+    private final ResourceMappings mappings;
+
+    private final MaintainService maintainService;
 
     private ExportCmsProperties properties;
 
-    private ResourceMappings mappings;
-
-    private MaintainService maintainService;
-
-    public ExportService(CmsProperties properties, ResourceMappings mappings, MaintainService maintainService) {
-        this.properties = properties.getExp();
-        this.mappings = mappings;
-        this.maintainService = maintainService;
+    @PostConstruct
+    private void postConstruct() {
+        properties = cmsProperties.getExp();
     }
 
     @Transactional

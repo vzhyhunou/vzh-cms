@@ -1,5 +1,6 @@
 package vzh.cms.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,29 +25,18 @@ import java.util.List;
  */
 @Configuration
 @EnableConfigurationProperties(JwtProperties.class)
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    private AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService;
+    private final AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService;
 
-    private JwtProperties properties;
+    private final JwtProperties properties;
 
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    private List<SecurityConfigurer> configs;
-
-    public SecurityConfiguration(UserDetailsService userDetailsService,
-                                 AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService,
-                                 JwtProperties properties,
-                                 PasswordEncoder encoder,
-                                 List<SecurityConfigurer> configs) {
-        this.userDetailsService = userDetailsService;
-        this.jwtDetailsService = jwtDetailsService;
-        this.properties = properties;
-        this.encoder = encoder;
-        this.configs = configs;
-    }
+    private final List<SecurityConfigurer> configs;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
