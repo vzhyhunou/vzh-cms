@@ -1,5 +1,6 @@
 package vzh.cms.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
@@ -13,13 +14,10 @@ import java.io.File;
  */
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class LocationService {
 
-    private ResourceMappings mappings;
-
-    public LocationService(ResourceMappings mappings) {
-        this.mappings = mappings;
-    }
+    private final ResourceMappings mappings;
 
     public String location(Item<?> item) {
         ResourceMetadata meta = mappings.getMetadataFor(item.getClass());

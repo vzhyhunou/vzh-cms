@@ -1,5 +1,6 @@
 package vzh.cms.component;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
@@ -20,16 +21,13 @@ import java.util.Date;
  */
 @Component
 @RepositoryEventHandler
+@RequiredArgsConstructor
 public class ItemHandler {
 
     @Autowired
     private HttpServletRequest request;
 
-    private FileService fileService;
-
-    public ItemHandler(FileService fileService) {
-        this.fileService = fileService;
-    }
+    private final FileService fileService;
 
     @HandleBeforeCreate
     @HandleBeforeSave

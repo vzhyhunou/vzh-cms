@@ -1,5 +1,6 @@
 package vzh.cms.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +16,12 @@ import java.util.stream.Collectors;
  * @author Viktar Zhyhunou
  */
 @Service
+@RequiredArgsConstructor
 public class AuthenticationDetailsService implements UserDetailsService {
 
     private static final String PREFIX = "ROLE_";
 
-    private UserRepository repository;
-
-    public AuthenticationDetailsService(UserRepository repository) {
-        this.repository = repository;
-    }
+    private final UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {

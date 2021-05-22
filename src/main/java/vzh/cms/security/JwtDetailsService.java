@@ -2,6 +2,7 @@ package vzh.cms.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,13 +20,10 @@ import java.util.List;
  */
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class JwtDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
-    private JwtProperties properties;
-
-    public JwtDetailsService(JwtProperties properties) {
-        this.properties = properties;
-    }
+    private final JwtProperties properties;
 
     @Override
     @SuppressWarnings("unchecked")

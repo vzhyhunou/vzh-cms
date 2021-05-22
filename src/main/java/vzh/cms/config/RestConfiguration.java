@@ -1,5 +1,6 @@
 package vzh.cms.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -14,13 +15,10 @@ import javax.persistence.EntityManager;
  * @author Viktar Zhyhunou
  */
 @Configuration
+@RequiredArgsConstructor
 public class RestConfiguration implements RepositoryRestConfigurer {
 
-    private EntityManager entityManager;
-
-    public RestConfiguration(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    private final EntityManager entityManager;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {

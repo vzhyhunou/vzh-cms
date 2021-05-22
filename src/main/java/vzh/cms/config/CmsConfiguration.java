@@ -1,5 +1,6 @@
 package vzh.cms.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,13 +17,10 @@ import vzh.cms.service.ImportService;
 @Configuration
 @EnableScheduling
 @EnableConfigurationProperties(CmsProperties.class)
+@RequiredArgsConstructor
 public class CmsConfiguration {
 
-    private ExportService exportService;
-
-    public CmsConfiguration(ExportService exportService) {
-        this.exportService = exportService;
-    }
+    private final ExportService exportService;
 
     @Bean
     public CommandLineRunner init(ImportService importService) {

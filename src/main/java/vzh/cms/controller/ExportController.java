@@ -1,5 +1,6 @@
 package vzh.cms.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +11,10 @@ import vzh.cms.service.ExportService;
  */
 @RestController
 @RequestMapping("export")
+@RequiredArgsConstructor
 public class ExportController {
 
-    private ExportService service;
-
-    public ExportController(ExportService service) {
-        this.service = service;
-    }
+    private final ExportService service;
 
     @GetMapping
     public void export() throws Exception {
