@@ -9,10 +9,7 @@ import {
 
 export default (resource, selectedIds, data) => {
 
-    const records = useSelector(
-        state => selectedIds.map(id => state.admin.resources[resource].data[id]),
-        [resource, selectedIds]
-    );
+    const records = useSelector(state => selectedIds.map(id => state.admin.resources[resource].data[id]));
     const notify = useNotify();
     const unselectAll = useUnselectAll();
     const refresh = useRefresh();
