@@ -64,8 +64,12 @@ public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJ
     }
 
     protected static Predicate contains(CriteriaBuilder b, Expression<String> expression, String field) {
+        return contains(b, expression, field, "%%%s%%");
+    }
+
+    protected static Predicate contains(CriteriaBuilder b, Expression<String> expression, String field, String format) {
         return Optional.ofNullable(field)
-                .map(f -> b.like(b.lower(expression), String.format("%%%s%%", f.toLowerCase())))
+                .map(f -> b.like(b.lower(expression), String.format(format, f.toLowerCase())))
                 .orElse(null);
     }
 
