@@ -8,9 +8,9 @@ import {
     TextInput,
     useLocale
 } from 'react-admin';
-import {Link} from 'react-router-dom';
 
 import TagsField from '../field/TagsField';
+import LinkField from '../field/LinkField';
 import TagsFilter from '../input/TagsFilter';
 import BulkActionButtons from '../button/BulkActionButtons';
 
@@ -30,10 +30,6 @@ const PageFilter = ({locale, ...rest}) =>
             label={`resources.pages.fields.properties.${locale}.content`}
         />
     </Filter>
-;
-
-const LinkField = ({source, record = {}}) =>
-    <Link to={`/cms/pages/${record[source]}`}>{record[source]}</Link>
 ;
 
 export default props => {
