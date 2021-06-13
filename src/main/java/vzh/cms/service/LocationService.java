@@ -7,6 +7,7 @@ import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
 
+import javax.persistence.EntityManagerFactory;
 import java.io.File;
 
 /**
@@ -19,12 +20,12 @@ public class LocationService {
 
     private final ResourceMappings mappings;
 
-    public String location(Item<?> item) {
-        ResourceMetadata meta = mappings.getMetadataFor(item.getClass());
-        return new File(meta.getRel().value(), pathById(item)).getPath();
-    }
+    private final EntityManagerFactory factory;
 
-    static String pathById(Item<?> item) {
-        return item.getId().toString().replace('.', File.separatorChar);
+    public String location(Item item) {
+        ResourceMetadata meta = mappings.getMetadataFor(item.getClass());
+        String id = factory.getPersistenceUnitUtil().getIdentifier(item).toString();
+        String path = id.replace('.', File.separatorChar);
+        return new File(meta.getRel().value(), path).getPath();
     }
 }

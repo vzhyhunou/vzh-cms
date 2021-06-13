@@ -17,7 +17,7 @@ import java.io.Serializable;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class TaggedRepositoryImpl<T extends Tagged<ID>, ID extends Serializable> extends RepositoryImpl<T, ID> {
+public abstract class TaggedRepositoryImpl<T extends Tagged, ID extends Serializable> extends RepositoryImpl<T, ID> {
 
     protected static final String ID = "id";
 

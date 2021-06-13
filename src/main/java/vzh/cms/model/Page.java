@@ -17,7 +17,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
 @Entity
-public class Page extends Tagged<String> {
+public class Page extends Tagged {
 
     @Id
     @EqualsAndHashCode.Include

@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,11 +17,7 @@ import static javax.persistence.FetchType.LAZY;
  */
 @Data
 @MappedSuperclass
-abstract public class Item<ID extends Serializable> {
-
-    abstract public ID getId();
-
-    abstract public void setId(ID id);
+abstract public class Item {
 
     private Date date;
 

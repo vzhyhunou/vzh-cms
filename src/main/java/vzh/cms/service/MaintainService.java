@@ -37,20 +37,20 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item<?>, ?> getRepository(Class<?> type) {
-        return (PagingAndSortingRepository<Item<?>, ?>) repositories.getRepositoryFor(type)
+    public PagingAndSortingRepository<Item, ?> getRepository(Class<Item> type) {
+        return (PagingAndSortingRepository<Item, ?>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Item<?> read(File file) throws IOException {
+    public Item read(File file) throws IOException {
         log.info("Read: {}", file);
-        Item<?> item = mapper.readValue(file, Wrapper.class).getItem();
+        Item item = mapper.readValue(file, Wrapper.class).getItem();
         fileService.save(item);
         return item;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void write(File file, Item<?> item) throws IOException {
+    public void write(File file, Item item) throws IOException {
         log.info("Write: {}", file);
         fileService.collect(item, true);
         file.getParentFile().mkdirs();
@@ -62,6 +62,6 @@ public class MaintainService {
     @Data
     private static class Wrapper {
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
-        private Item<?> item;
+        private Item item;
     }
 }

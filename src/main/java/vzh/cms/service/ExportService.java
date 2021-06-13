@@ -22,8 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static vzh.cms.service.LocationService.pathById;
-
 /**
  * @author Viktar Zhyhunou
  */
@@ -37,6 +35,8 @@ public class ExportService {
 
     private final MaintainService maintainService;
 
+    private final LocationService locationService;
+
     private ExportCmsProperties properties;
 
     @PostConstruct
@@ -45,16 +45,16 @@ public class ExportService {
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     public void export() throws IOException {
-        String path = properties.getPath();
-        SimpleDateFormat sdf = new SimpleDateFormat(properties.getPattern());
-        File p = new File(path, sdf.format(new Date()));
-        for (ResourceMetadata meta : mappings.filter(m -> Item.class.isAssignableFrom(m.getDomainType()))) {
-            File dir = new File(p, meta.getRel().value());
-            PagingAndSortingRepository<Item<?>, ?> repository = maintainService.getRepository(meta.getDomainType());
+        String date = new SimpleDateFormat(properties.getPattern()).format(new Date());
+        File path = new File(properties.getPath(), date);
+        for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
+            PagingAndSortingRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) type);
             for (int i = 0; i < repository.count(); i++) {
-                for (Item<?> item : repository.findAll(PageRequest.of(i, 1))) {
-                    maintainService.write(new File(dir, String.format("%s.json", pathById(item))), item);
+                for (Item item : repository.findAll(PageRequest.of(i, 1))) {
+                    String child = String.format("%s.json", locationService.location(item));
+                    maintainService.write(new File(path, child), item);
                 }
             }
         }

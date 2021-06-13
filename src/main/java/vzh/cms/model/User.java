@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Data
 @ToString
 @Entity
-public class User extends Tagged<String> {
+public class User extends Tagged {
 
     @Id
     @EqualsAndHashCode.Include
