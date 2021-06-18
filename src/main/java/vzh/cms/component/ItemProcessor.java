@@ -14,13 +14,13 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
-public class ItemProcessor implements RepresentationModelProcessor<EntityModel<Item<?>>> {
+public class ItemProcessor implements RepresentationModelProcessor<EntityModel<Item>> {
 
     private final FileService fileService;
 
     @Override
-    public EntityModel<Item<?>> process(EntityModel<Item<?>> model) {
-        Item<?> item = model.getContent();
+    public EntityModel<Item> process(EntityModel<Item> model) {
+        Item item = model.getContent();
         try {
             fileService.collect(item, false);
         } catch (IOException e) {

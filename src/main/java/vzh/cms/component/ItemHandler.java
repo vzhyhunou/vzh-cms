@@ -31,7 +31,7 @@ public class ItemHandler {
 
     @HandleBeforeCreate
     @HandleBeforeSave
-    public void save(Item<?> item) throws IOException {
+    public void save(Item item) throws IOException {
         item.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         item.setDate(new Date());
         if (!HttpMethod.PATCH.matches(request.getMethod())) {
@@ -40,7 +40,7 @@ public class ItemHandler {
     }
 
     @HandleAfterDelete
-    public void delete(Item<?> item) throws IOException {
+    public void delete(Item item) throws IOException {
         item.getFiles().clear();
         fileService.clean(item);
     }

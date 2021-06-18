@@ -44,7 +44,7 @@ public class FileService {
         path = cmsProperties.getFiles().getPath();
     }
 
-    public void save(Item<?> item) throws IOException {
+    public void save(Item item) throws IOException {
         clean(item);
         File dir = location(item);
         for (Base64File file : item.getFiles()) {
@@ -57,7 +57,7 @@ public class FileService {
         }
     }
 
-    public Set<Base64File> collect(Item<?> item, boolean addFiles) throws IOException {
+    public Set<Base64File> collect(Item item, boolean addFiles) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         if (exists(dir)) {
             try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
@@ -76,7 +76,7 @@ public class FileService {
         return item.getFiles();
     }
 
-    public void clean(Item<?> item) throws IOException {
+    public void clean(Item item) throws IOException {
         Path dir = Paths.get(location(item).getPath());
         if (exists(dir)) {
             boolean matched = false;
@@ -96,7 +96,7 @@ public class FileService {
         }
     }
 
-    private File location(Item<?> item) {
+    private File location(Item item) {
         return new File(path, locationService.location(item));
     }
 }

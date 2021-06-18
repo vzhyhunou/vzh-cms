@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.MappedSuperclass;
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @MappedSuperclass
-abstract public class Tagged<ID extends Serializable> extends Item<ID> {
+abstract public class Tagged extends Item {
 
     @ElementCollection
     @Column(name = "tag")
