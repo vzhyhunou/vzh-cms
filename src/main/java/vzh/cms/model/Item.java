@@ -38,4 +38,8 @@ abstract public class Item {
 
     @Transient
     private Set<Base64File> files = new HashSet<>();
+
+    public Object[] getParents() {
+        return new Object[]{};
+    }
 }
