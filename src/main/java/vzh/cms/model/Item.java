@@ -39,7 +39,10 @@ abstract public class Item {
     @Transient
     private Set<Base64File> files = new HashSet<>();
 
-    public Object[] getParents() {
+    public Object[] parents() {
         return new Object[]{};
     }
+
+    @Transient
+    private Object[] parents;
 }

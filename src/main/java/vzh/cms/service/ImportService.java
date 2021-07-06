@@ -52,7 +52,8 @@ public class ImportService {
                     imp(path, full);
                 } else {
                     Item item = maintainService.read(path.toFile());
-                    maintainService.getRepository((Class<Item>) item.getClass()).save(full ? item : getInstanceWithId(item));
+                    maintainService.getRepository((Class<Item>) item.getClass())
+                            .save(full ? item : getInstanceWithId(item));
                 }
             }
         }
