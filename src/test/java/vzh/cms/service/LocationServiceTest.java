@@ -50,13 +50,13 @@ public class LocationServiceTest {
         Item item = new Item() {
             @Override
             public Object[] getParents() {
-                return new Object[]{1, "2"};
+                return new Object[]{1, "2.3"};
             }
         };
 
         String result = service.location(item);
 
-        assertThat(result).isEqualTo("resource/1/2/a/b");
+        assertThat(result).isEqualTo("resource/1/2/3/a/b");
         verifyNoMoreInteractions(meta, rel, util);
     }
 }

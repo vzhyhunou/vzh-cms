@@ -161,7 +161,7 @@ describe('upload', () => {
         const request = {
             data: {
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
                         rawFile: new File([], "abc"),
@@ -187,7 +187,7 @@ describe('upload', () => {
         const expectedRequest = {
             data: {
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
                         data: "abc",
@@ -199,9 +199,9 @@ describe('upload', () => {
                     }
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
-                content: "<img src=\"/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
             }
         }
 
@@ -292,7 +292,7 @@ describe('upload', () => {
         const response = {
             data: {
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -304,15 +304,15 @@ describe('upload', () => {
         const expectedResponse = {
             data: {
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
-                        src: "/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
-                    src: "/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 }
             }
@@ -380,7 +380,7 @@ describe('upload', () => {
         const response = {
             data: [{
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
@@ -392,15 +392,15 @@ describe('upload', () => {
         const expectedResponse = {
             data: [{
                 id: "sample.1",
-                parents: [2, "3"],
+                parents: [2, "3.4"],
                 files: [
                     {
-                        src: "/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: {
-                    src: "/static/origin/items/2/3/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 }
             }]
