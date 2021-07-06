@@ -49,7 +49,7 @@ public class LocationServiceTest {
 
         Item item = new Item() {
             @Override
-            public Object[] getParents() {
+            public Object[] parents() {
                 return new Object[]{1, "2.3"};
             }
         };
