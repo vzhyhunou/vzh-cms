@@ -146,4 +146,4 @@ const process = files => [...new Set(files.map(f => f.name))]
         previews: f.map(f => f.preview)
     }));
 
-const pathByData = s => (s.parents ? s.parents.join('/') + '/' : '') + s.id.replace(/\./g, '/');
+const pathByData = s => ((s.parents ? s.parents.join('/') + '/' : '') + s.id).replace(/\./g, '/');
