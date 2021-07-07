@@ -43,7 +43,9 @@ export default props => {
         exporter={false}
     >
         <Datagrid>
-            <LinkField/>
+            <LinkField
+                source="id"
+            />
             <TextField
                 source={`properties.${locale}.title`}
                 sortable={false}
