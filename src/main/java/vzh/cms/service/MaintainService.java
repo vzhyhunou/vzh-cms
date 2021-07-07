@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.support.Repositories;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Id;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * @author Viktar Zhyhunou
@@ -42,13 +46,23 @@ public class MaintainService {
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Item read(File file, boolean saveFiles) throws IOException {
+    @SuppressWarnings("unchecked")
+    public Item read(File file, boolean full) throws Exception {
         log.info("Read: {}", file);
         Item item = mapper.readValue(file, Wrapper.class).getItem();
-        if (saveFiles) {
+        if (full) {
             fileService.save(item);
+            return item;
+        } else {
+            Item instance = ((Class<Item>) item.getClass()).newInstance();
+            BeanWrapperImpl src = new BeanWrapperImpl(item);
+            BeanWrapperImpl dst = new BeanWrapperImpl(instance);
+            Arrays.stream(item.getClass().getDeclaredFields())
+                    .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
+                    .map(Field::getName)
+                    .forEach(n -> dst.setPropertyValue(n, src.getPropertyValue(n)));
+            return instance;
         }
-        return item;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
