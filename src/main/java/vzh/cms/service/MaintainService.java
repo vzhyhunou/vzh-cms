@@ -46,23 +46,14 @@ public class MaintainService {
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    @SuppressWarnings("unchecked")
     public Item read(File file, boolean full) throws Exception {
         log.info("Read: {}", file);
         Item item = mapper.readValue(file, Wrapper.class).getItem();
-        if (full) {
-            fileService.save(item);
-            return item;
-        } else {
-            Item instance = ((Class<Item>) item.getClass()).newInstance();
-            BeanWrapperImpl src = new BeanWrapperImpl(item);
-            BeanWrapperImpl dst = new BeanWrapperImpl(instance);
-            Arrays.stream(item.getClass().getDeclaredFields())
-                    .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
-                    .map(Field::getName)
-                    .forEach(n -> dst.setPropertyValue(n, src.getPropertyValue(n)));
-            return instance;
+        if (!full) {
+            return getInstanceWithId(item);
         }
+        fileService.save(item);
+        return item;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -79,5 +70,17 @@ public class MaintainService {
     private static class Wrapper {
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
         private Item item;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Item getInstanceWithId(Item item) throws Exception {
+        Item instance = ((Class<Item>) item.getClass()).newInstance();
+        BeanWrapperImpl src = new BeanWrapperImpl(item);
+        BeanWrapperImpl dst = new BeanWrapperImpl(instance);
+        Arrays.stream(item.getClass().getDeclaredFields())
+                .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
+                .map(Field::getName)
+                .forEach(n -> dst.setPropertyValue(n, src.getPropertyValue(n)));
+        return instance;
     }
 }
