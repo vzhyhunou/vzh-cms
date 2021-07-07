@@ -42,10 +42,12 @@ public class MaintainService {
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
-    public Item read(File file) throws IOException {
+    public Item read(File file, boolean saveFiles) throws IOException {
         log.info("Read: {}", file);
         Item item = mapper.readValue(file, Wrapper.class).getItem();
-        fileService.save(item);
+        if (saveFiles) {
+            fileService.save(item);
+        }
         return item;
     }
 
