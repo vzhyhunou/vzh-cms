@@ -51,7 +51,7 @@ public class ImportService {
                 if (path.toFile().isDirectory()) {
                     imp(path, full);
                 } else {
-                    Item item = maintainService.read(path.toFile());
+                    Item item = maintainService.read(path.toFile(), full);
                     maintainService.getRepository((Class<Item>) item.getClass())
                             .save(full ? item : getInstanceWithId(item));
                 }
