@@ -1,5 +1,6 @@
 package vzh.cms.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -31,13 +32,17 @@ public class MaintainService {
 
     private final FileService fileService;
 
-    private final ObjectMapper mapper;
+    private final ObjectMapper objectMapper;
 
     private Repositories repositories;
+
+    private ObjectMapper mapper;
 
     @PostConstruct
     private void postConstruct() {
         repositories = new Repositories(factory);
+        mapper = objectMapper.copy();
+        mapper.addMixIn(Item.class, ItemMixIn.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -70,6 +75,11 @@ public class MaintainService {
     private static class Wrapper {
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
         private Item item;
+    }
+
+    private interface ItemMixIn {
+        @JsonIgnore
+        Object[] getParents();
     }
 
     @SuppressWarnings("unchecked")

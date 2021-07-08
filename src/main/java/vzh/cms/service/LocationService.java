@@ -26,7 +26,7 @@ public class LocationService {
         String resource = mappings.getMetadataFor(item.getClass())
                 .getRel()
                 .value();
-        String path = Arrays.stream(item.parents())
+        String path = Arrays.stream(item.getParents())
                 .map(Object::toString)
                 .collect(Collectors.joining(separator));
         String id = factory.getPersistenceUnitUtil()
