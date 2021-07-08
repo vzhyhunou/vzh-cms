@@ -29,8 +29,8 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             ...filter
         };
         return httpClient(`${apiUrl}/${resource}/search/list?${stringify(query)}`, options).then(({json}) => ({
-            data: json._embedded ? json._embedded[resource] : [],
-            total: json.page.totalElements
+            data: json.content ? json.content : [],
+            total: json.totalElements
         }));
     },
 

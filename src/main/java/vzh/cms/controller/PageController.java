@@ -1,11 +1,9 @@
 package vzh.cms.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,12 +32,10 @@ public class PageController {
 
     private final PageRepository repository;
 
-    private final PagedResourcesAssembler<RowPage> assembler;
-
     @ResponseBody
     @GetMapping("search/list")
-    public PagedModel<EntityModel<RowPage>> list(PageFilter filter, Pageable pageable) {
-        return assembler.toModel(repository.list(filter, pageable));
+    public Page<RowPage> list(PageFilter filter, Pageable pageable) {
+        return repository.list(filter, pageable);
     }
 
     @ResponseBody
