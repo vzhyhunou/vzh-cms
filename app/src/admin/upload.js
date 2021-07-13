@@ -109,8 +109,9 @@ const analyze = (resource, item) => {
 };
 
 const analyzeFiles = (resource, files, data) => {
+    const path = pathByData(resource, data);
     files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
-        src: `/static/origin/${resource}/${pathByData(data)}/${name}`,
+        src: `${path}/${name}`,
         title: name
     })));
     return data;
@@ -123,9 +124,10 @@ const replaceFiles = (data, files) => {
 
 const replaceSrc = (resource, data, files) => {
     let s = JSON.stringify(data);
+    const path = pathByData(resource, data);
     files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
         new RegExp(preview, 'g'),
-        `/static/origin/${resource}/${pathByData(data)}/${name}`
+        `${path}/${name}`
     ))));
     return JSON.parse(s);
 };
@@ -146,4 +148,8 @@ const process = files => [...new Set(files.map(f => f.name))]
         previews: f.map(f => f.preview)
     }));
 
-const pathByData = s => ((s.parents ? s.parents.join('/') + '/' : '') + s.id).replace(/\./g, '/');
+const pathByData = (resource, data) => {
+    const {parents, id} = data;
+    const s = ((parents ? parents.join('/') + '/' : '') + id).replace(/\./g, '/');
+    return `/static/origin/${resource}/${s}`;
+};
