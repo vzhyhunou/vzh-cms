@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Index;
 import javax.persistence.MappedSuperclass;
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ abstract public class Tagged extends Item {
 
     @ElementCollection
     @Column(name = "tag")
-    @CollectionTable
+    @CollectionTable(indexes = @Index(columnList = "name"))
     @Valid
     private Set<Tag> tags = new HashSet<>();
 }
