@@ -37,6 +37,8 @@ public class ExportService {
 
     private final LocationService locationService;
 
+    private final FileService fileService;
+
     private ExportCmsProperties properties;
 
     @PostConstruct
@@ -53,6 +55,7 @@ public class ExportService {
             PagingAndSortingRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) type);
             for (int i = 0; i < repository.count(); i++) {
                 for (Item item : repository.findAll(PageRequest.of(i, 1))) {
+                    fileService.collect(item, true);
                     String child = String.format("%s.json", locationService.location(item));
                     maintainService.write(new File(path, child), item);
                 }
