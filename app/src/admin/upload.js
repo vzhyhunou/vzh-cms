@@ -30,6 +30,12 @@ export default dataProvider => ({
         dataProvider.getList(resource, params).then(response => ({
             ...response,
             data: response.data.map(item => analyze(resource, item))
+        })),
+
+    getMany: (resource, params) =>
+        dataProvider.getMany(resource, params).then(response => ({
+            ...response,
+            data: response.data.map(item => analyze(resource, item))
         }))
 });
 
