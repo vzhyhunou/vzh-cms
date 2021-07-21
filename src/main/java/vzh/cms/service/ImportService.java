@@ -2,7 +2,6 @@ package vzh.cms.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
 import vzh.cms.config.property.ImportCmsProperties;
@@ -47,7 +46,6 @@ public class ImportService {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void imp(Path dir, boolean full) throws Exception {
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
             for (Path path : paths) {
@@ -55,13 +53,12 @@ public class ImportService {
                     imp(path, full);
                 } else {
                     Item item = maintainService.read(path.toFile());
-                    PagingAndSortingRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) item.getClass());
                     if (full) {
-                        Item entity = repository.save(item);
+                        Item entity = maintainService.getRepository(item).save(item);
                         entity.getFiles().addAll(item.getFiles());
                         fileService.save(entity);
                     } else {
-                        repository.save(getInstanceWithId(item));
+                        maintainService.getRepository(item).save(getInstanceWithId(item));
                     }
                 }
             }
