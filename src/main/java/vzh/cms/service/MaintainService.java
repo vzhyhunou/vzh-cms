@@ -40,8 +40,8 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item, ?> getRepository(Class<Item> type) {
-        return (PagingAndSortingRepository<Item, ?>) repositories.getRepositoryFor(type)
+    public PagingAndSortingRepository<Item, Object> getRepository(Class<Item> type) {
+        return (PagingAndSortingRepository<Item, Object>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 

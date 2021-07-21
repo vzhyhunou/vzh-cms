@@ -29,9 +29,11 @@ public class LocationService {
         String path = Arrays.stream(item.getParents())
                 .map(Object::toString)
                 .collect(Collectors.joining(separator));
-        String id = factory.getPersistenceUnitUtil()
-                .getIdentifier(item)
-                .toString();
+        String id = getIdentifier(item).toString();
         return (resource + separator + path + separator + id).replace(".", separator);
+    }
+
+    public Object getIdentifier(Object entity) {
+        return factory.getPersistenceUnitUtil().getIdentifier(entity);
     }
 }
