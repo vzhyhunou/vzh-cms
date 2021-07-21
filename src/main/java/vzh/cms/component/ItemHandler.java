@@ -87,11 +87,10 @@ public class ItemHandler {
         fileService.clean(item);
     }
 
-    @SuppressWarnings("unchecked")
     private Item find(Item item) {
         entityManager.detach(item);
         return Optional.ofNullable(locationService.getIdentifier(item))
-                .flatMap(id -> maintainService.getRepository((Class<Item>) item.getClass()).findById(id))
+                .flatMap(id -> maintainService.getRepository(item).findById(id))
                 .orElse(null);
     }
 }
