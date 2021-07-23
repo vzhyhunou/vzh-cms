@@ -166,7 +166,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
-        filter.setTitle("mE.E");
+        filter.setTitle("mE.R");
 
         org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
 

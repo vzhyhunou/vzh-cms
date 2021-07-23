@@ -21,7 +21,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,13 +36,12 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
     @Override
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
-            Subquery<Page> subquery = q.subquery(Page.class);
-            Root<Page> p = subquery.from(Page.class);
             if (Long.class != q.getResultType()) {
                 root.fetch(Page_.PROPERTIES, JoinType.LEFT);
                 root.fetch(Tagged_.TAGS, JoinType.LEFT);
             }
-            return root.in(subquery.select(p).where(filter(p, b, filter)));
+            q.distinct(true);
+            return filter(root, b, filter);
         }, RowPage.class, pageable);
     }
 

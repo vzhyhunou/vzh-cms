@@ -17,7 +17,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.util.Optional;
 
 /**
@@ -32,12 +31,11 @@ class UserRepositoryImpl extends TaggedRepositoryImpl<User, String> implements C
     @Override
     public Page<RowUser> list(UserFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
-            Subquery<User> subquery = q.subquery(User.class);
-            Root<User> p = subquery.from(User.class);
             if (Long.class != q.getResultType()) {
                 root.fetch(Tagged_.TAGS, JoinType.LEFT);
             }
-            return root.in(subquery.select(p).where(filter(p, b, filter)));
+            q.distinct(true);
+            return filter(root, b, filter);
         }, RowUser.class, pageable);
     }
 
