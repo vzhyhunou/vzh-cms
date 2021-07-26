@@ -9,6 +9,6 @@ public interface TitlePage {
 
     String getId();
 
-    @Value("#{target.properties[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].title}")
+    @Value("#{target.title[T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
     String getTitle();
 }

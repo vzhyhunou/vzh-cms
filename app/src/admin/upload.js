@@ -47,21 +47,22 @@ const upd = (resource, params, call) => {
             ...params.data,
             files: []
         }).includes(title)) : [];
+    const sanitizedData = {
+        ...params.data,
+        files: params.data.files ? params.data.files
+            .filter(({rawFile}) => rawFile)
+            .filter(({src}) => JSON.stringify({
+                ...params.data,
+                files: []
+            }).includes(src)) : []
+    };
 
     return Promise.all(
-        dumpKeysRecursively({
-            ...params.data,
-            files: params.data.files ? params.data.files
-               .filter(({rawFile}) => rawFile)
-               .filter(({src}) => JSON.stringify({
-                   ...params.data,
-                   files: []
-               }).includes(src)) : []
-        })
-        .filter(key => get(params.data, `${key}.rawFile`))
+        dumpKeysRecursively(sanitizedData)
+        .filter(key => get(sanitizedData, `${key}.rawFile`))
         .map(key =>
             convertFileToBase64(
-                get(params.data, key)
+                get(sanitizedData, key)
             ).then(
                 picture64 => ({
                     data: picture64.match(/,(.*)/)[1],
@@ -73,7 +74,7 @@ const upd = (resource, params, call) => {
                     type,
                     key,
                     name: `${md5(data)}.${type}`,
-                    preview: get(params.data, `${key}.src`)
+                    preview: get(sanitizedData, `${key}.src`)
                 })
             )
         )
@@ -84,9 +85,9 @@ const upd = (resource, params, call) => {
             call(resource, {
                 ...params,
                 data: {
-                    ...replaceFiles(params.data, transformedNewFiles),
-                    ...replaceFields(params.data, formerFiles),
-                    ...replaceSrc(resource, params.data, transformedNewFiles),
+                    ...replaceFiles(sanitizedData, transformedNewFiles),
+                    ...replaceFields(sanitizedData, formerFiles),
+                    ...replaceSrc(resource, sanitizedData, transformedNewFiles),
                     files: [
                         ...transformedNewFiles.map(({data, name}) => ({data, name})),
                         ...formerFiles.map(({title}) => ({name: title}))

@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default () => {
+export default props => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -47,6 +47,7 @@ export default () => {
         <Bar
             open={open}
             handleDrawerOpen={() => setOpen(true)}
+            {...props}
         />
         <div className={classNames(classes.content, {
             [classes.contentShift]: open,

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,5 +27,11 @@ public class Page extends Tagged {
     @ElementCollection
     @MapKeyColumn(name = "lang", length = 2)
     @CollectionTable
-    private Map<String, PageProperty> properties = new HashMap<>();
+    private Map<String, String> title = new HashMap<>();
+
+    @ElementCollection
+    @MapKeyColumn(name = "lang", length = 2)
+    @CollectionTable
+    @Column(columnDefinition = "TEXT")
+    private Map<String, String> content = new HashMap<>();
 }

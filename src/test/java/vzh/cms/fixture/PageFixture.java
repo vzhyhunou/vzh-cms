@@ -5,8 +5,6 @@ import vzh.cms.model.Tag;
 
 import java.util.Arrays;
 
-import static vzh.cms.fixture.PagePropertyFixture.property;
-
 public class PageFixture {
 
     public static Page withTags(String id, Tag... tags) {
@@ -25,11 +23,10 @@ public class PageFixture {
     }
 
     private static void createProperties(Page page, String... langs) {
-        Arrays.stream(langs).forEach(l ->
-                page.getProperties().put(l, property(
-                        String.format("%s.%s.title", page.getId(), l),
-                        String.format("%s.%s.content", page.getId(), l)
-                ))
+        Arrays.stream(langs).forEach(l -> {
+                    page.getTitle().put(l, String.format("%s.%s.title", page.getId(), l));
+                    page.getContent().put(l, String.format("%s.%s.content", page.getId(), l));
+                }
         );
     }
 }

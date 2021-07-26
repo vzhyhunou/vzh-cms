@@ -33,13 +33,9 @@ export default {
                 date: 'Update',
                 userId: 'User',
                 tags: 'Tags',
-                properties: {
-                    en: {
-                        title: 'Title',
-                        content: 'Content'
-                    }
-                },
-                files: 'Pictures'
+                title: 'Title',
+                content: 'Content',
+                images: 'Pictures'
             }
         },
         users: {

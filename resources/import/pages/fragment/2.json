@@ -7,15 +7,13 @@
         "name": "PUBLISHED"
       }
     ],
-    "properties": {
-      "ru": {
-        "title": "Фрагмент 2",
-        "content": "<p>Фрагмент 2</p>\n\t<page id=\"fragment.3\"></page>"
-      },
-      "en": {
-        "title": "Fragment 2",
-        "content": "<p>Fragment 2</p>\n\t<page id=\"fragment.3\"></page>"
-      }
+    "title": {
+      "ru": "Фрагмент 2",
+      "en": "Fragment 2"
+    },
+    "content": {
+      "ru": "<p>Фрагмент 2</p>\n\t<page id=\"fragment.3\"></page>",
+      "en": "<p>Fragment 2</p>\n\t<page id=\"fragment.3\"></page>"
     }
   }
 }

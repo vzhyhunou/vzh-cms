@@ -10,11 +10,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
-import {useLocale, usePermissions} from 'react-admin';
+import {usePermissions} from 'react-admin';
 import {Link} from 'react-router-dom';
 
 import LocaleInput from './LocaleInput';
-import {useLocales} from './AppContext';
 import {EDITOR} from './roles';
 
 const drawerWidth = 240;
@@ -42,10 +41,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default ({open, handleDrawerOpen}) => {
+export default ({open, handleDrawerOpen, resource, id}) => {
 
-    const locales = useLocales();
-    const locale = useLocale();
     const {permissions} = usePermissions();
     const classes = useStyles();
 
@@ -75,7 +72,7 @@ export default ({open, handleDrawerOpen}) => {
                     ? <IconButton
                         color="inherit"
                         component={Link}
-                        to={`/pages/${window.location.pathname.split('/')[3]}/${Object.keys(locales).indexOf(locale) + 2}`}
+                        to={`/${resource}/${id}`}
                     >
                         <EditIcon/>
                     </IconButton>
