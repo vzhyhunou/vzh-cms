@@ -153,6 +153,78 @@ describe('upload', () => {
         })
     })
 
+    it('should modify request data with existing files in request', () => {
+        expect.assertions(2)
+
+        window.FileReader = MockFileReader
+
+        const request = {
+            data: {
+                id: "sample.1",
+                files: [
+                    {
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f71.png",
+                        title: "900150983cd24fb0d6963f7d28e17f71.png"
+                    },
+                    {
+                        rawFile: new File([], "abc"),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
+                    },
+                    {
+                        rawFile: new File([], "abc"),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
+                    },
+                    {
+                        rawFile: new File([], "abe"),
+                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
+                    }
+                ],
+                file: {
+                    rawFile: new File([], "abf")
+                },
+                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
+                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+            }
+        }
+        const expectedRequest = {
+            data: {
+                id: "sample.1",
+                files: [
+                    {
+                        data: "abc",
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        data: "abf",
+                        name: "ff905c528ce7ce9e64c0758b54855b50.png"
+                    },
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f71.png"
+                    }
+                ],
+                file: "ff905c528ce7ce9e64c0758b54855b50.png",
+                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+            }
+        }
+
+        const response = {}
+
+        return addUploadFeature({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
+            expect(r).toEqual(response)
+        })
+    })
+
     it('should modify request data with parents', () => {
         expect.assertions(2)
 
