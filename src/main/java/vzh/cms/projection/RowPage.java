@@ -11,10 +11,6 @@ public interface RowPage extends RowTagged {
 
     String getId();
 
-    @Value("#{target.properties.?[key == T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
-    Map<String, Property> getProperties();
-
-    interface Property {
-        String getTitle();
-    }
+    @Value("#{target.title.?[key == T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
+    Map<String, String> getTitle();
 }

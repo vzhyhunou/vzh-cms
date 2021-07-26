@@ -8,12 +8,11 @@ import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import classnames from 'classnames';
-import { useInput, useTranslate, Labeled, InputHelperText } from 'react-admin';
+import { useInput, useTranslate, Labeled, InputHelperText, useTranslatableContext } from 'react-admin';
 import { useForm, useFormState } from 'react-final-form';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
-import {useLocales} from '../../commons/AppContext';
 
 const useStyles = makeStyles(
     theme => ({
@@ -57,11 +56,12 @@ const ContentFileInput = props => {
         validate,
         ...rest
     } = props;
-    const locales = useLocales();
     const translate = useTranslate();
     const classes = useStyles(props);
     const form = useForm();
-    const formState = useFormState();
+    const {values} = useFormState();
+    const {content} = values;
+    const {selectedLocale} = useTranslatableContext();
 
     const transformFile = file => {
         if (!(file instanceof File)) {
@@ -127,9 +127,8 @@ const ContentFileInput = props => {
 
     const onAdd = file => () => {
         const { source } = Children.only(children).props;
-        const locale = Object.keys(locales)[window.location.pathname.split('/')[3] - 2];
 
-        form.change(`properties.${locale}.content`, `${formState.values.properties[locale].content}\n<img src="${file[source]}"/>`);
+        form.change(`content.${selectedLocale}`, `${content[selectedLocale]}\n<img src="${file[source]}"/>`);
     };
 
     const onRemove = file => () => {

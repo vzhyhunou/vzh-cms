@@ -7,15 +7,13 @@
         "name": "PUBLISHED"
       }
     ],
-    "properties": {
-      "ru": {
-        "title": "Не найдено",
-        "content": "<div class=\"starter\">\n\t<h1>Страница не найдена</h1>\n</div>"
-      },
-      "en": {
-        "title": "Not found",
-        "content": "<div class=\"starter\">\n\t<h1>Page not found</h1>\n</div>"
-      }
+    "title": {
+      "ru": "Не найдено",
+      "en": "Not found"
+    },
+    "content": {
+      "ru": "<div class=\"starter\">\n\t<h1>Страница не найдена</h1>\n</div>",
+      "en": "<div class=\"starter\">\n\t<h1>Page not found</h1>\n</div>"
     }
   }
 }

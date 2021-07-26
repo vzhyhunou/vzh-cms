@@ -14,8 +14,8 @@ import LinkField from '../field/LinkField';
 import TagsFilter from '../input/TagsFilter';
 import BulkActionButtons from '../button/BulkActionButtons';
 
-const PageFilter = ({locale, ...rest}) =>
-    <Filter {...rest}>
+const PageFilter = props =>
+    <Filter {...props}>
         <TextInput
             source="id"
             alwaysOn
@@ -23,11 +23,9 @@ const PageFilter = ({locale, ...rest}) =>
         <TagsFilter/>
         <TextInput
             source="title"
-            label={`resources.pages.fields.properties.${locale}.title`}
         />
         <TextInput
             source="content"
-            label={`resources.pages.fields.properties.${locale}.content`}
         />
     </Filter>
 ;
@@ -38,7 +36,7 @@ export default props => {
 
     return <List
         {...props}
-        filters={<PageFilter locale={locale}/>}
+        filters={<PageFilter/>}
         bulkActionButtons={<BulkActionButtons/>}
         exporter={false}
     >
@@ -47,7 +45,8 @@ export default props => {
                 source="id"
             />
             <TextField
-                source={`properties.${locale}.title`}
+                source={`title.${locale}`}
+                label="resources.pages.fields.title"
                 sortable={false}
             />
             <TagsField

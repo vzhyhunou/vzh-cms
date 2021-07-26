@@ -2,59 +2,51 @@ import React from 'react';
 import {
     Create,
     FormTab,
-    ImageField,
     TabbedForm,
     TextInput,
-    useLocale,
+    TranslatableInputs,
     required
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
-import ContentImageInput from '../input/ContentImageInput';
 import {useIdValidation} from '../validation';
+import Images from './Images';
 
 export default props => {
 
-    const locale = useLocale();
     const locales = useLocales();
     const validateId = useIdValidation(props);
 
-    return <Create {...props}>
+    const transform = ({images, ...rest}) => ({
+        ...rest,
+        files: Object.values(images).flat()
+    });
+
+    return <Create {...props} {...{transform}}>
         <TabbedForm>
             <FormTab label="pos.general">
                 <TextInput
                     source="id"
                     validate={[required(), validateId]}
                 />
-            </FormTab>
-            <FormTab label="resources.pages.fields.tags">
-                <TagsInput/>
-            </FormTab>
-            {Object.keys(locales).map(l =>
-                <FormTab key={l} label={l}>
+                <TranslatableInputs locales={Object.keys(locales)}>
                     <TextInput
-                        source={`properties.${l}.title`}
-                        label={`resources.pages.fields.properties.${locale}.title`}
+                        source="title"
                     />
                     <TextInput
                         multiline
                         fullWidth
-                        source={`properties.${l}.content`}
-                        label={`resources.pages.fields.properties.${locale}.content`}
+                        source="content"
                     />
-                    <ContentImageInput
-                        multiple
-                        source="files"
-                        accept="image/*"
-                    >
-                        <ImageField
-                            source="src"
-                            title="title"
-                        />
-                    </ContentImageInput>
-                </FormTab>
-            )}
+                    <Images
+                        source="images"
+                    />
+                </TranslatableInputs>
+            </FormTab>
+            <FormTab label="resources.pages.fields.tags">
+                <TagsInput/>
+            </FormTab>
         </TabbedForm>
     </Create>;
 };
