@@ -3,16 +3,22 @@ import React, {
     cloneElement,
     isValidElement
 } from 'react';
-import { shallowEqual } from 'recompose';
+import { shallowEqual } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import classnames from 'classnames';
-import { useInput, useTranslate, Labeled, InputHelperText, useTranslatableContext } from 'react-admin';
+import {
+    useInput,
+    useTranslate,
+    Labeled,
+    InputHelperText,
+    useTranslatableContext,
+    sanitizeInputRestProps
+} from 'react-admin';
 import { useForm, useFormState } from 'react-final-form';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
-import sanitizeRestProps from './sanitizeRestProps';
 
 const useStyles = makeStyles(
     theme => ({
@@ -63,6 +69,7 @@ const ContentFileInput = props => {
     const {content} = values;
     const {selectedLocale} = useTranslatableContext();
 
+    // turn a browser dropped file structure into expected structure
     const transformFile = file => {
         if (!(file instanceof File)) {
             return file;
@@ -108,7 +115,7 @@ const ContentFileInput = props => {
         validate,
         ...rest,
     });
-    const { touched, error } = meta;
+    const { touched, error, submitError } = meta;
     const files = value ? (Array.isArray(value) ? value : [value]) : [];
 
     const onDrop = (newFiles, rejectedFiles, event) => {
@@ -146,9 +153,10 @@ const ContentFileInput = props => {
         }
     };
 
-    const childrenElement = isValidElement(Children.only(children))
-        ? Children.only(children)
-        : undefined;
+    const childrenElement =
+        children && isValidElement(Children.only(children))
+            ? Children.only(children)
+            : undefined;
 
     const { getRootProps, getInputProps } = useDropzone({
         ...options,
@@ -168,7 +176,7 @@ const ContentFileInput = props => {
             resource={resource}
             isRequired={isRequired}
             meta={meta}
-            {...sanitizeRestProps(rest)}
+            {...sanitizeInputRestProps(rest)}
         >
             <>
                 <div
@@ -194,7 +202,7 @@ const ContentFileInput = props => {
                 <FormHelperText>
                     <InputHelperText
                         touched={touched}
-                        error={error}
+                        error={error || submitError}
                         helperText={helperText}
                     />
                 </FormHelperText>
