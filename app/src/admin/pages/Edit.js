@@ -15,18 +15,12 @@ import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import {MANAGER} from '../../commons/roles';
 import Images from './Images';
+import transform from './transform';
 
 export default props => {
 
     const locales = useLocales();
     const {permissions} = usePermissions();
-
-    const transform = ({images, ...rest}) =>
-        images ? {
-            ...rest,
-            files: Object.values(images).flat()
-        } : rest
-    ;
 
     return <Edit {...props} {...{transform}}>
         <TabbedForm>

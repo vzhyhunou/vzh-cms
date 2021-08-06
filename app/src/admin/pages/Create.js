@@ -12,18 +12,12 @@ import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import {useIdValidation} from '../validation';
 import Images from './Images';
+import transform from './transform';
 
 export default props => {
 
     const locales = useLocales();
     const validateId = useIdValidation(props);
-
-    const transform = ({images, ...rest}) =>
-        images ? {
-            ...rest,
-            files: Object.values(images).flat()
-        } : rest
-    ;
 
     return <Create {...props} {...{transform}}>
         <TabbedForm>
