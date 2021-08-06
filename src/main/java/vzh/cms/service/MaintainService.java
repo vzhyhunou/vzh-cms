@@ -51,13 +51,13 @@ public class MaintainService {
     }
 
     public Item read(File file) throws IOException {
-        log.info("Read: {}", file);
+        log.debug("Read: {}", file);
         return mapper.readValue(file, Wrapper.class).getItem();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void write(File file, Item item) throws IOException {
-        log.info("Write: {}", file);
+        log.debug("Write: {}", file);
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
         wrapper.setItem(item);

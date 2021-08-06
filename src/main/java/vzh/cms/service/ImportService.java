@@ -1,6 +1,7 @@
 package vzh.cms.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
@@ -21,6 +22,7 @@ import java.util.Arrays;
  * @author Viktar Zhyhunou
  */
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ImportService {
 
@@ -41,8 +43,11 @@ public class ImportService {
     public void imp() throws Exception {
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
+            log.info("Start import pass 1 ...");
             imp(path, false);
+            log.info("Start import pass 2 ...");
             imp(path, true);
+            log.info("End import");
         }
     }
 

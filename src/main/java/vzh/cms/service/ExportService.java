@@ -1,6 +1,7 @@
 package vzh.cms.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * @author Viktar Zhyhunou
  */
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ExportService {
 
@@ -50,6 +52,7 @@ public class ExportService {
     @SuppressWarnings("unchecked")
     public void export() throws IOException {
         String date = new SimpleDateFormat(properties.getPattern()).format(new Date());
+        log.info("Start export {} ...", date);
         File path = new File(properties.getPath(), date);
         for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
             PagingAndSortingRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) type);
@@ -61,10 +64,12 @@ public class ExportService {
                 }
             }
         }
+        log.info("End export");
         clean();
     }
 
     private void clean() throws IOException {
+        log.info("Start clean ...");
         Path path = Paths.get(properties.getPath());
         if (Files.exists(path)) {
             long limitDelete = Files.list(path).count() - properties.getLimit();
@@ -75,5 +80,6 @@ public class ExportService {
                 FileSystemUtils.deleteRecursively(p);
             }
         }
+        log.info("End clean");
     }
 }
