@@ -21,10 +21,12 @@ export default props => {
     const locales = useLocales();
     const {permissions} = usePermissions();
 
-    const transform = ({images, ...rest}) => ({
-        ...rest,
-        files: Object.values(images).flat()
-    });
+    const transform = ({images, ...rest}) =>
+        images ? {
+            ...rest,
+            files: Object.values(images).flat()
+        } : rest
+    ;
 
     return <Edit {...props} {...{transform}}>
         <TabbedForm>

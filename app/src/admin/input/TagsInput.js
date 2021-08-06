@@ -1,5 +1,11 @@
 import React from 'react';
-import {ArrayInput, DateTimeInput, SelectInput, SimpleFormIterator} from 'react-admin';
+import {
+    ArrayInput,
+    DateTimeInput,
+    SelectInput,
+    SimpleFormIterator,
+    required
+} from 'react-admin';
 import {makeStyles} from '@material-ui/core/styles';
 
 import {useGetMessages} from '../../commons/AppContext';
@@ -35,6 +41,7 @@ const TagsInput = ({addField, resource, ...rest}) => {
                     id: tag,
                     name: tags[tag]
                 }))}
+                validate={[required()]}
             />
             <DateTimeInput
                 className={controlClasses.root}
