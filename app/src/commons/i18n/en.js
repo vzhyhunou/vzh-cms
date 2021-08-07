@@ -35,7 +35,7 @@ export default {
                 tags: 'Tags',
                 title: 'Title',
                 content: 'Content',
-                images: 'Pictures'
+                '@files.content': 'Images'
             }
         },
         users: {
