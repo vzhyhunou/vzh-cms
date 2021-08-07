@@ -103,25 +103,24 @@ const analyze = (resource, item) => {
         return item;
     }
 
-    const files = item.files.map(({name}) => ({
+    const fields = item.files.map(({name}) => ({
         name,
         keys: dumpKeysRecursively(item).filter(key => get(item, key) === name)
     }));
-    const analyzed = analyzeFiles(resource, files, item);
+    analyzeFiles(resource, fields, item);
 
     return {
-        ...analyzed,
-        files: analyzed.files.map(({name}) => name)
+        ...item,
+        files: item.files.map(({name}) => name)
     };
 };
 
-const analyzeFiles = (resource, files, data) => {
+const analyzeFiles = (resource, fields, data) => {
     const path = pathByData(resource, data);
-    files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
+    fields.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
         src: `${path}/${name}`,
         title: name
     })));
-    return data;
 };
 
 const replaceFiles = (data, files) => {
