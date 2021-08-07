@@ -60,7 +60,17 @@ describe('upload', () => {
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
-                extra: undefined
+                extra: undefined,
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                                title: "900150983cd24fb0d6963f7d28e17f73.png"
+                            }
+                        ]
+                    }
+                }
             }
         }
         const expectedRequest = {
@@ -113,11 +123,25 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf"),
+                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
                 },
-                content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                content: {
+                    en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bg\"/>"
+                },
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                rawFile: new File([], "abg"),
+                                src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bg"
+                            }
+                        ]
+                    }
+                }
             }
         }
         const expectedRequest = {
@@ -131,12 +155,19 @@ describe('upload', () => {
                     {
                         data: "abf",
                         name: "ff905c528ce7ce9e64c0758b54855b50.png"
+                    },
+                    {
+                        data: "abg",
+                        name: "894852696ee75656ba33c03041b1fa7f.png"
                     }
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
-                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/894852696ee75656ba33c03041b1fa7f.png\"/>"
+                }
             }
         }
 
@@ -180,12 +211,15 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf"),
+                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
                 },
-                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                }
             }
         }
         const expectedRequest = {
@@ -205,10 +239,12 @@ describe('upload', () => {
                     }
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
-                content: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
-                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                }
             }
         }
 
@@ -249,11 +285,14 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf"),
+                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
                 },
-                content: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                content: {
+                    en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
+                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                }
             }
         }
         const expectedRequest = {
@@ -271,9 +310,11 @@ describe('upload', () => {
                     }
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
-                content: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                content: {
+                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                }
             }
         }
 
@@ -324,9 +365,15 @@ describe('upload', () => {
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                }
             }
         }
         const expectedResponse = {
@@ -336,11 +383,28 @@ describe('upload', () => {
                     {
                         src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
                     src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
+                },
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                },
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                                title: "900150983cd24fb0d6963f7d28e17f73.png"
+                            }
+                        ]
+                    }
                 }
             }
         }
@@ -368,9 +432,15 @@ describe('upload', () => {
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: {
+                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                }
             }
         }
         const expectedResponse = {
@@ -381,11 +451,28 @@ describe('upload', () => {
                     {
                         src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
                     src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
+                },
+                content: {
+                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                },
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                                title: "900150983cd24fb0d6963f7d28e17f73.png"
+                            }
+                        ]
+                    }
                 }
             }
         }
@@ -412,9 +499,15 @@ describe('upload', () => {
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                }
             }]
         }
         const expectedResponse = {
@@ -424,11 +517,28 @@ describe('upload', () => {
                     {
                         src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
                     src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
+                },
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                },
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                                title: "900150983cd24fb0d6963f7d28e17f73.png"
+                            }
+                        ]
+                    }
                 }
             }]
         }
@@ -456,9 +566,15 @@ describe('upload', () => {
                 files: [
                     {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        name: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
-                file: "900150983cd24fb0d6963f7d28e17f72.png"
+                file: "900150983cd24fb0d6963f7d28e17f72.png",
+                content: {
+                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                }
             }]
         }
         const expectedResponse = {
@@ -469,11 +585,28 @@ describe('upload', () => {
                     {
                         src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
+                    },
+                    {
+                        src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                        title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
                     src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
+                },
+                content: {
+                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                },
+                "@files": {
+                    content: {
+                        en: [
+                            {
+                                src: "/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png",
+                                title: "900150983cd24fb0d6963f7d28e17f73.png"
+                            }
+                        ]
+                    }
                 }
             }]
         }

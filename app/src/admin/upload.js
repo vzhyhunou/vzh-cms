@@ -41,28 +41,22 @@ export default dataProvider => ({
 
 const upd = (resource, params, call) => {
 
+    const sanitizedData = JSON.stringify({
+        ...params.data,
+        files: [],
+        '@files': []
+    });
     const formerFiles = params.data.files ? params.data.files
         .filter(({rawFile}) => !rawFile)
-        .filter(({title}) => JSON.stringify({
-            ...params.data,
-            files: []
-        }).includes(title)) : [];
-    const sanitizedData = {
-        ...params.data,
-        files: params.data.files ? params.data.files
-            .filter(({rawFile}) => rawFile)
-            .filter(({src}) => JSON.stringify({
-                ...params.data,
-                files: []
-            }).includes(src)) : []
-    };
+        .filter(({title}) => sanitizedData.includes(title)) : [];
 
     return Promise.all(
-        dumpKeysRecursively(sanitizedData)
-        .filter(key => get(sanitizedData, `${key}.rawFile`))
+        dumpKeysRecursively(params.data)
+        .filter(key => get(params.data, `${key}.rawFile`))
+        .filter(key => sanitizedData.includes(get(params.data, `${key}.src`)))
         .map(key =>
             convertFileToBase64(
-                get(sanitizedData, key)
+                get(params.data, key)
             ).then(
                 picture64 => ({
                     data: picture64.match(/,(.*)/)[1],
@@ -74,7 +68,7 @@ const upd = (resource, params, call) => {
                     type,
                     key,
                     name: `${md5(data)}.${type}`,
-                    preview: get(sanitizedData, `${key}.src`)
+                    preview: get(params.data, `${key}.src`)
                 })
             )
         )
@@ -85,14 +79,15 @@ const upd = (resource, params, call) => {
             call(resource, {
                 ...params,
                 data: {
-                    ...replaceFiles(sanitizedData, transformedNewFiles),
-                    ...replaceFields(sanitizedData, formerFiles),
-                    ...replaceSrc(resource, sanitizedData, transformedNewFiles),
+                    ...replaceFiles(params.data, transformedNewFiles),
+                    ...replaceFields(params.data, formerFiles),
+                    ...replaceSrc(resource, params.data, transformedNewFiles),
                     files: [
                         ...transformedNewFiles.map(({data, name}) => ({data, name})),
                         ...formerFiles.map(({title}) => ({name: title}))
                     ],
-                },
+                    '@files': undefined
+                }
             })
     );
 }
@@ -103,25 +98,50 @@ const analyze = (resource, item) => {
         return item;
     }
 
-    const files = item.files.map(({name}) => ({
+    const names = item.files.map(({name}) => name);
+    const keys = dumpKeysRecursively(item);
+    const fields = names.map(name => ({
         name,
-        keys: dumpKeysRecursively(item).filter(key => get(item, key) === name)
+        keys: keys.filter(key => get(item, key) === name)
     }));
-    const analyzed = analyzeFiles(resource, files, item);
+    const contents = keys
+        .map(key => ({
+            key,
+            value: get(item, key)
+        }))
+        .filter(({value}) => typeof value === 'string')
+        .map(({key, value}) => ({
+            key,
+            names: names
+                .filter(name => value.includes(name))
+                .filter(name => value !== name)
+        }))
+        .filter(({names}) => names.length);
+    const path = pathByData(resource, item);
+
+    analyzeFields(path, fields, item);
 
     return {
-        ...analyzed,
-        files: analyzed.files.map(({name}) => name)
+        ...item,
+        files: item.files.map(({name}) => name),
+        '@files': analyzeContents(path, contents, item)
     };
 };
 
-const analyzeFiles = (resource, files, data) => {
-    const path = pathByData(resource, data);
-    files.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
+const analyzeFields = (path, fields, data) => {
+    fields.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
         src: `${path}/${name}`,
         title: name
     })));
-    return data;
+};
+
+const analyzeContents = (path, contents, data) => {
+    const result = {};
+    contents.forEach(({key, names}) => set(result, key, names.map(name => ({
+        src: `${path}/${name}`,
+        title: name
+    }))));
+    return result;
 };
 
 const replaceFiles = (data, files) => {

@@ -4,6 +4,7 @@ import {
     FormTab,
     TabbedForm,
     TextInput,
+    ImageField,
     TranslatableInputs,
     required
 } from 'react-admin';
@@ -11,15 +12,14 @@ import {
 import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import {useIdValidation} from '../validation';
-import Images from './Images';
-import transform from './transform';
+import ContentImageInput from '../input/ContentImageInput';
 
 export default props => {
 
     const locales = useLocales();
     const validateId = useIdValidation(props);
 
-    return <Create {...props} {...{transform}}>
+    return <Create {...props}>
         <TabbedForm>
             <FormTab label="pos.general">
                 <TextInput
@@ -35,9 +35,16 @@ export default props => {
                         fullWidth
                         source="content"
                     />
-                    <Images
-                        source="images"
-                    />
+                    <ContentImageInput
+                        multiple
+                        source="@files.content"
+                        accept="image/*"
+                    >
+                        <ImageField
+                            source="src"
+                            title="title"
+                        />
+                    </ContentImageInput>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">

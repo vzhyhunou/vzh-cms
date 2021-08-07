@@ -35,7 +35,7 @@ export default {
                 tags: 'Теги',
                 title: 'Заголовок',
                 content: 'Контент',
-                images: 'Изображения'
+                '@files.content': 'Изображения'
             }
         },
         users: {
