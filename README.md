@@ -28,4 +28,4 @@
 - Run created JAR: `java -jar target/vzh-cms-0.0.1-SNAPSHOT-exec.jar`
 ### Usage
 - Home page: http://localhost:8090
-- Admin console: http://localhost:8090/pages, use `admin`:`admin`, `editor`:`editor`, `manager`:`manager` for login form
+- Admin console: http://localhost:8090/pages, use `admin`, `editor`, `manager` for user name and password
