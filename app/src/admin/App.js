@@ -1,5 +1,5 @@
-import React from 'react';
-import {Admin} from 'react-admin';
+import React, {cloneElement} from 'react';
+import {AdminContext, AdminUI, usePermissions} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import {createMuiTheme} from '@material-ui/core/styles';
 
@@ -18,18 +18,31 @@ const theme = createMuiTheme({
     }
 });
 
+const Resources = ({routes, resources}) => {
+
+    const {permissions} = usePermissions();
+
+    return <AdminUI
+        {...{theme}}
+        customRoutes={routes}
+        layout={Layout}
+    >
+        {resources(permissions).map((resource, key) => cloneElement(resource, {key}))}
+    </AdminUI>;
+};
+
 export default ({routes, resources, history, data}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
 
-    return <Admin
-        {...{theme, authProvider, history}}
-        customRoutes={routes}
-        layout={Layout}
+    return <AdminContext
+        {...{authProvider, history}}
         dataProvider={data(getLocale)}
         i18nProvider={polyglotI18nProvider(getMessages, getLocale())}
     >
-        {permissions => resources(permissions)}
-    </Admin>
+        <Resources
+            {...{routes, resources}}
+        />
+    </AdminContext>;
 };
