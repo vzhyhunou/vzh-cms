@@ -1,7 +1,7 @@
-import React, {cloneElement, memo} from 'react';
+import React, {cloneElement} from 'react';
 
-export default memo(({routes}) =>
+export default ({customRoutes}) =>
     <>
-        {routes.map((route, key) => cloneElement(route, {key}))}
+        {customRoutes.map((route, key) => cloneElement(route, {key}))}
     </>
-);
+;

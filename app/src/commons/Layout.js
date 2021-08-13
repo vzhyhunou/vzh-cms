@@ -9,6 +9,7 @@ import routes from './routes';
 import components from '../pages/components';
 
 const drawerWidth = 240;
+const customRoutes = routes(components);
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -50,9 +51,9 @@ export default props => {
             {...props}
         />
         <div className={classNames(classes.content, {
-            [classes.contentShift]: open,
+            [classes.contentShift]: open
         })}>
-            <Body routes={routes(components)}/>
+            <Body {...{customRoutes}}/>
         </div>
         <Menu
             open={open}
