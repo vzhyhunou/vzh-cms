@@ -117,7 +117,7 @@ const analyze = (resource, item) => {
                 .filter(name => value !== name)
         }))
         .filter(({names}) => names.length);
-    const path = pathByData(resource, item);
+    const path = originByData(resource, item);
 
     analyzeFields(path, fields, item);
 
@@ -151,7 +151,7 @@ const replaceFiles = (data, files) => {
 
 const replaceSrc = (resource, data, files) => {
     let s = JSON.stringify(data);
-    const path = pathByData(resource, data);
+    const path = originByData(resource, data);
     files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
         new RegExp(preview, 'g'),
         `${path}/${name}`
@@ -175,8 +175,6 @@ const process = files => [...new Set(files.map(f => f.name))]
         previews: f.map(f => f.preview)
     }));
 
-const pathByData = (resource, data) => {
-    const {parents, id} = data;
-    const s = ((parents ? parents.join('/') + '/' : '') + id).replace(/\./g, '/');
-    return `/static/origin/${resource}/${s}`;
-};
+export const originByData = (resource, data) => `/static/origin/${resource}/${pathByData(data)}`;
+
+export const pathByData = ({parents, id}) => ((parents ? parents.join('/') + '/' : '') + id).replace(/\./g, '/');
