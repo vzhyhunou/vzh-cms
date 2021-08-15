@@ -10,9 +10,9 @@ const TagsFilter = ({addField, resource, ...rest}) => {
 
     return <SelectArrayInput
         {...rest}
-        choices={Object.keys(tags).map(tag => ({
-            id: tag,
-            name: tags[tag]
+        choices={Object.entries(tags).map(([key, value]) => ({
+            id: key,
+            name: value
         }))}
         label={`resources.${resource}.fields.tags`}
     />;

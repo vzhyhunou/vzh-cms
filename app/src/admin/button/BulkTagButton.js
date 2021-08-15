@@ -28,12 +28,12 @@ export default ({resource, selectedIds, label, children, data}) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
         >
-            {Object.keys(tags).map(tag =>
+            {Object.entries(tags).map(([key, value]) =>
                 <MenuItem
-                    key={tag}
-                    onClick={() => updateTag(tag)}
+                    {...{key}}
+                    onClick={() => updateTag(key)}
                 >
-                    {tags[tag]}
+                    {value}
                 </MenuItem>
             )}
         </Menu>
