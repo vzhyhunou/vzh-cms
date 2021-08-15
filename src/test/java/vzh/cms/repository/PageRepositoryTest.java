@@ -306,6 +306,7 @@ public class PageRepositoryTest extends RepositoryTest {
     public void oneByTag() {
 
         persist(withTags("home", tag("a"), tag("b")));
+        persist(withTags("sample", tag("a"), tag("b")));
 
         Optional<PropertyPage> result = repository.one("home", "a");
 
