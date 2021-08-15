@@ -37,9 +37,9 @@ const TagsInput = ({addField, resource, ...rest}) => {
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
-                choices={Object.keys(tags).map(tag => ({
-                    id: tag,
-                    name: tags[tag]
+                choices={Object.entries(tags).map(([key, value]) => ({
+                    id: key,
+                    name: value
                 }))}
                 validate={[required()]}
             />
