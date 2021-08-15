@@ -45,23 +45,24 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
     }
 
     @Override
-    public Optional<PropertyPage> one(String id, Object... names) {
+    public Optional<PropertyPage> one(String id, String... names) {
         return findOne((root, q, b) -> {
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             return b.and(
-                    filterAny(root, q, b, b.equal(root.get(ID), id), names),
+                    b.equal(root.get(ID), id),
+                    filterAny(root, q, b, names),
                     b.equal(content.key(), getLocale().getLanguage())
             );
         }, PropertyPage.class);
     }
 
     @Override
-    public List<TitlePage> menu(Object... names) {
+    public List<TitlePage> menu(String... names) {
         return findAll((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             q.orderBy(b.asc(title.value()));
             return b.and(
-                    filterAll(root, q, b, b.and(), names),
+                    filterAll(root, q, b, names),
                     b.equal(title.key(), getLocale().getLanguage())
             );
         }, TitlePage.class);

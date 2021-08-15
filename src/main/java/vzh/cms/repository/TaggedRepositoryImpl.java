@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author Viktar Zhyhunou
@@ -29,40 +30,34 @@ public abstract class TaggedRepositoryImpl<T extends Tagged, ID extends Serializ
         return active(b, tag.get(Tag_.start), tag.get(Tag_.end));
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag, Object... names) {
+    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag, String... names) {
         return b.and(
-                tag.get(Tag_.name).in(names),
+                tag.get(Tag_.name).in(Arrays.copyOf(names, names.length, Object[].class)),
                 active(b, tag)
         );
     }
 
-    protected Predicate filterAny(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
+    protected Predicate filterAny(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
         if (names.length == 0) {
-            return p;
+            return b.and();
         }
         Subquery<T> subquery = q.subquery(getDomainClass());
         Root<T> r = subquery.from(getDomainClass());
         return root.in(
                 subquery.select(r)
-                        .where(b.and(
-                                p,
-                                active(b, r.join(Tagged_.TAGS), names)
-                        ))
+                        .where(active(b, r.join(Tagged_.TAGS), names))
         );
     }
 
-    protected Predicate filterAll(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, Predicate p, Object... names) {
+    protected Predicate filterAll(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
         if (names.length == 0) {
-            return p;
+            return b.and();
         }
         Subquery<T> subquery = q.subquery(getDomainClass());
         Root<T> r = subquery.from(getDomainClass());
         return root.in(
                 subquery.select(r)
-                        .where(b.and(
-                                p,
-                                active(b, r.join(Tagged_.TAGS), names)
-                        ))
+                        .where(active(b, r.join(Tagged_.TAGS), names))
                         .groupBy(r.get(ID))
                         .having(b.equal(b.count(r.get(ID)), names.length))
         );

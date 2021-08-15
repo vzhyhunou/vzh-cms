@@ -17,7 +17,7 @@ interface CustomizedPageRepository extends CustomizedRepository<Page, String> {
 
     org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable);
 
-    Optional<PropertyPage> one(String id, Object... names);
+    Optional<PropertyPage> one(String id, String... names);
 
-    List<TitlePage> menu(Object... names);
+    List<TitlePage> menu(String... names);
 }
