@@ -42,6 +42,10 @@ describe('upload', () => {
             data: {
                 files: [
                     {
+                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f71.png",
+                        title: "900150983cd24fb0d6963f7d28e17f71.png"
+                    },
+                    {
                         src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f72.png",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     },
@@ -60,6 +64,9 @@ describe('upload', () => {
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
+                content: {
+                    en: "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f71.png\"/>"
+                },
                 extra: undefined,
                 "@files": {
                     content: {
@@ -77,13 +84,19 @@ describe('upload', () => {
             data: {
                 files: [
                     {
+                        name: "900150983cd24fb0d6963f7d28e17f71.png"
+                    },
+                    {
                         name: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 collection: [
                     "900150983cd24fb0d6963f7d28e17f72.png"
-                ]
+                ],
+                content: {
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f71.png\"/>"
+                }
             }
         }
 
@@ -163,10 +176,10 @@ describe('upload', () => {
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/894852696ee75656ba33c03041b1fa7f.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"894852696ee75656ba33c03041b1fa7f.png\"/>"
                 }
             }
         }
@@ -194,7 +207,7 @@ describe('upload', () => {
                 id: "sample.1",
                 files: [
                     {
-                        src: "/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f71.png",
+                        src: "/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png",
                         title: "900150983cd24fb0d6963f7d28e17f71.png"
                     },
                     {
@@ -240,10 +253,10 @@ describe('upload', () => {
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>"
                 }
             }
         }
@@ -311,9 +324,9 @@ describe('upload', () => {
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>" +
-                    "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f72.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
+                    "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>"
                 }
             }
         }
@@ -372,7 +385,7 @@ describe('upload', () => {
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 }
             }
         }
@@ -394,7 +407,7 @@ describe('upload', () => {
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 },
                 "@files": {
                     content: {
@@ -439,7 +452,7 @@ describe('upload', () => {
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 }
             }
         }
@@ -462,7 +475,7 @@ describe('upload', () => {
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
-                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 },
                 "@files": {
                     content: {
@@ -506,7 +519,7 @@ describe('upload', () => {
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 }
             }]
         }
@@ -528,7 +541,7 @@ describe('upload', () => {
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 },
                 "@files": {
                     content: {
@@ -573,7 +586,7 @@ describe('upload', () => {
                 ],
                 file: "900150983cd24fb0d6963f7d28e17f72.png",
                 content: {
-                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 }
             }]
         }
@@ -596,7 +609,7 @@ describe('upload', () => {
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
-                    en: "<img src=\"/static/origin/items/2/3/4/sample/1/900150983cd24fb0d6963f7d28e17f73.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f73.png\"/>"
                 },
                 "@files": {
                     content: {

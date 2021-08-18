@@ -21,5 +21,5 @@ export default ({id, internal, components}) => {
         return <None {...{internal, components}}/>;
     }
 
-    return <Page {...{...data, internal, components}}/>;
+    return <Page {...{data, internal, components}}/>;
 };

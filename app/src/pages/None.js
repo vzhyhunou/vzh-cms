@@ -16,5 +16,5 @@ export default ({internal, components}) => {
         return <div/>;
     }
 
-    return <Page {...{...data, internal, components}}/>;
+    return <Page {...{data, internal, components}}/>;
 };
