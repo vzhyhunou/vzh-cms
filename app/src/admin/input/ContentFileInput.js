@@ -135,7 +135,10 @@ const ContentFileInput = props => {
     const onAdd = file => () => {
         const { source } = Children.only(children).props;
 
-        form.change(`content.${selectedLocale}`, `${content[selectedLocale]}\n<img src="${file[source]}"/>`);
+        form.change(
+            `content.${selectedLocale}`,
+            content ? `${content[selectedLocale]}\n<img src="${file[source]}"/>` : `<img src="${file[source]}"/>`
+        );
     };
 
     const onRemove = file => () => {

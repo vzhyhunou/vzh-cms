@@ -46,7 +46,7 @@ const upd = (resource, params, call) => {
         files: [],
         '@files': []
     });
-    const formerFiles = params.data.files ? params.data.files
+    const formFiles = params.data.files ? params.data.files
         .filter(({rawFile}) => !rawFile)
         .filter(({title}) => sanitizedData.includes(title)) : [];
 
@@ -80,11 +80,11 @@ const upd = (resource, params, call) => {
                 ...params,
                 data: {
                     ...replaceFiles(params.data, transformedNewFiles),
-                    ...replaceFields(params.data, formerFiles),
-                    ...replaceSrc(resource, params.data, transformedNewFiles),
+                    ...replaceFormFiles(params.data, formFiles),
+                    ...replaceSrc(params.data, transformedNewFiles, formFiles),
                     files: [
                         ...transformedNewFiles.map(({data, name}) => ({data, name})),
-                        ...formerFiles.map(({title}) => ({name: title}))
+                        ...formFiles.map(({title}) => ({name: title}))
                     ],
                     '@files': undefined
                 }
@@ -149,22 +149,25 @@ const replaceFiles = (data, files) => {
     return data;
 };
 
-const replaceSrc = (resource, data, files) => {
-    let s = JSON.stringify(data);
-    const path = originByData(resource, data);
-    files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
-        new RegExp(preview, 'g'),
-        `${path}/${name}`
-    ))));
-    return JSON.parse(s);
-};
-
-const replaceFields = (data, formerFiles) => {
-    formerFiles.forEach(({title}) => dumpKeysRecursively(data)
+const replaceFormFiles = (data, formFiles) => {
+    formFiles.forEach(({title}) => dumpKeysRecursively(data)
         .filter(key => get(get(data, key), 'title') === title)
         .forEach(key => set(data, key, title))
     );
     return data;
+};
+
+const replaceSrc = (data, files, formFiles) => {
+    let s = JSON.stringify(data);
+    files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
+        new RegExp(preview, 'g'),
+        name
+    ))));
+    formFiles.forEach(({src, title}) => s = s.replace(
+        new RegExp(src, 'g'),
+        title
+    ));
+    return JSON.parse(s);
 };
 
 const process = files => [...new Set(files.map(f => f.name))]
