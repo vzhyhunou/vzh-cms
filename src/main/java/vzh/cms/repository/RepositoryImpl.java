@@ -79,6 +79,12 @@ public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJ
                 .orElse(null);
     }
 
+    protected static Predicate isNull(CriteriaBuilder b, Expression<?> expression, Object field) {
+        return Optional.ofNullable(field)
+                .map(f -> b.isNull(expression))
+                .orElse(null);
+    }
+
     protected static Predicate active(CriteriaBuilder b, Path<Date> start, Path<Date> end) {
         return b.and(
                 b.or(b.isNull(start), b.greaterThan(b.currentTimestamp(), start)),
