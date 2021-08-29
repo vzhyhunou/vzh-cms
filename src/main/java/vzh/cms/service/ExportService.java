@@ -9,7 +9,6 @@ import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.config.property.ExportCmsProperties;
 import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
@@ -41,7 +40,7 @@ public class ExportService {
 
     private final FileService fileService;
 
-    private ExportCmsProperties properties;
+    private CmsProperties.Export properties;
 
     @PostConstruct
     private void postConstruct() {
