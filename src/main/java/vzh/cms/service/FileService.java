@@ -3,7 +3,7 @@ package vzh.cms.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import vzh.cms.config.property.CmsProperties;
+import vzh.cms.config.CmsProperties;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
 

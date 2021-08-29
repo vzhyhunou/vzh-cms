@@ -1,4 +1,4 @@
-package vzh.cms.config.property;
+package vzh.cms.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

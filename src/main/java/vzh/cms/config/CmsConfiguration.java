@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import vzh.cms.config.property.CmsProperties;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 

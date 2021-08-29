@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
-import vzh.cms.config.property.CmsProperties;
+import vzh.cms.config.CmsProperties;
 import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;

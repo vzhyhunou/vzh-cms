@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import vzh.cms.config.property.CmsProperties;
+import vzh.cms.config.CmsProperties;
 import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
