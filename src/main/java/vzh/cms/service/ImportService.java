@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.property.CmsProperties;
-import vzh.cms.config.property.ImportCmsProperties;
 import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
@@ -32,21 +31,21 @@ public class ImportService {
 
     private final FileService fileService;
 
-    private ImportCmsProperties properties;
+    private String path;
 
     @PostConstruct
     private void postConstruct() {
-        properties = cmsProperties.getImp();
+        path = cmsProperties.getImp().getPath();
     }
 
     @Transactional
     public void imp() throws Exception {
-        Path path = Paths.get(properties.getPath());
-        if (Files.exists(path)) {
+        Path p = Paths.get(path);
+        if (Files.exists(p)) {
             log.info("Start import pass 1 ...");
-            imp(path, false);
+            imp(p, false);
             log.info("Start import pass 2 ...");
-            imp(path, true);
+            imp(p, true);
             log.info("End import");
         }
     }
