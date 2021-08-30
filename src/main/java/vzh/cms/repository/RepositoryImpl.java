@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +23,7 @@ import java.util.stream.Stream;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T, ID> {
+public abstract class RepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T, ID> {
 
     private final SpelAwareProxyProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 

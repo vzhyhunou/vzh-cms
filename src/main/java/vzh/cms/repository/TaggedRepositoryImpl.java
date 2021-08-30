@@ -12,13 +12,12 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class TaggedRepositoryImpl<T extends Tagged, ID extends Serializable> extends RepositoryImpl<T, ID> {
+public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends RepositoryImpl<T, ID> {
 
     protected static final String ID = "id";
 
