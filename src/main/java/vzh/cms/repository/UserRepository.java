@@ -5,5 +5,5 @@ import vzh.cms.model.User;
 /**
  * @author Viktar Zhyhunou
  */
-public interface UserRepository extends Repository<User, String>, CustomizedUserRepository {
+public interface UserRepository extends ItemRepository<User, String>, CustomizedUserRepository {
 }

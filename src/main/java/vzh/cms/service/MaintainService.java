@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
+import vzh.cms.repository.ItemRepository;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -41,13 +41,13 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item, Object> getRepository(Item item) {
+    public ItemRepository<Item, Object> getRepository(Item item) {
         return getRepository((Class<Item>) item.getClass());
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item, Object> getRepository(Class<Item> type) {
-        return (PagingAndSortingRepository<Item, Object>) repositories.getRepositoryFor(type)
+    public ItemRepository<Item, Object> getRepository(Class<Item> type) {
+        return (ItemRepository<Item, Object>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 

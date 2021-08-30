@@ -26,8 +26,13 @@ public class CmsConfiguration {
         return args -> importService.imp();
     }
 
-    @Scheduled(cron = "${cms.exp.cron}")
-    public void export() throws Exception {
-        exportService.export();
+    @Scheduled(cron = "${cms.exp.full.cron}")
+    public void full() throws Exception {
+        exportService.export(false);
+    }
+
+    @Scheduled(cron = "${cms.exp.inc.cron}")
+    public void inc() throws Exception {
+        exportService.export(true);
     }
 }

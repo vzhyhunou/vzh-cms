@@ -30,6 +30,14 @@ public class CmsProperties {
         private String pattern;
 
         private long limit;
+
+        private Incremental inc;
+
+        @Data
+        public static class Incremental {
+
+            private String ext;
+        }
     }
 
     @Data
