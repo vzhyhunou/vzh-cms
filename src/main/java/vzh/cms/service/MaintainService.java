@@ -6,11 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
+import vzh.cms.repository.ItemRepository;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -40,13 +41,13 @@ public class MaintainService {
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item, Object> getRepository(Item item) {
+    public ItemRepository<Item, Object> getRepository(Item item) {
         return getRepository((Class<Item>) item.getClass());
     }
 
     @SuppressWarnings("unchecked")
-    public PagingAndSortingRepository<Item, Object> getRepository(Class<Item> type) {
-        return (PagingAndSortingRepository<Item, Object>) repositories.getRepositoryFor(type)
+    public ItemRepository<Item, Object> getRepository(Class<Item> type) {
+        return (ItemRepository<Item, Object>) repositories.getRepositoryFor(type)
                 .orElseThrow(() -> new RuntimeException(String.format("Repository for %s not found", type)));
     }
 
@@ -60,7 +61,7 @@ public class MaintainService {
         log.debug("Write: {}", file);
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
-        wrapper.setItem(item);
+        wrapper.setItem(implementation(item));
         mapper.writeValue(file, wrapper);
     }
 
@@ -73,5 +74,11 @@ public class MaintainService {
     private interface ItemMixIn {
         @JsonIgnore
         Object[] getParents();
+    }
+
+    private Item implementation(Item item) {
+        return item instanceof HibernateProxy
+                ? (Item) ((HibernateProxy) item).getHibernateLazyInitializer().getImplementation()
+                : item;
     }
 }
