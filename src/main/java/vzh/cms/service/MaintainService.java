@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.support.Repositories;
@@ -60,7 +61,7 @@ public class MaintainService {
         log.debug("Write: {}", file);
         file.getParentFile().mkdirs();
         Wrapper wrapper = new Wrapper();
-        wrapper.setItem(item);
+        wrapper.setItem(implementation(item));
         mapper.writeValue(file, wrapper);
     }
 
@@ -73,5 +74,11 @@ public class MaintainService {
     private interface ItemMixIn {
         @JsonIgnore
         Object[] getParents();
+    }
+
+    private Item implementation(Item item) {
+        return item instanceof HibernateProxy
+                ? (Item) ((HibernateProxy) item).getHibernateLazyInitializer().getImplementation()
+                : item;
     }
 }
