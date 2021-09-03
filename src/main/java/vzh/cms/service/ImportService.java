@@ -9,6 +9,7 @@ import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.nio.file.DirectoryStream;
@@ -42,27 +43,36 @@ public class ImportService {
     public void imp() throws Exception {
         Path p = Paths.get(path);
         if (Files.exists(p)) {
-            log.info("Start import pass 1 ...");
-            imp(p, false);
-            log.info("Start import pass 2 ...");
-            imp(p, true);
+            for (int i = 1; i < 4; i++) {
+                log.info(String.format("Start import pass %d ...", i));
+                imp(p, i);
+            }
             log.info("End import");
         }
     }
 
-    private void imp(Path dir, boolean full) throws Exception {
+    private void imp(Path dir, int pass) throws Exception {
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
             for (Path path : paths) {
                 if (path.toFile().isDirectory()) {
-                    imp(path, full);
+                    imp(path, pass);
                 } else {
                     Item item = maintainService.read(path.toFile());
-                    if (full) {
-                        Item entity = maintainService.getRepository(item).save(item);
-                        entity.getFiles().addAll(item.getFiles());
-                        fileService.save(entity);
-                    } else {
-                        maintainService.getRepository(item).save(getInstanceWithId(item));
+                    switch (pass) {
+                        case 1:
+                            if (!isLinked(item)) {
+                                maintainService.getRepository(item).save(getInstanceWithId(item));
+                            }
+                            break;
+                        case 2:
+                            if (isLinked(item)) {
+                                maintainService.getRepository(item).save(getInstanceWithId(item));
+                            }
+                            break;
+                        case 3:
+                            Item entity = maintainService.getRepository(item).save(item);
+                            entity.getFiles().addAll(item.getFiles());
+                            fileService.save(entity);
                     }
                 }
             }
@@ -75,9 +85,16 @@ public class ImportService {
         BeanWrapperImpl src = new BeanWrapperImpl(item);
         BeanWrapperImpl dst = new BeanWrapperImpl(instance);
         Arrays.stream(item.getClass().getDeclaredFields())
-                .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
+                .filter(f -> Arrays.stream(f.getDeclaredAnnotations())
+                        .anyMatch(a -> a instanceof Id))
                 .map(Field::getName)
                 .forEach(n -> dst.setPropertyValue(n, src.getPropertyValue(n)));
         return instance;
+    }
+
+    private static boolean isLinked(Object entity) {
+        return Arrays.stream(entity.getClass().getDeclaredFields())
+                .anyMatch(f -> Arrays.stream(f.getDeclaredAnnotations())
+                        .anyMatch(a -> a instanceof PrimaryKeyJoinColumn));
     }
 }
