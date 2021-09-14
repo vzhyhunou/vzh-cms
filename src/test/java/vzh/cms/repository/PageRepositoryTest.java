@@ -9,6 +9,7 @@ import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.TitlePage;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,8 +37,8 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getTitle().values()).containsOnly("home.en.title");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
@@ -46,8 +47,8 @@ public class PageRepositoryTest extends RepositoryTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getTitle().values()).containsOnly("sample.en.title");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("sample.en.title");
     }
 
     @Test
@@ -65,7 +66,7 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
         result = repository.list(filter, page(1));
 
@@ -74,7 +75,7 @@ public class PageRepositoryTest extends RepositoryTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
     }
 
     @Test
@@ -92,7 +93,7 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
         result = repository.list(filter, page(1));
 
@@ -101,7 +102,7 @@ public class PageRepositoryTest extends RepositoryTest {
         content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("sample").containsOnlyOnce("sample");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
     }
 
     @Test
@@ -120,8 +121,8 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getTitle().values()).containsOnly("home.en.title");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
@@ -148,7 +149,7 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).isEmpty();
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
         result = repository.list(filter, page(1));
 
@@ -175,8 +176,8 @@ public class PageRepositoryTest extends RepositoryTest {
         List<RowPage> content = result.getContent();
         assertThat(content).isNotNull();
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
-        assertThat(content).flatExtracting(p -> p.getTitle().keySet()).containsOnly("en");
-        assertThat(content).flatExtracting(p -> p.getTitle().values()).containsOnly("home.en.title");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
+        assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
         result = repository.list(filter, page(1));
 
