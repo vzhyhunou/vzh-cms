@@ -47,11 +47,14 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
     @Override
     public Optional<PropertyPage> one(String id, String... names) {
         return findOne((root, q, b) -> {
+            MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
+            String language = getLocale().getLanguage();
             return b.and(
                     b.equal(root.get(ID), id),
                     filterAny(root, q, b, names),
-                    b.equal(content.key(), getLocale().getLanguage())
+                    b.equal(title.key(), language),
+                    b.equal(content.key(), language)
             );
         }, PropertyPage.class);
     }
