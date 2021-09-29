@@ -10,7 +10,7 @@ import java.util.List;
  * @author Viktar Zhyhunou
  */
 @NoRepositoryBean
-public interface Repository<T, ID> extends PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface Repository<T, ID> extends PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T>, CustomizedRepository<T, ID> {
 
     List<T> findByIdIn(ID[] ids);
 }

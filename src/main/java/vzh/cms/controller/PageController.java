@@ -14,7 +14,7 @@ import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.repository.PageRepository;
+import vzh.cms.service.PageService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,27 +32,27 @@ import static vzh.cms.security.Role.EDITOR;
 @RequiredArgsConstructor
 public class PageController {
 
-    private final PageRepository repository;
+    private final PageService service;
 
     private final PagedResourcesAssembler<RowPage> assembler;
 
     @ResponseBody
     @GetMapping("search/list")
     public PagedModel<EntityModel<RowPage>> list(PageFilter filter, Pageable pageable) {
-        return assembler.toModel(repository.list(filter, pageable));
+        return assembler.toModel(service.list(filter, pageable));
     }
 
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return repository.menu(PUBLISHED, MENU);
+        return service.menu(PUBLISHED, MENU);
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
         return request.isUserInRole(EDITOR)
-                ? repository.one(id)
-                : repository.one(id, PUBLISHED);
+                ? service.one(id)
+                : service.one(id, PUBLISHED);
     }
 }

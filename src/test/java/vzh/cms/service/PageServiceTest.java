@@ -1,12 +1,16 @@
-package vzh.cms.repository;
+package vzh.cms.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.TitlePage;
+import vzh.cms.repository.PageRepository;
+import vzh.cms.repository.RepositoryTest;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +21,19 @@ import static vzh.cms.fixture.PageFixture.withLang;
 import static vzh.cms.fixture.PageFixture.withTags;
 import static vzh.cms.fixture.TagFixture.*;
 
-public class PageRepositoryTest extends RepositoryTest {
+public class PageServiceTest extends RepositoryTest {
+
+    @TestConfiguration
+    static class ContextConfiguration {
+
+        @Bean
+        PageService service(PageRepository repository) {
+            return new PageService(repository);
+        }
+    }
 
     @Autowired
-    private PageRepository repository;
+    private PageService service;
 
     @Test
     public void listAllLanguages() {
@@ -30,7 +43,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -40,7 +53,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -59,7 +72,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -68,7 +81,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -86,7 +99,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -95,7 +108,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -114,7 +127,7 @@ public class PageRepositoryTest extends RepositoryTest {
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -124,7 +137,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -142,7 +155,7 @@ public class PageRepositoryTest extends RepositoryTest {
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -151,7 +164,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -169,7 +182,7 @@ public class PageRepositoryTest extends RepositoryTest {
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.R");
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -179,7 +192,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).containsOnly("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).containsOnly("home.en.title");
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -196,7 +209,7 @@ public class PageRepositoryTest extends RepositoryTest {
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(0);
@@ -214,7 +227,7 @@ public class PageRepositoryTest extends RepositoryTest {
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<RowPage> result = repository.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = service.list(filter, page(0));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -223,7 +236,7 @@ public class PageRepositoryTest extends RepositoryTest {
         assertThat(content).extracting(RowPage::getId).containsOnly("home").containsOnlyOnce("home");
         assertThat(content).flatExtracting(RowTagged::getTags).extracting(RowTagged.Tag::getName).containsOnly("a", "b").containsOnlyOnce("a", "b");
 
-        result = repository.list(filter, page(1));
+        result = service.list(filter, page(1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -238,7 +251,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "en", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -255,7 +268,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -267,7 +280,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -279,7 +292,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "en"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -297,7 +310,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withLang("home", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -309,7 +322,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withTags("home", tag("a"), tag("b")));
         persist(withTags("sample", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.one("home", "a");
+        Optional<PropertyPage> result = service.one("home", "a");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -326,7 +339,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.one("home", "c");
+        Optional<PropertyPage> result = service.one("home", "c");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -337,7 +350,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = repository.one("home");
+        Optional<PropertyPage> result = service.one("home");
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -354,7 +367,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a")));
 
-        List<TitlePage> result = repository.menu("a", "b");
+        List<TitlePage> result = service.menu("a", "b");
 
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
@@ -365,7 +378,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home"));
 
-        List<TitlePage> result = repository.menu();
+        List<TitlePage> result = service.menu();
 
         assertThat(result).isNotNull();
         assertThat(result).extracting(TitlePage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -377,7 +390,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withTags("home", tag("a"), tag("b")));
 
-        List<TitlePage> result = repository.menu("a", "b");
+        List<TitlePage> result = service.menu("a", "b");
 
         assertThat(result).isNotNull();
         assertThat(result).extracting(TitlePage::getId).containsOnly("home").containsOnlyOnce("home");
@@ -393,7 +406,7 @@ public class PageRepositoryTest extends RepositoryTest {
         persist(withTags("sample1", delayedTag("tag")));
         persist(withTags("sample2", expiredTag("tag")));
 
-        List<TitlePage> result = repository.menu("tag");
+        List<TitlePage> result = service.menu("tag");
 
         assertThat(result).isNotNull();
         assertThat(result).extracting(TitlePage::getId).containsOnly("test", "sample").containsOnlyOnce("test", "sample");
@@ -406,7 +419,7 @@ public class PageRepositoryTest extends RepositoryTest {
 
         persist(withLang("home", "ru"));
 
-        List<TitlePage> result = repository.menu();
+        List<TitlePage> result = service.menu();
 
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
