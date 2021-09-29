@@ -8,6 +8,7 @@ import vzh.cms.model.Tagged_;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends RepositoryImpl<T, ID> {
+public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends RepositoryImpl<T, ID> implements CustomizedTaggedRepository<T, ID> {
 
     protected static final String ID = "id";
 
@@ -36,7 +37,7 @@ public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends Reposit
         );
     }
 
-    protected Predicate filterAny(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
+    public Predicate filterAny(Expression<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
         if (names.length == 0) {
             return b.and();
         }
@@ -48,7 +49,7 @@ public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends Reposit
         );
     }
 
-    protected Predicate filterAll(Root<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
+    public Predicate filterAll(Expression<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
         if (names.length == 0) {
             return b.and();
         }
