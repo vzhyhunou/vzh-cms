@@ -1,9 +1,9 @@
 package vzh.cms.service;
 
-import lombok.RequiredArgsConstructor;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
 import vzh.cms.model.Tagged_;
+import vzh.cms.repository.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,12 +17,16 @@ import java.util.Arrays;
 /**
  * @author Viktar Zhyhunou
  */
-@RequiredArgsConstructor
-public abstract class TaggedService<T> extends AbstractService {
+public abstract class TaggedService<T, ID> extends Service<T, ID> {
 
     private static final String ID = "id";
 
-    protected final Class<T> domainClass;
+    private final Class<T> domainClass;
+
+    public TaggedService(Repository<T, ID> repository, Class<T> domainClass) {
+        super(repository);
+        this.domainClass = domainClass;
+    }
 
     protected static Predicate active(CriteriaBuilder b, Path<Tag> tag) {
         return active(b, tag.get(Tag_.start), tag.get(Tag_.end));

@@ -28,17 +28,14 @@ import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
  * @author Viktar Zhyhunou
  */
 @Service
-public class PageService extends TaggedService<Page> {
-
-    private final PageRepository repository;
+public class PageService extends TaggedService<Page, String> {
 
     public PageService(PageRepository repository) {
-        super(Page.class);
-        this.repository = repository;
+        super(repository, Page.class);
     }
 
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
-        return repository.findAll((root, q, b) -> {
+        return findAll((root, q, b) -> {
             if (Long.class != q.getResultType()) {
                 root.fetch(Page_.TITLE, JoinType.LEFT);
                 root.fetch(Tagged_.TAGS, JoinType.LEFT);
@@ -49,7 +46,7 @@ public class PageService extends TaggedService<Page> {
     }
 
     public Optional<PropertyPage> one(String id, String... names) {
-        return repository.findOne((root, q, b) -> {
+        return findOne((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             String language = getLocale().getLanguage();
@@ -63,7 +60,7 @@ public class PageService extends TaggedService<Page> {
     }
 
     public List<TitlePage> menu(String... names) {
-        return repository.findAll((root, q, b) -> {
+        return findAll((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             q.orderBy(b.asc(title.value()));
             return b.and(

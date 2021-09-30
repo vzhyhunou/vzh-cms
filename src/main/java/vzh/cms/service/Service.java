@@ -1,14 +1,14 @@
-package vzh.cms.repository;
+package vzh.cms.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import vzh.cms.repository.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,36 +16,32 @@ import java.util.stream.Collectors;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class RepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomizedRepository<T, ID> {
+@RequiredArgsConstructor
+public abstract class Service<T, ID> extends AbstractService {
 
-    private final SpelAwareProxyProjectionFactory factory = new SpelAwareProxyProjectionFactory();
+    protected final Repository<T, ID> repository;
 
-    protected RepositoryImpl(Class<T> domainClass, EntityManager manager) {
-        super(domainClass, manager);
-    }
+    private SpelAwareProxyProjectionFactory factory;
 
     @Autowired
     public void setBeanFactory(BeanFactory beanFactory) {
+        factory = new SpelAwareProxyProjectionFactory();
         factory.setBeanFactory(beanFactory);
     }
 
-    @Override
     public <E> Optional<E> findById(ID id, Class<E> type) {
-        return findById(id).map(e -> factory.createProjection(type, e));
+        return repository.findById(id).map(e -> factory.createProjection(type, e));
     }
 
-    @Override
     public <E> Optional<E> findOne(Specification<T> specification, Class<E> type) {
-        return findOne(specification).map(e -> factory.createProjection(type, e));
+        return repository.findOne(specification).map(e -> factory.createProjection(type, e));
     }
 
-    @Override
     public <E> List<E> findAll(Specification<T> specification, Class<E> type) {
-        return findAll(specification).stream().map(e -> factory.createProjection(type, e)).collect(Collectors.toList());
+        return repository.findAll(specification).stream().map(e -> factory.createProjection(type, e)).collect(Collectors.toList());
     }
 
-    @Override
     public <E> Page<E> findAll(Specification<T> specification, Class<E> type, Pageable pageable) {
-        return findAll(specification, pageable).map(e -> factory.createProjection(type, e));
+        return repository.findAll(specification, pageable).map(e -> factory.createProjection(type, e));
     }
 }

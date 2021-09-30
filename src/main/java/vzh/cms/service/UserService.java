@@ -24,17 +24,14 @@ import java.util.Optional;
  * @author Viktar Zhyhunou
  */
 @Service
-public class UserService extends TaggedService<User> {
-
-    private final UserRepository repository;
+public class UserService extends TaggedService<User, String> {
 
     public UserService(UserRepository repository) {
-        super(User.class);
-        this.repository = repository;
+        super(repository, User.class);
     }
 
     public Page<RowUser> list(UserFilter filter, Pageable pageable) {
-        return repository.findAll((root, q, b) -> {
+        return findAll((root, q, b) -> {
             if (Long.class != q.getResultType()) {
                 root.fetch(Tagged_.TAGS, JoinType.LEFT);
             }

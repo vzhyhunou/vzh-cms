@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class AbstractService {
+abstract class AbstractService {
 
     protected static Predicate equal(CriteriaBuilder b, Expression<?> expression, Object field) {
         return Optional.ofNullable(field)
