@@ -1,6 +1,7 @@
-package vzh.cms.repository;
+package vzh.cms.service;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
 import vzh.cms.model.Page_;
@@ -10,8 +11,8 @@ import vzh.cms.model.Tagged_;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
+import vzh.cms.repository.PageRepository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -26,13 +27,13 @@ import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 /**
  * @author Viktar Zhyhunou
  */
-class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements CustomizedPageRepository {
+@Service
+public class PageService extends TaggedService<Page, String> {
 
-    PageRepositoryImpl(EntityManager manager) {
-        super(Page.class, manager);
+    public PageService(PageRepository repository) {
+        super(repository, Page.class);
     }
 
-    @Override
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
             if (Long.class != q.getResultType()) {
@@ -44,14 +45,13 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
         }, RowPage.class, pageable);
     }
 
-    @Override
     public Optional<PropertyPage> one(String id, String... names) {
         return findOne((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             String language = getLocale().getLanguage();
             return b.and(
-                    b.equal(root.get(ID), id),
+                    b.equal(root.get(Page_.ID), id),
                     filterAny(root, q, b, names),
                     b.equal(title.key(), language),
                     b.equal(content.key(), language)
@@ -59,7 +59,6 @@ class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements C
         }, PropertyPage.class);
     }
 
-    @Override
     public List<TitlePage> menu(String... names) {
         return findAll((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);

@@ -1,7 +1,8 @@
-package vzh.cms.repository;
+package vzh.cms.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
@@ -9,8 +10,8 @@ import vzh.cms.model.Tagged_;
 import vzh.cms.model.User;
 import vzh.cms.model.User_;
 import vzh.cms.projection.RowUser;
+import vzh.cms.repository.UserRepository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -22,13 +23,13 @@ import java.util.Optional;
 /**
  * @author Viktar Zhyhunou
  */
-class UserRepositoryImpl extends TaggedRepositoryImpl<User, String> implements CustomizedUserRepository {
+@Service
+public class UserService extends TaggedService<User, String> {
 
-    UserRepositoryImpl(EntityManager manager) {
-        super(User.class, manager);
+    public UserService(UserRepository repository) {
+        super(repository, User.class);
     }
 
-    @Override
     public Page<RowUser> list(UserFilter filter, Pageable pageable) {
         return findAll((root, q, b) -> {
             if (Long.class != q.getResultType()) {
@@ -39,10 +40,9 @@ class UserRepositoryImpl extends TaggedRepositoryImpl<User, String> implements C
         }, RowUser.class, pageable);
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public Optional<User> withActiveRoles(String id) {
-        return findOne((root, q, b) -> {
+        return repository.findOne((root, q, b) -> {
                     Path<Tag> tags = (Path<Tag>) root.fetch(Tagged_.TAGS, JoinType.LEFT);
                     return b.and(
                             b.equal(root.get(User_.ID), id),

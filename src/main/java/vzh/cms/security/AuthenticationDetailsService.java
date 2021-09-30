@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Tag;
-import vzh.cms.repository.UserRepository;
+import vzh.cms.service.UserService;
 
 import java.util.stream.Collectors;
 
@@ -21,12 +21,12 @@ public class AuthenticationDetailsService implements UserDetailsService {
 
     private static final String PREFIX = "ROLE_";
 
-    private final UserRepository repository;
+    private final UserService service;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
-        return repository.withActiveRoles(id).map(u -> new User(
+        return service.withActiveRoles(id).map(u -> new User(
                 u.getId(),
                 u.getPassword(),
                 AuthorityUtils.createAuthorityList(

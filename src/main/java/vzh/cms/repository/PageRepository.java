@@ -5,5 +5,5 @@ import vzh.cms.model.Page;
 /**
  * @author Viktar Zhyhunou
  */
-public interface PageRepository extends ItemRepository<Page, String>, CustomizedPageRepository {
+public interface PageRepository extends ItemRepository<Page, String> {
 }
