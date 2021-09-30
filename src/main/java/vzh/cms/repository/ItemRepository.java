@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Viktar Zhyhunou
  */
 @NoRepositoryBean
-public interface ItemRepository<T extends Item, ID> extends Repository<T, ID> {
+public interface ItemRepository<T extends Item, ID> extends BaseRepository<T, ID> {
 
     Page<Item> findByDateGreaterThan(Date date, Pageable pageable);
 

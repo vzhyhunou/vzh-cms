@@ -3,7 +3,7 @@ package vzh.cms.service;
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
 import vzh.cms.model.Tagged_;
-import vzh.cms.repository.Repository;
+import vzh.cms.repository.BaseRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,13 +17,13 @@ import java.util.Arrays;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class TaggedService<T, ID> extends Service<T, ID> {
+public abstract class TaggedService<T, ID> extends BaseService<T, ID> {
 
     private static final String ID = "id";
 
     private final Class<T> domainClass;
 
-    public TaggedService(Repository<T, ID> repository, Class<T> domainClass) {
+    public TaggedService(BaseRepository<T, ID> repository, Class<T> domainClass) {
         super(repository);
         this.domainClass = domainClass;
     }

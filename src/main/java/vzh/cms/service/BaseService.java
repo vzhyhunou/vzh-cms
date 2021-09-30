@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import vzh.cms.repository.Repository;
+import vzh.cms.repository.BaseRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
  * @author Viktar Zhyhunou
  */
 @RequiredArgsConstructor
-public abstract class Service<T, ID> extends AbstractService {
+public abstract class BaseService<T, ID> extends AbstractService {
 
-    protected final Repository<T, ID> repository;
+    protected final BaseRepository<T, ID> repository;
 
     private SpelAwareProxyProjectionFactory factory;
 
