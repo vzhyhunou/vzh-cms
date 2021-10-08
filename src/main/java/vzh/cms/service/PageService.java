@@ -47,13 +47,13 @@ public class PageService extends TaggedService<Page, String> {
 
     public Optional<PropertyPage> one(String id, String... names) {
         return findOne((root, q, b) -> {
-            MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
+            MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE, JoinType.LEFT);
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             String language = getLocale().getLanguage();
             return b.and(
                     b.equal(root.get(Page_.ID), id),
                     filterAny(root, q, b, names),
-                    b.equal(title.key(), language),
+                    b.or(b.equal(title.key(), language), b.isNull(title.key())),
                     b.equal(content.key(), language)
             );
         }, PropertyPage.class);
