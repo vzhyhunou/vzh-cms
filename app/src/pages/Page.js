@@ -3,11 +3,11 @@ import parse, {domToReact} from 'html-react-parser';
 
 import {originByData} from '../commons/upload';
 
-export default ({data, internal, components}) => {
+export default ({data, external, components}) => {
 
     let {title, content, files} = data;
 
-    if (!internal) {
+    if (external) {
         document.title = title;
     }
 
@@ -15,7 +15,7 @@ export default ({data, internal, components}) => {
         replace: ({name, attribs, children}) => {
             const Component = components[name];
             if (Component) {
-                return createElement(Component, {...attribs, internal: true, components}, domToReact(children, options));
+                return createElement(Component, {...attribs, components}, domToReact(children, options));
             }
         }
     };

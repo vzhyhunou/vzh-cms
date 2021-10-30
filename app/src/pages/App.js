@@ -4,7 +4,7 @@ import {useLocale, useQuery} from 'react-admin';
 import Page from './Page';
 import None from './None';
 
-export default ({id, internal, components}) => {
+export default ({id, external, components}) => {
 
     const locale = useLocale();
     const {data, loading} = useQuery({
@@ -18,8 +18,8 @@ export default ({id, internal, components}) => {
     }
 
     if (!data) {
-        return <None {...{internal, components}}/>;
+        return <None {...{external, components}}/>;
     }
 
-    return <Page {...{data, internal, components}}/>;
+    return <Page {...{data, external, components}}/>;
 };

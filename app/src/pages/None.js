@@ -3,7 +3,7 @@ import {useLocale, useQuery} from 'react-admin';
 
 import Page from './Page';
 
-export default ({internal, components}) => {
+export default ({external, components}) => {
 
     const locale = useLocale();
     const {data} = useQuery({
@@ -16,5 +16,5 @@ export default ({internal, components}) => {
         return <div/>;
     }
 
-    return <Page {...{data, internal, components}}/>;
+    return <Page {...{data, external, components}}/>;
 };
