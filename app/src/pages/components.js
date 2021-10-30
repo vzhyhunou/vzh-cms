@@ -1,7 +1,7 @@
-import App from './App';
+import Page from './App';
 import Auth from './Auth';
 
 export default {
-    page: App,
+    page: Page,
     auth: Auth
 };
