@@ -5,11 +5,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
-import routes from './routes';
-import components from '../pages/components';
+import customRoutes from './routes';
 
 const drawerWidth = 240;
-const customRoutes = routes(components);
 
 const useStyles = makeStyles(theme => ({
     '@global': {

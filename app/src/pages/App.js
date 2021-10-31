@@ -1,10 +1,9 @@
 import React from 'react';
 import {useLocale, useQuery} from 'react-admin';
 
-import Page from './Page';
-import None from './None';
+import Parser from '../commons/Parser';
 
-export default ({id, internal, components}) => {
+const App = ({id, external}) => {
 
     const locale = useLocale();
     const {data, loading} = useQuery({
@@ -14,12 +13,18 @@ export default ({id, internal, components}) => {
     });
 
     if (loading) {
-        return <div/>;
+        return null;
     }
 
     if (!data) {
-        return <None {...{internal, components}}/>;
+        return id !== 'none' && <App {...{id: 'none', external}}/>;
     }
 
-    return <Page {...{data, internal, components}}/>;
+    if (external) {
+        document.title = data.title;
+    }
+
+    return <Parser {...data}/>;
 };
+
+export default App;
