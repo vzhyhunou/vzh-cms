@@ -9,7 +9,7 @@ import {i18nLoader, i18nWriter} from './locale';
 
 const AppContext = createContext();
 
-export default ({locales, i18n, children}) => {
+export default ({locales, i18n, components, children}) => {
 
     const [contextValues, setContextValues] = useState();
 
@@ -19,7 +19,7 @@ export default ({locales, i18n, children}) => {
     }, [i18n]);
 
     if (!contextValues) {
-        return <div/>;
+        return null;
     }
 
     let {locale, messages} = contextValues;
@@ -35,7 +35,8 @@ export default ({locales, i18n, children}) => {
     return <AppContext.Provider value={{
         locales,
         getLocale,
-        getMessages
+        getMessages,
+        components
     }}>
         {children}
     </AppContext.Provider>;
@@ -46,3 +47,5 @@ export const useLocales = () => useContext(AppContext).locales;
 export const useGetLocale = () => useContext(AppContext).getLocale;
 
 export const useGetMessages = () => useContext(AppContext).getMessages;
+
+export const useComponents = () => useContext(AppContext).components;

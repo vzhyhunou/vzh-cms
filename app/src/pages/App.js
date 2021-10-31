@@ -3,7 +3,7 @@ import {useLocale, useQuery} from 'react-admin';
 
 import Parser from '../commons/Parser';
 
-const App = ({id, external, components}) => {
+const App = ({id, external}) => {
 
     const locale = useLocale();
     const {data, loading} = useQuery({
@@ -13,18 +13,18 @@ const App = ({id, external, components}) => {
     });
 
     if (loading) {
-        return <div/>;
+        return null;
     }
 
     if (!data) {
-        return id !== 'none' && <App {...{id: 'none', external, components}}/>;
+        return id !== 'none' && <App {...{id: 'none', external}}/>;
     }
 
     if (external) {
         document.title = data.title;
     }
 
-    return <Parser {...{data, components}}/>;
+    return <Parser {...data}/>;
 };
 
 export default App;

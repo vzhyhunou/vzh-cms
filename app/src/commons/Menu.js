@@ -40,7 +40,7 @@ export default ({open, handleDrawerClose}) => {
     });
 
     if (!data) {
-        return <div/>;
+        return null;
     }
 
     return <Drawer
