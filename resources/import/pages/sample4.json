@@ -15,8 +15,8 @@
       "en": "Sample page 4"
     },
     "content": {
-      "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 4</h1>\n\t<auth include=\"EDITOR\"/>Контент для редактора</auth>\n\t<auth exclude=\"EDITOR\"/>Контент для всех кроме редактора</auth>\n</div>",
-      "en": "<div class=\"starter\">\n\t<h1>Sample page 4</h1>\n\t<auth include=\"EDITOR\"/>Content for editor</auth>\n\t<auth exclude=\"EDITOR\"/>Content for all except editor</auth>\n</div>"
+      "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 4</h1>\n\t<Auth include=\"EDITOR\"/>Контент для редактора</Auth>\n\t<Auth exclude=\"EDITOR\"/>Контент для всех кроме редактора</Auth>\n</div>",
+      "en": "<div class=\"starter\">\n\t<h1>Sample page 4</h1>\n\t<Auth include=\"EDITOR\"/>Content for editor</Auth>\n\t<Auth exclude=\"EDITOR\"/>Content for all except editor</Auth>\n</div>"
     }
   }
 }
