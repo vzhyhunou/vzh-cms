@@ -1,7 +1,7 @@
 import React from 'react';
 import {useLocale, useQuery} from 'react-admin';
 
-import Page from './Page';
+import Parser from '../commons/Parser';
 
 const App = ({id, external, components}) => {
 
@@ -20,7 +20,11 @@ const App = ({id, external, components}) => {
         return id !== 'none' && <App {...{id: 'none', external, components}}/>;
     }
 
-    return <Page {...{data, external, components}}/>;
+    if (external) {
+        document.title = data.title;
+    }
+
+    return <Parser {...{data, components}}/>;
 };
 
 export default App;

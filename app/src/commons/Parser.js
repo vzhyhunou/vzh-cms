@@ -1,15 +1,11 @@
 import {createElement} from 'react';
 import parse, {domToReact} from 'html-react-parser';
 
-import {originByData} from '../commons/upload';
+import {originByData} from './upload';
 
-export default ({data, external, components}) => {
+export default ({data, components}) => {
 
-    let {title, content, files} = data;
-
-    if (external) {
-        document.title = title;
-    }
+    let {content, files} = data;
 
     const options = {
         replace: ({name, attribs, children}) => {
