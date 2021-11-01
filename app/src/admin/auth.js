@@ -1,7 +1,7 @@
 import decodeJwt from 'jwt-decode';
 
-const TOKEN = 'token';
-const ROLES = 'roles';
+export const TOKEN = 'token';
+export const ROLES = 'roles';
 
 export default {
     login: ({ username, password }) => {

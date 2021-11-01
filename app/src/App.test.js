@@ -3,6 +3,11 @@ import {waitFor} from '@testing-library/react'
 
 import renderWithHistory from './commons/renderWithHistory'
 import App from './App'
+import {EDITOR} from './commons/roles';
+import {ROLES} from './admin/auth';
+
+const permissionsMock = jest.fn()
+Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock()}})
 
 describe('App', () => {
 
@@ -63,7 +68,18 @@ describe('App', () => {
         expect(document.title).toEqual('sample3 title')
     })
 
-    it('should render sample page with auth content', async () => {
+    it('should render sample page with auth content for editor', async () => {
+        permissionsMock.mockReturnValue([EDITOR])
+        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
+        let container = await waitFor(() => getByText('menu title'))
+        expect(container).toBeDefined()
+        container = await waitFor(() => getByText('sample4 content for editor'))
+        expect(container).toBeDefined()
+        expect(document.title).toEqual('sample4 title')
+    })
+
+    it('should render sample page with auth content for all except editor', async () => {
+        permissionsMock.mockReturnValue(null)
         const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
