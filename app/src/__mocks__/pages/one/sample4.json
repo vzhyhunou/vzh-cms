@@ -1,6 +1,6 @@
 {
   "json": {
     "title": "sample4 title",
-    "content": "sample4 content <auth exclude=\"EDITOR\"/>for editor</auth>"
+    "content": "sample4 content <Auth exclude=\"EDITOR\">for all except editor</Auth>"
   }
 }

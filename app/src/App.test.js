@@ -67,7 +67,7 @@ describe('App', () => {
         const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
-        container = await waitFor(() => getByText('sample4 content for editor'))
+        container = await waitFor(() => getByText('sample4 content for all except editor'))
         expect(container).toBeDefined()
         expect(document.title).toEqual('sample4 title')
     })
