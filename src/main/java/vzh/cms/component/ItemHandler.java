@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
+import vzh.cms.model.User;
 import vzh.cms.service.FileService;
 import vzh.cms.service.LocationService;
 import vzh.cms.service.MaintainService;
@@ -47,7 +48,9 @@ public class ItemHandler {
     @HandleBeforeCreate
     @HandleBeforeSave
     public void before(Item item) throws IOException {
-        item.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = new User();
+        user.setId(SecurityContextHolder.getContext().getAuthentication().getName());
+        item.setUser(user);
         item.setDate(new Date());
         if (HttpMethod.PATCH.matches(request.getMethod())) {
             return;

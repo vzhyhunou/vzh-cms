@@ -1,5 +1,7 @@
 package vzh.cms.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,6 +17,12 @@ import javax.validation.constraints.Size;
 @Data
 @ToString
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        resolver = IdResolver.class,
+        property = "id",
+        scope = User.class
+)
 public class User extends Tagged {
 
     @Id

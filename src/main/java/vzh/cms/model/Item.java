@@ -1,5 +1,6 @@
 package vzh.cms.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -25,15 +26,13 @@ abstract public class Item {
     @JsonIgnore
     private User user;
 
-    public String getUserId() {
-        return user == null ? null : user.getId();
+    @JsonIdentityReference(alwaysAsId = true)
+    public User getUserId() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        if (userId != null) {
-            user = new User();
-            user.setId(userId);
-        }
+    public void setUserId(User user) {
+        this.user = user;
     }
 
     @Transient
