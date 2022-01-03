@@ -1,7 +1,7 @@
 package vzh.cms.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
@@ -22,23 +21,19 @@ class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtProperties properties;
 
+    private final TokenService tokenService;
+
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth)
             throws IOException {
 
-        long now = System.currentTimeMillis();
-        String token = Jwts.builder()
-                .setSubject(auth.getName())
-                .claim(
-                        properties.getRoles(),
-                        auth.getAuthorities().stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList())
-                )
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + properties.getExpiration() * 1000L))
-                .signWith(SignatureAlgorithm.HS512, properties.getSecret().getBytes())
-                .compact();
+        Claims claims = new DefaultClaims();
+        claims.setSubject(auth.getName());
+        claims.put(properties.getRoles(),
+                auth.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()));
+        String token = tokenService.createToken(claims);
 
         response.getWriter().print(token);
     }

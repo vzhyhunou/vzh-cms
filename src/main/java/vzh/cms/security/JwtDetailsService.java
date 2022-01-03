@@ -1,7 +1,6 @@
 package vzh.cms.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +24,8 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
 
     private final JwtProperties properties;
 
+    private final TokenService tokenService;
+
     @Override
     @SuppressWarnings("unchecked")
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication) throws UsernameNotFoundException {
@@ -33,10 +34,7 @@ public class JwtDetailsService implements AuthenticationUserDetailsService<PreAu
         String prefix = properties.getPrefix() + " ";
         try {
             if (principal.startsWith(prefix)) {
-                Claims claims = Jwts.parser()
-                        .setSigningKey(properties.getSecret().getBytes())
-                        .parseClaimsJws(principal.replace(prefix, ""))
-                        .getBody();
+                Claims claims = tokenService.extractClaims(principal.replace(prefix, ""));
                 return new User(
                         claims.getSubject(),
                         "",

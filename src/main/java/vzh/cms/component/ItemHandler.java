@@ -9,6 +9,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
@@ -49,7 +50,7 @@ public class ItemHandler {
     @HandleBeforeSave
     public void before(Item item) throws IOException {
         User user = new User();
-        user.setId(SecurityContextHolder.getContext().getAuthentication().getName());
+        user.setId(getAuthentication().getName());
         item.setUser(user);
         item.setDate(new Date());
         if (HttpMethod.PATCH.matches(request.getMethod())) {
@@ -95,5 +96,9 @@ public class ItemHandler {
         return Optional.ofNullable(locationService.getIdentifier(item))
                 .flatMap(id -> maintainService.getRepository(item).findById(id))
                 .orElse(null);
+    }
+
+    private static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

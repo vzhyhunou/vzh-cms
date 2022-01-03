@@ -38,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final List<SecurityConfigurer> configs;
 
+    private final TokenService tokenService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin();
@@ -62,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private Filter jwtAuthenticationFilter() throws Exception {
-        AbstractAuthenticationProcessingFilter filter = new JwtAuthenticationFilter(properties);
+        AbstractAuthenticationProcessingFilter filter = new JwtAuthenticationFilter(properties, tokenService);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
