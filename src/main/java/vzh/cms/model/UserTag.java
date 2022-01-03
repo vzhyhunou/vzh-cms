@@ -3,7 +3,8 @@ package vzh.cms.model;
 /**
  * @author Viktar Zhyhunou
  */
-public enum PageTag {
-    PUBLISHED,
-    MENU
+public enum UserTag {
+    ADMIN,
+    MANAGER,
+    EDITOR
 }

@@ -4,6 +4,7 @@ import {usePermissions} from 'react-admin';
 
 import {originByData} from './upload';
 import {useComponents} from './AppContext';
+import * as roles from './roles';
 
 export default memo(data => {
 
@@ -18,7 +19,8 @@ export default memo(data => {
 
     return <JsxParser
         bindings={{
-            permissions
+            permissions,
+            ...Object.fromEntries(Object.entries(roles))
         }}
         {...{components}}
         jsx={content}

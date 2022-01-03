@@ -69,7 +69,7 @@ describe('App', () => {
     })
 
     it('should render sample page with auth content for editor', async () => {
-        permissionsMock.mockReturnValue([EDITOR])
+        permissionsMock.mockReturnValue(EDITOR)
         const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()

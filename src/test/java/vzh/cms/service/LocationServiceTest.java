@@ -27,7 +27,7 @@ public class LocationServiceTest {
     private EntityManagerFactory factory;
 
     @InjectMocks
-    private LocationService service;
+    private LocationService subj;
 
     @AfterEach
     public void after() {
@@ -54,7 +54,7 @@ public class LocationServiceTest {
             }
         };
 
-        String result = service.location(item);
+        String result = subj.location(item);
 
         assertThat(result).isEqualTo("resource/1/2/3/a/b");
         verifyNoMoreInteractions(meta, rel, util);

@@ -41,9 +41,9 @@ export default {
         users: {
             name: 'Users',
             tags: {
-                'ROLE_ADMIN': 'Administrator',
-                'ROLE_MANAGER': 'Manager',
-                'ROLE_EDITOR': 'Editor'
+                'ADMIN': 'Administrator',
+                'MANAGER': 'Manager',
+                'EDITOR': 'Editor'
             },
             fields: {
                 date: 'Update',

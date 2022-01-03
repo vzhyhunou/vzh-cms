@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import static vzh.cms.model.PageTag.MENU;
 import static vzh.cms.model.PageTag.PUBLISHED;
-import static vzh.cms.security.Role.EDITOR;
+import static vzh.cms.model.UserTag.EDITOR;
 
 /**
  * @author Viktar Zhyhunou
@@ -45,14 +45,14 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return service.menu(PUBLISHED, MENU);
+        return service.menu(PUBLISHED.name(), MENU.name());
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return request.isUserInRole(EDITOR)
+        return request.isUserInRole(EDITOR.name())
                 ? service.one(id)
-                : service.one(id, PUBLISHED);
+                : service.one(id, PUBLISHED.name());
     }
 }

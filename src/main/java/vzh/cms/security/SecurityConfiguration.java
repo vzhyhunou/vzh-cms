@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
 import javax.servlet.Filter;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -28,9 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsService authenticationService;
 
-    private final AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtDetailsService;
+    private final AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> jwtService;
 
     private final JwtProperties properties;
 
@@ -42,34 +41,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().sameOrigin();
         http
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
-                .antMatcher("/login").addFilter(jwtAuthenticationFilter())
-                .antMatcher("/**").addFilter(headerAuthenticationFilter())
+                .addFilter(jwtFilter())
+                .addFilter(authenticationFilter())
         ;
-        for (SecurityConfigurer configuration : configs) {
-            configuration.configure(http);
+        for (SecurityConfigurer conf : configs) {
+            conf.configure(http);
         }
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
-        auth.authenticationProvider(jwtAuthenticationProvider());
+        auth.userDetailsService(authenticationService).passwordEncoder(encoder);
+        auth.authenticationProvider(authenticationProvider());
     }
 
-    private Filter jwtAuthenticationFilter() throws Exception {
-        AbstractAuthenticationProcessingFilter filter = new JwtAuthenticationFilter(properties, tokenService);
+    private Filter jwtFilter() throws Exception {
+        AbstractAuthenticationProcessingFilter filter = new JwtFilter(properties, tokenService);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
 
-    private Filter headerAuthenticationFilter() throws Exception {
+    private Filter authenticationFilter() throws Exception {
         RequestHeaderAuthenticationFilter filter = new RequestHeaderAuthenticationFilter();
         filter.setPrincipalRequestHeader(properties.getHeader());
         filter.setAuthenticationManager(authenticationManager());
@@ -77,9 +75,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    private AuthenticationProvider jwtAuthenticationProvider() {
+    private AuthenticationProvider authenticationProvider() {
         PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(jwtDetailsService);
+        provider.setPreAuthenticatedUserDetailsService(jwtService);
         return provider;
     }
 }

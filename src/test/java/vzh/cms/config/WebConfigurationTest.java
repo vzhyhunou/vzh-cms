@@ -7,7 +7,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import vzh.cms.security.JwtDetailsService;
+import vzh.cms.security.JwtService;
+import vzh.cms.security.TokenService;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 
@@ -28,13 +29,16 @@ public class WebConfigurationTest {
     private PasswordEncoder passwordEncoder;
 
     @MockBean
-    private JwtDetailsService jwtDetailsService;
+    private JwtService jwtService;
 
     @MockBean
     private ImportService importService;
 
     @MockBean
     private ExportService exportService;
+
+    @MockBean
+    private TokenService tokenService;
 
     @Autowired
     private MockMvc mockMvc;

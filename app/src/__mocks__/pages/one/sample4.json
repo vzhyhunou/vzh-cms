@@ -1,6 +1,6 @@
 {
   "json": {
     "title": "sample4 title",
-    "content": "sample4 content for {permissions && permissions.includes('ROLE_EDITOR') ? 'editor' : 'all except editor'}"
+    "content": "sample4 content for {permissions && permissions.includes(EDITOR) ? 'editor' : 'all except editor'}"
   }
 }

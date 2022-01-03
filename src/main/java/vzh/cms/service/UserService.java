@@ -47,10 +47,7 @@ public class UserService extends TaggedService<User, String> {
                     return b.and(
                             b.equal(root.get(User_.ID), id),
                             b.or(
-                                    b.and(
-                                            b.like(tags.get(Tag_.name), "ROLE_%"),
-                                            active(b, tags)
-                                    ),
+                                    active(b, tags),
                                     b.isNull(tags.get(Tag_.name))
                             )
                     );
