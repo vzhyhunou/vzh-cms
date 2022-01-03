@@ -36,7 +36,7 @@ class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                 .collect(Collectors.toList())
                 )
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + properties.getExpiration() * 1000))
+                .setExpiration(new Date(now + properties.getExpiration() * 1000L))
                 .signWith(SignatureAlgorithm.HS512, properties.getSecret().getBytes())
                 .compact();
 

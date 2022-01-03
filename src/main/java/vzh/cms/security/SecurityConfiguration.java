@@ -61,13 +61,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(jwtAuthenticationProvider());
     }
 
-    protected Filter jwtAuthenticationFilter() throws Exception {
+    private Filter jwtAuthenticationFilter() throws Exception {
         AbstractAuthenticationProcessingFilter filter = new JwtAuthenticationFilter(properties);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
 
-    protected Filter headerAuthenticationFilter() throws Exception {
+    private Filter headerAuthenticationFilter() throws Exception {
         RequestHeaderAuthenticationFilter filter = new RequestHeaderAuthenticationFilter();
         filter.setPrincipalRequestHeader(properties.getHeader());
         filter.setAuthenticationManager(authenticationManager());
