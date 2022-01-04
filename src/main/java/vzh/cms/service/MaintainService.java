@@ -16,6 +16,7 @@ import vzh.cms.repository.ItemRepository;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * @author Viktar Zhyhunou
@@ -56,10 +57,9 @@ public class MaintainService {
         return mapper.readValue(file, Wrapper.class).getItem();
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void write(File file, Item item) throws IOException {
         log.debug("Write: {}", file);
-        file.getParentFile().mkdirs();
+        Files.createDirectories(file.getParentFile().toPath());
         Wrapper wrapper = new Wrapper();
         wrapper.setItem(implementation(item));
         mapper.writeValue(file, wrapper);

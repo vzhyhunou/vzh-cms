@@ -12,7 +12,6 @@ import vzh.cms.repository.ItemRepository;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +33,7 @@ import static org.springframework.util.FileSystemUtils.deleteRecursively;
 @RequiredArgsConstructor
 public class ExportService {
 
-    private static final Comparator<Path> COMPARATOR = Comparator.comparing(p -> p.toFile().getName());
+    private static final Comparator<Path> COMPARATOR = Comparator.comparing(Path::getFileName);
 
     private final CmsProperties cmsProperties;
 
@@ -60,16 +59,16 @@ public class ExportService {
     @SuppressWarnings("unchecked")
     public void export(boolean incremental) throws Exception {
         Optional<Date> last = last(incremental);
-        File path = path(last.isPresent());
-        log.info("Start export {} ...", path.getName());
+        Path dir = path(last.isPresent());
+        log.info("Start export {} ...", dir);
         for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
             ItemRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) type);
             for (int i = 0; i < last.map(repository::countByDateGreaterThan).orElseGet(repository::count); i++) {
                 PageRequest p = PageRequest.of(i, 1);
                 for (Item item : last.map(l -> repository.findByDateGreaterThan(l, p)).orElseGet(() -> repository.findAll(p))) {
                     fileService.collect(item, true);
-                    String child = String.format("%s.json", locationService.location(item));
-                    maintainService.write(new File(path, child), item);
+                    String file = String.format("%s.json", locationService.location(item));
+                    maintainService.write(Paths.get(dir.toString(), file).toFile(), item);
                 }
             }
         }
@@ -118,17 +117,17 @@ public class ExportService {
         if (!incremental) {
             return Optional.empty();
         }
-        Optional<String> name = listFull().max(COMPARATOR).map(Path::toFile).map(File::getName);
-        return name.isPresent()
-                ? Optional.of(new SimpleDateFormat(properties.getPattern()).parse(name.get()))
+        Optional<Path> last = listFull().max(COMPARATOR);
+        return last.isPresent()
+                ? Optional.of(new SimpleDateFormat(properties.getPattern()).parse(last.get().getFileName().toString()))
                 : Optional.empty();
     }
 
-    private File path(boolean incremental) {
+    private Path path(boolean incremental) {
         String folder = new SimpleDateFormat(properties.getPattern()).format(new Date());
         if (incremental) {
             folder = String.format("%s.%s", folder, ext);
         }
-        return new File(properties.getPath(), folder);
+        return Paths.get(properties.getPath(), folder);
     }
 }

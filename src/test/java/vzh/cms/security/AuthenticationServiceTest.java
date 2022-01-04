@@ -20,16 +20,15 @@ import static vzh.cms.fixture.TagFixture.tag;
 import static vzh.cms.fixture.UserFixture.withTags;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthenticationDetailsServiceTest {
+public class AuthenticationServiceTest {
 
     private static final String ID = "id";
-    private static final String NAME = "ROLE_A";
 
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private AuthenticationDetailsService service;
+    private AuthenticationService subj;
 
     @AfterEach
     public void after() {
@@ -40,7 +39,10 @@ public class AuthenticationDetailsServiceTest {
     @Test
     public void noUser() {
 
-        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> service.loadUserByUsername(ID));
+        UsernameNotFoundException exception = assertThrows(
+                UsernameNotFoundException.class,
+                () -> subj.loadUserByUsername(ID)
+        );
 
         assertThat(exception.getMessage()).isEqualTo(ID);
     }
@@ -50,26 +52,22 @@ public class AuthenticationDetailsServiceTest {
 
         when(userService.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID)));
 
-        UserDetails result = service.loadUserByUsername(ID);
+        UserDetails result = subj.loadUserByUsername(ID);
 
-        assertThat(result).isNotNull();
         assertThat(result.getUsername()).isEqualTo(ID);
         assertThat(result.getPassword()).isEqualTo(ID);
-        assertThat(result.getAuthorities()).isNotNull();
         assertThat(result.getAuthorities()).isEmpty();
     }
 
     @Test
     public void tags() {
 
-        when(userService.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID, tag(NAME))));
+        when(userService.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID, tag("a"))));
 
-        UserDetails result = service.loadUserByUsername(ID);
+        UserDetails result = subj.loadUserByUsername(ID);
 
-        assertThat(result).isNotNull();
         assertThat(result.getUsername()).isEqualTo(ID);
-        assertThat(result.getUsername()).isEqualTo(ID);
-        assertThat(result.getAuthorities()).isNotNull();
-        assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).containsOnly(NAME);
+        assertThat(result.getPassword()).isEqualTo(ID);
+        assertThat(result.getAuthorities()).extracting(GrantedAuthority::getAuthority).contains("a");
     }
 }

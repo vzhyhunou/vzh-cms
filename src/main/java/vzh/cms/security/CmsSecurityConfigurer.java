@@ -4,8 +4,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Component;
 
-import static vzh.cms.security.Role.*;
+import static vzh.cms.model.UserTag.*;
 
+/**
+ * @author Viktar Zhyhunou
+ */
 @Component
 @Profile("!dev")
 public class CmsSecurityConfigurer implements SecurityConfigurer {
@@ -17,17 +20,17 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                 .antMatchers(
                         "/import",
                         "/export"
-                ).hasRole(ADMIN)
+                ).hasRole(ADMIN.name())
                 .antMatchers(
                         "/api/pages/search/one/**",
                         "/api/pages/search/menu"
                 ).permitAll()
                 .antMatchers(
                         "/api/users/**"
-                ).hasRole(MANAGER)
+                ).hasRole(MANAGER.name())
                 .antMatchers(
                         "/api/pages/**"
-                ).hasRole(EDITOR)
+                ).hasRole(EDITOR.name())
         ;
     }
 }

@@ -12,8 +12,8 @@
       "en": "Fragment 2"
     },
     "content": {
-      "ru": "<p>Фрагмент 2</p>\n\t<Page id=\"fragment.3\"></Page>",
-      "en": "<p>Fragment 2</p>\n\t<Page id=\"fragment.3\"></Page>"
+      "ru": "<p>Фрагмент 2</p>\n\t<Page id=\"fragment.3\"/>",
+      "en": "<p>Fragment 2</p>\n\t<Page id=\"fragment.3\"/>"
     }
   }
 }

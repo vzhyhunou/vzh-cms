@@ -1,6 +1,6 @@
 {
   "json": {
     "title": "sample2 title",
-    "content": "sample2 content <page id=\"fragment.1\"></page>"
+    "content": "sample2 content <Page id=\"fragment.1\"/>"
   }
 }

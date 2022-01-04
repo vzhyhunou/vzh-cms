@@ -5,13 +5,13 @@
     "password": "$2a$10$FRCM42aZbWohdyauQ.UwNuJysW/qSuT1B0S5HtlFQlcWsqMC0SPZ2",
     "tags": [
       {
-        "name": "ROLE_ADMIN"
+        "name": "ADMIN"
       },
       {
-        "name": "ROLE_MANAGER"
+        "name": "MANAGER"
       },
       {
-        "name": "ROLE_EDITOR"
+        "name": "EDITOR"
       }
     ]
   }

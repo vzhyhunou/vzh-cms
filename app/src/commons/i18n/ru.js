@@ -41,9 +41,9 @@ export default {
         users: {
             name: 'Пользователи',
             tags: {
-                'ROLE_ADMIN': 'Администратор',
-                'ROLE_MANAGER': 'Менеджер',
-                'ROLE_EDITOR': 'Редактор'
+                'ADMIN': 'Администратор',
+                'MANAGER': 'Менеджер',
+                'EDITOR': 'Редактор'
             },
             fields: {
                 date: 'Обновление',

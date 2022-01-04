@@ -85,8 +85,7 @@ public class ImportService {
         BeanWrapperImpl src = new BeanWrapperImpl(item);
         BeanWrapperImpl dst = new BeanWrapperImpl(instance);
         Arrays.stream(item.getClass().getDeclaredFields())
-                .filter(f -> Arrays.stream(f.getDeclaredAnnotations())
-                        .anyMatch(a -> a instanceof Id))
+                .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
                 .map(Field::getName)
                 .forEach(n -> dst.setPropertyValue(n, src.getPropertyValue(n)));
         return instance;

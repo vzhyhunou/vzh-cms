@@ -1,27 +1,28 @@
-import {createElement} from 'react';
-import parse, {domToReact} from 'html-react-parser';
+import React, {memo} from 'react';
+import JsxParser from 'react-jsx-parser';
+import {usePermissions} from 'react-admin';
 
 import {originByData} from './upload';
 import {useComponents} from './AppContext';
+import * as roles from './roles';
 
-export default data => {
+export default memo(data => {
 
     const components = useComponents();
+    const {permissions} = usePermissions();
     let {content, files} = data;
-
-    const options = {
-        replace: ({name, attribs, children}) => {
-            const Component = components[name];
-            if (Component) {
-                return createElement(Component, {...attribs}, domToReact(children, options));
-            }
-        }
-    };
 
     files && files.forEach(name => content = content.replace(
         new RegExp(name, 'g'),
         `${originByData('pages', data)}/${name}`
     ));
 
-    return parse(content, options);
-};
+    return <JsxParser
+        bindings={{
+            permissions,
+            ...Object.fromEntries(Object.entries(roles))
+        }}
+        {...{components}}
+        jsx={content}
+    />;
+});

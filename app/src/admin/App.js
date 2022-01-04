@@ -1,13 +1,13 @@
 import React, {cloneElement} from 'react';
 import {AdminContext, AdminUI, usePermissions} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import {createMuiTheme} from '@material-ui/core/styles';
+import {createTheme} from '@material-ui/core/styles';
 
 import authProvider from './auth';
 import Layout from './Layout';
 import {useGetLocale, useGetMessages} from '../commons/AppContext';
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         secondary: {
             light: '#5f5fc4',

@@ -17,7 +17,7 @@ public class ExportController {
 
     private final ExportService service;
 
-    @GetMapping()
+    @GetMapping
     public void export(@RequestParam(required = false) boolean incremental) throws Exception {
         service.export(incremental);
     }

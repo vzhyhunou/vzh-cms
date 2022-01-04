@@ -1,11 +1,12 @@
 import addUploadFeature from './upload'
 
-class MockFileReader {
+class FileReaderMock {
     readAsDataURL(blob) {
         this.result = `data:image/png;base64,${blob.name}`
         this.onload()
     }
 }
+global.FileReader = FileReaderMock
 
 describe('upload', () => {
 
@@ -116,8 +117,6 @@ describe('upload', () => {
     it('should modify request data', () => {
         expect.assertions(2)
 
-        window.FileReader = MockFileReader
-
         const request = {
             data: {
                 id: "sample.1",
@@ -200,8 +199,6 @@ describe('upload', () => {
     it('should modify request data with existing files in request', () => {
         expect.assertions(2)
 
-        window.FileReader = MockFileReader
-
         const request = {
             data: {
                 id: "sample.1",
@@ -276,8 +273,6 @@ describe('upload', () => {
 
     it('should modify request data with parents', () => {
         expect.assertions(2)
-
-        window.FileReader = MockFileReader
 
         const request = {
             data: {
