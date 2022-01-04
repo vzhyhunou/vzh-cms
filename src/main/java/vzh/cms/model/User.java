@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
-@ToString
+@ToString(callSuper = true)
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

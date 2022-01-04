@@ -2,6 +2,7 @@ package vzh.cms.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Data
+@ToString(callSuper = true)
 @Entity
 public class Page extends Tagged {
 
