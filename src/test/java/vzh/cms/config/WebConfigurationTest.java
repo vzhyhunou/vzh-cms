@@ -50,7 +50,6 @@ public class WebConfigurationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("/static/js/")))
-                .andExpect(content().string(containsString(".chunk.js")))
         ;
     }
 }

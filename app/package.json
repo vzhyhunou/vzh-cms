@@ -14,14 +14,13 @@
     "react-jsx-parser": "^1.28.4"
   },
   "devDependencies": {
-    "react-scripts": "^3.4.4",
-    "@testing-library/react": "^11.2.5",
-    "jest-environment-jsdom-sixteen": "^1.0.3"
+    "react-scripts": "^5.0.0",
+    "@testing-library/react": "^12.1.2"
   },
   "scripts": {
     "start": "CI=true PORT=3010 react-scripts start",
     "build": "react-scripts build && mkdir -p ../target/classes && mv build ../target/classes/static",
-    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen"
+    "test": "CI=true react-scripts test"
   },
   "proxy": "http://localhost:8090",
   "browserslist": [

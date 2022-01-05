@@ -18,19 +18,21 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
         http
                 .authorizeRequests()
                 .antMatchers(
+                        "/api/pages/search/one/**",
+                        "/api/pages/search/menu",
+                        "/static/**"
+                ).permitAll()
+                .antMatchers(
                         "/import",
                         "/export"
                 ).hasRole(ADMIN.name())
-                .antMatchers(
-                        "/api/pages/search/one/**",
-                        "/api/pages/search/menu"
-                ).permitAll()
                 .antMatchers(
                         "/api/users/**"
                 ).hasRole(MANAGER.name())
                 .antMatchers(
                         "/api/pages/**"
                 ).hasRole(EDITOR.name())
+                .anyRequest().authenticated()
         ;
     }
 }
