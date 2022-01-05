@@ -5,13 +5,9 @@ export const ROLES = 'roles';
 
 export default {
     login: ({ username, password }) => {
-        const data = new URLSearchParams();
-        data.append('username', username);
-        data.append('password', password);
-        return fetch('/login', {
-            method: 'post',
-            body: data
-        })
+        const credentials = btoa(`${username}:${password}`);
+        const auth = { Authorization: `Basic ${credentials}` };
+        return fetch('/api/login', { headers: auth })
             .then(response => {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
