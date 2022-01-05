@@ -7,7 +7,7 @@ export default {
     login: ({ username, password }) => {
         const credentials = btoa(`${username}:${password}`);
         const auth = { Authorization: `Basic ${credentials}` };
-        return fetch('/api/login', { headers: auth })
+        return fetch('/login', { headers: auth })
             .then(response => {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
