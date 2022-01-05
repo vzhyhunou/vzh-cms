@@ -8,11 +8,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Collectors;
 
+/**
+ * @author Viktar Zhyhunou
+ */
 @RestController
+@RequestMapping("login")
 @Log4j2
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -21,7 +26,7 @@ public class AuthenticationController {
 
     private final TokenService tokenService;
 
-    @GetMapping("/api/login")
+    @GetMapping
     public String login() {
         return tokenService.createToken(createClaims());
     }
