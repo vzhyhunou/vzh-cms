@@ -3,12 +3,12 @@ import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
 import {originByData} from './upload';
-import {useComponents} from './AppContext';
-import * as roles from './roles';
+import {useComponents, useRoles} from './AppContext';
 
 export default memo(data => {
 
     const components = useComponents();
+    const roles = useRoles();
     const {permissions} = usePermissions();
     let {content, files} = data;
 
@@ -20,7 +20,7 @@ export default memo(data => {
     return <JsxParser
         bindings={{
             permissions,
-            ...Object.fromEntries(Object.entries(roles))
+            ...roles
         }}
         {...{components}}
         jsx={content}

@@ -19,8 +19,7 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                 .authorizeRequests()
                 .antMatchers(
                         "/api/pages/search/one/**",
-                        "/api/pages/search/menu",
-                        "/static/**"
+                        "/api/pages/search/menu"
                 ).permitAll()
                 .antMatchers(
                         "/import",
@@ -32,7 +31,6 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                 .antMatchers(
                         "/api/pages/**"
                 ).hasRole(EDITOR.name())
-                .anyRequest().authenticated()
         ;
     }
 }
