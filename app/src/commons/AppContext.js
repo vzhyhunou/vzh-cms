@@ -9,7 +9,7 @@ import {i18nLoader, i18nWriter} from './locale';
 
 const AppContext = createContext();
 
-export default ({locales, i18n, components, children}) => {
+export default ({locales, i18n, components, roles, children}) => {
 
     const [contextValues, setContextValues] = useState();
 
@@ -36,16 +36,15 @@ export default ({locales, i18n, components, children}) => {
         locales,
         getLocale,
         getMessages,
-        components
+        components,
+        roles
     }}>
         {children}
     </AppContext.Provider>;
 };
 
 export const useLocales = () => useContext(AppContext).locales;
-
 export const useGetLocale = () => useContext(AppContext).getLocale;
-
 export const useGetMessages = () => useContext(AppContext).getMessages;
-
 export const useComponents = () => useContext(AppContext).components;
+export const useRoles = () => useContext(AppContext).roles;
