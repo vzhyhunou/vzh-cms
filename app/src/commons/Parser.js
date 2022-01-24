@@ -24,5 +24,6 @@ export default memo(data => {
         }}
         {...{components}}
         jsx={content}
+        renderInWrapper={false}
     />;
 });
