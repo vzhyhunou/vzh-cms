@@ -1,4 +1,4 @@
-import Page from '../pages/App';
+import Page from '../pages/Page';
 
 export default {
     Page
