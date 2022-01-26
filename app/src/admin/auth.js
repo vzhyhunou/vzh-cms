@@ -20,10 +20,10 @@ export default {
                 localStorage.setItem(ROLES, decodedToken.roles);
             });
     },
-    logout: path => {
+    logout: () => {
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(ROLES);
-        return Promise.resolve(path);
+        return Promise.resolve();
     },
     checkError: ({ status }) => {
         if (status === 401 || status === 403) {
