@@ -7,5 +7,5 @@ import Configuration from './Configuration';
 export default Layout => [
     <Redirect exact from="/" to="cms/pages/home"/>,
     <Route exact path="/configuration" component={Configuration}/>,
-    <RouteWithoutLayout path="/cms/:resource/:id?" component={({match: {params: {resource, id}}}) => <Layout {...{resource, id}}/>}/>
+    <RouteWithoutLayout path="/cms/:resource/:id?" component={({match: {params}}) => <Layout {...params}/>}/>
 ];
