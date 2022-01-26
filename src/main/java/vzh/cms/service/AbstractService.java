@@ -32,7 +32,7 @@ abstract class AbstractService {
 
     protected static Predicate in(Expression<?> expression, Object[] fields) {
         return Optional.ofNullable(fields)
-                .map(f -> expression.in(fields))
+                .map(expression::in)
                 .orElse(null);
     }
 
