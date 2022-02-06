@@ -53,7 +53,7 @@ const upd = (resource, params, call) => {
     return Promise.all(
         dumpKeysRecursively(params.data)
         .filter(key => get(params.data, `${key}.rawFile`))
-        .filter(key => sanitizedData.includes(get(params.data, `${key}.src`)))
+        .filter(key => !get(params.data, `${key}.src`) || sanitizedData.includes(get(params.data, `${key}.src`)))
         .map(key =>
             convertFileToBase64(
                 get(params.data, key)

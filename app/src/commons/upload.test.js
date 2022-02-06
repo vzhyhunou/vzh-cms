@@ -135,8 +135,7 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf"),
-                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
+                    rawFile: new File([], "abf")
                 },
                 content: {
                     en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
@@ -221,8 +220,7 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf"),
-                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
+                    rawFile: new File([], "abf")
                 },
                 content: {
                     en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
@@ -293,8 +291,7 @@ describe('upload', () => {
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf"),
-                    src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bf"
+                    rawFile: new File([], "abf")
                 },
                 content: {
                     en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
