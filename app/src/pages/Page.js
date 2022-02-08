@@ -7,9 +7,8 @@ const Page = ({id, external}) => {
 
     const locale = useLocale();
     const {data, loading} = useQuery({
-        type: 'search',
-        resource: 'pages',
-        payload: {path: `one/${id}`, options: {locale}}
+        type: 'exchange',
+        payload: {path: `pages/search/one/${id}`, options: {locale}}
     });
 
     if (loading) {

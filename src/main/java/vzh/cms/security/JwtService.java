@@ -42,7 +42,7 @@ public class JwtService implements AuthenticationUserDetailsService<PreAuthentic
         try {
             return createUser(principal);
         } catch (Exception e) {
-            log.warn("Principal '{}' won't be authenticated: {}", principal, e.getMessage());
+            log.debug("Principal '{}' won't be authenticated: {}", principal, e.getMessage());
             throw new BadCredentialsException(principal, e);
         }
     }
