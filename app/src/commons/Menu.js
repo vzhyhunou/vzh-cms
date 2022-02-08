@@ -34,9 +34,8 @@ export default ({open, handleDrawerClose}) => {
     const locale = useLocale();
     const classes = useStyles();
     const {data} = useQuery({
-        type: 'search',
-        resource: 'pages',
-        payload: {path: 'menu', options: {locale}}
+        type: 'exchange',
+        payload: {path: 'pages/search/menu', options: {locale}}
     });
 
     if (!data) {
