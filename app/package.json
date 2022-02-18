@@ -1,5 +1,5 @@
 {
-  "name": "vzh-cms",
+  "name": "@vzhyhunou/vzh-cms",
   "version": "0.0.1",
   "dependencies": {
     "react": "^17.0.2",
@@ -23,6 +23,8 @@
     "test": "CI=true react-scripts test"
   },
   "proxy": "http://localhost:8090",
+  "files": ["package.json", "dist"],
+  "main": "dist/main.js",
   "browserslist": [
     ">0.2%",
     "not dead",
