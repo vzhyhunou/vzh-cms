@@ -1,13 +1,24 @@
-import React from 'react'
-import {waitFor} from '@testing-library/react'
+import React, {cloneElement} from 'react'
+import {waitFor, render} from '@testing-library/react'
+import {createMemoryHistory} from 'history'
 
-import renderWithHistory from './commons/renderWithHistory'
 import App from './App'
-import {EDITOR} from './commons/roles';
-import {ROLES} from './admin/auth';
+import {EDITOR} from './commons/roles'
+import {ROLES} from './admin/auth'
 
 const permissionsMock = jest.fn()
 Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock()}})
+
+const renderWithHistory = (
+    ui,
+    {
+        route = '/',
+        history = createMemoryHistory({initialEntries: [route]})
+    } = {}
+) => ({
+    ...render(cloneElement(ui, {history})),
+    history
+})
 
 describe('App', () => {
 
