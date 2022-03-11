@@ -1,6 +1,5 @@
 import React, {
     createContext,
-    useState,
     useContext
 } from 'react';
 
@@ -8,11 +7,13 @@ const ComponentContext = createContext();
 
 export default ({children}) => {
 
-    const [contextValues, setContextValues] = useState({});
+    let bindings = {};
 
-    const getBindings = () => contextValues;
+    const getBindings = () => bindings;
 
-    const setBindings = props => setContextValues({...contextValues, ...props});
+    const setBindings = props => {
+        bindings = {...bindings, ...props};
+    };
 
     return <ComponentContext.Provider value={{
         getBindings,
