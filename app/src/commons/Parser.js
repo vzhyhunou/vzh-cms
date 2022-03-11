@@ -3,20 +3,20 @@ import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
 import {useComponents, useRoles} from './AppContext';
-import ComponentProvider, {useBindings} from './ComponentContext';
+import ComponentProvider, {useGetBindings} from './ComponentContext';
 
 const Parser = ({content}) => {
 
     const components = useComponents();
     const roles = useRoles();
     const {permissions} = usePermissions();
-    const bindings = useBindings();
+    const getBindings = useGetBindings();
 
     return <JsxParser
         bindings={{
             permissions,
             ...roles,
-            ...bindings
+            getBindings
         }}
         {...{components}}
         jsx={content}
