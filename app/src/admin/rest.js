@@ -112,8 +112,8 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             data: responses.map(response => response.json),
         })),
 
-    exchange: ({path, query, data = {}, options}) =>
-        httpClient((path.startsWith('/') ? path : `${apiUrl}/${path}`) + (query ? `?${stringify(query)}` : ''), {
+    exchange: ({path, query, data, options}) =>
+        httpClient((path.startsWith('/') ? path : `${apiUrl}/${path}`) + (query ? `?${stringify(query)}` : ''), !data ? options : {
             body: JSON.stringify(data),
             ...options
         }).then(({json}) => ({
