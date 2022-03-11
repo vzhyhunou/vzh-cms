@@ -10,15 +10,17 @@ export default ({children}) => {
 
     const [contextValues, setContextValues] = useState({});
 
+    const getBindings = () => contextValues;
+
     const setBindings = props => setContextValues({...contextValues, ...props});
 
     return <ComponentContext.Provider value={{
-        bindings: contextValues,
+        getBindings,
         setBindings
     }}>
         {children}
     </ComponentContext.Provider>;
 };
 
-export const useBindings = () => useContext(ComponentContext).bindings;
+export const useGetBindings = () => useContext(ComponentContext).getBindings;
 export const useSetBindings = () => useContext(ComponentContext).setBindings;
