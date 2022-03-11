@@ -1,29 +1,31 @@
-import React, {memo} from 'react';
+import React from 'react';
 import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
-import {originByData} from './upload';
 import {useComponents, useRoles} from './AppContext';
+import ComponentProvider, {useBindings} from './ComponentContext';
 
-export default memo(data => {
+const Parser = ({content}) => {
 
     const components = useComponents();
     const roles = useRoles();
     const {permissions} = usePermissions();
-    let {content, files} = data;
-
-    files && files.forEach(name => content = content.replace(
-        new RegExp(name, 'g'),
-        `${originByData('pages', data)}/${name}`
-    ));
+    const bindings = useBindings();
 
     return <JsxParser
         bindings={{
             permissions,
-            ...roles
+            ...roles,
+            ...bindings
         }}
         {...{components}}
         jsx={content}
         renderInWrapper={false}
     />;
-});
+};
+
+export default props =>
+    <ComponentProvider>
+        <Parser {...props}/>
+    </ComponentProvider>
+;
