@@ -14,7 +14,6 @@ export default ({locales, i18n, components, roles, children}) => {
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
-
         i18nLoader(i18n).then(props => setContextValues(props));
     }, [i18n]);
 

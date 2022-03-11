@@ -15,10 +15,10 @@ export default dataProvider => ({
     ...dataProvider,
 
     create: (resource, params) =>
-        upd(resource, params, dataProvider.create),
+        upd(params, p => dataProvider.create(resource, p)),
 
     update: (resource, params) =>
-        upd(resource, params, dataProvider.update),
+        upd(params, p => dataProvider.update(resource, p)),
 
     getOne: (resource, params) =>
         dataProvider.getOne(resource, params).then(response => ({
@@ -36,10 +36,13 @@ export default dataProvider => ({
         dataProvider.getMany(resource, params).then(response => ({
             ...response,
             data: response.data.map(item => analyze(resource, item))
-        }))
+        })),
+
+    exchange: params =>
+        params.data ? upd(params, p => dataProvider.exchange(p)) : dataProvider.exchange(params)
 });
 
-const upd = (resource, params, call) => {
+const upd = (params, call) => {
 
     const sanitizedData = JSON.stringify({
         ...params.data,
@@ -76,7 +79,7 @@ const upd = (resource, params, call) => {
         process
     ).then(
         transformedNewFiles =>
-            call(resource, {
+            call({
                 ...params,
                 data: {
                     ...replaceFiles(params.data, transformedNewFiles),
