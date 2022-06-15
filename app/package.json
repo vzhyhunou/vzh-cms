@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "CI=true PORT=3010 react-scripts start",
-    "build": "react-scripts build && mkdir -p ../target/classes && mv build ../target/classes/static",
+    "build": "BUILD_PATH=../target/classes/static react-scripts build",
     "test": "CI=true react-scripts test"
   },
   "proxy": "http://localhost:8090",
