@@ -81,7 +81,7 @@ public class ImportService {
 
     @SuppressWarnings("unchecked")
     private static Item getInstanceWithId(Item item) throws Exception {
-        Item instance = ((Class<Item>) item.getClass()).newInstance();
+        Item instance = ((Class<Item>) item.getClass()).getDeclaredConstructor().newInstance();
         BeanWrapperImpl src = new BeanWrapperImpl(item);
         BeanWrapperImpl dst = new BeanWrapperImpl(instance);
         Arrays.stream(item.getClass().getDeclaredFields())
