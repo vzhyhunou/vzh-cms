@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Viktar Zhyhunou
  */
 @WebMvcTest
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles("dev")
 public class WebConfigurationTest {
 
     @MockBean
