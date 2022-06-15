@@ -10,7 +10,7 @@ import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.RowUser;
-import vzh.cms.repository.RepositoryTest;
+import vzh.cms.repository.RepositoryIT;
 import vzh.cms.repository.UserRepository;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.withTags;
 
-public class UserServiceTest extends RepositoryTest {
+public class UserServiceIT extends RepositoryIT {
 
     @TestConfiguration
     static class ContextConfiguration {

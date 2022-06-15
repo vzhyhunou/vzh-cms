@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles("dev")
 @DataJpaTest
-abstract public class RepositoryTest {
+abstract public class RepositoryIT {
 
     @Autowired
     private TestEntityManager manager;

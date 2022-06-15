@@ -10,7 +10,7 @@ import vzh.cms.projection.RowPage;
 import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
-import vzh.cms.repository.RepositoryTest;
+import vzh.cms.repository.RepositoryIT;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import static vzh.cms.fixture.PageFixture.withLang;
 import static vzh.cms.fixture.PageFixture.withTags;
 import static vzh.cms.fixture.TagFixture.*;
 
-public class PageServiceTest extends RepositoryTest {
+public class PageServiceIT extends RepositoryIT {
 
     @TestConfiguration
     static class ContextConfiguration {
