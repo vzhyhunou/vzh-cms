@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest
 @ActiveProfiles("dev")
-public class WebConfigurationTest {
+public class WebConfigurationIT {
 
     @MockBean
     private PasswordEncoder passwordEncoder;

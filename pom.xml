@@ -21,6 +21,7 @@
 		<node.version>v16.14.0</node.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<jpamodelgen.version>5.6.5.Final</jpamodelgen.version>
+		<failsafe.version>3.0.0-M7</failsafe.version>
 	</properties>
 
 	<distributionManagement>
@@ -151,6 +152,23 @@
 						</executions>
 						<configuration>
 							<workingDirectory>app</workingDirectory>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${failsafe.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includes>
+								<include>**/*IT</include>
+							</includes>
 						</configuration>
 					</plugin>
 				</plugins>
