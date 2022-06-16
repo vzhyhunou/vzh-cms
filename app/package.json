@@ -12,12 +12,13 @@
   },
   "devDependencies": {
     "react-scripts": "^5.0.0",
-    "@testing-library/react": "^12.1.2"
+    "@testing-library/react": "^12.1.2",
+    "cross-env": "^7.0.3"
   },
   "scripts": {
-    "start": "CI=true PORT=3010 react-scripts start",
-    "build": "BUILD_PATH=../target/classes/static react-scripts build",
-    "test": "CI=true react-scripts test"
+    "start": "cross-env CI=true PORT=3010 react-scripts start",
+    "build": "cross-env BUILD_PATH=../target/classes/static react-scripts build",
+    "test": "cross-env CI=true react-scripts test"
   },
   "proxy": "http://localhost:8090",
   "files": ["package.json", "dist"],

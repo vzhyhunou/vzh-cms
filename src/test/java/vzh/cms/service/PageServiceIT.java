@@ -1,9 +1,11 @@
 package vzh.cms.service;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.i18n.LocaleContext;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
@@ -16,7 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Locale.ENGLISH;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.context.i18n.LocaleContextHolder.setLocaleContext;
 import static vzh.cms.fixture.PageFixture.withLang;
 import static vzh.cms.fixture.PageFixture.withTags;
 import static vzh.cms.fixture.TagFixture.*;
@@ -34,6 +40,13 @@ public class PageServiceIT extends RepositoryIT {
 
     @Autowired
     private PageService subj;
+
+    @BeforeAll
+    public static void before() {
+        LocaleContext context = mock(LocaleContext.class);
+        setLocaleContext(context);
+        when(context.getLocale()).thenReturn(ENGLISH);
+    }
 
     @Test
     public void listAllLanguages() {

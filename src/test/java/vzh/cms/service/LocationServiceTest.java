@@ -14,6 +14,8 @@ import vzh.cms.model.Item;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnitUtil;
 
+import static java.io.File.separator;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -56,7 +58,7 @@ public class LocationServiceTest {
 
         String result = subj.location(item);
 
-        assertThat(result).isEqualTo("resource/1/2/3/a/b");
+        assertThat(result).isEqualTo(String.join(separator, asList("resource", "1", "2", "3", "a", "b")));
         verifyNoMoreInteractions(meta, rel, util);
     }
 }
