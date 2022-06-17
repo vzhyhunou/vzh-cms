@@ -18,21 +18,18 @@ public class TokenService {
 
     private final JwtProperties properties;
 
-    private byte[] secretKey;
+    private String secret;
 
     private long expiration;
 
     @PostConstruct
     private void postConstruct() {
-        secretKey = properties.getSecret().getBytes();
+        secret = properties.getSecret();
         expiration = properties.getExpiration() * 1000L;
     }
 
-    public Claims extractClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
+    public CmsClaims extractClaims(String token) {
+        return new CmsClaims(parse(secret, token), properties.getRoles());
     }
 
     public String createToken(Claims claims) {
@@ -41,16 +38,18 @@ public class TokenService {
                 .setClaims(claims)
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + expiration))
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
+    private static Claims parse(String secret, String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     public static void main(String[] args) {
-        System.out.println(
-                Jwts.parser()
-                        .setSigningKey(args[0].getBytes())
-                        .parseClaimsJws(args[1])
-                        .getBody()
-        );
+        System.out.println(parse(args[0], args[1]));
     }
 }
