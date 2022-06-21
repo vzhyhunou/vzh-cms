@@ -13,12 +13,18 @@
   "devDependencies": {
     "react-scripts": "^5.0.0",
     "@testing-library/react": "^12.1.2",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/plugin-proposal-class-properties": "^7.17.12"
   },
   "scripts": {
     "start": "cross-env CI=true PORT=3010 react-scripts start",
     "build": "cross-env BUILD_PATH=../target/classes/static react-scripts build",
-    "test": "cross-env CI=true react-scripts test"
+    "test": "cross-env CI=true react-scripts test",
+    "transpile": "babel src --out-dir dist --presets @babel/preset-env,@babel/preset-react --plugins @babel/plugin-proposal-class-properties"
   },
   "proxy": "http://localhost:8090",
   "files": ["package.json", "dist"],

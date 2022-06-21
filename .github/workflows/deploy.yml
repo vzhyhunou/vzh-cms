@@ -8,7 +8,6 @@ jobs:
     strategy:
           matrix:
             java_version: [11]
-            node_version: [16.14.0]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -20,20 +19,3 @@ jobs:
       run: mvn -B deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Node ${{ matrix.node_version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node_version }}
-        registry-url: https://npm.pkg.github.com
-        scope: '@${{ github.event.repository.owner.login }}'
-    - name: Install babel
-      run: npm install @babel/cli @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties
-      working-directory: app
-    - name: Transpile
-      run: npx babel src --out-dir dist --presets @babel/preset-env,@babel/preset-react --plugins @babel/plugin-proposal-class-properties
-      working-directory: app
-    - name: Publish to GitHub
-      run: npm publish
-      working-directory: app
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
