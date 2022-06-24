@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
-import customRoutes from './routes';
+import routes from './routes';
 
 const drawerWidth = 240;
 
@@ -51,7 +51,7 @@ export default props => {
         <div className={classNames(classes.content, {
             [classes.contentShift]: open
         })}>
-            <Body {...{customRoutes}}/>
+            <Body {...{routes}}/>
         </div>
         <Menu
             open={open}

@@ -1,7 +1,7 @@
 import React, {cloneElement} from 'react';
 
-export default ({customRoutes}) =>
+export default ({routes}) =>
     <>
-        {customRoutes.map((route, key) => cloneElement(route, {key}))}
+        {routes.map((route, key) => cloneElement(route, {key}))}
     </>
 ;
