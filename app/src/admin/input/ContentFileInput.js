@@ -13,10 +13,8 @@ import {
     useTranslate,
     Labeled,
     InputHelperText,
-    useTranslatableContext,
     sanitizeInputRestProps
 } from 'react-admin';
-import { useForm, useFormState } from 'react-final-form';
 
 import ContentFileInputPreview from './ContentFileInputPreview';
 
@@ -64,10 +62,6 @@ const ContentFileInput = props => {
     } = props;
     const translate = useTranslate();
     const classes = useStyles(props);
-    const form = useForm();
-    const {values} = useFormState();
-    const {content} = values;
-    const {selectedLocale} = useTranslatableContext();
 
     // turn a browser dropped file structure into expected structure
     const transformFile = file => {
@@ -133,12 +127,9 @@ const ContentFileInput = props => {
     };
 
     const onAdd = file => () => {
-        const { source } = Children.only(children).props;
-
-        form.change(
-            `content.${selectedLocale}`,
-            content ? `${content[selectedLocale]}\n<img src="${file[source]}"/>` : `<img src="${file[source]}"/>`
-        );
+        if (options.onAdd) {
+            options.onAdd(file);
+        }
     };
 
     const onRemove = file => () => {

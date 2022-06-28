@@ -7,7 +7,6 @@ import {
     TabbedForm,
     TextField,
     TextInput,
-    ImageField,
     TranslatableInputs,
     usePermissions
 } from 'react-admin';
@@ -15,7 +14,7 @@ import {
 import TagsInput from '../input/TagsInput';
 import {useLocales} from '../../commons/AppContext';
 import {MANAGER} from '../../commons/roles';
-import ContentImageInput from '../input/ContentImageInput';
+import Input from './Input';
 
 export default props => {
 
@@ -47,16 +46,9 @@ export default props => {
                         fullWidth
                         source="content"
                     />
-                    <ContentImageInput
-                        multiple
+                    <Input
                         source="@files.content"
-                        accept="image/*"
-                    >
-                        <ImageField
-                            source="src"
-                            title="title"
-                        />
-                    </ContentImageInput>
+                    />
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">
