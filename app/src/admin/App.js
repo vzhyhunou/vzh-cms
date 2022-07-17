@@ -1,48 +1,23 @@
-import React, {cloneElement} from 'react';
-import {AdminContext, AdminUI, usePermissions} from 'react-admin';
+import React from 'react';
+import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import {createTheme} from '@material-ui/core/styles';
 
-import authProvider from './auth';
-import Layout from './Layout';
-import {useGetLocale, useGetMessages} from '../commons/AppContext';
+import authProvider, {getToken} from './auth';
+import {useGetLocale, useGetMessages} from '../commons';
+import restProvider from './rest';
+import addUploadFeature from '../commons/upload';
 
-const theme = createTheme({
-    palette: {
-        secondary: {
-            light: '#5f5fc4',
-            main: '#283593',
-            dark: '#001064',
-            contrastText: '#fff'
-        }
-    }
-});
-
-const Resources = ({routes, resources}) => {
-
-    const {permissions} = usePermissions();
-
-    return <AdminUI
-        {...{theme}}
-        customRoutes={routes}
-        layout={Layout}
-    >
-        {resources(permissions).map((resource, key) => cloneElement(resource, {key}))}
-    </AdminUI>;
-};
-
-export default ({routes, resources, history, data}) => {
+export default ({locales, children, history}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
+    const l = Object.entries(locales).map(([key, value]) => ({locale: key, name: value}));
 
-    return <AdminContext
+    return <Admin
         {...{authProvider, history}}
-        dataProvider={data(getLocale)}
-        i18nProvider={polyglotI18nProvider(getMessages, getLocale())}
+        dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
+        i18nProvider={{...polyglotI18nProvider(getMessages, getLocale()), getLocales: () => l}}
     >
-        <Resources
-            {...{routes, resources}}
-        />
-    </AdminContext>;
+        {children}
+    </Admin>;
 };

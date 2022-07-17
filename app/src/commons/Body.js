@@ -1,7 +1,10 @@
-import React, {cloneElement} from 'react';
+import React from 'react';
+import {Routes, Route} from 'react-router-dom';
 
-export default ({routes}) =>
-    <>
-        {routes.map((route, key) => cloneElement(route, {key}))}
-    </>
+import {Page} from '../pages';
+
+export default () =>
+    <Routes>
+        <Route path="/pages/:id" element={<Page/>}/>
+    </Routes>
 ;

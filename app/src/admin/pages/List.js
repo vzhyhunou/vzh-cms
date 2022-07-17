@@ -2,45 +2,39 @@ import React from 'react';
 import {
     Datagrid,
     EditButton,
-    Filter,
     List,
     TextField,
     TextInput,
     useLocale
 } from 'react-admin';
 
-import TagsField from '../field/TagsField';
-import LinkField from '../field/LinkField';
-import TagsFilter from '../input/TagsFilter';
-import BulkActionButtons from '../button/BulkActionButtons';
+import {TagsField, LinkField} from '../field';
+import {TagsFilter} from '../input';
+import {BulkActionButtons} from '../button';
 
-const PageFilter = props =>
-    <Filter {...props}>
-        <TextInput
-            source="id"
-            alwaysOn
-        />
-        <TagsFilter/>
-        <TextInput
-            source="title"
-        />
-        <TextInput
-            source="content"
-        />
-    </Filter>
-;
+const filters = [
+    <TextInput
+        source="id"
+        alwaysOn
+    />,
+    <TagsFilter/>,
+    <TextInput
+        source="title"
+    />,
+    <TextInput
+        source="content"
+    />
+];
 
-export default props => {
+export default () => {
 
     const locale = useLocale();
 
     return <List
-        {...props}
-        filters={<PageFilter/>}
-        bulkActionButtons={<BulkActionButtons/>}
+        {...{filters}}
         exporter={false}
     >
-        <Datagrid>
+        <Datagrid bulkActionButtons={<BulkActionButtons/>}>
             <LinkField
                 source="id"
             />

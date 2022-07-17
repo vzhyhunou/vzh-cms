@@ -2,12 +2,11 @@ import React, {cloneElement} from 'react'
 import {waitFor, render} from '@testing-library/react'
 import {createMemoryHistory} from 'history'
 
-import App from './App'
-import {EDITOR} from './commons/roles'
+import App, {roles} from './App'
 import {ROLES} from './admin/auth'
 
 const permissionsMock = jest.fn()
-Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock()}})
+Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock(), setItem: () => {}}})
 
 const renderWithHistory = (
     ui,
@@ -15,10 +14,7 @@ const renderWithHistory = (
         route = '/',
         history = createMemoryHistory({initialEntries: [route]})
     } = {}
-) => ({
-    ...render(cloneElement(ui, {history})),
-    history
-})
+) => render(cloneElement(ui, {history}))
 
 describe('App', () => {
 
@@ -80,7 +76,7 @@ describe('App', () => {
     })
 
     it('should render sample page with auth content for editor', async () => {
-        permissionsMock.mockReturnValue(EDITOR)
+        permissionsMock.mockReturnValue(roles.EDITOR)
         const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()

@@ -1,40 +1,30 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import {makeStyles} from '@material-ui/core/styles';
-import {useTranslate} from 'react-admin';
+import {Stack, Chip} from '@mui/material';
+import {useTranslate, useRecordContext, useResourceContext} from 'react-admin';
 
-const useStyles = makeStyles({
-    main: {
-        display: 'flex',
-        flexWrap: 'wrap'
-    },
-    chip: {
-        margin: 4
-    }
-});
-
-const TagsField = ({record, resource}) => {
+const TagsField = () => {
 
     const translate = useTranslate();
-    const classes = useStyles();
+    const record = useRecordContext();
+    const resource = useResourceContext();
 
-    return <span className={classes.main}>
-        {record.tags && record.tags.map(tag => {
+    if (!record || !record.tags) {
+        return null;
+    }
 
-            const {name} = tag;
-
-            return <Chip
+    return <Stack direction="row" gap={1} flexWrap="wrap">
+        {record.tags.map(({name}) =>
+            <Chip
+                size="small"
                 key={name}
-                className={classes.chip}
                 label={translate(`resources.${resource}.tags.${name}`)}
-            />;
-        })}
-    </span>;
+            />
+        )}
+    </Stack>;
 };
 
 TagsField.defaultProps = {
-    addLabel: true,
-    source: 'tags',
+    source: 'tags'
 };
 
 export default TagsField;

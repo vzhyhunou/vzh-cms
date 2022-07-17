@@ -1,30 +1,13 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AddCircle from '@material-ui/icons/AddCircle';
-import RemoveCircle from '@material-ui/icons/RemoveCircle';
-import IconButton from '@material-ui/core/IconButton';
+import { styled } from '@mui/material/styles';
+import AddCircle from '@mui/icons-material/AddCircle';
+import RemoveCircle from '@mui/icons-material/RemoveCircle';
+import IconButton from '@mui/material/IconButton';
 import { useTranslate } from 'react-admin';
 
-const useStyles = makeStyles(
-    theme => ({
-        button: {},
-        icon: {
-            color: theme.palette.error.main,
-        },
-    })
-);
+export const FileInputPreview = props => {
+    const { children, className, onAdd, onRemove, file, ...rest } = props;
 
-const ContentFileInputPreview = props => {
-    const {
-        children,
-        classes: classesOverride,
-        className,
-        onAdd,
-        onRemove,
-        file,
-        ...rest
-    } = props;
-    const classes = useStyles(props);
     const translate = useTranslate();
 
     useEffect(() => {
@@ -38,30 +21,56 @@ const ContentFileInputPreview = props => {
     }, [file]);
 
     return (
-        <div className={className} {...rest}>
+        <Root className={className} {...rest}>
             <IconButton
-                className="add"
+                className={FileInputPreviewClasses.addButton}
                 onClick={onAdd}
                 aria-label={translate('ra.action.add')}
                 title={translate('ra.action.add')}
+                size="large"
             >
-                <AddCircle className={classes.icon} />
+                <AddCircle className={FileInputPreviewClasses.addIcon} />
             </IconButton>
             <IconButton
-                className="remove"
+                className={FileInputPreviewClasses.removeButton}
                 onClick={onRemove}
                 aria-label={translate('ra.action.delete')}
                 title={translate('ra.action.delete')}
+                size="large"
             >
-                <RemoveCircle className={classes.icon} />
+                <RemoveCircle className={FileInputPreviewClasses.removeIcon} />
             </IconButton>
             {children}
-        </div>
+        </Root>
     );
 };
 
-ContentFileInputPreview.defaultProps = {
+FileInputPreview.defaultProps = {
     file: undefined,
 };
 
-export default ContentFileInputPreview;
+const PREFIX = 'RaContentFileInputPreview';
+
+export const FileInputPreviewClasses = {
+    addButton: `${PREFIX}-addButton`,
+    addIcon: `${PREFIX}-addIcon`,
+    removeButton: `${PREFIX}-removeButton`,
+    removeIcon: `${PREFIX}-removeIcon`,
+};
+
+const Root = styled('div', {
+    name: PREFIX,
+    overridesResolver: (props, styles) => styles.root,
+})(({ theme }) => ({
+    [`& .${FileInputPreviewClasses.addButton}`]: {},
+
+    [`& .${FileInputPreviewClasses.addIcon}`]: {
+        color: theme.palette.error.main,
+    },
+
+    [`& .${FileInputPreviewClasses.removeButton}`]: {},
+
+    [`& .${FileInputPreviewClasses.removeIcon}`]: {
+        color: theme.palette.error.main,
+    },
+}));

@@ -3,25 +3,24 @@ import {
     ImageField,
     useTranslatableContext
 } from 'react-admin';
-import {useForm, useFormState} from 'react-final-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 
 import ContentImageInput from '../input/ContentImageInput';
 
-export default props => {
+const Input = props => {
 
-    const form = useForm();
-    const {values: {content}} = useFormState();
+    const {setValue} = useFormContext();
+    const val = useWatch({name: 'content'});
     const {selectedLocale} = useTranslatableContext();
-    const onAdd = file => form.change(
+    const onAdd = ({src}) => setValue(
         `content.${selectedLocale}`,
-        content ? `${content[selectedLocale]}\n<img src="${file.src}"/>` : `<img src="${file.src}"/>`
+        val ? `${val[selectedLocale]}\n<img src="${src}"/>` : `<img src="${src}"/>`
     );
 
     return <ContentImageInput
         multiple
         accept="image/*"
-        options={{onAdd}}
-        {...props}
+        {...{...props, onAdd}}
     >
         <ImageField
             source="src"
@@ -29,3 +28,9 @@ export default props => {
         />
     </ContentImageInput>;
 };
+
+Input.defaultProps = {
+    source: '@files.content'
+};
+
+export default Input;

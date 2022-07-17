@@ -1,49 +1,47 @@
-import {useSelector} from 'react-redux';
 import {
-    useMutation,
-    useRefresh,
+    useUpdateMany,
     useNotify,
     useUnselectAll,
-    CRUD_UPDATE_MANY
+    useListContext,
+    useGetMany,
+    useResourceContext
 } from 'react-admin';
 
-export default (resource, selectedIds, data) => {
+export default getData => {
 
-    const records = useSelector(({admin}) => selectedIds.map(id => admin.resources[resource].data[id]));
+    const resource = useResourceContext();
+    const {selectedIds} = useListContext();
+    const {data} = useGetMany(
+        resource,
+        {ids: selectedIds}
+    );
     const notify = useNotify();
-    const unselectAll = useUnselectAll();
-    const refresh = useRefresh();
-    const [mutate] = useMutation();
+    const unselectAll = useUnselectAll(resource);
+    const [updateMany] = useUpdateMany();
 
-    return tag => mutate(
+    return tag => updateMany(
+        resource,
         {
-            type: 'updateMany',
-            resource,
-            payload: {
-                ids: selectedIds,
-                data: records.map(r => data(r, tag))
-            }
+            ids: selectedIds,
+            data: data.map(r => getData(r, tag))
         },
         {
-            action: CRUD_UPDATE_MANY,
             onSuccess: () => {
-                notify(
-                    'ra.notification.updated',
-                    'info',
-                    { smart_count: selectedIds.length },
-                    true
-                );
-                unselectAll(resource);
-                refresh();
+                notify('ra.notification.updated', {
+                    type: 'info',
+                    messageArgs: { smart_count: selectedIds.length },
+                    undoable: true,
+                });
+                unselectAll();
             },
-            onFailure: error =>
+            onError: error =>
                 notify(
                     typeof error === 'string'
                         ? error
                         : error.message || 'ra.notification.http_error',
-                    'warning'
+                    { type: 'warning' }
                 ),
-            undoable: true
+            mutationMode: 'undoable'
         }
     );
 };

@@ -2,13 +2,8 @@ import messages from 'ra-language-english';
 
 export default {
     ...messages,
-    pos: {
-        configuration: 'Configuration',
-        language: 'Language',
-        title: 'Control Panel',
-        general: 'General'
-    },
     resources: {
+        general: 'General',
         validation: {
             id: 'Id already exists'
         },
@@ -31,7 +26,7 @@ export default {
             },
             fields: {
                 date: 'Update',
-                userId: 'User',
+                user: 'User',
                 tags: 'Tags',
                 title: 'Title',
                 content: 'Content',
@@ -47,7 +42,7 @@ export default {
             },
             fields: {
                 date: 'Update',
-                userId: 'User',
+                user: 'User',
                 password: 'Password',
                 tags: 'Tags'
             }

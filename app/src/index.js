@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import {createBrowserHistory} from 'history';
 
 import App from './App';
 
-ReactDOM.render(
-    <App history={createBrowserHistory()}/>,
-    document.getElementById('react')
-);
+ReactDOM.createRoot(document.getElementById('react')).render(<App history={createBrowserHistory()}/>);

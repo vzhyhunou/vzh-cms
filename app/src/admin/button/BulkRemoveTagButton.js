@@ -1,13 +1,12 @@
 import React from 'react';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 import BulkTagButton from './BulkTagButton';
 
-export default props =>
+export default () =>
     <BulkTagButton
-        {...props}
         label="resources.tags.actions.remove"
-        data={(record, tag) => ({
+        getData={(record, tag) => ({
             id: record.id,
             tags: record.tags ? record.tags.filter(({name}) => name !== tag) : []
         })}

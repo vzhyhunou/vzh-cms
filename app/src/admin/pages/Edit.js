@@ -8,37 +8,44 @@ import {
     TextField,
     TextInput,
     TranslatableInputs,
-    usePermissions
+    usePermissions,
+    useLocales,
+    Labeled
 } from 'react-admin';
 
-import TagsInput from '../input/TagsInput';
-import {useLocales} from '../../commons/AppContext';
-import {MANAGER} from '../../commons/roles';
+import {TagsInput} from '../input';
+import {useRoles} from '../../commons';
 import Input from './Input';
 
-export default props => {
+export default () => {
 
     const locales = useLocales();
     const {permissions} = usePermissions();
+    const {MANAGER} = useRoles();
 
-    return <Edit {...props}>
+    return <Edit>
         <TabbedForm>
-            <FormTab label="pos.general">
-                <DateField
-                    source="date"
-                    showTime
-                />
+            <FormTab label="resources.general">
+                <Labeled source="date">
+                    <DateField
+                        source="date"
+                        showTime
+                    />
+                </Labeled>
                 {permissions && permissions.includes(MANAGER) &&
-                    <ReferenceField
-                        source="userId"
-                        reference="users"
-                        allowEmpty={true}
-                    >
-                        <TextField source="id"/>
-                    </ReferenceField>
+                    <Labeled source="user">
+                        <ReferenceField
+                            source="userId"
+                            reference="users"
+                            allowEmpty={true}
+                        >
+                            <TextField source="id"/>
+                        </ReferenceField>
+                    </Labeled>
                 }
-                <TranslatableInputs locales={Object.keys(locales)}>
+                <TranslatableInputs locales={locales.map(l => l.locale)}>
                     <TextInput
+                        fullWidth
                         source="title"
                     />
                     <TextInput
@@ -46,9 +53,7 @@ export default props => {
                         fullWidth
                         source="content"
                     />
-                    <Input
-                        source="@files.content"
-                    />
+                    <Input/>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">

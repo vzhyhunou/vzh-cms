@@ -1,57 +1,77 @@
 import React from 'react';
-import classNames from 'classnames';
-import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SettingsIcon from '@material-ui/icons/Settings';
-import EditIcon from '@material-ui/icons/Edit';
-import {usePermissions} from 'react-admin';
-import {Link} from 'react-router-dom';
+import {styled} from '@mui/material/styles';
+import {AppBar, Toolbar, Typography, IconButton} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsIcon from '@mui/icons-material/Settings';
+import EditIcon from '@mui/icons-material/Edit';
+import {usePermissions, LocalesMenuButton} from 'react-admin';
+import {Link, useParams} from 'react-router-dom';
 
-import LocaleInput from './LocaleInput';
-import {EDITOR} from './roles';
+import {useRoles} from './AppContext';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
+const Root = styled(AppBar, {shouldForwardProp: prop => prop !== 'open'})(({theme, open}) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+    }),
+    ...(open && {
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
+            duration: theme.transitions.duration.enteringScreen
         }),
-        marginRight: drawerWidth,
-    },
-    title: {
-        flexGrow: 1,
-    },
-    hide: {
-        display: 'none',
-    },
+        marginRight: drawerWidth
+    })
 }));
 
-export default ({open, handleDrawerOpen, resource, id}) => {
+const AdminButton = () => {
 
     const {permissions} = usePermissions();
-    const classes = useStyles();
+    const {'*': path} = useParams();
+    const {EDITOR, MANAGER} = useRoles();
 
-    return <AppBar
-                position="fixed"
-                className={classNames(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
+    if (!permissions) {
+        return <IconButton
+            color="inherit"
+            component={Link}
+            to="/login"
+        >
+            <AccountCircleIcon/>
+        </IconButton>;
+    }
+
+    if (permissions.includes(EDITOR)) {
+        return <IconButton
+            color="inherit"
+            component={Link}
+            to={`/${path}`}
+        >
+            <EditIcon/>
+        </IconButton>;
+    }
+
+    if (permissions.includes(MANAGER)) {
+        return <IconButton
+            color="inherit"
+            component={Link}
+            to="/users"
+        >
+            <SettingsIcon/>
+        </IconButton>;
+    }
+
+    return null;
+};
+
+export default ({open, handleDrawerOpen}) =>
+    <Root
+        position="fixed"
+        open={open}
+    >
         <Toolbar>
             <IconButton
                 color="inherit"
@@ -62,42 +82,19 @@ export default ({open, handleDrawerOpen, resource, id}) => {
             </IconButton>
             <Typography
                 variant="h6"
-                className={classes.title}
+                sx={{flexGrow: 1}}
             >
                 Project
             </Typography>
-            <LocaleInput/>
-            {permissions
-                ? permissions.includes(EDITOR)
-                    ? <IconButton
-                        color="inherit"
-                        component={Link}
-                        to={`/${resource}/${id}`}
-                    >
-                        <EditIcon/>
-                    </IconButton>
-                    : <IconButton
-                        color="inherit"
-                        component={Link}
-                        to="/configuration"
-                    >
-                        <SettingsIcon/>
-                    </IconButton>
-                : <IconButton
-                    color="inherit"
-                    component={Link}
-                    to="/login"
-                >
-                    <AccountCircleIcon/>
-                </IconButton>
-            }
+            <LocalesMenuButton/>
+            <AdminButton/>
             <IconButton
                 color="inherit"
                 onClick={handleDrawerOpen}
-                className={classNames(open && classes.hide)}
+                sx={{...(open && {display: 'none'})}}
             >
                 <MenuIcon/>
             </IconButton>
         </Toolbar>
-    </AppBar>;
-};
+    </Root>
+;

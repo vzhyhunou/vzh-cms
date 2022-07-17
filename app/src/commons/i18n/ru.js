@@ -2,13 +2,8 @@ import messages from 'ra-language-russian';
 
 export default {
     ...messages,
-    pos: {
-        configuration: 'Конфигурация',
-        language: 'Язык',
-        title: 'Панель управления',
-        general: 'Общие'
-    },
     resources: {
+        general: 'Общие',
         validation: {
             id: 'Id уже существует'
         },
@@ -31,7 +26,7 @@ export default {
             },
             fields: {
                 date: 'Обновление',
-                userId: 'Пользователь',
+                user: 'Пользователь',
                 tags: 'Теги',
                 title: 'Заголовок',
                 content: 'Контент',
@@ -47,7 +42,7 @@ export default {
             },
             fields: {
                 date: 'Обновление',
-                userId: 'Пользователь',
+                user: 'Пользователь',
                 password: 'Пароль',
                 tags: 'Теги'
             }
