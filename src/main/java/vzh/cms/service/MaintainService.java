@@ -1,8 +1,9 @@
 package vzh.cms.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +11,7 @@ import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
+import vzh.cms.model.ExportIgnore;
 import vzh.cms.model.Item;
 import vzh.cms.repository.ItemRepository;
 
@@ -38,7 +40,12 @@ public class MaintainService {
     private void postConstruct() {
         repositories = new Repositories(factory);
         mapper = objectMapper.copy();
-        mapper.addMixIn(Item.class, ItemMixIn.class);
+        mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public boolean hasIgnoreMarker(AnnotatedMember m) {
+                return super.hasIgnoreMarker(m) || _findAnnotation(m, ExportIgnore.class) != null;
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -69,11 +76,6 @@ public class MaintainService {
     private static class Wrapper {
         @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY)
         private Item item;
-    }
-
-    private interface ItemMixIn {
-        @JsonIgnore
-        Object[] getParents();
     }
 
     private Item implementation(Item item) {

@@ -41,6 +41,7 @@ abstract public class Item {
     @Transient
     private Set<Base64File> files = new HashSet<>();
 
+    @ExportIgnore
     public Object[] getParents() {
         return new Object[]{};
     }
