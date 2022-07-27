@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
+import static vzh.cms.model.PageTag.MENU;
+import static vzh.cms.model.PageTag.PUBLISHED;
 
 /**
  * @author Viktar Zhyhunou
@@ -45,26 +47,26 @@ public class PageService extends TaggedService<Page, String> {
         }, RowPage.class, pageable);
     }
 
-    public Optional<PropertyPage> one(String id, String... names) {
+    public Optional<PropertyPage> one(String id, boolean editor) {
         return findOne((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE, JoinType.LEFT);
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             String language = getLocale().getLanguage();
             return b.and(
                     b.equal(root.get(Page_.ID), id),
-                    filterAny(root, q, b, names),
+                    editor ? b.and() : filterAny(root, q, b, PUBLISHED.name()),
                     b.or(b.equal(title.key(), language), b.isNull(title.key())),
                     b.equal(content.key(), language)
             );
         }, PropertyPage.class);
     }
 
-    public List<TitlePage> menu(String... names) {
+    public List<TitlePage> menu() {
         return findAll((root, q, b) -> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             q.orderBy(b.asc(title.value()));
             return b.and(
-                    filterAll(root, q, b, names),
+                    filterAny(root, q, b, MENU.name()),
                     b.equal(title.key(), getLocale().getLanguage())
             );
         }, TitlePage.class);

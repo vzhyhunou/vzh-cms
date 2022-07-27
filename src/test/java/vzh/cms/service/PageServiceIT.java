@@ -26,6 +26,8 @@ import static org.springframework.context.i18n.LocaleContextHolder.setLocaleCont
 import static vzh.cms.fixture.PageFixture.withLang;
 import static vzh.cms.fixture.PageFixture.withTags;
 import static vzh.cms.fixture.TagFixture.*;
+import static vzh.cms.model.PageTag.MENU;
+import static vzh.cms.model.PageTag.PUBLISHED;
 
 public class PageServiceIT extends RepositoryIT {
 
@@ -264,7 +266,7 @@ public class PageServiceIT extends RepositoryIT {
         persist(withLang("home", "en", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = subj.one("home");
+        Optional<PropertyPage> result = subj.one("home", true);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -281,7 +283,7 @@ public class PageServiceIT extends RepositoryIT {
 
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = subj.one("home");
+        Optional<PropertyPage> result = subj.one("home", true);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -293,7 +295,7 @@ public class PageServiceIT extends RepositoryIT {
         persist(withLang("home"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = subj.one("home");
+        Optional<PropertyPage> result = subj.one("home", true);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
@@ -305,7 +307,7 @@ public class PageServiceIT extends RepositoryIT {
         persist(withLang("home", "en"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = subj.one("home");
+        Optional<PropertyPage> result = subj.one("home", true);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -323,19 +325,19 @@ public class PageServiceIT extends RepositoryIT {
         persist(withLang("home", "ru"));
         persist(withLang("sample"));
 
-        Optional<PropertyPage> result = subj.one("home");
+        Optional<PropertyPage> result = subj.one("home", true);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
     }
 
     @Test
-    public void oneByTag() {
+    public void onePublishedTag() {
 
-        persist(withTags("home", tag("a"), tag("b")));
+        persist(withTags("home", tag(PUBLISHED.name()), tag("b")));
         persist(withTags("sample", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = subj.one("home", "a");
+        Optional<PropertyPage> result = subj.one("home", false);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isTrue();
@@ -348,48 +350,31 @@ public class PageServiceIT extends RepositoryIT {
     }
 
     @Test
-    public void oneByAnotherTag() {
+    public void oneNoPublishedTag() {
 
         persist(withTags("home", tag("a"), tag("b")));
 
-        Optional<PropertyPage> result = subj.one("home", "c");
+        Optional<PropertyPage> result = subj.one("home", false);
 
         assertThat(result).isNotNull();
         assertThat(result.isPresent()).isFalse();
     }
 
     @Test
-    public void oneByNoTag() {
-
-        persist(withTags("home", tag("a"), tag("b")));
-
-        Optional<PropertyPage> result = subj.one("home");
-
-        assertThat(result).isNotNull();
-        assertThat(result.isPresent()).isTrue();
-
-        PropertyPage page = result.get();
-
-        assertThat(page).isNotNull();
-        assertThat(page.getTitle()).isEqualTo("home.en.title");
-        assertThat(page.getContent()).isEqualTo("home.en.content");
-    }
-
-    @Test
-    public void menuByAllTagsEmpty() {
+    public void menuNoTag() {
 
         persist(withTags("home", tag("a")));
 
-        List<TitlePage> result = subj.menu("a", "b");
+        List<TitlePage> result = subj.menu();
 
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
     }
 
     @Test
-    public void menuNoTag() {
+    public void menuTag() {
 
-        persist(withTags("home"));
+        persist(withTags("home", tag(MENU.name())));
 
         List<TitlePage> result = subj.menu();
 
@@ -399,27 +384,15 @@ public class PageServiceIT extends RepositoryIT {
     }
 
     @Test
-    public void menuByAllTags() {
-
-        persist(withTags("home", tag("a"), tag("b")));
-
-        List<TitlePage> result = subj.menu("a", "b");
-
-        assertThat(result).isNotNull();
-        assertThat(result).extracting(TitlePage::getId).contains("home");
-        assertThat(result).extracting(TitlePage::getTitle).contains("home.en.title");
-    }
-
-    @Test
-    public void menuActiveTags() {
+    public void menuActiveTag() {
 
         persist(withTags("home"));
-        persist(withTags("test", tag("tag")));
-        persist(withTags("sample", tag("tag")));
-        persist(withTags("sample1", delayedTag("tag")));
-        persist(withTags("sample2", expiredTag("tag")));
+        persist(withTags("test", tag(MENU.name())));
+        persist(withTags("sample", tag(MENU.name())));
+        persist(withTags("sample1", delayedTag(MENU.name())));
+        persist(withTags("sample2", expiredTag(MENU.name())));
 
-        List<TitlePage> result = subj.menu("tag");
+        List<TitlePage> result = subj.menu();
 
         assertThat(result).isNotNull();
         assertThat(result).extracting(TitlePage::getId).contains("test", "sample");

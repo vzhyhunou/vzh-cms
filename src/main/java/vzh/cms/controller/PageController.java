@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-import static vzh.cms.model.PageTag.MENU;
-import static vzh.cms.model.PageTag.PUBLISHED;
 import static vzh.cms.model.UserTag.EDITOR;
 
 /**
@@ -45,14 +43,12 @@ public class PageController {
     @ResponseBody
     @GetMapping("search/menu")
     public List<TitlePage> menu() {
-        return service.menu(PUBLISHED.name(), MENU.name());
+        return service.menu();
     }
 
     @ResponseBody
     @GetMapping("search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return request.isUserInRole(EDITOR.name())
-                ? service.one(id)
-                : service.one(id, PUBLISHED.name());
+        return service.one(id, request.isUserInRole(EDITOR.name()));
     }
 }
