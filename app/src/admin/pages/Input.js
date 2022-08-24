@@ -12,9 +12,9 @@ const Input = props => {
     const {setValue} = useFormContext();
     const val = useWatch({name: 'content'});
     const {selectedLocale} = useTranslatableContext();
-    const onAdd = ({src}) => setValue(
+    const onAdd = ({title}) => setValue(
         `content.${selectedLocale}`,
-        val ? `${val[selectedLocale]}\n<img src="${src}"/>` : `<img src="${src}"/>`
+        val ? `${val[selectedLocale]}\n<img src="${title}"/>` : `<img src="${title}"/>`
     );
 
     return <ContentImageInput

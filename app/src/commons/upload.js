@@ -3,11 +3,11 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import md5 from 'js-md5';
 
-const convertFileToBase64 = file => new Promise((resolve, reject) => {
+const convertFileToBase64 = f => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
-    reader.readAsDataURL(file.rawFile);
+    reader.readAsDataURL(f);
 });
 
 export default dataProvider => ({
@@ -44,10 +44,17 @@ export default dataProvider => ({
 
 const upd = (params, call) => {
 
-    const sanitizedData = JSON.stringify({
+    const sanitized = {
         ...params.data,
         files: [],
         '@files': []
+    };
+    const sanitizedData = JSON.stringify({
+        ...sanitized,
+        names: dumpKeysRecursively(sanitized)
+            .map(key => get(sanitized, `${key}.rawFile`))
+            .filter(f => f)
+            .map(({name}) => name)
     });
     const formFiles = params.data.files ? params.data.files
         .filter(({rawFile}) => !rawFile)
@@ -55,44 +62,36 @@ const upd = (params, call) => {
 
     return Promise.all(
         dumpKeysRecursively(params.data)
-        .filter(key => get(params.data, `${key}.rawFile`))
-        .filter(key => !get(params.data, `${key}.src`) || sanitizedData.includes(get(params.data, `${key}.src`)))
-        .map(key =>
-            convertFileToBase64(
-                get(params.data, key)
-            ).then(
-                picture64 => ({
+            .map(key => ({key, f: get(params.data, `${key}.rawFile`)}))
+            .filter(({f}) => f)
+            .filter(({f: {name}}) => sanitizedData.includes(name))
+            .map(({key, f}) => convertFileToBase64(f)
+                .then(picture64 => ({
                     data: picture64.match(/,(.*)/)[1],
                     type: picture64.match(/\/(.*);/)[1]
-                })
-            ).then(
-                ({data, type}) => ({
+                }))
+                .then(({data, type}) => ({
                     data,
-                    type,
                     key,
                     name: `${md5(data)}.${type}`,
-                    preview: get(params.data, `${key}.src`)
-                })
+                    preview: f.name
+                }))
             )
-        )
-    ).then(
-        process
-    ).then(
-        transformedNewFiles =>
-            call({
-                ...params,
-                data: {
-                    ...replaceFiles(params.data, transformedNewFiles),
-                    ...replaceFormFiles(params.data, formFiles),
-                    ...replaceSrc(params.data, transformedNewFiles, formFiles),
-                    files: [
-                        ...transformedNewFiles.map(({data, name}) => ({data, name})),
-                        ...formFiles.map(({title}) => ({name: title}))
-                    ],
-                    '@files': undefined
-                }
-            })
-    );
+    )
+        .then(process)
+        .then(transformedNewFiles => call({
+            ...params,
+            data: {
+                ...replaceFiles(params.data, transformedNewFiles),
+                ...replaceFormFiles(params.data, formFiles),
+                ...replaceSrc(params.data, transformedNewFiles, formFiles),
+                files: [
+                    ...transformedNewFiles.map(({data, name}) => ({data, name})),
+                    ...formFiles.map(({title}) => ({name: title}))
+                ],
+                '@files': undefined
+            }
+        }));
 }
 
 const analyze = (resource, item) => {
