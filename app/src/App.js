@@ -5,7 +5,7 @@ import {CustomRoutes, Resource} from 'react-admin';
 import Layout from './commons/Layout';
 import {App} from './commons';
 import {pages, users} from './admin';
-import {PageComponent} from './pages';
+import {Page, PageComponent} from './pages';
 
 export const roles = {
     ADMIN: 'ADMIN',
@@ -34,10 +34,12 @@ export default ({history}) => {
         i18n={locale => import(`./commons/i18n/${locale}`)}
     >
         <CustomRoutes>
-            <Route exact path="/" element={<Navigate to="cms/pages/home"/>}/>
+            <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
         </CustomRoutes>
         <CustomRoutes noLayout>
-            <Route path="/cms/*" element={<Layout/>}/>
+            <Route path="cms" element={<Layout/>}>
+                <Route path="pages/:id" element={<Page/>}/>
+            </Route>
         </CustomRoutes>
         {permissions =>
             <>

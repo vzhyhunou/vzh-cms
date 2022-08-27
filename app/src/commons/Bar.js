@@ -31,7 +31,7 @@ const Root = styled(AppBar, {shouldForwardProp: prop => prop !== 'open'})(({them
 const AdminButton = () => {
 
     const {permissions} = usePermissions();
-    const {'*': path} = useParams();
+    const {id} = useParams();
     const {EDITOR, MANAGER} = useRoles();
 
     if (!permissions) {
@@ -48,7 +48,7 @@ const AdminButton = () => {
         return <IconButton
             color="inherit"
             component={Link}
-            to={`/${path}`}
+            to={`/pages/${id}`}
         >
             <EditIcon/>
         </IconButton>;

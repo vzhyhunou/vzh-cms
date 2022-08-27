@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Box, GlobalStyles} from '@mui/material';
 import {styled} from '@mui/material/styles';
+import {Outlet} from 'react-router-dom';
 
-import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
 
@@ -40,7 +40,7 @@ export default () => {
                 handleDrawerOpen={() => setOpen(true)}
             />
             <Main open={open}>
-                <Body/>
+                <Outlet/>
             </Main>
             <Menu
                 open={open}
