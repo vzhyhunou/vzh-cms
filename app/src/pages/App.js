@@ -1,21 +1,9 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {useParams} from 'react-router-dom';
 
 import {originByData} from '../commons/upload';
 import Parser from '../commons/Parser';
 import {useExchange} from '../commons';
-
-const Content = memo(data => {
-
-    let {content, files} = data;
-
-    files && files.forEach(name => content = content.replace(
-        new RegExp(name, 'g'),
-        `${originByData('pages', data)}/${name}`
-    ));
-
-    return <Parser {...{content}}/>;
-});
 
 export const PageComponent = ({id, external}) => {
 
@@ -29,11 +17,18 @@ export const PageComponent = ({id, external}) => {
         return id !== 'none' && <PageComponent {...{id: 'none', external}}/>;
     }
 
+    let {content, files, title} = data;
+
     if (external) {
-        document.title = data.title;
+        document.title = title;
     }
 
-    return <Content {...data}/>;
+    files && files.forEach(name => content = content.replace(
+        new RegExp(name, 'g'),
+        `${originByData('pages', data)}/${name}`
+    ));
+
+    return <Parser {...{content}}/>;
 };
 
 export default () => {
