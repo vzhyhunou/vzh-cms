@@ -6,10 +6,10 @@ export default props => {
     const locale = useLocale();
     const dataProvider = useDataProvider();
     const p = {...props, options: {locale}};
-    const {data, isLoading} = useQuery(
-        ['exchange', p],
-        () => dataProvider.exchange(p)
-    );
 
-    return ({isLoading, data: data && data.data});
+    return useQuery(
+        ['exchange', p],
+        () => dataProvider.exchange(p).then(({data}) => data),
+        {refetchOnWindowFocus: false}
+    );
 };
