@@ -22,14 +22,8 @@ const components = {
     Page: PageComponent
 };
 
-export default ({history}) => {
-
-    const {
-        EDITOR,
-        MANAGER
-    } = roles;
-
-    return <App
+export default ({history}) =>
+    <App
         {...{locales, components, history, roles}}
         i18n={locale => import(`./commons/i18n/${locale}`)}
     >
@@ -43,13 +37,13 @@ export default ({history}) => {
         </CustomRoutes>
         {permissions =>
             <>
-                {permissions && permissions.includes(EDITOR) ?
+                {permissions && permissions.includes(roles.EDITOR) ?
                     <Resource name="pages" {...pages}/>
                 : null}
-                {permissions && permissions.includes(MANAGER) ?
+                {permissions && permissions.includes(roles.MANAGER) ?
                     <Resource name="users" {...users}/>
                 : null}
             </>
         }
-    </App>;
-};
+    </App>
+;
