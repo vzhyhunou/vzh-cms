@@ -22,9 +22,9 @@ const components = {
     Page: PageComponent
 };
 
-export default ({history}) =>
+export default () =>
     <App
-        {...{locales, components, history, roles}}
+        {...{locales, components, roles}}
         i18n={locale => import(`./commons/i18n/${locale}`)}
     >
         <CustomRoutes>

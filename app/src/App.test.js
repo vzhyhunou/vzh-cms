@@ -1,6 +1,6 @@
-import React, {cloneElement} from 'react'
+import React from 'react'
 import {waitFor, render} from '@testing-library/react'
-import {createMemoryHistory} from 'history'
+import {MemoryRouter} from 'react-router-dom'
 
 import App, {roles} from './App'
 import {ROLES} from './admin/auth'
@@ -8,18 +8,16 @@ import {ROLES} from './admin/auth'
 const permissionsMock = jest.fn()
 Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock(), setItem: () => {}}})
 
-const renderWithHistory = (
-    ui,
-    {
-        route = '/',
-        history = createMemoryHistory({initialEntries: [route]})
-    } = {}
-) => render(cloneElement(ui, {history}))
+const renderWithHistory = (route = '/') => render(
+    <MemoryRouter initialEntries={[route]}>
+        <App/>
+    </MemoryRouter>
+)
 
 describe('App', () => {
 
     it('should render home page', async () => {
-        const {getByText} = renderWithHistory(<App/>)
+        const {getByText} = renderWithHistory()
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('home content'))
@@ -28,13 +26,13 @@ describe('App', () => {
     })
 
     it('should render login page', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/login'})
+        const {getByText} = renderWithHistory('/login')
         const container = await waitFor(() => getByText('Sign in'))
         expect(container).toBeDefined()
     })
 
     it('should render none page', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/no-exist'})
+        const {getByText} = renderWithHistory('/cms/pages/no-exist')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('none content'))
@@ -43,7 +41,7 @@ describe('App', () => {
     })
 
     it('should render sample page', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample1'})
+        const {getByText} = renderWithHistory('/cms/pages/sample1')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample1 content'))
@@ -52,7 +50,7 @@ describe('App', () => {
     })
 
     it('should render sample page with fragment', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample2'})
+        const {getByText} = renderWithHistory('/cms/pages/sample2')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample2 content'))
@@ -63,7 +61,7 @@ describe('App', () => {
     })
 
     it('should render sample page with two fragments', async () => {
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample3'})
+        const {getByText} = renderWithHistory('/cms/pages/sample3')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample3 content'))
@@ -77,7 +75,7 @@ describe('App', () => {
 
     it('should render sample page with auth content for editor', async () => {
         permissionsMock.mockReturnValue(roles.EDITOR)
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
+        const {getByText} = renderWithHistory('/cms/pages/sample4')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample4 content for editor'))
@@ -87,7 +85,7 @@ describe('App', () => {
 
     it('should render sample page with auth content for all except editor', async () => {
         permissionsMock.mockReturnValue(null)
-        const {getByText} = renderWithHistory(<App/>, {route: '/cms/pages/sample4'})
+        const {getByText} = renderWithHistory('/cms/pages/sample4')
         let container = await waitFor(() => getByText('menu title'))
         expect(container).toBeDefined()
         container = await waitFor(() => getByText('sample4 content for all except editor'))
