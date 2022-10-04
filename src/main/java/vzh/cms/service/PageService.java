@@ -14,9 +14,9 @@ import vzh.cms.projection.TitlePage;
 import vzh.cms.repository.PageRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
@@ -53,8 +53,8 @@ public class PageService extends TaggedService<Page, String> {
             MapJoin<?, ?, ?> content = (MapJoin<?, ?, ?>) root.fetch(Page_.CONTENT);
             String language = getLocale().getLanguage();
             return b.and(
-                    b.equal(root.get(Page_.ID), id),
-                    editor ? b.and() : filterAny(root, q, b, PUBLISHED.name()),
+                    b.equal(root.get(Page_.id), id),
+                    editor ? b.and() : any(root, q, b, PUBLISHED.name()),
                     b.or(b.equal(title.key(), language), b.isNull(title.key())),
                     b.equal(content.key(), language)
             );
@@ -66,7 +66,7 @@ public class PageService extends TaggedService<Page, String> {
             MapJoin<?, ?, ?> title = (MapJoin<?, ?, ?>) root.fetch(Page_.TITLE);
             q.orderBy(b.asc(title.value()));
             return b.and(
-                    filterAny(root, q, b, MENU.name()),
+                    any(root, q, b, MENU.name()),
                     b.equal(title.key(), getLocale().getLanguage())
             );
         }, TitlePage.class);
@@ -75,12 +75,12 @@ public class PageService extends TaggedService<Page, String> {
     private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
         MapJoin<Page, String, String> title = root.joinMap(Page_.TITLE, JoinType.LEFT);
         MapJoin<Page, String, String> content = root.joinMap(Page_.CONTENT, JoinType.LEFT);
-        Join<Page, Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);
-        return b.and(nonNull(
+        Path<Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);
+        return b.and(
                 contains(b, root.get(Page_.id), filter.getId()),
-                in(tags.get(Tag_.name), filter.getTags()),
+                in(b, tags.get(Tag_.name), filter.getTags()),
                 contains(b, title.value(), filter.getTitle()),
                 contains(b, content.value(), filter.getContent())
-        ));
+        );
     }
 }

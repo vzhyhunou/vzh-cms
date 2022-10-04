@@ -19,8 +19,6 @@ import java.util.Arrays;
  */
 public abstract class TaggedService<T, ID> extends BaseService<T, ID> {
 
-    private static final String ID = "id";
-
     private final Class<T> domainClass;
 
     public TaggedService(BaseRepository<T, ID> repository, Class<T> domainClass) {
@@ -28,40 +26,24 @@ public abstract class TaggedService<T, ID> extends BaseService<T, ID> {
         this.domainClass = domainClass;
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag) {
-        return active(b, tag.get(Tag_.start), tag.get(Tag_.end));
+    protected static Predicate active(CriteriaBuilder b, Path<Tag> tags) {
+        return active(b, tags.get(Tag_.start), tags.get(Tag_.end));
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tag, String... names) {
+    protected static Predicate active(CriteriaBuilder b, Path<Tag> tags, String... names) {
         return b.and(
-                tag.get(Tag_.name).in(Arrays.copyOf(names, names.length, Object[].class)),
-                active(b, tag)
+                tags.get(Tag_.name).in(Arrays.copyOf(names, names.length, Object[].class)),
+                active(b, tags)
         );
     }
 
-    public Predicate filterAny(Expression<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
+    public Predicate any(Expression<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
         if (names.length == 0) {
             return b.and();
         }
         Subquery<T> subquery = q.subquery(domainClass);
         Root<T> r = subquery.from(domainClass);
-        return root.in(
-                subquery.select(r)
-                        .where(active(b, r.join(Tagged_.TAGS), names))
-        );
-    }
-
-    public Predicate filterAll(Expression<T> root, CriteriaQuery<?> q, CriteriaBuilder b, String... names) {
-        if (names.length == 0) {
-            return b.and();
-        }
-        Subquery<T> subquery = q.subquery(domainClass);
-        Root<T> r = subquery.from(domainClass);
-        return root.in(
-                subquery.select(r)
-                        .where(active(b, r.join(Tagged_.TAGS), names))
-                        .groupBy(r.get(ID))
-                        .having(b.equal(b.count(r.get(ID)), names.length))
-        );
+        Path<Tag> tags = r.join(Tagged_.TAGS);
+        return root.in(subquery.select(r).where(active(b, tags, names)));
     }
 }

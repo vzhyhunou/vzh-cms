@@ -13,7 +13,6 @@ import vzh.cms.projection.RowUser;
 import vzh.cms.repository.UserRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -43,23 +42,22 @@ public class UserService extends TaggedService<User, String> {
     @SuppressWarnings("unchecked")
     public Optional<User> withActiveRoles(String id) {
         return repository.findOne((root, q, b) -> {
-                    Path<Tag> tags = (Path<Tag>) root.fetch(Tagged_.TAGS, JoinType.LEFT);
-                    return b.and(
-                            b.equal(root.get(User_.ID), id),
-                            b.or(
-                                    active(b, tags),
-                                    b.isNull(tags.get(Tag_.name))
-                            )
-                    );
-                }
-        );
+            Path<Tag> tags = (Path<Tag>) root.fetch(Tagged_.TAGS, JoinType.LEFT);
+            return b.and(
+                    b.equal(root.get(User_.id), id),
+                    b.or(
+                            active(b, tags),
+                            b.isNull(tags.get(Tag_.name))
+                    )
+            );
+        });
     }
 
     private static Predicate filter(Root<User> root, CriteriaBuilder b, UserFilter filter) {
-        Join<User, Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);
-        return b.and(nonNull(
+        Path<Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);
+        return b.and(
                 contains(b, root.get(User_.id), filter.getId()),
-                in(tags.get(Tag_.name), filter.getTags())
-        ));
+                in(b, tags.get(Tag_.name), filter.getTags())
+        );
     }
 }
