@@ -7,7 +7,6 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.RowUser;
@@ -17,7 +16,6 @@ import vzh.cms.service.UserService;
  * @author Viktar Zhyhunou
  */
 @RepositoryRestController
-@RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -26,7 +24,7 @@ public class UserController {
     private final PagedResourcesAssembler<RowUser> assembler;
 
     @ResponseBody
-    @GetMapping("search/list")
+    @GetMapping("users/search/list")
     public PagedModel<EntityModel<RowUser>> list(UserFilter filter, Pageable pageable) {
         return assembler.toModel(service.list(filter, pageable));
     }
