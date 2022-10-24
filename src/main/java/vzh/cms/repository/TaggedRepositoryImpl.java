@@ -1,10 +1,11 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import vzh.cms.model.Tag;
 import vzh.cms.model.Tag_;
+import vzh.cms.model.Tagged;
 import vzh.cms.model.Tagged_;
-import vzh.cms.repository.BaseRepository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -17,20 +18,17 @@ import java.util.Arrays;
 /**
  * @author Viktar Zhyhunou
  */
-public abstract class TaggedService<T, ID> extends BaseService<T, ID> {
+public abstract class TaggedRepositoryImpl<T extends Tagged, ID> extends BaseRepositoryImpl<T, ID> {
 
-    private final Class<T> domainClass;
-
-    public TaggedService(BaseRepository<T, ID> repository, Class<T> domainClass) {
-        super(repository);
-        this.domainClass = domainClass;
+    protected TaggedRepositoryImpl(Class<T> domainClass, EntityManager em) {
+        super(domainClass, em);
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tags) {
+    public static Predicate active(CriteriaBuilder b, Path<Tag> tags) {
         return active(b, tags.get(Tag_.start), tags.get(Tag_.end));
     }
 
-    protected static Predicate active(CriteriaBuilder b, Path<Tag> tags, String... names) {
+    public static Predicate active(CriteriaBuilder b, Path<Tag> tags, String... names) {
         return b.and(
                 tags.get(Tag_.name).in(Arrays.copyOf(names, names.length, Object[].class)),
                 active(b, tags)
@@ -41,8 +39,8 @@ public abstract class TaggedService<T, ID> extends BaseService<T, ID> {
         if (names.length == 0) {
             return b.and();
         }
-        Subquery<T> subquery = q.subquery(domainClass);
-        Root<T> r = subquery.from(domainClass);
+        Subquery<T> subquery = q.subquery(getDomainClass());
+        Root<T> r = subquery.from(getDomainClass());
         Path<Tag> tags = r.join(Tagged_.TAGS);
         return root.in(subquery.select(r).where(active(b, tags, names)));
     }

@@ -13,7 +13,7 @@ import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.service.PageService;
+import vzh.cms.repository.PageRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -28,25 +28,25 @@ import static vzh.cms.model.UserTag.EDITOR;
 @RequiredArgsConstructor
 public class PageController {
 
-    private final PageService service;
+    private final PageRepository repository;
 
     private final PagedResourcesAssembler<RowPage> assembler;
 
     @ResponseBody
     @GetMapping("pages/search/list")
     public PagedModel<EntityModel<RowPage>> list(PageFilter filter, Pageable pageable) {
-        return assembler.toModel(service.list(filter, pageable));
+        return assembler.toModel(repository.list(filter, pageable));
     }
 
     @ResponseBody
     @GetMapping("pages/search/menu")
     public List<TitlePage> menu() {
-        return service.menu();
+        return repository.menu();
     }
 
     @ResponseBody
     @GetMapping("pages/search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return service.one(id, request.isUserInRole(EDITOR.name()));
+        return repository.one(id, request.isUserInRole(EDITOR.name()));
     }
 }

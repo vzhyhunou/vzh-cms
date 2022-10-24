@@ -1,7 +1,6 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.model.Page;
 import vzh.cms.model.Page_;
@@ -11,8 +10,8 @@ import vzh.cms.model.Tagged_;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.repository.PageRepository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
@@ -29,11 +28,10 @@ import static vzh.cms.model.PageTag.PUBLISHED;
 /**
  * @author Viktar Zhyhunou
  */
-@Service
-public class PageService extends TaggedService<Page, String> {
+public class PageRepositoryImpl extends TaggedRepositoryImpl<Page, String> implements CustomizedPageRepository {
 
-    public PageService(PageRepository repository) {
-        super(repository, Page.class);
+    public PageRepositoryImpl(EntityManager em) {
+        super(Page.class, em);
     }
 
     public org.springframework.data.domain.Page<RowPage> list(PageFilter filter, Pageable pageable) {
@@ -72,7 +70,7 @@ public class PageService extends TaggedService<Page, String> {
         }, TitlePage.class);
     }
 
-    private static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
+    protected static Predicate filter(Root<Page> root, CriteriaBuilder b, PageFilter filter) {
         MapJoin<Page, String, String> title = root.joinMap(Page_.TITLE, JoinType.LEFT);
         MapJoin<Page, String, String> content = root.joinMap(Page_.CONTENT, JoinType.LEFT);
         Path<Tag> tags = root.join(Tagged_.TAGS, JoinType.LEFT);

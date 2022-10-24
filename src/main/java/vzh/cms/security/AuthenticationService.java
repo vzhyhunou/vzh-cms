@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import vzh.cms.service.UserService;
+import vzh.cms.repository.UserRepository;
 
 /**
  * @author Viktar Zhyhunou
@@ -16,11 +16,11 @@ import vzh.cms.service.UserService;
 @RequiredArgsConstructor
 public class AuthenticationService implements UserDetailsService {
 
-    private final UserService service;
+    private final UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         log.debug("id: {}", id);
-        return service.withActiveRoles(id).map(CmsUser::new).orElseThrow(() -> new UsernameNotFoundException(id));
+        return repository.withActiveRoles(id).map(CmsUser::new).orElseThrow(() -> new UsernameNotFoundException(id));
     }
 }

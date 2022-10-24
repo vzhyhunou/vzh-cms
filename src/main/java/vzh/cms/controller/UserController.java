@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.projection.RowUser;
-import vzh.cms.service.UserService;
+import vzh.cms.repository.UserRepository;
 
 /**
  * @author Viktar Zhyhunou
@@ -19,13 +19,13 @@ import vzh.cms.service.UserService;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final UserRepository repository;
 
     private final PagedResourcesAssembler<RowUser> assembler;
 
     @ResponseBody
     @GetMapping("users/search/list")
     public PagedModel<EntityModel<RowUser>> list(UserFilter filter, Pageable pageable) {
-        return assembler.toModel(service.list(filter, pageable));
+        return assembler.toModel(repository.list(filter, pageable));
     }
 }

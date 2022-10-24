@@ -1,17 +1,13 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Tag;
 import vzh.cms.model.User;
 import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.RowUser;
-import vzh.cms.repository.RepositoryIT;
-import vzh.cms.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,19 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.withTags;
 
-public class UserServiceIT extends RepositoryIT {
-
-    @TestConfiguration
-    static class ContextConfiguration {
-
-        @Bean
-        UserService service(UserRepository repository) {
-            return new UserService(repository);
-        }
-    }
+public class UserRepositoryIT extends RepositoryIT {
 
     @Autowired
-    private UserService subj;
+    private UserRepository subj;
 
     @Test
     public void listNoTags() {

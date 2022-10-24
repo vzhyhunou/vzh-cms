@@ -1,18 +1,14 @@
-package vzh.cms.service;
+package vzh.cms.repository;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContext;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
 import vzh.cms.projection.RowTagged;
 import vzh.cms.projection.TitlePage;
-import vzh.cms.repository.PageRepository;
-import vzh.cms.repository.RepositoryIT;
 
 import java.util.List;
 import java.util.Map;
@@ -29,19 +25,10 @@ import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.model.PageTag.MENU;
 import static vzh.cms.model.PageTag.PUBLISHED;
 
-public class PageServiceIT extends RepositoryIT {
-
-    @TestConfiguration
-    static class ContextConfiguration {
-
-        @Bean
-        PageService service(PageRepository repository) {
-            return new PageService(repository);
-        }
-    }
+public class PageRepositoryIT extends RepositoryIT {
 
     @Autowired
-    private PageService subj;
+    private PageRepository subj;
 
     @BeforeAll
     public static void before() {
