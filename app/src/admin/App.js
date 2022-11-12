@@ -7,7 +7,7 @@ import {useGetLocale, useGetMessages} from '../commons';
 import restProvider from './rest';
 import addUploadFeature from '../commons/upload';
 
-export default ({locales, children}) => {
+export default ({locales, children, ...rest}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
@@ -17,6 +17,7 @@ export default ({locales, children}) => {
         {...{authProvider}}
         dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
         i18nProvider={{...polyglotI18nProvider(getMessages, getLocale()), getLocales: () => l}}
+        {...rest}
     >
         {children}
     </Admin>;

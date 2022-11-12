@@ -4,7 +4,7 @@ import {usePermissions} from 'react-admin';
 
 import {useComponents, useRoles} from './AppContext';
 
-export default memo(({content}) => {
+export default memo(({content, ...rest}) => {
 
     const components = useComponents();
     const roles = useRoles();
@@ -18,5 +18,8 @@ export default memo(({content}) => {
         {...{components}}
         jsx={content}
         renderInWrapper={false}
+        autoCloseVoidElements={true}
+        showWarnings={true}
+        {...rest}
     />;
 });
