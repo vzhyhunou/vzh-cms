@@ -38,7 +38,7 @@ export default {
             tags: {
                 'ADMIN': 'Администратор',
                 'MANAGER': 'Менеджер',
-                'EDITOR': 'Редактор'
+                'PAGES_EDITOR': 'Редактор страниц'
             },
             fields: {
                 date: 'Обновление',

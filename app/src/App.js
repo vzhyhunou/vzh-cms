@@ -10,7 +10,7 @@ import {Page, PageComponent} from './pages';
 export const roles = {
     ADMIN: 'ADMIN',
     MANAGER: 'MANAGER',
-    EDITOR: 'EDITOR'
+    PAGES_EDITOR: 'PAGES_EDITOR'
 };
 
 const locales = {
@@ -37,7 +37,7 @@ export default () =>
         </CustomRoutes>
         {permissions =>
             <>
-                {permissions && permissions.includes(roles.EDITOR) ?
+                {permissions && permissions.includes(roles.PAGES_EDITOR) ?
                     <Resource name="pages" {...pages}/>
                 : null}
                 {permissions && permissions.includes(roles.MANAGER) ?

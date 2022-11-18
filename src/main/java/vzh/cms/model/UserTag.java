@@ -6,5 +6,5 @@ package vzh.cms.model;
 public enum UserTag {
     ADMIN,
     MANAGER,
-    EDITOR
+    PAGES_EDITOR
 }

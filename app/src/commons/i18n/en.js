@@ -38,7 +38,7 @@ export default {
             tags: {
                 'ADMIN': 'Administrator',
                 'MANAGER': 'Manager',
-                'EDITOR': 'Editor'
+                'PAGES_EDITOR': 'Pages editor'
             },
             fields: {
                 date: 'Update',

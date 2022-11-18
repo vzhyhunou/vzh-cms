@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-import static vzh.cms.model.UserTag.EDITOR;
+import static vzh.cms.model.UserTag.PAGES_EDITOR;
 
 /**
  * @author Viktar Zhyhunou
@@ -47,6 +47,6 @@ public class PageController {
     @ResponseBody
     @GetMapping("pages/search/one/{id:.+}")
     public Optional<PropertyPage> one(@PathVariable String id, HttpServletRequest request) {
-        return repository.one(id, request.isUserInRole(EDITOR.name()));
+        return repository.one(id, request.isUserInRole(PAGES_EDITOR.name()));
     }
 }

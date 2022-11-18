@@ -32,7 +32,7 @@ const AdminButton = () => {
 
     const {permissions} = usePermissions();
     const {id} = useParams();
-    const {EDITOR, MANAGER} = useRoles();
+    const {PAGES_EDITOR, MANAGER} = useRoles();
 
     if (!permissions) {
         return <IconButton
@@ -44,7 +44,7 @@ const AdminButton = () => {
         </IconButton>;
     }
 
-    if (permissions.includes(EDITOR)) {
+    if (permissions.includes(PAGES_EDITOR)) {
         return <IconButton
             color="inherit"
             component={Link}
