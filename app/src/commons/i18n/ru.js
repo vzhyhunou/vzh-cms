@@ -2,6 +2,23 @@ import messages from 'ra-language-russian';
 
 export default {
     ...messages,
+    ra: {
+        ...messages.ra,
+        action: {
+            ...messages.ra.action,
+            clear_array_input: 'Очистить список',
+            move_up: 'Вверх',
+            move_down: 'Вниз'
+        },
+        message: {
+            ...messages.ra.message,
+            clear_array_input: 'Вы уверены, что хотите очистить весь список?'
+        },
+        configurable: {
+            ...messages.ra.configurable,
+            customize: 'Кастомизировать'
+        }
+    },
     resources: {
         general: 'Общие',
         validation: {

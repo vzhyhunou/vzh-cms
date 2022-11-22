@@ -19,7 +19,7 @@
     "@babel/preset-react": "^7.18.6"
   },
   "scripts": {
-    "start": "cross-env CI=true DANGEROUSLY_DISABLE_HOST_CHECK=true PORT=3010 react-scripts start",
+    "start": "cross-env CI=true PORT=3010 react-scripts start",
     "build": "cross-env BUILD_PATH=../target/classes/static react-scripts build",
     "test": "cross-env CI=true react-scripts test",
     "transpile": "babel src --out-dir dist --presets @babel/preset-react"
