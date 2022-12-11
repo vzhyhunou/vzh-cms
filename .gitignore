@@ -3,6 +3,7 @@ resources/static
 build
 node
 node_modules
+.idea
 *.ipr
 *.iml
 *.iws
