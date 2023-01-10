@@ -1,71 +1,56 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {useLocale, useQuery} from 'react-admin';
+import {styled} from '@mui/material/styles';
+import {Drawer, List, ListItem, ListItemText, Divider, IconButton} from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {Link} from 'react-router-dom';
+
+import useExchange from './useExchange';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-start',
-    },
+const DrawerHeader = styled('div')(({theme}) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start'
 }));
 
 export default ({open, handleDrawerClose}) => {
 
-    const locale = useLocale();
-    const classes = useStyles();
-    const {data} = useQuery({
-        type: 'exchange',
-        payload: {path: 'pages/search/menu', options: {locale}}
-    });
+    const {data} = useExchange({path: 'pages/search/menu'});
 
     if (!data) {
         return null;
     }
 
     return <Drawer
-        className={classes.drawer}
+        sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+                width: drawerWidth
+            }
+        }}
         variant="persistent"
         anchor="right"
         open={open}
-        classes={{
-            paper: classes.drawerPaper,
-        }}
     >
-        <div className={classes.drawerHeader}>
+        <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
                 <ChevronLeftIcon/>
             </IconButton>
-        </div>
-        <Divider/>
+        </DrawerHeader>
+        <Divider />
         <List>
-            {data.map(item =>
+            {data.map(({id, title}) =>
                 <ListItem
-                    key={item.id}
+                    key={id}
                     component={Link}
-                    to={item.id}
+                    to={`pages/${id}`}
                 >
                     <ListItemText
-                        primary={item.title}
+                        primary={title}
                     />
                 </ListItem>
             )}

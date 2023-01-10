@@ -2,34 +2,29 @@ import React from 'react';
 import {
     Datagrid,
     EditButton,
-    Filter,
     List,
     TextField,
     TextInput
 } from 'react-admin';
 
-import TagsField from '../field/TagsField';
-import TagsFilter from '../input/TagsFilter';
-import BulkActionButtons from '../button/BulkActionButtons';
+import {TagsField} from '../field';
+import {TagsFilter} from '../input';
+import {BulkActionButtons} from '../button';
 
-const UserFilter = props =>
-    <Filter {...props}>
-        <TextInput
-            source="id"
-            alwaysOn
-        />
-        <TagsFilter/>
-    </Filter>
-;
+const filters = [
+    <TextInput
+        source="id"
+        alwaysOn
+    />,
+    <TagsFilter/>
+];
 
-export default props =>
+export default () =>
     <List
-        {...props}
-        filters={<UserFilter/>}
-        bulkActionButtons={<BulkActionButtons/>}
+        {...{filters}}
         exporter={false}
     >
-        <Datagrid>
+        <Datagrid bulkActionButtons={<BulkActionButtons/>}>
             <TextField
                 source="id"
             />

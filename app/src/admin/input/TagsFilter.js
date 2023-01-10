@@ -1,15 +1,16 @@
 import React from 'react';
-import {SelectArrayInput} from 'react-admin';
+import {SelectArrayInput, useResourceContext} from 'react-admin';
 
-import {useGetMessages} from '../../commons/AppContext';
+import {useGetMessages} from '../../commons';
 
-const TagsFilter = ({addField, resource, ...rest}) => {
+const TagsFilter = () => {
 
     const getMessages = useGetMessages();
+    const resource = useResourceContext();
     const {tags} = getMessages().resources[resource];
 
     return <SelectArrayInput
-        {...rest}
+        source="tags"
         choices={Object.entries(tags).map(([key, value]) => ({
             id: key,
             name: value
@@ -19,8 +20,7 @@ const TagsFilter = ({addField, resource, ...rest}) => {
 };
 
 TagsFilter.defaultProps = {
-    addField: true,
-    source: 'tags',
+    source: 'tags'
 };
 
 export default TagsFilter;

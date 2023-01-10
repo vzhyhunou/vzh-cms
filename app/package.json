@@ -2,7 +2,7 @@
   "name": "@vzhyhunou/vzh-cms",
   "version": "0.0.1",
   "dependencies": {
-    "react-admin": "^3.19.7",
+    "react-admin": "^4.2.7",
     "ra-language-russian": "^3.13.5",
     "query-string": "^7.0.1",
     "jwt-decode": "^2.2.0",
@@ -11,21 +11,44 @@
     "react-jsx-parser": "^1.28.4"
   },
   "devDependencies": {
-    "react-scripts": "^5.0.0",
-    "@testing-library/react": "^12.1.2"
+    "react-scripts": "^4.0.3",
+    "@testing-library/react": "^13.3.0",
+    "cross-env": "^7.0.3",
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-react": "^7.18.6"
   },
   "scripts": {
-    "start": "CI=true PORT=3010 react-scripts start",
-    "build": "BUILD_PATH=../target/classes/static react-scripts build",
-    "test": "CI=true react-scripts test"
+    "start": "cross-env CI=true PORT=3010 react-scripts start",
+    "build": "cross-env BUILD_PATH=../target/classes/static react-scripts build",
+    "test": "cross-env CI=true react-scripts test",
+    "transpile": "babel src --out-dir dist --presets @babel/preset-react"
   },
   "proxy": "http://localhost:8090",
-  "files": ["package.json", "dist"],
+  "files": [
+    "package.json",
+    "dist"
+  ],
   "main": "dist/main.js",
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "import/no-anonymous-default-export": "off"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

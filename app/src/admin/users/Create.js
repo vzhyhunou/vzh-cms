@@ -9,16 +9,16 @@ import {
     PasswordInput
 } from 'react-admin';
 
-import TagsInput from '../input/TagsInput';
+import {TagsInput} from '../input';
 import {useIdValidation} from '../validation';
 
-export default props => {
+export default () => {
 
-    const validateId = useIdValidation(props);
+    const validateId = useIdValidation();
 
-    return <Create {...props}>
+    return <Create>
         <TabbedForm>
-            <FormTab label="pos.general">
+            <FormTab label="resources.general">
                 <TextInput
                     source="id"
                     validate={[required(), validateId]}

@@ -30,7 +30,7 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                 ).hasRole(MANAGER.name())
                 .antMatchers(
                         "/api/pages/**"
-                ).hasRole(EDITOR.name())
+                ).hasRole(PAGES_EDITOR.name())
         ;
     }
 }

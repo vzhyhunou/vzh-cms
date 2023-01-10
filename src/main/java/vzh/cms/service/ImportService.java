@@ -42,38 +42,39 @@ public class ImportService {
     @Transactional
     public void imp() throws Exception {
         Path p = Paths.get(path);
-        if (Files.exists(p)) {
-            for (int i = 1; i < 4; i++) {
-                log.info(String.format("Start import pass %d ...", i));
-                imp(p, i);
-            }
-            log.info("End import");
+        if (!Files.exists(p)) {
+            return;
         }
+        log.info("Import not linked items with id only");
+        imp(p, item -> {
+            if (!isLinked(item)) {
+                maintainService.getRepository(item).save(getInstanceWithId(item));
+            }
+        });
+        log.info("Import linked items with id only");
+        imp(p, item -> {
+            if (isLinked(item)) {
+                maintainService.getRepository(item).save(getInstanceWithId(item));
+            }
+        });
+        log.info("Import items");
+        imp(p, item -> maintainService.getRepository(item).save(item));
+        log.info("Import files");
+        imp(p, item -> {
+            Item entity = maintainService.getRepository(item).save(item);
+            entity.getFiles().addAll(item.getFiles());
+            fileService.save(entity);
+        });
+        log.info("End import");
     }
 
-    private void imp(Path dir, int pass) throws Exception {
+    private void imp(Path dir, Consumer consumer) throws Exception {
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
             for (Path path : paths) {
                 if (path.toFile().isDirectory()) {
-                    imp(path, pass);
+                    imp(path, consumer);
                 } else {
-                    Item item = maintainService.read(path.toFile());
-                    switch (pass) {
-                        case 1:
-                            if (!isLinked(item)) {
-                                maintainService.getRepository(item).save(getInstanceWithId(item));
-                            }
-                            break;
-                        case 2:
-                            if (isLinked(item)) {
-                                maintainService.getRepository(item).save(getInstanceWithId(item));
-                            }
-                            break;
-                        case 3:
-                            Item entity = maintainService.getRepository(item).save(item);
-                            entity.getFiles().addAll(item.getFiles());
-                            fileService.save(entity);
-                    }
+                    consumer.accept(maintainService.read(path.toFile()));
                 }
             }
         }
@@ -95,5 +96,9 @@ public class ImportService {
         return Arrays.stream(entity.getClass().getDeclaredFields())
                 .anyMatch(f -> Arrays.stream(f.getDeclaredAnnotations())
                         .anyMatch(a -> a instanceof PrimaryKeyJoinColumn));
+    }
+
+    private interface Consumer {
+        void accept(Item i) throws Exception;
     }
 }

@@ -2,13 +2,25 @@ import messages from 'ra-language-russian';
 
 export default {
     ...messages,
-    pos: {
-        configuration: 'Конфигурация',
-        language: 'Язык',
-        title: 'Панель управления',
-        general: 'Общие'
+    ra: {
+        ...messages.ra,
+        action: {
+            ...messages.ra.action,
+            clear_array_input: 'Очистить список',
+            move_up: 'Вверх',
+            move_down: 'Вниз'
+        },
+        message: {
+            ...messages.ra.message,
+            clear_array_input: 'Вы уверены, что хотите очистить весь список?'
+        },
+        configurable: {
+            ...messages.ra.configurable,
+            customize: 'Кастомизировать'
+        }
     },
     resources: {
+        general: 'Общие',
         validation: {
             id: 'Id уже существует'
         },
@@ -31,7 +43,7 @@ export default {
             },
             fields: {
                 date: 'Обновление',
-                userId: 'Пользователь',
+                user: 'Пользователь',
                 tags: 'Теги',
                 title: 'Заголовок',
                 content: 'Контент',
@@ -43,11 +55,11 @@ export default {
             tags: {
                 'ADMIN': 'Администратор',
                 'MANAGER': 'Менеджер',
-                'EDITOR': 'Редактор'
+                'PAGES_EDITOR': 'Редактор страниц'
             },
             fields: {
                 date: 'Обновление',
-                userId: 'Пользователь',
+                user: 'Пользователь',
                 password: 'Пароль',
                 tags: 'Теги'
             }

@@ -20,7 +20,7 @@ public class IdResolver implements ObjectIdResolver {
     @Override
     public Object resolveId(ObjectIdGenerator.IdKey id) {
         try {
-            Object instance = id.scope.newInstance();
+            Object instance = id.scope.getDeclaredConstructor().newInstance();
             BeanWrapperImpl dst = new BeanWrapperImpl(instance);
             Arrays.stream(id.scope.getDeclaredFields())
                     .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))

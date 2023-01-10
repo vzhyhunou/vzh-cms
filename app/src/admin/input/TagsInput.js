@@ -4,36 +4,26 @@ import {
     DateTimeInput,
     SelectInput,
     SimpleFormIterator,
-    required
+    required,
+    useResourceContext
 } from 'react-admin';
-import {makeStyles} from '@material-ui/core/styles';
 
-import {useGetMessages} from '../../commons/AppContext';
+import {useGetMessages} from '../../commons';
 
-const useStyles = makeStyles({
-    form: {
-        display: 'flex'
-    }
-});
-
-const useControlStyles = makeStyles(theme => ({
-    root: {
-        paddingLeft: theme.spacing(1)
-    }
-}));
-
-const TagsInput = ({addField, resource, ...rest}) => {
+export default () => {
 
     const getMessages = useGetMessages();
-    const classes = useStyles();
-    const controlClasses = useControlStyles();
+    const resource = useResourceContext();
     const {tags} = getMessages().resources[resource];
 
     return <ArrayInput
-        {...rest}
+        source="tags"
         label=""
     >
-        <SimpleFormIterator classes={classes}>
+        <SimpleFormIterator
+            inline
+            getItemLabel={() => ''}
+        >
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
@@ -44,22 +34,13 @@ const TagsInput = ({addField, resource, ...rest}) => {
                 validate={[required()]}
             />
             <DateTimeInput
-                className={controlClasses.root}
                 source="start"
                 label={`resources.tags.fields.start`}
             />
             <DateTimeInput
-                className={controlClasses.root}
                 source="end"
                 label={`resources.tags.fields.end`}
             />
         </SimpleFormIterator>
     </ArrayInput>;
 };
-
-TagsInput.defaultProps = {
-    addField: true,
-    source: 'tags',
-};
-
-export default TagsInput;

@@ -1,8 +1,8 @@
 import addUploadFeature from './upload'
 
 class FileReaderMock {
-    readAsDataURL(blob) {
-        this.result = `data:image/png;base64,${blob.name}`
+    readAsDataURL({type}) {
+        this.result = `data:image/png;base64,${type}`
         this.onload()
     }
 }
@@ -66,7 +66,7 @@ describe('upload', () => {
                     }
                 ],
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/900150983cd24fb0d6963f7d28e17f71.png\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f71.png\"/>"
                 },
                 extra: undefined,
                 "@files": {
@@ -122,33 +122,29 @@ describe('upload', () => {
                 id: "sample.1",
                 files: [
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
+                        rawFile: new File([], "abc", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
+                        rawFile: new File([], "abd", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abe"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
+                        rawFile: new File([], "abe", {type: 'abe'})
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf", {type: 'abf'})
                 },
                 content: {
-                    en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bg\"/>"
+                    en: "<img src=\"abc\"/>" +
+                    "<img src=\"abd\"/>" +
+                    "<img src=\"abd\"/>" +
+                    "<img src=\"abg\"/>"
                 },
                 "@files": {
                     content: {
                         en: [
                             {
-                                rawFile: new File([], "abg"),
-                                src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bg"
+                                rawFile: new File([], "abg", {type: 'abg'})
                             }
                         ]
                     }
@@ -207,26 +203,23 @@ describe('upload', () => {
                         title: "900150983cd24fb0d6963f7d28e17f71.png"
                     },
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
+                        rawFile: new File([], "abc", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
+                        rawFile: new File([], "abd", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abe"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
+                        rawFile: new File([], "abe", {type: 'abe'})
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf", {type: 'abf'})
                 },
                 content: {
-                    en: "<img src=\"/static/origin/items/sample/1/900150983cd24fb0d6963f7d28e17f71.png\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                    en: "<img src=\"900150983cd24fb0d6963f7d28e17f71.png\"/>" +
+                    "<img src=\"abc\"/>" +
+                    "<img src=\"abd\"/>" +
+                    "<img src=\"abd\"/>"
                 }
             }
         }
@@ -278,25 +271,22 @@ describe('upload', () => {
                 parents: [2, "3.4"],
                 files: [
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc"
+                        rawFile: new File([], "abc", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abc"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd"
+                        rawFile: new File([], "abd", {type: 'abc'})
                     },
                     {
-                        rawFile: new File([], "abe"),
-                        src: "blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7be"
+                        rawFile: new File([], "abe", {type: 'abe'})
                     }
                 ],
                 file: {
-                    rawFile: new File([], "abf")
+                    rawFile: new File([], "abf", {type: 'abf'})
                 },
                 content: {
-                    en: "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bc\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>" +
-                    "<img src=\"blob:http://localhost:8090/cb822ba5-8864-4d03-97c2-a798cad9c7bd\"/>"
+                    en: "<img src=\"abc\"/>" +
+                    "<img src=\"abd\"/>" +
+                    "<img src=\"abd\"/>"
                 }
             }
         }

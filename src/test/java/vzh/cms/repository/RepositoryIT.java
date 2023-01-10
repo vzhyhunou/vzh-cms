@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("dev")
 @DataJpaTest
-abstract public class RepositoryIT {
+abstract class RepositoryIT {
 
     @Autowired
     private TestEntityManager manager;

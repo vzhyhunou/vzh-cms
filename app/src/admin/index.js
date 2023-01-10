@@ -1,10 +1,9 @@
-import data from './data';
-import resources from './resources';
-import routes from './routes';
+import pages from './pages';
+import users from './users';
 
 export * from './button';
 export * from './field';
 export * from './input';
 export * from './validation';
 
-export {data, resources, routes};
+export {pages, users};

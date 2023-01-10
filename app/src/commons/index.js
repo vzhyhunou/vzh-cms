@@ -1,12 +1,10 @@
 import App from './App';
 import AppContext from './AppContext';
-import upload from './upload';
-import components from './components';
-import Body from './Body';
-import locales from './locales';
+import useExchange from './useExchange';
+import Parser from './Parser';
 
-export * from './roles';
 export * from './i18n';
 export * from './AppContext';
+export * from './upload';
 
-export {App, AppContext, upload, components, Body, locales};
+export {App, AppContext, useExchange, Parser};

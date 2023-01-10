@@ -1,34 +1,35 @@
 package vzh.cms.security;
 
-import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import vzh.cms.model.Tag;
 
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
  * @author Viktar Zhyhunou
  */
-@Getter
 public class CmsUser extends User {
 
-    public CmsUser(String subject, Collection<String> roles) {
+    private static final String PREFIX = "ROLE_";
+
+    CmsUser(CmsClaims claims) {
         super(
-                subject,
+                claims.getSubject(),
                 "",
-                roles.stream()
-                        .map(r -> String.format("ROLE_%s", r))
+                claims.getRoles().stream()
+                        .map(PREFIX::concat)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toSet())
         );
     }
 
-    public CmsUser(String subject, String password, Collection<String> roles) {
+    CmsUser(vzh.cms.model.User user) {
         super(
-                subject,
-                password,
-                roles.stream()
+                user.getId(),
+                user.getPassword(),
+                user.getTags().stream()
+                        .map(Tag::getName)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toSet())
         );

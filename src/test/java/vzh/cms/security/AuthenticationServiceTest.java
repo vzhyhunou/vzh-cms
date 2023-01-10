@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import vzh.cms.service.UserService;
+import vzh.cms.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -25,15 +25,15 @@ public class AuthenticationServiceTest {
     private static final String ID = "id";
 
     @Mock
-    private UserService userService;
+    private UserRepository repository;
 
     @InjectMocks
     private AuthenticationService subj;
 
     @AfterEach
     public void after() {
-        verify(userService).withActiveRoles(ID);
-        verifyNoMoreInteractions(userService);
+        verify(repository).withActiveRoles(ID);
+        verifyNoMoreInteractions(repository);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class AuthenticationServiceTest {
     @Test
     public void emptyTags() {
 
-        when(userService.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID)));
+        when(repository.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID)));
 
         UserDetails result = subj.loadUserByUsername(ID);
 
@@ -62,7 +62,7 @@ public class AuthenticationServiceTest {
     @Test
     public void tags() {
 
-        when(userService.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID, tag("a"))));
+        when(repository.withActiveRoles(any())).thenReturn(Optional.of(withTags(ID, tag("a"))));
 
         UserDetails result = subj.loadUserByUsername(ID);
 

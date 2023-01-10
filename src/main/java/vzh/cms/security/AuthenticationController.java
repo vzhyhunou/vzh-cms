@@ -1,17 +1,13 @@
 package vzh.cms.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 /**
  * @author Viktar Zhyhunou
@@ -28,24 +24,8 @@ public class AuthenticationController {
 
     @GetMapping
     public String login() {
-        return tokenService.createToken(createClaims());
-    }
-
-    private Claims createClaims() {
-        Claims claims = new DefaultClaims();
-        claims.setSubject(getAuthentication().getName());
-        claims.put(properties.getRoles(), getRoles());
+        Claims claims = new CmsClaims(getContext().getAuthentication(), properties.getRoles());
         log.debug("claims: {}", claims);
-        return claims;
-    }
-
-    private Object getRoles() {
-        return getAuthentication().getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-    }
-
-    private static Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+        return tokenService.createToken(claims);
     }
 }

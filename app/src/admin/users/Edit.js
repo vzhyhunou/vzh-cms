@@ -8,26 +8,31 @@ import {
     TextField,
     required,
     minLength,
-    PasswordInput
+    PasswordInput,
+    Labeled
 } from 'react-admin';
 
-import TagsInput from '../input/TagsInput';
+import {TagsInput} from '../input';
 
-export default props =>
-    <Edit {...props}>
+export default () =>
+    <Edit>
         <TabbedForm>
-            <FormTab label="pos.general">
-                <DateField
-                    source="date"
-                    showTime
-                />
-                <ReferenceField
-                    source="userId"
-                    reference="users"
-                    allowEmpty={true}
-                >
-                    <TextField source="id"/>
-                </ReferenceField>
+            <FormTab label="resources.general">
+                <Labeled source="date">
+                    <DateField
+                        source="date"
+                        showTime
+                    />
+                </Labeled>
+                <Labeled source="user">
+                    <ReferenceField
+                        source="userId"
+                        reference="users"
+                        allowEmpty={true}
+                    >
+                        <TextField source="id"/>
+                    </ReferenceField>
+                </Labeled>
                 <PasswordInput
                     source="password"
                     validate={[required(), minLength(5)]}

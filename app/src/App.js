@@ -1,19 +1,49 @@
 import React from 'react';
+import {Route, Navigate} from 'react-router-dom';
+import {CustomRoutes, Resource} from 'react-admin';
 
-import App from './commons/App';
-import locales from './commons/locales';
 import Layout from './commons/Layout';
-import components from './commons/components';
-import * as roles from './commons/roles';
-import resources from './admin/resources';
-import routes from './admin/routes';
-import data from './admin/data';
+import {App} from './commons';
+import {pages, users} from './admin';
+import {Page, PageComponent} from './pages';
 
-export default ({history}) =>
+export const roles = {
+    ADMIN: 'ADMIN',
+    MANAGER: 'MANAGER',
+    PAGES_EDITOR: 'PAGES_EDITOR'
+};
+
+const locales = {
+    en: 'English',
+    ru: 'Русский'
+};
+
+const components = {
+    Page: PageComponent
+};
+
+export default () =>
     <App
-        {...{locales, components, resources, history, data}}
+        {...{locales, components, roles}}
         i18n={locale => import(`./commons/i18n/${locale}`)}
-        routes={routes(Layout)}
-        roles={Object.fromEntries(Object.entries(roles))}
-    />
+    >
+        <CustomRoutes>
+            <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
+        </CustomRoutes>
+        <CustomRoutes noLayout>
+            <Route path="cms" element={<Layout/>}>
+                <Route path="pages/:id" element={<Page/>}/>
+            </Route>
+        </CustomRoutes>
+        {permissions =>
+            <>
+                {permissions && permissions.includes(roles.PAGES_EDITOR) ?
+                    <Resource name="pages" {...pages}/>
+                : null}
+                {permissions && permissions.includes(roles.MANAGER) ?
+                    <Resource name="users" {...users}/>
+                : null}
+            </>
+        }
+    </App>
 ;

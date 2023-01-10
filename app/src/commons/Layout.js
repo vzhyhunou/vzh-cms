@@ -1,61 +1,51 @@
 import React, {useState} from 'react';
-import classNames from 'classnames';
-import {makeStyles} from '@material-ui/core/styles';
+import {Box, GlobalStyles} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Outlet} from 'react-router-dom';
 
-import Body from './Body';
 import Bar from './Bar';
 import Menu from './Menu';
-import customRoutes from './routes';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
-    '@global': {
-        '.starter': {
-            padding: '3rem 1.5rem',
-            'text-align': 'center'
-        }
-    },
-    root: {
-        display: 'flex'
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginRight: -drawerWidth
-    },
-    contentShift: {
+const Main = styled('main', {shouldForwardProp: prop => prop !== 'open' })(({theme, open}) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+    }),
+    marginRight: -drawerWidth,
+    ...(open && {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
+            duration: theme.transitions.duration.enteringScreen
         }),
         marginRight: 0
-    }
+    })
 }));
 
-export default props => {
+export default () => {
 
-    const classes = useStyles();
     const [open, setOpen] = useState(false);
 
-    return <div className={classes.root}>
-        <Bar
-            open={open}
-            handleDrawerOpen={() => setOpen(true)}
-            {...props}
-        />
-        <div className={classNames(classes.content, {
-            [classes.contentShift]: open
-        })}>
-            <Body {...{customRoutes}}/>
-        </div>
-        <Menu
-            open={open}
-            handleDrawerClose={() => setOpen(false)}
-        />
-    </div>;
+    return <>
+        <GlobalStyles styles={{'.starter': {
+            padding: '3rem 1.5rem',
+            textAlign: 'center'
+        }}}/>
+        <Box sx={{display: 'flex'}}>
+            <Bar
+                open={open}
+                handleDrawerOpen={() => setOpen(true)}
+            />
+            <Main open={open}>
+                <Outlet/>
+            </Main>
+            <Menu
+                open={open}
+                handleDrawerClose={() => setOpen(false)}
+            />
+        </Box>
+    </>;
 };

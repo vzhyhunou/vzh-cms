@@ -1,6 +1,7 @@
 export
 resources/static
 build
+dist
 node
 node_modules
 .idea

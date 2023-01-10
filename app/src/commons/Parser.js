@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {memo} from 'react';
 import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
 import {useComponents, useRoles} from './AppContext';
 
-export default ({content}) => {
+export default memo(({content, ...rest}) => {
 
     const components = useComponents();
     const roles = useRoles();
@@ -18,5 +18,8 @@ export default ({content}) => {
         {...{components}}
         jsx={content}
         renderInWrapper={false}
+        autoCloseVoidElements={true}
+        showWarnings={true}
+        {...rest}
     />;
-};
+});
