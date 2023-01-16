@@ -13,7 +13,8 @@ export default memo(({content, ...rest}) => {
     return <JsxParser
         bindings={{
             permissions,
-            ...roles
+            ...roles,
+            window
         }}
         {...{components}}
         jsx={content}
