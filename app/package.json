@@ -2,7 +2,7 @@
   "name": "@vzhyhunou/vzh-cms",
   "version": "0.0.1",
   "dependencies": {
-    "react-admin": "^4.2.7",
+    "react-admin": "^4.7.6",
     "ra-language-russian": "^3.13.5",
     "query-string": "^7.0.1",
     "jwt-decode": "^2.2.0",
