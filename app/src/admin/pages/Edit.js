@@ -52,6 +52,7 @@ export default () => {
                         multiline
                         fullWidth
                         source="content"
+                        sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
                     />
                     <Input/>
                 </TranslatableInputs>
