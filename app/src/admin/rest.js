@@ -117,6 +117,6 @@ export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLoc
             body: JSON.stringify(data),
             ...options
         }).then(({json}) => ({
-            data: json
+            data: json && json._embedded ? json._embedded[path.split('/')[0]] : json
         }))
 });
