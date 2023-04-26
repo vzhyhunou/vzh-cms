@@ -57,32 +57,36 @@ public class ItemHandler {
             return;
         }
         Item old = find(item);
-        if (old != null) {
-
-            //clean removed files
-            old.getFiles().addAll(item.getFiles());
-            fileService.clean(old);
-
-            //collect old files and clean
-            old.getFiles().clear();
-            fileService.collect(old, true);
-            Set<Base64File> files = new HashSet<>(old.getFiles());
-            old.getFiles().clear();
-            fileService.clean(old);
-
-            //save new and old files
-            old.getFiles().addAll(item.getFiles());
-            old.getFiles().removeAll(files);
-            old.getFiles().addAll(files);
+        if (old == null) {
+            return;
         }
+
+        //clean removed files
+        old.getFiles().addAll(item.getFiles());
+        fileService.clean(old);
+
+        //collect old files and clean
+        old.getFiles().clear();
+        fileService.collect(old, true);
+        Set<Base64File> files = new HashSet<>(old.getFiles());
+        old.getFiles().clear();
+        fileService.clean(old);
+
+        //save new and old files
+        old.getFiles().addAll(item.getFiles());
+        old.getFiles().removeAll(files);
+        old.getFiles().addAll(files);
     }
 
     @HandleAfterCreate
     @HandleAfterSave
     public void after(Item item) throws IOException {
-        if (!HttpMethod.PATCH.matches(request.getMethod())) {
-            fileService.save(item);
+        if (HttpMethod.PATCH.matches(request.getMethod())) {
+            return;
         }
+        Item i = find(item);
+        i.getFiles().addAll(item.getFiles());
+        fileService.save(i);
     }
 
     @HandleAfterDelete
