@@ -37,8 +37,8 @@ const AdminButton = () => {
     if (!permissions) {
         return <IconButton
             color="inherit"
-            component={Link}
-            to="/login"
+            component="a"
+            href="/login"
         >
             <AccountCircleIcon/>
         </IconButton>;
