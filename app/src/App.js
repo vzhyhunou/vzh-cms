@@ -25,7 +25,7 @@ const components = {
 export default () =>
     <App
         {...{locales, components, roles}}
-        i18n={locale => import(`./commons/i18n/${locale}`)}
+        i18n={locale => import(`./commons/i18n/${locale}`).then(r => r.default)}
     >
         <CustomRoutes>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
