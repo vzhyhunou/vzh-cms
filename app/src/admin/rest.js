@@ -5,7 +5,7 @@ const client = (getLocale, getToken) => (url, options = {}) => {
 
     options.headers = new Headers({
         Accept: 'application/json',
-        'Accept-Language': options.locale || getLocale()
+        'Accept-Language': getLocale()
     });
 
     const token = getToken();
