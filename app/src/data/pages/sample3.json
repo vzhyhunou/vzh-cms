@@ -1,0 +1,19 @@
+{
+  "id": "sample3",
+  "tags": [
+    {
+      "name": "MENU"
+    },
+    {
+      "name": "PUBLISHED"
+    }
+  ],
+  "title": {
+    "ru": "Пример страницы 3",
+    "en": "Sample page 3"
+  },
+  "content": {
+    "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 3</h1>\n\t<Page id=\"fragment.2\"/>\n</div>",
+    "en": "<div class=\"starter\">\n\t<h1>Sample page 3</h1>\n\t<Page id=\"fragment.2\"/>\n</div>"
+  }
+}

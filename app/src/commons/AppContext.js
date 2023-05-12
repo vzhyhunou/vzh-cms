@@ -9,19 +9,22 @@ import {i18nLoader, i18nWriter} from './locale';
 
 const AppContext = createContext();
 
-export default ({i18n, components, roles, children}) => {
+export default ({i18n, data, components, roles, children}) => {
 
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
-        i18nLoader(i18n).then(props => setContextValues(props));
-    }, [i18n]);
+        Promise.all([
+            i18nLoader(i18n),
+            data
+        ]).then(props => setContextValues(props));
+    }, [i18n, data]);
 
     if (!contextValues) {
         return null;
     }
 
-    let {locale, messages} = contextValues;
+    let [{locale, messages}, d] = contextValues;
 
     const getLocale = () => locale;
 
@@ -35,7 +38,8 @@ export default ({i18n, components, roles, children}) => {
         getLocale,
         getMessages,
         components,
-        roles
+        roles,
+        d
     }}>
         {children}
     </AppContext.Provider>;
@@ -45,3 +49,4 @@ export const useGetLocale = () => useContext(AppContext).getLocale;
 export const useGetMessages = () => useContext(AppContext).getMessages;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
+export const useData = () => useContext(AppContext).d;

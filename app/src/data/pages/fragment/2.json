@@ -1,0 +1,21 @@
+{
+  "id": "fragment.2",
+  "tags": [
+    {
+      "name": "PUBLISHED"
+    }
+  ],
+  "title": {
+    "ru": "Фрагмент 2",
+    "en": "Fragment 2"
+  },
+  "content": {
+    "ru": "<Page id=\"fragment.1\"/>\n<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Фрагмент 2</p>",
+    "en": "<Page id=\"fragment.1\"/>\n<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Fragment 2</p>"
+  },
+  "files": [
+    {
+      "name": "a5440060877315a0027f2bed7b7c9cc6.png"
+    }
+  ]
+}

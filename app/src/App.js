@@ -22,9 +22,11 @@ const components = {
     Page: PageComponent
 };
 
+const data = process.env.REACT_APP_DATA && import('./data').then(r => r.default);
+
 export default () =>
     <App
-        {...{locales, components, roles}}
+        {...{locales, components, roles, data}}
         i18n={locale => import(`./commons/i18n/${locale}`).then(r => r.default)}
     >
         <CustomRoutes>

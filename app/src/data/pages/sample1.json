@@ -1,0 +1,19 @@
+{
+  "id": "sample1",
+  "tags": [
+    {
+      "name": "MENU"
+    },
+    {
+      "name": "PUBLISHED"
+    }
+  ],
+  "title": {
+    "ru": "Пример страницы 1",
+    "en": "Sample page 1"
+  },
+  "content": {
+    "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 1</h1>\n</div>",
+    "en": "<div class=\"starter\">\n\t<h1>Sample page 1</h1>\n</div>"
+  }
+}

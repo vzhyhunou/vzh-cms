@@ -1,6 +1,0 @@
-{
-  "json": {
-    "title": "sample4 title",
-    "content": "sample4 content for {permissions && permissions.includes(PAGES_EDITOR) ? 'editor' : 'all except editor'}"
-  }
-}
