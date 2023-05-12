@@ -14,12 +14,15 @@ export default ({locales, children, ...rest}) => {
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
     const data = useData();
-    const l = Object.entries(locales).map(([key, value]) => ({locale: key, name: value}));
 
     return <Admin
         authProvider={data ? fakeAuthProvider(data) : authProvider}
         dataProvider={addUploadFeature(data ? fakeRestProvider(getLocale, data) : restProvider(getLocale, authProvider.getToken))}
-        i18nProvider={{...polyglotI18nProvider(getMessages, getLocale()), getLocales: () => l}}
+        i18nProvider={polyglotI18nProvider(
+            getMessages,
+            getLocale(),
+            Object.entries(locales).map(([key, value]) => ({locale: key, name: value}))
+        )}
         {...rest}
     >
         {children}
