@@ -6,25 +6,26 @@ import React, {
 } from 'react';
 
 import {i18nLoader, i18nWriter} from './locale';
+import srcLoader from './data';
 
 const AppContext = createContext();
 
-export default ({i18n, data, components, roles, children}) => {
+export default ({i18n, src, components, roles, children}) => {
 
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
         Promise.all([
             i18nLoader(i18n),
-            data
+            srcLoader(src)
         ]).then(props => setContextValues(props));
-    }, [i18n, data]);
+    }, [i18n, src]);
 
     if (!contextValues) {
         return null;
     }
 
-    let [{locale, messages}, d] = contextValues;
+    let [{locale, messages}, data] = contextValues;
 
     const getLocale = () => locale;
 
@@ -39,7 +40,7 @@ export default ({i18n, data, components, roles, children}) => {
         getMessages,
         components,
         roles,
-        d
+        data
     }}>
         {children}
     </AppContext.Provider>;
@@ -49,4 +50,4 @@ export const useGetLocale = () => useContext(AppContext).getLocale;
 export const useGetMessages = () => useContext(AppContext).getMessages;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
-export const useData = () => useContext(AppContext).d;
+export const useData = () => useContext(AppContext).data;

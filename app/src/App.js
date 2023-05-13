@@ -22,11 +22,11 @@ const components = {
     Page: PageComponent
 };
 
-const i18n = locale => import(`./commons/i18n/${locale}`).then(r => r.default);
-const data = process.env.REACT_APP_DATA && import('./data').then(r => r.default);
+const i18n = locale => import(`./commons/i18n/${locale}`);
+const src = () => import('./data');
 
 export default () =>
-    <App {...{i18n, locales, components, roles, data}}>
+    <App {...{i18n, locales, components, roles, src}}>
         <CustomRoutes>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
         </CustomRoutes>
