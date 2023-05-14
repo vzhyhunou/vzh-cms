@@ -10,7 +10,7 @@ import srcLoader from './data';
 
 const AppContext = createContext();
 
-export default ({i18n, src, components, roles, children}) => {
+export default ({i18n, src, children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
@@ -29,8 +29,7 @@ export default ({i18n, src, components, roles, children}) => {
 
     return <AppContext.Provider value={{
         localeProvider,
-        components,
-        roles,
+        ...rest,
         data
     }}>
         {children}
@@ -39,6 +38,7 @@ export default ({i18n, src, components, roles, children}) => {
 
 export const useGetLocale = () => useContext(AppContext).localeProvider.getLocale;
 export const useGetMessages = () => useContext(AppContext).localeProvider.getMessages;
+export const useLocales = () => useContext(AppContext).locales;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
 export const useData = () => useContext(AppContext).data;
