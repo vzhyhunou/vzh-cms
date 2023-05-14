@@ -121,20 +121,22 @@ const analyze = (resource, item) => {
         .filter(({names}) => names.length);
     const path = originByData(resource, item);
 
-    analyzeFields(path, fields, item);
+    const i = analyzeFields(path, fields, item);
 
     return {
-        ...item,
-        files: item.files.map(({name}) => name),
-        '@files': analyzeContents(path, contents, item)
+        ...i,
+        files: i.files.map(({name}) => name),
+        '@files': analyzeContents(path, contents, i)
     };
 };
 
 const analyzeFields = (path, fields, data) => {
-    fields.forEach(({name, keys}) => keys.forEach(key => set(data, key, {
+    const result = JSON.parse(JSON.stringify(data));
+    fields.forEach(({name, keys}) => keys.forEach(key => set(result, key, {
         src: `${path}/${name}`,
         title: name
     })));
+    return result;
 };
 
 const analyzeContents = (path, contents, data) => {

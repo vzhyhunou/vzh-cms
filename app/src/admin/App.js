@@ -2,21 +2,28 @@ import React from 'react';
 import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
-import authProvider, {getToken} from './auth';
-import {useGetLocale, useGetMessages} from '../commons';
+import authProvider from './auth';
+import fakeAuthProvider from './fake/auth';
+import {useGetLocale, useGetMessages, useLocales, useData} from '../commons';
 import restProvider from './rest';
+import fakeRestProvider from './fake/rest';
 import addUploadFeature from '../commons/upload';
 
-export default ({locales, children, ...rest}) => {
+export default ({children, ...rest}) => {
 
     const getLocale = useGetLocale();
     const getMessages = useGetMessages();
-    const l = Object.entries(locales).map(([key, value]) => ({locale: key, name: value}));
+    const locales = useLocales();
+    const data = useData();
 
     return <Admin
-        {...{authProvider}}
-        dataProvider={addUploadFeature(restProvider(getLocale, getToken))}
-        i18nProvider={{...polyglotI18nProvider(getMessages, getLocale()), getLocales: () => l}}
+        authProvider={data ? fakeAuthProvider(data) : authProvider}
+        dataProvider={addUploadFeature(data ? fakeRestProvider(getLocale, data) : restProvider(getLocale, authProvider.getToken))}
+        i18nProvider={polyglotI18nProvider(
+            getMessages,
+            getLocale(),
+            Object.entries(locales).map(([key, value]) => ({locale: key, name: value}))
+        )}
         {...rest}
     >
         {children}

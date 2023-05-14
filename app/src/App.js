@@ -5,28 +5,11 @@ import {CustomRoutes, Resource} from 'react-admin';
 import Layout from './commons/Layout';
 import {App} from './commons';
 import {pages, users} from './admin';
-import {Page, PageComponent} from './pages';
-
-export const roles = {
-    ADMIN: 'ADMIN',
-    MANAGER: 'MANAGER',
-    PAGES_EDITOR: 'PAGES_EDITOR'
-};
-
-const locales = {
-    en: 'English',
-    ru: 'Русский'
-};
-
-const components = {
-    Page: PageComponent
-};
+import {Page} from './pages';
+import context from './context';
 
 export default () =>
-    <App
-        {...{locales, components, roles}}
-        i18n={locale => import(`./commons/i18n/${locale}`)}
-    >
+    <App {...{context}}>
         <CustomRoutes>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
         </CustomRoutes>
@@ -37,10 +20,10 @@ export default () =>
         </CustomRoutes>
         {permissions =>
             <>
-                {permissions && permissions.includes(roles.PAGES_EDITOR) ?
+                {permissions && permissions.includes(context.roles.PAGES_EDITOR) ?
                     <Resource name="pages" {...pages}/>
                 : null}
-                {permissions && permissions.includes(roles.MANAGER) ?
+                {permissions && permissions.includes(context.roles.MANAGER) ?
                     <Resource name="users" {...users}/>
                 : null}
             </>

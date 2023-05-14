@@ -5,43 +5,40 @@ import React, {
     useContext
 } from 'react';
 
-import {i18nLoader, i18nWriter} from './locale';
+import i18nLoader from './locale';
+import srcLoader from './data';
 
 const AppContext = createContext();
 
-export default ({i18n, components, roles, children}) => {
+export default ({i18n, src, children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
-        i18nLoader(i18n).then(props => setContextValues(props));
-    }, [i18n]);
+        Promise.all([
+            i18nLoader(i18n),
+            srcLoader(src)
+        ]).then(props => setContextValues(props));
+    }, [i18n, src]);
 
     if (!contextValues) {
         return null;
     }
 
-    let {locale, messages} = contextValues;
-
-    const getLocale = () => locale;
-
-    const getMessages = l => l && l !== locale ? i18nWriter(i18n, l).then(m => {
-        locale = l;
-        messages = m;
-        return m;
-    }) : messages;
+    let [localeProvider, data] = contextValues;
 
     return <AppContext.Provider value={{
-        getLocale,
-        getMessages,
-        components,
-        roles
+        localeProvider,
+        ...rest,
+        data
     }}>
         {children}
     </AppContext.Provider>;
 };
 
-export const useGetLocale = () => useContext(AppContext).getLocale;
-export const useGetMessages = () => useContext(AppContext).getMessages;
+export const useGetLocale = () => useContext(AppContext).localeProvider.getLocale;
+export const useGetMessages = () => useContext(AppContext).localeProvider.getMessages;
+export const useLocales = () => useContext(AppContext).locales;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
+export const useData = () => useContext(AppContext).data;

@@ -15,9 +15,8 @@ export default {
                 return response.text();
             })
             .then(token => {
-                const decodedToken = decodeJwt(token);
                 localStorage.setItem(TOKEN, token);
-                localStorage.setItem(ROLES, decodedToken.roles);
+                localStorage.setItem(ROLES, decodeJwt(token).roles);
             });
     },
     logout: p => {
@@ -33,13 +32,7 @@ export default {
         }
         return Promise.resolve();
     },
-    checkAuth: () => {
-        return getToken() ? Promise.resolve() : Promise.reject();
-    },
-    getPermissions: () => {
-        const roles = localStorage.getItem(ROLES);
-        return Promise.resolve(roles);
-    }
+    checkAuth: () => localStorage.getItem(TOKEN) ? Promise.resolve() : Promise.reject(),
+    getPermissions: () => Promise.resolve(localStorage.getItem(ROLES)),
+    getToken: () => localStorage.getItem(TOKEN)
 };
-
-export const getToken = () => localStorage.getItem(TOKEN);
