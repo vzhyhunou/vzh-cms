@@ -2,12 +2,20 @@ const LOCALE = 'locale';
 
 const load = (i18n, locale) => i18n(locale).then(r => r.default);
 
-export const i18nLoader = i18n => {
-    const locale = localStorage.getItem(LOCALE) || 'en';
-    return load(i18n, locale).then(messages => ({locale, messages}));
-};
+export default i18n => {
 
-export const i18nWriter = (i18n, locale) => load(i18n, locale).then(messages => {
-    localStorage.setItem(LOCALE, locale);
-    return messages;
-});
+    let locale = localStorage.getItem(LOCALE) || 'en', messages;
+
+    return load(i18n, locale).then(m => {
+        messages = m;
+        return {
+            getLocale: () => locale,
+            getMessages: l => !l || l === locale ? messages : load(i18n, l).then(m => {
+                localStorage.setItem(LOCALE, l);
+                locale = l;
+                messages = m;
+                return m;
+            })
+        };
+    });
+};

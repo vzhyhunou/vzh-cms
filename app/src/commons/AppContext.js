@@ -5,7 +5,7 @@ import React, {
     useContext
 } from 'react';
 
-import {i18nLoader, i18nWriter} from './locale';
+import i18nLoader from './locale';
 import srcLoader from './data';
 
 const AppContext = createContext();
@@ -25,19 +25,10 @@ export default ({i18n, src, components, roles, children}) => {
         return null;
     }
 
-    let [{locale, messages}, data] = contextValues;
-
-    const getLocale = () => locale;
-
-    const getMessages = l => l && l !== locale ? i18nWriter(i18n, l).then(m => {
-        locale = l;
-        messages = m;
-        return m;
-    }) : messages;
+    let [localeProvider, data] = contextValues;
 
     return <AppContext.Provider value={{
-        getLocale,
-        getMessages,
+        localeProvider,
         components,
         roles,
         data
@@ -46,8 +37,8 @@ export default ({i18n, src, components, roles, children}) => {
     </AppContext.Provider>;
 };
 
-export const useGetLocale = () => useContext(AppContext).getLocale;
-export const useGetMessages = () => useContext(AppContext).getMessages;
+export const useGetLocale = () => useContext(AppContext).localeProvider.getLocale;
+export const useGetMessages = () => useContext(AppContext).localeProvider.getMessages;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
 export const useData = () => useContext(AppContext).data;
