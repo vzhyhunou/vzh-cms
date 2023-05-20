@@ -1,4 +1,4 @@
-import {ROLES} from '../auth';
+import {ROLES} from '../admin/auth';
 
 export default ({users}) => ({
     login: ({ username, password }) => {

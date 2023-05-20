@@ -8,11 +8,11 @@ import {
     useResourceContext
 } from 'react-admin';
 
-import {useGetMessages} from '../../commons';
+import {useLocaleProvider} from '../../commons';
 
 export default () => {
 
-    const getMessages = useGetMessages();
+    const {getMessages} = useLocaleProvider();
     const resource = useResourceContext();
     const {tags} = getMessages().resources[resource];
 
