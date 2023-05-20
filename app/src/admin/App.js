@@ -3,22 +3,19 @@ import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 import authProvider from './auth';
-import fakeAuthProvider from './fake/auth';
-import {useGetLocale, useGetMessages, useLocales, useData} from '../commons';
+import {useLocaleProvider, useLocales, useDataProvider} from '../commons';
 import restProvider from './rest';
-import fakeRestProvider from './fake/rest';
 import addUploadFeature from '../commons/upload';
 
 export default ({children, ...rest}) => {
 
-    const getLocale = useGetLocale();
-    const getMessages = useGetMessages();
+    const {getLocale, getMessages} = useLocaleProvider();
     const locales = useLocales();
-    const data = useData();
+    const {data, dataRestProvider, dataAuthProvider, getResponse} = useDataProvider();
 
     return <Admin
-        authProvider={data ? fakeAuthProvider(data) : authProvider}
-        dataProvider={addUploadFeature(data ? fakeRestProvider(getLocale, data) : restProvider(getLocale, authProvider.getToken))}
+        authProvider={data ? dataAuthProvider(data) : authProvider}
+        dataProvider={addUploadFeature(data ? dataRestProvider(data, getResponse(getLocale)) : restProvider(getLocale, authProvider.getToken))}
         i18nProvider={polyglotI18nProvider(
             getMessages,
             getLocale(),

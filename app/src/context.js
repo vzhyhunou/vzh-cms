@@ -14,5 +14,5 @@ export default {
         Page: PageComponent
     },
     i18n: locale => import(`./commons/i18n/${locale}`),
-    src: () => import('./data')
+    data: () => import('./data')
 };
