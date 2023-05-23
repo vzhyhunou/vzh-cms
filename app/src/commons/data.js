@@ -1,1 +1,1 @@
-export default data => process.env.REACT_APP_DATA ? data().then(r => ({...r, data: r.default})) : Promise.resolve({});
+export default data => data(process.env.REACT_APP_DATA).then(r => r.default);
