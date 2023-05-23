@@ -1,7 +1,7 @@
-import {ROLES} from '../admin/auth';
+import {ROLES} from '../back/auth';
 
-export default ({users}) => ({
-    login: ({ username, password }) => {
+export default users => ({
+    login: ({ username }) => {
         const user = users.find(({id}) => id === username);
         if (!user) {
             throw new Error('User not found');

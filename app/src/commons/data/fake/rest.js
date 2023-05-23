@@ -11,7 +11,7 @@ const log = (params, response) => {
     }
 };
 
-export const getResponse = getLocale => (data, params) => {
+export const getResponse = (data, getLocale, params) => {
 
     const locale = getLocale();
     const {pages} = data;
@@ -48,12 +48,12 @@ export const getResponse = getLocale => (data, params) => {
     }
 };
 
-export default (data, getResponse) => {
+export default (data, getResponse) => getLocale => {
 
     const handle = params => {
         let response;
         try {
-            response = getResponse(data, params);
+            response = getResponse(data, getLocale, params);
         } catch (error) {
             console.error(error);
             return Promise.reject(error);
