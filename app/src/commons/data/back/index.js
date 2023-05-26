@@ -1,9 +1,9 @@
-import backData from './rest';
-import backAuth from './auth';
+import data from './rest';
+import auth from './auth';
 
-export {backData, backAuth};
+export {data, auth};
 
 export default {
-    data: backData,
-    auth: backAuth
+    data,
+    auth
 };
