@@ -1,6 +1,6 @@
 import backRest from './back';
-import fakeRest from './fake';
 
+export * from './back';
 export * from './fake';
 
-export {backRest, fakeRest};
+export {backRest};

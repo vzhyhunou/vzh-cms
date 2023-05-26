@@ -1,6 +1,6 @@
 import backAuth from './back';
-import fakeAuth from './fake';
 
+export * from './back';
 export * from './fake';
 
-export {backAuth, fakeAuth};
+export {backAuth};
