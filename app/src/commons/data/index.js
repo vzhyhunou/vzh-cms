@@ -1,8 +1,7 @@
-import backRest from './back/rest';
-import backAuth from './back/auth';
-import fakeRest from './fake/rest';
-import fakeAuth from './fake/auth';
+import pages from './pages';
+import users from './users';
 
-export * from './fake/rest';
-
-export {backRest, backAuth, fakeRest, fakeAuth};
+export default {
+    pages,
+    users
+};

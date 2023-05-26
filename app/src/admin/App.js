@@ -2,14 +2,15 @@ import React from 'react';
 import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
-import {useLocaleProvider, useLocales, useDataProvider} from '../commons';
+import {useLocaleProvider, useLocales, useDataProvider, useAuthProvider} from '../commons';
 import addUploadFeature from '../commons/upload';
 
 export default ({children, ...rest}) => {
 
     const {getLocale, getMessages} = useLocaleProvider();
     const locales = useLocales();
-    const {data, auth} = useDataProvider();
+    const data = useDataProvider();
+    const auth = useAuthProvider();
 
     return <Admin
         authProvider={auth}

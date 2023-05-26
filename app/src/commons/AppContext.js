@@ -6,31 +6,33 @@ import React, {
 } from 'react';
 
 import i18nLoader from './locale';
-import dataLoader from './data';
+import providerLoader from './provider';
 
 const AppContext = createContext();
 
-export default ({i18n, data, children, ...rest}) => {
+export default ({i18n, data, auth, children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
         Promise.all([
             i18nLoader(i18n),
-            dataLoader(data)
+            providerLoader(data),
+            providerLoader(auth)
         ]).then(props => setContextValues(props));
-    }, [i18n, data]);
+    }, [i18n, data, auth]);
 
     if (!contextValues) {
         return null;
     }
 
-    let [localeProvider, dataProvider] = contextValues;
+    let [localeProvider, dataProvider, authProvider] = contextValues;
 
     return <AppContext.Provider value={{
         localeProvider,
         ...rest,
-        dataProvider
+        dataProvider,
+        authProvider
     }}>
         {children}
     </AppContext.Provider>;
@@ -41,3 +43,4 @@ export const useLocales = () => useContext(AppContext).locales;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
 export const useDataProvider = () => useContext(AppContext).dataProvider;
+export const useAuthProvider = () => useContext(AppContext).authProvider;

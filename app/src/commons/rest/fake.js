@@ -1,4 +1,5 @@
 import fakeDataProvider from 'ra-data-fakerest';
+import data from '../data';
 
 const log = (params, response) => {
     if (console.group) {
@@ -11,11 +12,9 @@ const log = (params, response) => {
     }
 };
 
-export const getResponse = (data, getLocale, params) => {
+export const getFakeResponse = ({pages}, getLocale, {path}) => {
 
     const locale = getLocale();
-    const {pages} = data;
-    const {path} = params;
     const p = path.split('/');
 
     switch (p[0]) {
@@ -48,7 +47,7 @@ export const getResponse = (data, getLocale, params) => {
     }
 };
 
-export default (data, getResponse) => getLocale => {
+export const getFakeRest = (data, getResponse) => getLocale => {
 
     const handle = params => {
         let response;
@@ -67,3 +66,5 @@ export default (data, getResponse) => getLocale => {
         exchange: params => handle(params)
     };
 };
+
+export default getFakeRest(data, getFakeResponse);

@@ -4,7 +4,7 @@ import {MemoryRouter} from 'react-router-dom'
 
 import App from './App'
 import context from './context'
-import {ROLES} from './commons/data/back/auth'
+import {ROLES} from './commons/auth/back'
 
 const permissionsMock = jest.fn()
 Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock(), setItem: () => {}}})
