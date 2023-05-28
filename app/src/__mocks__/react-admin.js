@@ -1,8 +1,9 @@
-import fake from '../commons/rest/fake'
+import getDataProvider from '../commons/data/fake'
+import source from '../commons/resources/fake'
 
 const apiUrl = '/api/'
 const ra = require('react-admin')
-const dataProvider = fake(() => 'en')
+const dataProvider = getDataProvider(source, () => 'en')
 
 ra.fetchUtils.fetchJson = (url, options) => {
     console.log(url, options)

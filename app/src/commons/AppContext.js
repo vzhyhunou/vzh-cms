@@ -6,33 +6,36 @@ import React, {
 } from 'react';
 
 import i18nLoader from './locale';
-import providerLoader from './provider';
+import srcLoader from './source';
 
 const AppContext = createContext();
 
-export default ({i18n, data, auth, children, ...rest}) => {
+export default ({i18n, resources, data, auth, children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
     useEffect(() => {
         Promise.all([
             i18nLoader(i18n),
-            providerLoader(data),
-            providerLoader(auth)
+            srcLoader(resources),
+            srcLoader(data),
+            srcLoader(auth)
         ]).then(props => setContextValues(props));
-    }, [i18n, data, auth]);
+    }, [i18n, resources, data, auth]);
 
     if (!contextValues) {
         return null;
     }
 
-    let [localeProvider, dataProvider, authProvider] = contextValues;
+    const [localeProvider, source, getDataProvider, getAuthProvider] = contextValues;
+    const authProvider = getAuthProvider(source);
+    const dataProvider = getDataProvider(source, localeProvider.getLocale, authProvider.getToken);
 
     return <AppContext.Provider value={{
         localeProvider,
-        ...rest,
         dataProvider,
-        authProvider
+        authProvider,
+        ...rest
     }}>
         {children}
     </AppContext.Provider>;

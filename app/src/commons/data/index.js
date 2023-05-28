@@ -1,7 +1,5 @@
-import pages from './pages';
-import users from './users';
+import backData from './back';
 
-export default {
-    pages,
-    users
-};
+export * from './fake';
+
+export {backData};
