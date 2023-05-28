@@ -26,7 +26,7 @@
     "build": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=back react-scripts build && rimraf ../target/classes/static/static/origin",
     "build:fake": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=fake react-scripts build",
     "test": "cross-env CI=true REACT_APP_SRC=back react-scripts test",
-    "transpile": "babel src --out-dir dist --presets @babel/preset-react"
+    "transpile": "babel src --out-dir dist --presets @babel/preset-react --ignore '**/*.test.js'"
   },
   "proxy": "http://localhost:8090",
   "files": [
