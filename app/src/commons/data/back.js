@@ -17,7 +17,7 @@ const client = (getLocale, getToken) => (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export default (getLocale, getToken, apiUrl = '/api', httpClient = client(getLocale, getToken)) => ({
+export default (data, getLocale, getToken, apiUrl = '/api', httpClient = client(getLocale, getToken)) => ({
 
     getList: (resource, {pagination, sort, filter, options}) => {
         const {page, perPage} = pagination;

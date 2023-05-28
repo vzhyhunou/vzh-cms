@@ -3,7 +3,7 @@ import decodeJwt from 'jwt-decode';
 export const TOKEN = 'token';
 export const ROLES = 'roles';
 
-export default {
+export default () => ({
     login: ({ username, password }) => {
         const credentials = btoa(`${username}:${password}`);
         const auth = { Authorization: `Basic ${credentials}` };
@@ -35,4 +35,4 @@ export default {
     checkAuth: () => localStorage.getItem(TOKEN) ? Promise.resolve() : Promise.reject(),
     getPermissions: () => Promise.resolve(localStorage.getItem(ROLES)),
     getToken: () => localStorage.getItem(TOKEN)
-};
+});

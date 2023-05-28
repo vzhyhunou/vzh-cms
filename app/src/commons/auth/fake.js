@@ -1,7 +1,6 @@
 import {ROLES} from './back';
-import data from '../data';
 
-export const getFakeAuth = users => ({
+export default ({users}) => ({
     login: ({ username }) => {
         const user = users.find(({id}) => id === username);
         if (!user) {
@@ -19,5 +18,3 @@ export const getFakeAuth = users => ({
     checkAuth: () => localStorage.getItem(ROLES) ? Promise.resolve() : Promise.reject(),
     getPermissions: () => Promise.resolve(localStorage.getItem(ROLES))
 });
-
-export default getFakeAuth(data.users);

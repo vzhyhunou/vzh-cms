@@ -14,6 +14,7 @@ export default {
         Page: PageComponent
     },
     i18n: locale => import(`./commons/i18n/${locale}`),
-    data: name => import(`./commons/rest/${name}`),
+    resources: name => import(`./commons/resources/${name}`),
+    data: name => import(`./commons/data/${name}`),
     auth: name => import(`./commons/auth/${name}`)
 };

@@ -9,12 +9,12 @@ export default ({children, ...rest}) => {
 
     const {getLocale, getMessages} = useLocaleProvider();
     const locales = useLocales();
-    const data = useDataProvider();
-    const auth = useAuthProvider();
+    const dataProvider = useDataProvider();
+    const authProvider = useAuthProvider();
 
     return <Admin
-        authProvider={auth}
-        dataProvider={addUploadFeature(data(getLocale, auth.getToken))}
+        {...{authProvider}}
+        dataProvider={addUploadFeature(dataProvider)}
         i18nProvider={polyglotI18nProvider(
             getMessages,
             getLocale(),
