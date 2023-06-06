@@ -25,9 +25,9 @@ export const getFakeResponse = ({pages}, getLocale, {path}) => {
                         return false;
                     }
                     const {id, title, content, files} = page;
-                    return {data: {
+                    return {data: content && content[locale] && {
                         id,
-                        title: title[locale],
+                        title: title && title[locale],
                         content: content[locale],
                         files: files && files.map(({name}) => name)
                     }};
