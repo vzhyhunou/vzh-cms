@@ -20,12 +20,16 @@ export const getFakeResponse = ({pages}, getLocale, {path}) => {
         case 'pages':
             switch (p[2]) {
                 case 'one':
-                    const page = pages.find(({id}) => id === p[3]);
+                    const page = pages.filter(({tags}) => tags.some(({name}) => name === 'PUBLISHED'))
+                        .find(({id}) => id === p[3]);
                     if (!page) {
                         return false;
                     }
                     const {id, title, content, files} = page;
-                    return {data: content && content[locale] && {
+                    if (!content || !content[locale]) {
+                        return false;
+                    }
+                    return {data: {
                         id,
                         title: title && title[locale],
                         content: content[locale],
