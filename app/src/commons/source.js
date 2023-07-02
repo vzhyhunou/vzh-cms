@@ -1,1 +1,1 @@
-export default src => src(process.env.REACT_APP_SRC).then(r => r.default);
+export default src => src.then(r => r.default);

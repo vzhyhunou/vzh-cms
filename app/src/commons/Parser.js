@@ -2,7 +2,7 @@ import React from 'react';
 import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
-import {useComponents, useRoles} from './AppContext';
+import {useComponents, useRoles} from '.';
 
 export default ({content, ...rest}) => {
 

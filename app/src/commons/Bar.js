@@ -3,13 +3,10 @@ import {styled} from '@mui/material/styles';
 import {AppBar, Toolbar, Typography, IconButton} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SettingsIcon from '@mui/icons-material/Settings';
-import EditIcon from '@mui/icons-material/Edit';
-import {usePermissions, LocalesMenuButton} from 'react-admin';
-import {Link, useParams} from 'react-router-dom';
+import {LocalesMenuButton} from 'react-admin';
+import {Link} from 'react-router-dom';
 
-import {useRoles} from './AppContext';
+import Login from './Login';
 
 const drawerWidth = 240;
 
@@ -27,45 +24,6 @@ const Root = styled(AppBar, {shouldForwardProp: prop => prop !== 'open'})(({them
         marginRight: drawerWidth
     })
 }));
-
-const AdminButton = () => {
-
-    const {permissions} = usePermissions();
-    const {id} = useParams();
-    const {PAGES_EDITOR, MANAGER} = useRoles();
-
-    if (!permissions) {
-        return <IconButton
-            color="inherit"
-            component="a"
-            href="/login"
-        >
-            <AccountCircleIcon/>
-        </IconButton>;
-    }
-
-    if (permissions.includes(PAGES_EDITOR)) {
-        return <IconButton
-            color="inherit"
-            component={Link}
-            to={`/pages/${id}`}
-        >
-            <EditIcon/>
-        </IconButton>;
-    }
-
-    if (permissions.includes(MANAGER)) {
-        return <IconButton
-            color="inherit"
-            component={Link}
-            to="/users"
-        >
-            <SettingsIcon/>
-        </IconButton>;
-    }
-
-    return null;
-};
 
 export default ({open, handleDrawerOpen}) =>
     <Root
@@ -87,7 +45,7 @@ export default ({open, handleDrawerOpen}) =>
                 Project
             </Typography>
             <LocalesMenuButton/>
-            <AdminButton/>
+            <Login/>
             <IconButton
                 color="inherit"
                 onClick={handleDrawerOpen}

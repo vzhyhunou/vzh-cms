@@ -10,7 +10,7 @@ const convertFileToBase64 = f => new Promise((resolve, reject) => {
     reader.readAsDataURL(f);
 });
 
-export default dataProvider => ({
+export default (dataProvider, funcProvider) => ({
 
     ...dataProvider,
 
@@ -23,19 +23,19 @@ export default dataProvider => ({
     getOne: (resource, params) =>
         dataProvider.getOne(resource, params).then(response => ({
             ...response,
-            data: analyze(resource, response.data)
+            data: analyze(resource, response.data, funcProvider)
         })),
 
     getList: (resource, params) =>
         dataProvider.getList(resource, params).then(response => ({
             ...response,
-            data: response.data.map(item => analyze(resource, item))
+            data: response.data.map(item => analyze(resource, item, funcProvider))
         })),
 
     getMany: (resource, params) =>
         dataProvider.getMany(resource, params).then(response => ({
             ...response,
-            data: response.data.map(item => analyze(resource, item))
+            data: response.data.map(item => analyze(resource, item, funcProvider))
         })),
 
     exchange: params =>
@@ -78,7 +78,7 @@ const upd = (params, call) => {
                 }))
             )
     )
-        .then(process)
+        .then(handle)
         .then(transformedNewFiles => call({
             ...params,
             data: {
@@ -94,7 +94,7 @@ const upd = (params, call) => {
         }));
 }
 
-const analyze = (resource, item) => {
+const analyze = (resource, item, funcProvider) => {
 
     if (!item.files) {
         return item;
@@ -119,7 +119,7 @@ const analyze = (resource, item) => {
                 .filter(name => value !== name)
         }))
         .filter(({names}) => names.length);
-    const path = originByData(resource, item);
+    const path = funcProvider.originByData(resource, item);
 
     const i = analyzeFields(path, fields, item);
 
@@ -174,14 +174,10 @@ const replaceSrc = (data, files, formFiles) => {
     return JSON.parse(s);
 };
 
-const process = files => [...new Set(files.map(f => f.name))]
+const handle = files => [...new Set(files.map(f => f.name))]
     .map(n => files.filter(({name}) => name === n))
     .map(f => ({
         ...f[0],
         keys: f.map(f => f.key),
         previews: f.map(f => f.preview)
     }));
-
-export const originByData = (resource, data) => `/static/origin/${resource}/${pathByData(data)}`;
-
-export const pathByData = ({parents, id}) => ((parents ? parents.join('/') + '/' : '') + id).replace(/\./g, '/');

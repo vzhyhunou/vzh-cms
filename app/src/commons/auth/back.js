@@ -4,10 +4,10 @@ export const TOKEN = 'token';
 export const ROLES = 'roles';
 
 export default () => ({
-    login: ({ username, password }) => {
+    login: ({username, password}) => {
         const credentials = btoa(`${username}:${password}`);
-        const auth = { Authorization: `Basic ${credentials}` };
-        return fetch('/login', { headers: auth })
+        const auth = {Authorization: `Basic ${credentials}`};
+        return fetch('/login', {headers: auth})
             .then(response => {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
@@ -22,9 +22,9 @@ export default () => ({
     logout: p => {
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(ROLES);
-        return Promise.resolve(p);
+        return typeof p === 'string' ? Promise.resolve(p) : Promise.resolve();
     },
-    checkError: ({ status }) => {
+    checkError: ({status}) => {
         if (status === 401 || status === 403) {
             localStorage.removeItem(TOKEN);
             localStorage.removeItem(ROLES);

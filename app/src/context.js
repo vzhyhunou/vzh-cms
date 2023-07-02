@@ -14,7 +14,8 @@ export default {
         Page: PageComponent
     },
     i18n: locale => import(`./commons/i18n/${locale}`),
-    resources: name => import(`./commons/resources/${name}`),
-    data: name => import(`./commons/data/${name}`),
-    auth: name => import(`./commons/auth/${name}`)
+    resources: import(`./commons/resources/${process.env.REACT_APP_SRC}`),
+    data: import(`./commons/data/${process.env.REACT_APP_SRC}`),
+    auth: import(`./commons/auth/${process.env.REACT_APP_SRC}`),
+    basename: process.env.REACT_APP_BASE
 };
