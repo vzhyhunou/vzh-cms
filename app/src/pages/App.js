@@ -1,13 +1,12 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 
-import {originByData} from '../commons/upload';
-import Parser from '../commons/Parser';
-import {useExchange} from '../commons';
+import {Parser, useExchange, useFuncProvider} from '../commons';
 
 export const PageComponent = ({id, external}) => {
 
     const {data, isLoading} = useExchange({path: `pages/search/one/${id}`});
+    const funcProvider = useFuncProvider();
 
     if (isLoading) {
         return null;
@@ -25,7 +24,7 @@ export const PageComponent = ({id, external}) => {
 
     files && files.forEach(name => content = content.replace(
         new RegExp(name, 'g'),
-        `${originByData('pages', data)}/${name}`
+        `${funcProvider.originByData('pages', data)}/${name}`
     ));
 
     return <Parser {...{content}}/>;

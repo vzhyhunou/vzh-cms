@@ -1,7 +1,7 @@
 import {ROLES} from './back';
 
 export default ({users}) => ({
-    login: ({ username }) => {
+    login: ({username}) => {
         const user = users.find(({id}) => id === username);
         if (!user) {
             throw new Error('User not found');
@@ -12,7 +12,7 @@ export default ({users}) => ({
     },
     logout: p => {
         localStorage.removeItem(ROLES);
-        return Promise.resolve(p);
+        return typeof p === 'string' ? Promise.resolve(p) : Promise.resolve();
     },
     checkError: () => Promise.resolve(),
     checkAuth: () => localStorage.getItem(ROLES) ? Promise.resolve() : Promise.reject(),

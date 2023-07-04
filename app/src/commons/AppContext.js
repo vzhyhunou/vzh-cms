@@ -2,15 +2,17 @@ import React, {
     createContext,
     useEffect,
     useState,
-    useContext
+    useContext,
+    cloneElement
 } from 'react';
 
 import i18nLoader from './locale';
 import srcLoader from './source';
+import functions from './functions';
 
 const AppContext = createContext();
 
-export default ({i18n, resources, data, auth, children, ...rest}) => {
+export default ({locales, i18n, resources, data, auth, basename = '', children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
@@ -30,20 +32,22 @@ export default ({i18n, resources, data, auth, children, ...rest}) => {
     const [localeProvider, source, getDataProvider, getAuthProvider] = contextValues;
     const authProvider = getAuthProvider(source);
     const dataProvider = getDataProvider(source, localeProvider.getLocale, authProvider.getToken);
+    const funcProvider = functions(basename);
 
     return <AppContext.Provider value={{
         localeProvider,
-        dataProvider,
-        authProvider,
+        funcProvider,
         ...rest
     }}>
-        {children}
+        {cloneElement(children, {
+            authProvider,
+            dataProvider,
+            locales
+        })}
     </AppContext.Provider>;
 };
 
 export const useLocaleProvider = () => useContext(AppContext).localeProvider;
-export const useLocales = () => useContext(AppContext).locales;
 export const useComponents = () => useContext(AppContext).components;
 export const useRoles = () => useContext(AppContext).roles;
-export const useDataProvider = () => useContext(AppContext).dataProvider;
-export const useAuthProvider = () => useContext(AppContext).authProvider;
+export const useFuncProvider = () => useContext(AppContext).funcProvider;
