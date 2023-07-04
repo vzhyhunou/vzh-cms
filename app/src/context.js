@@ -17,5 +17,6 @@ export default {
     resources: import(`./commons/resources/${process.env.REACT_APP_SRC}`),
     data: import(`./commons/data/${process.env.REACT_APP_SRC}`),
     auth: import(`./commons/auth/${process.env.REACT_APP_SRC}`),
+    functions: import(`./commons/functions`),
     basename: process.env.REACT_APP_BASE
 };
