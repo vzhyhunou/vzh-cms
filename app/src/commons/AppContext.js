@@ -8,11 +8,10 @@ import React, {
 
 import i18nLoader from './locale';
 import srcLoader from './source';
-import functions from './functions';
 
 const AppContext = createContext();
 
-export default ({locales, i18n, resources, data, auth, basename = '', children, ...rest}) => {
+export default ({locales, i18n, resources, data, auth, functions, basename, children, ...rest}) => {
 
     const [contextValues, setContextValues] = useState();
 
@@ -21,18 +20,19 @@ export default ({locales, i18n, resources, data, auth, basename = '', children, 
             i18nLoader(i18n),
             srcLoader(resources),
             srcLoader(data),
-            srcLoader(auth)
+            srcLoader(auth),
+            srcLoader(functions)
         ]).then(props => setContextValues(props));
-    }, [i18n, resources, data, auth]);
+    }, [i18n, resources, data, auth, functions]);
 
     if (!contextValues) {
         return null;
     }
 
-    const [localeProvider, source, getDataProvider, getAuthProvider] = contextValues;
+    const [localeProvider, source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
     const authProvider = getAuthProvider(source);
     const dataProvider = getDataProvider(source, localeProvider.getLocale, authProvider.getToken);
-    const funcProvider = functions(basename);
+    const funcProvider = getFuncProvider(basename);
 
     return <AppContext.Provider value={{
         localeProvider,
