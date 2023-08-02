@@ -10,10 +10,8 @@ import context from './context';
 
 export default () =>
     <App {...{context}}>
-        <CustomRoutes>
-            <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
-        </CustomRoutes>
         <CustomRoutes noLayout>
+            <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
             <Route path="cms" element={<Layout/>}>
                 <Route path="pages/:id" element={<Page/>}/>
             </Route>
