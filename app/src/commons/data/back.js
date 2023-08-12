@@ -8,13 +8,12 @@ const client = (getLocale, getToken) => (url, options = {}) => {
         'Accept-Language': getLocale()
     });
 
-    const token = getToken();
-    token && (options.user = {
-        authenticated: true,
-        token: `Bearer ${token}`
-    });
-
-    return fetchUtils.fetchJson(url, options);
+    return getToken()
+        .then(token => token ? {...options, user: {
+            authenticated: true,
+            token: `Bearer ${token}`
+        }} : options)
+        .then(options => fetchUtils.fetchJson(url, options));
 };
 
 export default (data, getLocale, getToken, apiUrl = '/api', httpClient = client(getLocale, getToken)) => ({
