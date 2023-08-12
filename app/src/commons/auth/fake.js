@@ -8,11 +8,14 @@ export default ({users}) => {
         ...auth,
         login: ({username}) => {
             const user = users.find(({id}) => id === username);
-            if (!user) {
-                throw new Error('User not found');
-            }
-            auth.setToken(user.token);
-            return Promise.resolve();
+            return Promise.resolve(user)
+                .then(user => {
+                    if (!user) {
+                        throw new Error('User not found');
+                    }
+                    return user.token;
+                })
+                .then(auth.setToken);
         }
     };
 };
