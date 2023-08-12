@@ -1,7 +1,11 @@
 import decodeJwt from 'jwt-decode';
 
 export const TOKEN = 'token';
-export const ROLES = 'roles';
+
+const setToken = value => localStorage.setItem(TOKEN, value);
+const getToken = () => localStorage.getItem(TOKEN);
+const removeToken = () => localStorage.removeItem(TOKEN);
+const getClaims = () => decodeJwt(getToken());
 
 export default () => ({
     login: ({username, password}) => {
@@ -14,25 +18,21 @@ export default () => ({
                 }
                 return response.text();
             })
-            .then(token => {
-                localStorage.setItem(TOKEN, token);
-                localStorage.setItem(ROLES, decodeJwt(token).roles);
-            });
+            .then(setToken);
     },
     logout: p => {
-        localStorage.removeItem(TOKEN);
-        localStorage.removeItem(ROLES);
+        removeToken();
         return typeof p === 'string' ? Promise.resolve(p) : Promise.resolve();
     },
     checkError: ({status}) => {
         if (status === 401 || status === 403) {
-            localStorage.removeItem(TOKEN);
-            localStorage.removeItem(ROLES);
+            removeToken();
             return Promise.reject();
         }
         return Promise.resolve();
     },
-    checkAuth: () => localStorage.getItem(TOKEN) ? Promise.resolve() : Promise.reject(),
-    getPermissions: () => Promise.resolve(localStorage.getItem(ROLES)),
-    getToken: () => localStorage.getItem(TOKEN)
+    checkAuth: () => getToken() ? Promise.resolve() : Promise.reject(),
+    getPermissions: () => Promise.resolve(getClaims()).then(({roles}) => roles),
+    setToken: value => Promise.resolve(value).then(setToken),
+    getToken
 });

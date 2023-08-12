@@ -3,11 +3,12 @@ import {waitFor, render} from '@testing-library/react'
 import {MemoryRouter} from 'react-router-dom'
 
 import App from './App'
-import context from './context'
-import {ROLES} from './commons/auth/back'
+import resources from './commons/resources/fake'
+import {TOKEN} from './commons'
 
-const permissionsMock = jest.fn()
-Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === ROLES && permissionsMock(), setItem: () => {}}})
+const tokenMock = jest.fn()
+const auth = userId => tokenMock.mockReturnValue(userId && resources.users.find(({id}) => id === userId).token)
+Object.defineProperty(global, 'localStorage', {value: {getItem: key => key === TOKEN && tokenMock(), setItem: () => {}}})
 
 const renderWithHistory = (route = '/') => render(
     <MemoryRouter initialEntries={[route]}>
@@ -75,7 +76,7 @@ describe('App', () => {
     })
 
     it('should render sample page with auth content for editor', async () => {
-        permissionsMock.mockReturnValue(context.roles.PAGES_EDITOR)
+        auth('editor')
         const {getByText} = renderWithHistory('/cms/pages/sample4')
         let container = await waitFor(() => getByText('Sample page 1'))
         expect(container).toBeDefined()
@@ -85,7 +86,7 @@ describe('App', () => {
     })
 
     it('should render sample page with auth content for all except editor', async () => {
-        permissionsMock.mockReturnValue(null)
+        auth(null)
         const {getByText} = renderWithHistory('/cms/pages/sample4')
         let container = await waitFor(() => getByText('Sample page 1'))
         expect(container).toBeDefined()
