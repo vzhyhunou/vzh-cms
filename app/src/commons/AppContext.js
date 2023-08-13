@@ -31,7 +31,7 @@ export default ({locales, i18n, resources, data, auth, functions, basename, chil
 
     const [localeProvider, source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
     const authProvider = getAuthProvider(source);
-    const dataProvider = getDataProvider(source, localeProvider.getLocale, authProvider.getToken);
+    const dataProvider = getDataProvider(source, localeProvider, authProvider);
     const funcProvider = getFuncProvider(basename);
 
     return <AppContext.Provider value={{

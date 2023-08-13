@@ -11,7 +11,7 @@ export default ({users}) => {
             return Promise.resolve(user)
                 .then(user => {
                     if (!user) {
-                        throw new Error('User not found');
+                        throw new Error('Unauthorized');
                     }
                     return user.token;
                 })

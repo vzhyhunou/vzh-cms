@@ -11,9 +11,8 @@ const log = (params, response) => {
     }
 };
 
-export const getFakeResponse = ({pages}, getLocale, {path}) => {
+const getResponse = ({pages}, locale, {path}) => {
 
-    const locale = getLocale();
     const p = path.split('/');
 
     switch (p[0]) {
@@ -50,24 +49,17 @@ export const getFakeResponse = ({pages}, getLocale, {path}) => {
     }
 };
 
-export const getFakeData = getResponse => (data, getLocale) => {
+export default (data, {getLocale}) => {
 
     const handle = params => {
-        let response;
-        try {
-            response = getResponse(data, getLocale, params);
-        } catch (error) {
-            console.error(error);
-            return Promise.reject(error);
-        }
+        const response = getResponse(data, getLocale(), params);
         log(params, response);
         return Promise.resolve(response);
     };
 
     return {
         ...fakeDataProvider(data, true),
-        exchange: params => handle(params)
+        exchange: params => handle(params),
+        log
     };
 };
-
-export default getFakeData(getFakeResponse);

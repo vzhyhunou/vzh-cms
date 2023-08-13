@@ -1,5 +1,4 @@
 import backData from './back';
+import fakeData from './fake';
 
-export * from './fake';
-
-export {backData};
+export {backData, fakeData};
