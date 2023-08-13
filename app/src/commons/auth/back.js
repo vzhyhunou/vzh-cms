@@ -2,10 +2,13 @@ import decodeJwt from 'jwt-decode';
 
 export const TOKEN = 'token';
 
-const setToken = value => localStorage.setItem(TOKEN, value);
-const getToken = () => localStorage.getItem(TOKEN);
-const removeToken = () => localStorage.removeItem(TOKEN);
-const getClaims = () => decodeJwt(getToken());
+const setItem = value => localStorage.setItem(TOKEN, value);
+const getItem = () => localStorage.getItem(TOKEN);
+const removeItem = () => localStorage.removeItem(TOKEN);
+const getClaims = () => {
+    const token = getItem();
+    return token ? decodeJwt(token) : {};
+};
 
 export default () => ({
     login: ({username, password}) => {
@@ -18,21 +21,24 @@ export default () => ({
                 }
                 return response.text();
             })
-            .then(setToken);
+            .then(setItem);
     },
-    logout: p => {
-        removeToken();
-        return typeof p === 'string' ? Promise.resolve(p) : Promise.resolve();
-    },
-    checkError: ({status}) => {
-        if (status === 401 || status === 403) {
-            removeToken();
-            return Promise.reject();
-        }
-        return Promise.resolve();
-    },
-    checkAuth: () => getToken() ? Promise.resolve() : Promise.reject(),
-    getPermissions: () => Promise.resolve(getClaims()).then(({roles}) => roles),
-    setToken: value => Promise.resolve(value).then(setToken),
-    getToken: () => Promise.resolve().then(getToken)
+    logout: p => Promise.resolve()
+        .then(removeItem)
+        .then(() => {
+            if (typeof p === 'string') {
+                return p;
+            }
+        }),
+    checkError: ({status}) => Promise.resolve()
+        .then(() => {
+            if (status === 401 || status === 403) {
+                removeItem();
+                return Promise.reject();
+            }
+        }),
+    checkAuth: () => getItem() ? Promise.resolve() : Promise.reject(),
+    getPermissions: () => Promise.resolve().then(getClaims).then(({roles}) => roles),
+    setToken: value => Promise.resolve(value).then(setItem),
+    getToken: () => Promise.resolve().then(getItem)
 });

@@ -3,7 +3,7 @@ import source from '../commons/resources/fake'
 
 const apiUrl = '/api/'
 const ra = require('react-admin')
-const dataProvider = getDataProvider(source, {getLocale: () => 'en'})
+const dataProvider = getDataProvider(source, {getLocale: () => Promise.resolve('en')})
 
 ra.fetchUtils.fetchJson = (url, options) => {
     console.log(url, options)

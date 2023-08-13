@@ -51,11 +51,12 @@ const getResponse = ({pages}, locale, {path}) => {
 
 export default (data, {getLocale}) => {
 
-    const handle = params => {
-        const response = getResponse(data, getLocale(), params);
-        log(params, response);
-        return Promise.resolve(response);
-    };
+    const handle = params => getLocale()
+        .then(locale => getResponse(data, locale, params))
+        .then(response => {
+            log(params, response);
+            return response;
+        });
 
     return {
         ...fakeDataProvider(data, true),

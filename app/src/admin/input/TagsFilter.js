@@ -5,13 +5,13 @@ import {useLocaleProvider} from '../../commons';
 
 const TagsFilter = () => {
 
-    const {getMessages} = useLocaleProvider();
+    const {useMessages} = useLocaleProvider();
     const resource = useResourceContext();
-    const {tags} = getMessages().resources[resource];
+    const messages = useMessages();
 
-    return <SelectArrayInput
+    return messages && <SelectArrayInput
         source="tags"
-        choices={Object.entries(tags).map(([key, value]) => ({
+        choices={Object.entries(messages.resources[resource].tags).map(([key, value]) => ({
             id: key,
             name: value
         }))}

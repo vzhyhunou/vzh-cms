@@ -12,11 +12,11 @@ import {useLocaleProvider} from '../../commons';
 
 export default () => {
 
-    const {getMessages} = useLocaleProvider();
+    const {useMessages} = useLocaleProvider();
     const resource = useResourceContext();
-    const {tags} = getMessages().resources[resource];
+    const messages = useMessages();
 
-    return <ArrayInput
+    return messages && <ArrayInput
         source="tags"
         label=""
     >
@@ -27,7 +27,7 @@ export default () => {
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
-                choices={Object.entries(tags).map(([key, value]) => ({
+                choices={Object.entries(messages.resources[resource].tags).map(([key, value]) => ({
                     id: key,
                     name: value
                 }))}

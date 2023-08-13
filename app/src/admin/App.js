@@ -7,14 +7,22 @@ import addUploadFeature from '../commons/upload';
 
 export default ({children, locales, authProvider, dataProvider, ...rest}) => {
 
-    const {getLocale, getMessages} = useLocaleProvider();
+    const {useLocale, setLocale, useMessages, getMessages} = useLocaleProvider();
+    const locale = useLocale();
+    const messages = useMessages();
     const funcProvider = useFuncProvider();
 
-    return <Admin
+    return locale && messages && <Admin
         dataProvider={addUploadFeature(dataProvider, funcProvider)}
         i18nProvider={polyglotI18nProvider(
-            getMessages,
-            getLocale(),
+            l => {
+                if (l === locale) {
+                    setLocale(l);
+                    return messages;
+                }
+                return setLocale(l).then(getMessages);
+            },
+            locale,
             Object.entries(locales).map(([key, value]) => ({locale: key, name: value}))
         )}
         {...{authProvider, ...rest}}

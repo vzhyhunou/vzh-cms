@@ -6,16 +6,14 @@ export default ({users}) => {
 
     return {
         ...auth,
-        login: ({username}) => {
-            const user = users.find(({id}) => id === username);
-            return Promise.resolve(user)
-                .then(user => {
-                    if (!user) {
-                        throw new Error('Unauthorized');
-                    }
-                    return user.token;
-                })
-                .then(auth.setToken);
-        }
+        login: ({username}) => Promise.resolve()
+            .then(() => users.find(({id}) => id === username))
+            .then(user => {
+                if (!user) {
+                    throw new Error('Unauthorized');
+                }
+                return user.token;
+            })
+            .then(auth.setToken)
     };
 };

@@ -5,20 +5,21 @@ const API_URL = '/api';
 
 export default (data, {getLocale}, {getToken}) => {
 
-    const httpClient = (url, options = {}) => {
-    
-        options.headers = new Headers({
-            Accept: 'application/json',
-            'Accept-Language': getLocale()
-        });
-    
-        return getToken()
-            .then(token => token ? {...options, user: {
-                authenticated: true,
-                token: `Bearer ${token}`
-            }} : options)
-            .then(options => fetchUtils.fetchJson(url, options));
-    };
+    const httpClient = (url, options = {}) => Promise.all([getLocale(), getToken()])
+        .then(([locale, token]) => ({
+            ...options,
+            headers: new Headers({
+                Accept: 'application/json',
+                'Accept-Language': locale
+            }),
+            ...(token ? {
+                user: {
+                    authenticated: true,
+                    token: `Bearer ${token}`
+                }
+            } : {})
+        }))
+        .then(options => fetchUtils.fetchJson(url, options));
 
     return {
         getList: (resource, {pagination, sort, filter, options}) => {
