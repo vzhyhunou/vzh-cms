@@ -6,7 +6,7 @@ import {Parser, useExchange, useFuncProvider} from '../commons';
 export const PageComponent = ({id, external}) => {
 
     const {data, isLoading} = useExchange({path: `pages/search/one/${id}`});
-    const funcProvider = useFuncProvider();
+    const {originByData} = useFuncProvider();
 
     if (isLoading) {
         return null;
@@ -24,7 +24,7 @@ export const PageComponent = ({id, external}) => {
 
     files && files.forEach(name => content = content.replace(
         new RegExp(name, 'g'),
-        `${funcProvider.originByData('pages', data)}/${name}`
+        `${originByData('pages', data)}/${name}`
     ));
 
     return <Parser {...{content}}/>;
