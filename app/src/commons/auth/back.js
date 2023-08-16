@@ -39,6 +39,7 @@ export default () => ({
         }),
     checkAuth: () => getItem() ? Promise.resolve() : Promise.reject(),
     getPermissions: () => Promise.resolve().then(getClaims).then(({roles}) => roles),
+    getUserId: () => Promise.resolve().then(getClaims).then(({sub}) => sub),
     setToken: value => Promise.resolve(value).then(setItem),
     getToken: () => Promise.resolve().then(getItem)
 });
