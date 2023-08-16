@@ -1,5 +1,5 @@
 import upload from './upload'
-import getFuncProvider from './functions'
+import getFuncProvider from '../functions'
 
 class FileReaderMock {
     readAsDataURL({type}) {

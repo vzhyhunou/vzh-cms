@@ -3,7 +3,7 @@ import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 import {useLocaleProvider, useFuncProvider, useLocale, useMessages} from '../commons';
-import addUploadFeature from '../commons/upload';
+import addUploadFeature from '../commons/data/upload';
 
 export default ({children, locales, authProvider, dataProvider, ...rest}) => {
 
