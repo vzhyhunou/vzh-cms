@@ -6,7 +6,7 @@ import React, {
     cloneElement
 } from 'react';
 
-import i18nLoader from './locale';
+import getLocaleProvider from './i18n/provider';
 import srcLoader from './source';
 
 const AppContext = createContext();
@@ -17,7 +17,6 @@ export default ({locales, i18n, resources, data, auth, functions, basename, chil
 
     useEffect(() => {
         Promise.all([
-            i18nLoader(i18n),
             srcLoader(resources),
             srcLoader(data),
             srcLoader(auth),
@@ -29,9 +28,10 @@ export default ({locales, i18n, resources, data, auth, functions, basename, chil
         return null;
     }
 
-    const [localeProvider, source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
+    const [source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
+    const localeProvider = getLocaleProvider(i18n);
     const authProvider = getAuthProvider(source);
-    const dataProvider = getDataProvider(source, localeProvider.getLocale, authProvider.getToken);
+    const dataProvider = getDataProvider(source, localeProvider, authProvider);
     const funcProvider = getFuncProvider(basename);
 
     return <AppContext.Provider value={{

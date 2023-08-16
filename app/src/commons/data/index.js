@@ -1,5 +1,5 @@
 import backData from './back';
+import fakeData from './fake';
+import useExchange from './useExchange';
 
-export * from './fake';
-
-export {backData};
+export {backData, fakeData, useExchange};

@@ -1,5 +1,5 @@
 import upload from './upload'
-import functions from './functions'
+import getFuncProvider from '../functions'
 
 class FileReaderMock {
     readAsDataURL({type}) {
@@ -9,7 +9,7 @@ class FileReaderMock {
 }
 global.FileReader = FileReaderMock
 
-const addUploadFeature = dataProvider => upload(dataProvider, functions(''))
+const addUploadFeature = dataProvider => upload(dataProvider, getFuncProvider())
 
 describe('upload', () => {
 

@@ -10,38 +10,6 @@ const convertFileToBase64 = f => new Promise((resolve, reject) => {
     reader.readAsDataURL(f);
 });
 
-export default (dataProvider, funcProvider) => ({
-
-    ...dataProvider,
-
-    create: (resource, params) =>
-        upd(params, p => dataProvider.create(resource, p)),
-
-    update: (resource, params) =>
-        upd(params, p => dataProvider.update(resource, p)),
-
-    getOne: (resource, params) =>
-        dataProvider.getOne(resource, params).then(response => ({
-            ...response,
-            data: analyze(resource, response.data, funcProvider)
-        })),
-
-    getList: (resource, params) =>
-        dataProvider.getList(resource, params).then(response => ({
-            ...response,
-            data: response.data.map(item => analyze(resource, item, funcProvider))
-        })),
-
-    getMany: (resource, params) =>
-        dataProvider.getMany(resource, params).then(response => ({
-            ...response,
-            data: response.data.map(item => analyze(resource, item, funcProvider))
-        })),
-
-    exchange: params =>
-        params.data ? upd(params, p => dataProvider.exchange(p)) : dataProvider.exchange(params)
-});
-
 const upd = (params, call) => {
 
     const sanitized = {
@@ -94,42 +62,6 @@ const upd = (params, call) => {
         }));
 }
 
-const analyze = (resource, item, funcProvider) => {
-
-    if (!item.files) {
-        return item;
-    }
-
-    const names = item.files.map(({name}) => name);
-    const keys = dumpKeysRecursively(item);
-    const fields = names.map(name => ({
-        name,
-        keys: keys.filter(key => get(item, key) === name)
-    }));
-    const contents = keys
-        .map(key => ({
-            key,
-            value: get(item, key)
-        }))
-        .filter(({value}) => typeof value === 'string')
-        .map(({key, value}) => ({
-            key,
-            names: names
-                .filter(name => value.includes(name))
-                .filter(name => value !== name)
-        }))
-        .filter(({names}) => names.length);
-    const path = funcProvider.originByData(resource, item);
-
-    const i = analyzeFields(path, fields, item);
-
-    return {
-        ...i,
-        files: i.files.map(({name}) => name),
-        '@files': analyzeContents(path, contents, i)
-    };
-};
-
 const analyzeFields = (path, fields, data) => {
     const result = JSON.parse(JSON.stringify(data));
     fields.forEach(({name, keys}) => keys.forEach(key => set(result, key, {
@@ -139,7 +71,7 @@ const analyzeFields = (path, fields, data) => {
     return result;
 };
 
-const analyzeContents = (path, contents, data) => {
+const analyzeContents = (path, contents) => {
     const result = {};
     contents.forEach(({key, names}) => set(result, key, names.map(name => ({
         src: `${path}/${name}`,
@@ -181,3 +113,61 @@ const handle = files => [...new Set(files.map(f => f.name))]
         keys: f.map(f => f.key),
         previews: f.map(f => f.preview)
     }));
+
+export default (dataProvider, {originByData}) => {
+
+    const analyze = (resource, item) => {
+
+        if (!item.files) {
+            return item;
+        }
+
+        const names = item.files.map(({name}) => name);
+        const keys = dumpKeysRecursively(item);
+        const fields = names.map(name => ({
+            name,
+            keys: keys.filter(key => get(item, key) === name)
+        }));
+        const contents = keys
+            .map(key => ({
+                key,
+                value: get(item, key)
+            }))
+            .filter(({value}) => typeof value === 'string')
+            .map(({key, value}) => ({
+                key,
+                names: names
+                    .filter(name => value.includes(name))
+                    .filter(name => value !== name)
+            }))
+            .filter(({names}) => names.length);
+        const path = originByData(resource, item);
+
+        const i = analyzeFields(path, fields, item);
+
+        return {
+            ...i,
+            files: i.files.map(({name}) => name),
+            '@files': analyzeContents(path, contents)
+        };
+    };
+
+    return {
+        ...dataProvider,
+        create: (resource, params) => upd(params, p => dataProvider.create(resource, p)),
+        update: (resource, params) => upd(params, p => dataProvider.update(resource, p)),
+        getOne: (resource, params) => dataProvider.getOne(resource, params).then(response => ({
+            ...response,
+            data: analyze(resource, response.data)
+        })),
+        getList: (resource, params) => dataProvider.getList(resource, params).then(response => ({
+            ...response,
+            data: response.data.map(item => analyze(resource, item))
+        })),
+        getMany: (resource, params) => dataProvider.getMany(resource, params).then(response => ({
+            ...response,
+            data: response.data.map(item => analyze(resource, item))
+        })),
+        exchange: params => params.data ? upd(params, p => dataProvider.exchange(p)) : dataProvider.exchange(params)
+    };
+};

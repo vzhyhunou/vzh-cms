@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 import {Button, useResourceContext} from 'react-admin';
 import {Menu, MenuItem} from '@mui/material';
 
-import {useLocaleProvider} from '../../commons';
+import {useMessages} from '../../commons';
 import useUpdateTag from './useUpdateTag';
 
 export default ({label, children, getData}) => {
 
-    const {getMessages} = useLocaleProvider();
     const resource = useResourceContext();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(getData);
-    const {tags} = getMessages().resources[resource];
+    const messages = useMessages();
 
-    return <>
+    return messages && <>
         <Button
             label={label}
             aria-controls={anchorEl ? 'simple-menu' : undefined}
@@ -28,7 +27,7 @@ export default ({label, children, getData}) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
         >
-            {Object.entries(tags).map(([key, value]) =>
+            {Object.entries(messages.resources[resource].tags).map(([key, value]) =>
                 <MenuItem
                     {...{key}}
                     onClick={() => updateTag(key)}
