@@ -6,7 +6,7 @@ import React, {
     cloneElement
 } from 'react';
 
-import getLocaleProvider from './locale';
+import getLocaleProvider from './i18n/provider';
 import srcLoader from './source';
 
 const AppContext = createContext();

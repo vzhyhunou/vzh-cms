@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import {Button, useResourceContext} from 'react-admin';
 import {Menu, MenuItem} from '@mui/material';
 
-import {useLocaleProvider} from '../../commons';
+import {useMessages} from '../../commons';
 import useUpdateTag from './useUpdateTag';
 
 export default ({label, children, getData}) => {
 
-    const {useMessages} = useLocaleProvider();
     const resource = useResourceContext();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(getData);

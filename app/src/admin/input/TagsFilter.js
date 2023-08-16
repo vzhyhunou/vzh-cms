@@ -1,11 +1,10 @@
 import React from 'react';
 import {SelectArrayInput, useResourceContext} from 'react-admin';
 
-import {useLocaleProvider} from '../../commons';
+import {useMessages} from '../../commons';
 
 const TagsFilter = () => {
 
-    const {useMessages} = useLocaleProvider();
     const resource = useResourceContext();
     const messages = useMessages();
 
