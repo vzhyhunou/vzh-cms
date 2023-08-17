@@ -1,13 +1,13 @@
 import getDataProvider from '../commons/data/fake'
 import source from '../commons/resources/fake'
 
-const apiUrl = '/api/'
+const API_URL = '/api'
 const ra = require('react-admin')
-const dataProvider = getDataProvider(source, {getLocale: () => Promise.resolve('en')})
+const {exchange} = getDataProvider(source, {getLocale: () => Promise.resolve('en')})
 
 ra.fetchUtils.fetchJson = (url, options) => {
     console.log(url, options)
-    return dataProvider.exchange({path: url.startsWith(apiUrl) ? url.slice(apiUrl.length) : url})
+    return exchange({path: url.startsWith(API_URL) ? url.slice(API_URL.length + 1) : url})
         .then(({data}) => ({json: data}))
 }
 
