@@ -13,10 +13,10 @@ export default {
     components: {
         Page: PageComponent
     },
-    i18n: locale => import(`./commons/i18n/${locale}`),
+    i18n: locale => import(`./commons/i18n/messages/${locale}`),
     resources: import(`./commons/resources/${process.env.REACT_APP_SRC}`),
-    data: import(`./commons/data/${process.env.REACT_APP_SRC}`),
+    data: import(`./commons/data/provider/${process.env.REACT_APP_SRC}`),
     auth: import(`./commons/auth/${process.env.REACT_APP_SRC}`),
-    functions: import(`./commons/functions`),
+    functions: import('./commons/functions'),
     basename: process.env.REACT_APP_BASE
 };
