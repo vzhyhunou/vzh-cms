@@ -1,4 +1,4 @@
-import {PageComponent} from './pages/App';
+import Page from './pages/Component';
 
 export default {
     roles: {
@@ -11,7 +11,7 @@ export default {
         ru: 'Русский'
     },
     components: {
-        Page: PageComponent
+        Page
     },
     i18n: locale => import(`./commons/i18n/messages/${locale}`),
     resources: import(`./commons/resources/${process.env.REACT_APP_SRC}`),
