@@ -4,7 +4,7 @@ import {MemoryRouter} from 'react-router-dom'
 
 import App from './App'
 import source from './commons/resources/fake'
-import getAuthProvider from './commons/auth/fake'
+import getAuthProvider from './commons/auth/provider/fake'
 
 const authProvider = getAuthProvider(source)
 
