@@ -4,10 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
-import vzh.cms.security.JwtService;
+import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.security.TokenService;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
@@ -22,14 +25,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Viktar Zhyhunou
  */
 @WebMvcTest
-@ActiveProfiles("dev")
+@Import(SecurityConfiguration.class)
 public class WebConfigurationIT {
 
     @MockBean
     private PasswordEncoder passwordEncoder;
 
     @MockBean
-    private JwtService jwtService;
+    private AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
 
     @MockBean
     private ImportService importService;
