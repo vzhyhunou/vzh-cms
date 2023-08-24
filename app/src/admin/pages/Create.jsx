@@ -9,7 +9,7 @@ import {
     useLocales
 } from 'react-admin';
 
-import {TagsInput} from '../input';
+import TagsInput from '../input/TagsInput';
 import {useIdValidation} from '../validation';
 import Input from './Input';
 

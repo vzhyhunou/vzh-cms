@@ -2,7 +2,9 @@ import React from 'react';
 import {Admin} from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
-import {useLocaleProvider, useFuncProvider, useLocale, useMessages} from '../commons';
+import {useLocaleProvider, useFuncProvider} from '../commons/AppContext';
+import useLocale from '../commons/i18n/useLocale';
+import useMessages from '../commons/i18n/useMessages';
 import addUploadFeature from '../commons/data/upload';
 
 export default ({children, locales, authProvider, dataProvider, ...rest}) => {

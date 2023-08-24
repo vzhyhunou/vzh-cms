@@ -3,9 +3,10 @@ import {Route, Navigate} from 'react-router-dom';
 import {CustomRoutes, Resource} from 'react-admin';
 
 import Layout from './commons/Layout';
-import {App} from './commons';
-import {pages, users} from './admin';
-import {Page} from './pages';
+import App from './commons/App';
+import pages from './admin/pages';
+import users from './admin/users';
+import Page from './pages/App';
 import context from './context';
 
 export default () =>

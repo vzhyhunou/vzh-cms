@@ -12,7 +12,7 @@ import {
     Labeled
 } from 'react-admin';
 
-import {TagsInput} from '../input';
+import TagsInput from '../input/TagsInput';
 
 export default () =>
     <Edit>

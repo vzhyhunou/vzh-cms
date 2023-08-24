@@ -1,7 +1,9 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 
-import {Parser, useExchange, useFuncProvider} from '../commons';
+import Parser from '../commons/Parser';
+import useExchange from '../commons/data/useExchange';
+import {useFuncProvider} from '../commons/AppContext';
 
 export const PageComponent = ({id, external}) => {
 

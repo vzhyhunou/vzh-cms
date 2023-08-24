@@ -8,7 +8,7 @@ import {
     useResourceContext
 } from 'react-admin';
 
-import {useMessages} from '../../commons';
+import useMessages from '../../commons/i18n/useMessages';
 
 export default () => {
 

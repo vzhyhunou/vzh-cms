@@ -13,8 +13,8 @@ import {
     Labeled
 } from 'react-admin';
 
-import {TagsInput} from '../input';
-import {useRoles} from '../../commons';
+import TagsInput from '../input/TagsInput';
+import {useRoles} from '../../commons/AppContext';
 import Input from './Input';
 
 export default () => {

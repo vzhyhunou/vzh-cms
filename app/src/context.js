@@ -1,4 +1,4 @@
-import {PageComponent} from './pages';
+import {PageComponent} from './pages/App';
 
 export default {
     roles: {

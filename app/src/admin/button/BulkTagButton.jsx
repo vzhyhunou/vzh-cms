@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, useResourceContext} from 'react-admin';
 import {Menu, MenuItem} from '@mui/material';
 
-import {useMessages} from '../../commons';
+import useMessages from '../../commons/i18n/useMessages';
 import useUpdateTag from './useUpdateTag';
 
 export default ({label, children, getData}) => {

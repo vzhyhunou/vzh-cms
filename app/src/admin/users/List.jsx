@@ -7,9 +7,9 @@ import {
     TextInput
 } from 'react-admin';
 
-import {TagsField} from '../field';
-import {TagsFilter} from '../input';
-import {BulkActionButtons} from '../button';
+import TagsField from '../field/TagsField';
+import TagsFilter from '../input/TagsFilter';
+import BulkActionButtons from '../button/BulkActionButtons';
 
 const filters = [
     <TextInput

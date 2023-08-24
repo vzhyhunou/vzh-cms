@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {AppContext} from '.';
+import AppContext from './AppContext';
 import App from '../admin/App';
 
 export default ({context, children, ...rest}) =>
