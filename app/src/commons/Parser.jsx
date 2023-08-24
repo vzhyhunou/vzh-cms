@@ -2,12 +2,11 @@ import React from 'react';
 import JsxParser from 'react-jsx-parser';
 import {usePermissions} from 'react-admin';
 
-import {useComponents, useRoles} from '.';
+import {useContextProvider} from './AppContext';
 
 export default ({content, ...rest}) => {
 
-    const components = useComponents();
-    const roles = useRoles();
+    const {components, roles} = useContextProvider();
     const {permissions} = usePermissions();
 
     return <JsxParser

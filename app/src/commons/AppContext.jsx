@@ -41,7 +41,6 @@ export default ({locales, i18n, resources, data, auth, functions, basename, chil
     </AppContext.Provider>;
 };
 
-export const useLocaleProvider = () => useContext(AppContext).localeProvider;
-export const useComponents = () => useContext(AppContext).components;
-export const useRoles = () => useContext(AppContext).roles;
-export const useFuncProvider = () => useContext(AppContext).funcProvider;
+export const useContextProvider = () => useContext(AppContext);
+export const useLocaleProvider = () => useContextProvider().localeProvider;
+export const useFuncProvider = () => useContextProvider().funcProvider;

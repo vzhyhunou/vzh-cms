@@ -4,7 +4,7 @@ import {Drawer, List, ListItem, ListItemText, Divider, IconButton} from '@mui/ma
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {Link} from 'react-router-dom';
 
-import {useExchange} from '.';
+import useExchange from './data/useExchange';
 
 const drawerWidth = 240;
 

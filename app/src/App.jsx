@@ -9,8 +9,11 @@ import users from './admin/users';
 import Page from './pages/App';
 import context from './context';
 
-export default () =>
-    <App {...{context}}>
+export default () => {
+
+    const {roles: {PAGES_EDITOR, MANAGER}} = context;
+
+    return <App {...{context}}>
         <CustomRoutes noLayout>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
             <Route path="cms" element={<Layout/>}>
@@ -19,13 +22,13 @@ export default () =>
         </CustomRoutes>
         {permissions =>
             <>
-                {permissions && permissions.includes(context.roles.PAGES_EDITOR) ?
+                {permissions && permissions.includes(PAGES_EDITOR) ?
                     <Resource name="pages" {...pages}/>
                 : null}
-                {permissions && permissions.includes(context.roles.MANAGER) ?
+                {permissions && permissions.includes(MANAGER) ?
                     <Resource name="users" {...users}/>
                 : null}
             </>
         }
-    </App>
-;
+    </App>;
+};

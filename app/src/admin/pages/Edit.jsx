@@ -14,14 +14,14 @@ import {
 } from 'react-admin';
 
 import TagsInput from '../input/TagsInput';
-import {useRoles} from '../../commons/AppContext';
+import {useContextProvider} from '../../commons/AppContext';
 import Input from './Input';
 
 export default () => {
 
     const locales = useLocales();
     const {permissions} = usePermissions();
-    const {MANAGER} = useRoles();
+    const {roles: {MANAGER}} = useContextProvider();
 
     return <Edit>
         <TabbedForm>

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-import {useLocaleProvider} from '..';
+import {useLocaleProvider} from '../AppContext';
 
 export default () => {
 

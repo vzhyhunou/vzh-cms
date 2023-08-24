@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import {usePermissions, useRefresh} from 'react-admin';
 import {Link, useParams} from 'react-router-dom';
 
-import {useRoles} from '.';
+import {useContextProvider} from './AppContext';
 
 export default () => {
 
@@ -14,7 +14,7 @@ export default () => {
     const {permissions} = usePermissions();
     const [loading, setLoading] = useState(true);
     const {id} = useParams();
-    const {PAGES_EDITOR, MANAGER} = useRoles();
+    const {roles: {PAGES_EDITOR, MANAGER}} = useContextProvider();
 
     useEffect(() => {
         refresh();
