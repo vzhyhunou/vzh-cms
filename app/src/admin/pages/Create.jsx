@@ -25,14 +25,12 @@ export default () => {
                     source="id"
                     validate={[required(), validateId]}
                 />
-                <TranslatableInputs locales={locales.map(l => l.locale)}>
+                <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
                     <TextInput
-                        fullWidth
                         source="title"
                     />
                     <TextInput
                         multiline
-                        fullWidth
                         source="content"
                     />
                     <Input/>

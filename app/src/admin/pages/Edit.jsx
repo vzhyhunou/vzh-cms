@@ -43,14 +43,12 @@ export default () => {
                         </ReferenceField>
                     </Labeled>
                 }
-                <TranslatableInputs locales={locales.map(l => l.locale)}>
+                <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
                     <TextInput
-                        fullWidth
                         source="title"
                     />
                     <TextInput
                         multiline
-                        fullWidth
                         source="content"
                         sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
                     />
