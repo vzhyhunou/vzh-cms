@@ -19,7 +19,8 @@
 - React-admin
 - React Router
 - Material-UI
-- Create React App
+- ViteJS
+- Jest
 
 ## Getting Started
 ### Running

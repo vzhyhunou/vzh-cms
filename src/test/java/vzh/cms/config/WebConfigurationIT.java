@@ -55,7 +55,7 @@ public class WebConfigurationIT {
         mockMvc.perform(get("/index.html"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("/static/js/")))
+                .andExpect(content().string(containsString("/assets/")))
         ;
     }
 }
