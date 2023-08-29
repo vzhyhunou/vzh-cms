@@ -1,7 +1,8 @@
-import { dumpKeysRecursively } from 'recursive-keys';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import md5 from 'js-md5';
+
+import dumpKeys from './dumpKeys';
 
 const convertFileToBase64 = f => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -19,7 +20,7 @@ const upd = (params, call) => {
     };
     const sanitizedData = JSON.stringify({
         ...sanitized,
-        names: dumpKeysRecursively(sanitized)
+        names: dumpKeys(sanitized)
             .map(key => get(sanitized, `${key}.rawFile`))
             .filter(f => f)
             .map(({name}) => name)
@@ -29,7 +30,7 @@ const upd = (params, call) => {
         .filter(({title}) => sanitizedData.includes(title)) : [];
 
     return Promise.all(
-        dumpKeysRecursively(params.data)
+        dumpKeys(params.data)
             .map(key => ({key, f: get(params.data, `${key}.rawFile`)}))
             .filter(({f}) => f)
             .filter(({f: {name}}) => sanitizedData.includes(name))
@@ -86,7 +87,7 @@ const replaceFiles = (data, files) => {
 };
 
 const replaceFormFiles = (data, formFiles) => {
-    formFiles.forEach(({title}) => dumpKeysRecursively(data)
+    formFiles.forEach(({title}) => dumpKeys(data)
         .filter(key => get(get(data, key), 'title') === title)
         .forEach(key => set(data, key, title))
     );
@@ -123,7 +124,7 @@ export default (dataProvider, {originByData}) => {
         }
 
         const names = item.files.map(({name}) => name);
-        const keys = dumpKeysRecursively(item);
+        const keys = dumpKeys(item);
         const fields = names.map(name => ({
             name,
             keys: keys.filter(key => get(item, key) === name)

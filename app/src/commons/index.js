@@ -1,11 +1,10 @@
 import App from './App';
-import AppContext from './AppContext';
 import Parser from './Parser';
-import functions from './functions';
+import getFuncProvider from './functions';
 
+export * from './auth';
+export * from './data';
 export * from './i18n';
 export * from './AppContext';
-export * from './data';
-export * from './auth';
 
-export {App, AppContext, Parser, functions};
+export {App, Parser, getFuncProvider};

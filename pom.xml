@@ -86,7 +86,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>app/dist</directory>
+							<directory>app/lib</directory>
 						</fileset>
 					</filesets>
 				</configuration>

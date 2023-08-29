@@ -1,6 +1,6 @@
-import {PageComponent} from './pages';
+import Page from './pages/Component';
 
-export default {
+export default (({REACT_APP_SRC, REACT_APP_BASE}) => ({
     roles: {
         ADMIN: 'ADMIN',
         MANAGER: 'MANAGER',
@@ -11,12 +11,12 @@ export default {
         ru: 'Русский'
     },
     components: {
-        Page: PageComponent
+        Page
     },
-    i18n: locale => import(`./commons/i18n/${locale}`),
-    resources: import(`./commons/resources/${process.env.REACT_APP_SRC}`),
-    data: import(`./commons/data/${process.env.REACT_APP_SRC}`),
-    auth: import(`./commons/auth/${process.env.REACT_APP_SRC}`),
-    functions: import(`./commons/functions`),
-    basename: process.env.REACT_APP_BASE
-};
+    i18n: locale => import(`./commons/i18n/messages/${locale}.js`),
+    resources: import(`./commons/resources/${REACT_APP_SRC}.js`),
+    data: import(`./commons/data/provider/${REACT_APP_SRC}.js`),
+    auth: import(`./commons/auth/provider/${REACT_APP_SRC}.js`),
+    functions: import('./commons/functions.js'),
+    basename: REACT_APP_BASE
+}))(process.env);

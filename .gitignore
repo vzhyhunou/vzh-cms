@@ -1,9 +1,8 @@
-export
+resources/export
 resources/static
-build
-dist
-node
-node_modules
+app/lib
+app/node
+app/node_modules
 .idea
 *.ipr
 *.iml

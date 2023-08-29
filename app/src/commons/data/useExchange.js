@@ -3,11 +3,11 @@ import {useDataProvider} from 'react-admin';
 
 export default props => {
 
-    const dataProvider = useDataProvider();
+    const {exchange} = useDataProvider();
 
     return useQuery(
         ['exchange', props],
-        () => dataProvider.exchange(props).then(({data}) => data),
+        () => exchange(props).then(({data}) => data),
         {refetchOnWindowFocus: false}
     );
 };

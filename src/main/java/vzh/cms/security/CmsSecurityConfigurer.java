@@ -22,15 +22,16 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                         "/api/pages/search/menu"
                 ).permitAll()
                 .antMatchers(
-                        "/import",
-                        "/export"
-                ).hasRole(ADMIN.name())
-                .antMatchers(
                         "/api/users/**"
                 ).hasRole(MANAGER.name())
                 .antMatchers(
                         "/api/pages/**"
                 ).hasRole(PAGES_EDITOR.name())
+                .antMatchers(
+                        "/api/**",
+                        "/import",
+                        "/export"
+                ).hasRole(ADMIN.name())
         ;
     }
 }

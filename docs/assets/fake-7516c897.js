@@ -1,0 +1,1 @@
+import n from"./back-8cb8e109.js";import"./index-6e4e2e79.js";const h=({users:o})=>{const e=n();return{...e,login:({username:r})=>Promise.resolve().then(()=>o.find(({id:t})=>t===r)).then(t=>{if(!t)throw new Error("Unauthorized");return t.token}).then(e.setToken)}};export{h as default};
