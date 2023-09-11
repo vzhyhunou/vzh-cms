@@ -27,8 +27,8 @@ public class CmsSecurityConfigurer implements SecurityConfigurer {
                 .antMatchers(
                         "/api/pages/**"
                 ).hasRole(PAGES_EDITOR.name())
-                .antMatchers(
-                        "/api/**",
+                .mvcMatchers(
+                        "/api",
                         "/import",
                         "/export"
                 ).hasRole(ADMIN.name())
