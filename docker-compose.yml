@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  cms:
+    image: openjdk:11
+    volumes:
+      - ./resources:/usr/src/cms/resources
+      - ./application.properties:/usr/src/cms/application.properties
+      - ./target/vzh-cms-0.0.1-SNAPSHOT-exec.jar:/usr/src/cms/vzh-cms.jar
+    working_dir: /usr/src/cms
+    command: java -jar vzh-cms.jar
+    ports:
+      - '8090:8090'
