@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>React.js and Spring Data REST - CMS</name>
-	<description>An CMS with ReactJS in the frontend and Spring Data REST in the backend</description>
+	<description>CMS with ReactJS in the frontend and Spring Data REST in the backend</description>
 
 	<properties>
 		<java.version>1.8</java.version>
