@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
     DateField,
     Edit,
@@ -22,6 +22,7 @@ export default () => {
     const locales = useLocales();
     const {permissions} = usePermissions();
     const {roles: {MANAGER}} = useContextProvider();
+    const ref = useRef();
 
     return <Edit>
         <TabbedForm>
@@ -44,15 +45,14 @@ export default () => {
                     </Labeled>
                 }
                 <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
-                    <TextInput
-                        source="title"
-                    />
+                    <TextInput source="title"/>
                     <TextInput
                         multiline
                         source="content"
                         sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
+                        inputProps={{ref}}
                     />
-                    <Input/>
+                    <Input contentRef={ref}/>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">
