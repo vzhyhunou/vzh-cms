@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
     Create,
     FormTab,
@@ -17,6 +17,7 @@ export default () => {
 
     const locales = useLocales();
     const validateId = useIdValidation();
+    const ref = useRef();
 
     return <Create>
         <TabbedForm>
@@ -26,14 +27,14 @@ export default () => {
                     validate={[required(), validateId]}
                 />
                 <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
-                    <TextInput
-                        source="title"
-                    />
+                    <TextInput source="title"/>
                     <TextInput
                         multiline
                         source="content"
+                        sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
+                        inputProps={{ref}}
                     />
-                    <Input/>
+                    <Input contentRef={ref}/>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">
