@@ -23,7 +23,7 @@ export default ({locales, i18n, resources, data, auth, functions, basename, chil
     }
 
     const [source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
-    const localeProvider = getLocaleProvider(i18n);
+    const localeProvider = getLocaleProvider(i18n, locales);
     const authProvider = getAuthProvider(source);
     const funcProvider = getFuncProvider(basename);
     const dataProvider = getDataProvider(source, localeProvider, authProvider, funcProvider);
