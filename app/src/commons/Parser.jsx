@@ -4,7 +4,7 @@ import {usePermissions} from 'react-admin';
 
 import {useContextProvider} from './AppContext';
 
-export default ({content, ...rest}) => {
+export default ({content, bindings, ...rest}) => {
 
     const {components, roles} = useContextProvider();
     const {permissions} = usePermissions();
@@ -13,7 +13,8 @@ export default ({content, ...rest}) => {
         bindings={{
             permissions,
             ...roles,
-            window
+            window,
+            ...bindings
         }}
         {...{components}}
         jsx={content}
