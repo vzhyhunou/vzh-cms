@@ -1,0 +1,16 @@
+{
+  "id": "fragment.3",
+  "tags": [
+    {
+      "name": "PUBLISHED"
+    }
+  ],
+  "title": {
+    "ru": "Фрагмент 3",
+    "en": "Fragment 3"
+  },
+  "content": {
+    "ru": "<p>Параметр 1: {p1}</p>\n<p>Параметр 2: {p2}</p>",
+    "en": "<p>Parameter 1: {p1}</p>\n<p>Parameter 2: {p2}</p>"
+  }
+}
