@@ -6,14 +6,15 @@ import {useContextProvider} from './AppContext';
 
 export default ({content, bindings, ...rest}) => {
 
-    const {components, roles} = useContextProvider();
+    const {components, localeProvider, funcProvider, ...context} = useContextProvider();
     const {permissions} = usePermissions();
 
     return <JsxParser
         bindings={{
             permissions,
-            ...roles,
+            context,
             window,
+            JSON,
             ...bindings
         }}
         {...{components}}

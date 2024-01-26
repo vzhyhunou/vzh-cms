@@ -10,7 +10,7 @@
     "en": "Fragment 3"
   },
   "content": {
-    "ru": "<p>Параметр 1: {p1}</p>\n<p>Параметр 2: {p2}</p>",
-    "en": "<p>Parameter 1: {p1}</p>\n<p>Parameter 2: {p2}</p>"
+    "ru": "<p>Параметры</p><code>{JSON.stringify(props)}</code>\n<p>Контекст</p><code>{JSON.stringify(context)}</code>\n<p>Разрешения</p><code>{JSON.stringify(permissions)}</code>",
+    "en": "<p>Properties</p><code>{JSON.stringify(props)}</code>\n<p>Context</p><code>{JSON.stringify(context)}</code>\n<p>Permissions</p><code>{JSON.stringify(permissions)}</code>"
   }
 }
