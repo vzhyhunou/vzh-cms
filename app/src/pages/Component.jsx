@@ -4,7 +4,7 @@ import Parser from '../commons/Parser';
 import useExchange from '../commons/data/useExchange';
 import {useFuncProvider} from '../commons/AppContext';
 
-const Component = ({id, external, ...rest}) => {
+const Component = ({id, external, ...props}) => {
 
     const {data, isLoading} = useExchange({path: `pages/search/one/${id}`});
     const {originByData} = useFuncProvider();
@@ -28,7 +28,7 @@ const Component = ({id, external, ...rest}) => {
         `${originByData('pages', data)}/${name}`
     ));
 
-    return <Parser {...{content}} bindings={rest}/>;
+    return <Parser {...{content}} bindings={{props}}/>;
 };
 
 export default Component;
