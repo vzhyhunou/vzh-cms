@@ -17,6 +17,6 @@ public interface PropertyPage {
     @Value("#{target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
     String getContent();
 
-    @Value("#{@fileService.collect(target, false).?[#root.target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].contains(name)].![name]}")
+    @Value("#{@fileService.read(@locationService.location(target), false).?[#root.target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].contains(name)].![name]}")
     Set<String> getFiles();
 }

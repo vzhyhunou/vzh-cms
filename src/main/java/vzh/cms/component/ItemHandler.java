@@ -2,28 +2,21 @@ package vzh.cms.component;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.HandleAfterCreate;
-import org.springframework.data.rest.core.annotation.HandleAfterDelete;
-import org.springframework.data.rest.core.annotation.HandleAfterSave;
-import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
-import org.springframework.data.rest.core.annotation.HandleBeforeSave;
-import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.data.rest.core.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
-import vzh.cms.model.User;
+import vzh.cms.repository.UserRepository;
+import vzh.cms.service.EntityService;
 import vzh.cms.service.FileService;
 import vzh.cms.service.LocationService;
-import vzh.cms.service.MaintainService;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
@@ -35,70 +28,65 @@ import static org.springframework.security.core.context.SecurityContextHolder.ge
 @RequiredArgsConstructor
 public class ItemHandler {
 
+    private static final String OLD_LOCATION = "OLD_LOCATION";
+    private static final String NEW_FILES = "NEW_FILES";
+
     @Autowired
     private HttpServletRequest request;
 
     private final FileService fileService;
 
+    private final EntityService entityService;
+
     private final LocationService locationService;
 
-    private final MaintainService maintainService;
-
-    private final EntityManager entityManager;
+    private final UserRepository userRepository;
 
     @HandleBeforeCreate
-    @HandleBeforeSave
-    public void before(Item item) throws IOException {
-        User user = new User();
-        user.setId(getContext().getAuthentication().getName());
-        item.setUser(user);
-        item.setDate(new Date());
-        if (HttpMethod.PATCH.matches(request.getMethod())) {
-            return;
-        }
-        Item old = find(item);
-        if (old == null) {
-            return;
-        }
-
-        //clean removed files
-        old.getFiles().addAll(item.getFiles());
-        fileService.clean(old);
-
-        //collect old files and clean
-        old.getFiles().clear();
-        fileService.collect(old, true);
-        Set<Base64File> files = new HashSet<>(old.getFiles());
-        old.getFiles().clear();
-        fileService.clean(old);
-
-        //save new and old files
-        old.getFiles().addAll(item.getFiles());
-        old.getFiles().removeAll(files);
-        old.getFiles().addAll(files);
+    public void beforeCreate(Item item) {
+        fill(item);
     }
 
     @HandleAfterCreate
-    @HandleAfterSave
-    public void after(Item item) throws IOException {
+    public void afterCreate(Item item) throws IOException {
         if (HttpMethod.PATCH.matches(request.getMethod())) {
             return;
         }
-        Item i = find(item);
-        i.getFiles().addAll(item.getFiles());
-        fileService.save(i);
+        fileService.create(locationService.location(item), item.getFiles());
+        item.getFiles().clear();
+    }
+
+    @HandleBeforeSave
+    public void beforeSave(Item item) throws IOException {
+        fill(item);
+        if (HttpMethod.PATCH.matches(request.getMethod())) {
+            return;
+        }
+        request.setAttribute(OLD_LOCATION, locationService.location(entityService.find(item)));
+        request.setAttribute(NEW_FILES, item.getFiles());
+    }
+
+    @SuppressWarnings("unchecked")
+    @HandleAfterSave
+    public void afterSave(Item item) throws IOException {
+        if (HttpMethod.PATCH.matches(request.getMethod())) {
+            return;
+        }
+        fileService.update(
+                (String) request.getAttribute(OLD_LOCATION),
+                locationService.location(item),
+                (Collection<Base64File>) request.getAttribute(NEW_FILES)
+        );
+        item.getFiles().clear();
     }
 
     @HandleAfterDelete
-    public void delete(Item item) throws IOException {
-        item.getFiles().clear();
-        fileService.clean(item);
+    public void afterDelete(Item item) throws IOException {
+        fileService.clean(locationService.location(item), Collections.emptySet());
     }
 
-    private Item find(Item item) {
-        entityManager.detach(item);
-        return Optional.ofNullable(locationService.getIdentifier(item))
-                .flatMap(id -> maintainService.getRepository(item).findById(id))
-                .orElse(null);
+    private void fill(Item item) {
+        item.setDate(new Date());
+        userRepository.findById(getContext().getAuthentication().getName()).ifPresent(item::setUser);
     }
 }

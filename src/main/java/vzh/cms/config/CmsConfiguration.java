@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 
+import java.io.IOException;
+
 /**
  * @author Viktar Zhyhunou
  */
@@ -27,12 +29,12 @@ public class CmsConfiguration {
     }
 
     @Scheduled(cron = "${cms.exp.full.cron}")
-    public void full() throws Exception {
+    public void full() throws IOException {
         exportService.export(false);
     }
 
     @Scheduled(cron = "${cms.exp.inc.cron}")
-    public void inc() throws Exception {
+    public void inc() throws IOException {
         exportService.export(true);
     }
 }

@@ -18,11 +18,11 @@ import javax.persistence.EntityManager;
 @RequiredArgsConstructor
 public class RestConfiguration implements RepositoryRestConfigurer {
 
-    private final EntityManager manager;
+    private final EntityManager em;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        manager.getMetamodel().getEntities().forEach(e -> config.exposeIdsFor(e.getJavaType()));
+        em.getMetamodel().getEntities().forEach(e -> config.exposeIdsFor(e.getJavaType()));
     }
 
     @Bean

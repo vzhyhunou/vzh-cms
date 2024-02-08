@@ -4,6 +4,7 @@ import vzh.cms.model.Page;
 import vzh.cms.model.Tag;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class PageFixture {
 
@@ -19,6 +20,13 @@ public class PageFixture {
         Page page = new Page();
         page.setId(id);
         createProperties(page, langs);
+        return page;
+    }
+
+    public static Page withDate(String id, Date date) {
+        Page page = new Page();
+        page.setId(id);
+        page.setDate(date);
         return page;
     }
 
