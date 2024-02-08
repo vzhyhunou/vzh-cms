@@ -2,45 +2,40 @@ import React, {
     createContext,
     useEffect,
     useState,
-    useContext,
-    cloneElement
+    useContext
 } from 'react';
 
 import getLocaleProvider from './i18n/provider';
 
 const AppContext = createContext();
 
-export default ({locales, i18n, resources, data, auth, functions, basename, children, ...rest}) => {
+export default ({resources, data, auth, functions, children, ...rest}) => {
 
-    const [contextValues, setContextValues] = useState();
+    const [providers, setProviders] = useState();
 
     useEffect(() => {
-        Promise.all([resources, data, auth, functions]).then(s => s.map(r => r.default)).then(setContextValues);
-    }, [i18n, resources, data, auth, functions]);
+        Promise.all([resources, data, auth, functions]).then(s => s.map(r => r.default)).then(setProviders);
+    }, [resources, data, auth, functions]);
 
-    if (!contextValues) {
+    if (!providers) {
         return null;
     }
 
-    const [source, getDataProvider, getAuthProvider, getFuncProvider] = contextValues;
-    const localeProvider = getLocaleProvider(i18n, locales);
-    const authProvider = getAuthProvider(source);
-    const funcProvider = getFuncProvider(basename);
-    const dataProvider = getDataProvider(source, localeProvider, authProvider, funcProvider);
+    const [resProvider, getDataProvider, getAuthProvider, getFuncProvider] = providers;
+    const localeProvider = getLocaleProvider(rest);
+    const funcProvider = getFuncProvider(rest);
+    const authProvider = getAuthProvider({resProvider, ...rest});
+    const dataProvider = getDataProvider({resProvider, localeProvider, funcProvider, authProvider, ...rest});
 
     return <AppContext.Provider value={{
         localeProvider,
         funcProvider,
+        authProvider,
+        dataProvider,
         ...rest
     }}>
-        {cloneElement(children, {
-            authProvider,
-            dataProvider,
-            locales
-        })}
+        {children}
     </AppContext.Provider>;
 };
 
 export const useContextProvider = () => useContext(AppContext);
-export const useLocaleProvider = () => useContextProvider().localeProvider;
-export const useFuncProvider = () => useContextProvider().funcProvider;

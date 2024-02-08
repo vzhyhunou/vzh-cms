@@ -2,20 +2,18 @@ package vzh.cms.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.CmsProperties;
 import vzh.cms.model.Item;
-import vzh.cms.repository.ItemRepository;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -39,7 +37,9 @@ public class ExportService {
 
     private final ResourceMappings mappings;
 
-    private final MaintainService maintainService;
+    private final EntityService entityService;
+
+    private final MapperService mapperService;
 
     private final LocationService locationService;
 
@@ -55,21 +55,16 @@ public class ExportService {
         ext = properties.getInc().getExt();
     }
 
-    @Transactional
     @SuppressWarnings("unchecked")
-    public void export(boolean incremental) throws Exception {
+    public void export(boolean incremental) throws IOException {
         Optional<Date> last = last(incremental);
         Path dir = path(last.isPresent());
         log.info("Start export {} ...", dir);
         for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
-            ItemRepository<Item, ?> repository = maintainService.getRepository((Class<Item>) type);
-            for (int i = 0; i < last.map(repository::countByDateGreaterThan).orElseGet(repository::count); i++) {
-                PageRequest p = PageRequest.of(i, 1);
-                for (Item item : last.map(l -> repository.findByDateGreaterThan(l, p)).orElseGet(() -> repository.findAll(p))) {
-                    fileService.collect(item, true);
-                    String file = String.format("%s.json", locationService.location(item));
-                    maintainService.write(Paths.get(dir.toString(), file).toFile(), item);
-                }
+            for (Item item : entityService.findAll((Class<Item>) type, last.orElse(null))) {
+                String location = locationService.location(item);
+                item.getFiles().addAll(fileService.read(location, true));
+                mapperService.write(Paths.get(dir.toString(), String.format("%s.json", location)).toFile(), item);
             }
         }
         log.info("End export");
@@ -113,14 +108,17 @@ public class ExportService {
         }
     }
 
-    private Optional<Date> last(boolean incremental) throws Exception {
+    private Optional<Date> last(boolean incremental) throws IOException {
         if (!incremental) {
             return Optional.empty();
         }
-        Optional<Path> last = listFull().max(COMPARATOR);
-        return last.isPresent()
-                ? Optional.of(new SimpleDateFormat(properties.getPattern()).parse(last.get().getFileName().toString()))
-                : Optional.empty();
+        return listFull().max(COMPARATOR).map(p -> {
+            try {
+                return new SimpleDateFormat(properties.getPattern()).parse(p.getFileName().toString());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private Path path(boolean incremental) {

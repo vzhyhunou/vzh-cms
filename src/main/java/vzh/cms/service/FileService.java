@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import vzh.cms.config.CmsProperties;
 import vzh.cms.model.Base64File;
-import vzh.cms.model.Item;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -13,12 +12,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.nio.file.Files.*;
 
 /**
  * @author Viktar Zhyhunou
@@ -33,8 +28,6 @@ public class FileService {
 
     private final CmsProperties cmsProperties;
 
-    private final LocationService locationService;
-
     private String path;
 
     @PostConstruct
@@ -42,10 +35,84 @@ public class FileService {
         path = cmsProperties.getFiles().getPath();
     }
 
-    public void save(Item item) throws IOException {
-        clean(item);
-        Path dir = location(item);
-        for (Base64File file : item.getFiles()) {
+    public void create(String location, Collection<Base64File> files) throws IOException {
+        try {
+            write(location, files);
+        } catch (Exception e) {
+            clean(location, Collections.emptySet());
+            throw e;
+        }
+    }
+
+    public void update(String oldLocation, String newLocation, Collection<Base64File> newFiles) throws IOException {
+
+        //collect all files
+        Collection<Base64File> oldFiles = read(oldLocation, true);
+
+        //clean removed files
+        clean(oldLocation, newFiles);
+
+        //collect exist files
+        Collection<Base64File> keepFiles = read(oldLocation, true);
+
+        //clean exist files
+        clean(oldLocation, Collections.emptySet());
+
+        //add exist files
+        newFiles.removeAll(keepFiles);
+        newFiles.addAll(keepFiles);
+
+        try {
+            write(newLocation, newFiles);
+        } catch (Exception e) {
+            clean(newLocation, Collections.emptySet());
+            write(oldLocation, oldFiles);
+            throw e;
+        }
+    }
+
+    public Collection<Base64File> read(String location, boolean addFiles) throws IOException {
+        Path dir = Paths.get(path, location);
+        Collection<Base64File> files = new HashSet<>();
+        if (!Files.exists(dir)) {
+            return files;
+        }
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
+            for (Path in : paths) {
+                Base64File file = new Base64File();
+                file.setName(in.getFileName().toString());
+                if (addFiles) {
+                    log.debug("Read: {}", in);
+                    byte[] data = Files.readAllBytes(in);
+                    file.setData(new String(ENCODER.encode(data)));
+                }
+                files.add(file);
+            }
+        }
+        return files;
+    }
+
+    public void clean(String location, Collection<Base64File> files) throws IOException {
+        Path dir = Paths.get(path, location);
+        if (!Files.exists(dir)) {
+            return;
+        }
+        Collection<String> names = files.stream().map(Base64File::getName).collect(Collectors.toSet());
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
+            for (Path file : paths) {
+                if (!names.contains(file.getFileName().toString())) {
+                    Files.delete(file);
+                }
+            }
+        }
+        if (Objects.requireNonNull(dir.toFile().list()).length == 0) {
+            Files.delete(dir);
+        }
+    }
+
+    private void write(String location, Collection<Base64File> files) throws IOException {
+        Path dir = Paths.get(path, location);
+        for (Base64File file : files) {
             if (file.getData() != null) {
                 Path out = Paths.get(dir.toString(), file.getName());
                 log.debug("Write: {}", out);
@@ -54,48 +121,5 @@ public class FileService {
                 Files.write(out, data);
             }
         }
-    }
-
-    public Set<Base64File> collect(Item item, boolean addFiles) throws IOException {
-        Path dir = location(item);
-        if (exists(dir)) {
-            try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
-                for (Path in : paths) {
-                    Base64File file = new Base64File();
-                    file.setName(in.getFileName().toString());
-                    if (addFiles) {
-                        log.debug("Read: {}", in);
-                        byte[] data = Files.readAllBytes(in);
-                        file.setData(new String(ENCODER.encode(data)));
-                    }
-                    item.getFiles().add(file);
-                }
-            }
-        }
-        return item.getFiles();
-    }
-
-    public void clean(Item item) throws IOException {
-        Path dir = location(item);
-        if (exists(dir)) {
-            boolean matched = false;
-            Collection<String> names = item.getFiles().stream().map(Base64File::getName).collect(Collectors.toSet());
-            try (DirectoryStream<Path> paths = newDirectoryStream(dir)) {
-                for (Path file : paths) {
-                    if (names.contains(file.getFileName().toString())) {
-                        matched = true;
-                    } else {
-                        delete(file);
-                    }
-                }
-            }
-            if (!matched) {
-                delete(dir);
-            }
-        }
-    }
-
-    private Path location(Item item) {
-        return Paths.get(path, locationService.location(item));
     }
 }

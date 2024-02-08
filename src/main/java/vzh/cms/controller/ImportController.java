@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vzh.cms.service.ImportService;
 
+import java.io.IOException;
+
 /**
  * @author Viktar Zhyhunou
  */
@@ -17,7 +19,7 @@ public class ImportController {
     private final ImportService service;
 
     @GetMapping
-    public void imp() throws Exception {
+    public void imp() throws IOException {
         service.imp();
     }
 }

@@ -23,17 +23,9 @@ public class LocationService {
     private final EntityManagerFactory factory;
 
     public String location(Item item) {
-        String resource = mappings.getMetadataFor(item.getClass())
-                .getRel()
-                .value();
-        String path = Arrays.stream(item.getParents())
-                .map(Object::toString)
-                .collect(Collectors.joining(separator));
-        String id = getIdentifier(item).toString();
+        String resource = mappings.getMetadataFor(item.getClass()).getRel().value();
+        String path = Arrays.stream(item.getParents()).map(Object::toString).collect(Collectors.joining(separator));
+        String id = factory.getPersistenceUnitUtil().getIdentifier(item).toString();
         return (resource + separator + path + separator + id).replace(".", separator);
-    }
-
-    public Object getIdentifier(Object entity) {
-        return factory.getPersistenceUnitUtil().getIdentifier(entity);
     }
 }

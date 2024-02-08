@@ -11,7 +11,7 @@ const log = (params, response) => {
     }
 };
 
-const getResponse = ({pages}, locale, {path}) => {
+const getResponse = ({pages}, {PAGES_EDITOR}, locale, permissions, {path}) => {
 
     const p = path.split('/');
 
@@ -19,7 +19,7 @@ const getResponse = ({pages}, locale, {path}) => {
         case 'pages':
             switch (p[2]) {
                 case 'one':
-                    const page = pages.filter(({tags}) => tags.some(({name}) => name === 'PUBLISHED'))
+                    const page = pages.filter(({tags}) => tags.some(({name}) => name === 'PUBLISHED' || (permissions && permissions.includes(PAGES_EDITOR))))
                         .find(({id}) => id === p[3]);
                     if (!page) {
                         return false;
@@ -49,17 +49,17 @@ const getResponse = ({pages}, locale, {path}) => {
     }
 };
 
-export default (data, {getLocale}) => {
+export default ({resProvider, roles, localeProvider: {getLocale}, authProvider: {getPermissions}}) => {
 
-    const handle = params => getLocale()
-        .then(locale => getResponse(data, locale, params))
+    const handle = params => Promise.all([getLocale(), getPermissions()])
+        .then(([locale, permissions]) => getResponse(resProvider, roles, locale, permissions, params))
         .then(response => {
             log(params, response);
             return response;
         });
 
     return {
-        ...fakeDataProvider(data, true),
+        ...fakeDataProvider(resProvider, true),
         exchange: params => handle(params),
         log
     };

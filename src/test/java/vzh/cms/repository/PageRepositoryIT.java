@@ -3,7 +3,11 @@ package vzh.cms.repository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.i18n.LocaleContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import vzh.cms.dto.PageFilter;
 import vzh.cms.projection.PropertyPage;
 import vzh.cms.projection.RowPage;
@@ -25,7 +29,12 @@ import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.model.PageTag.MENU;
 import static vzh.cms.model.PageTag.PUBLISHED;
 
-public class PageRepositoryIT extends RepositoryIT {
+@ActiveProfiles("dev")
+@DataJpaTest
+public class PageRepositoryIT {
+
+    @Autowired
+    private TestEntityManager manager;
 
     @Autowired
     private PageRepository subj;
@@ -40,12 +49,12 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listAllLanguages() {
 
-        persist(withLang("home", "en", "ru"));
-        persist(withLang("sample", "en", "ru"));
+        manager.persistAndFlush(withLang("home", "en", "ru"));
+        manager.persistAndFlush(withLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -55,7 +64,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).contains("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).contains("home.en.title");
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -69,12 +78,12 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listAnotherLanguage() {
 
-        persist(withLang("home", "ru"));
-        persist(withLang("sample", "ru"));
+        manager.persistAndFlush(withLang("home", "ru"));
+        manager.persistAndFlush(withLang("sample", "ru"));
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -83,7 +92,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getId).contains("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -96,12 +105,12 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listAllNoLanguages() {
 
-        persist(withLang("home"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home"));
+        manager.persistAndFlush(withLang("sample"));
 
         PageFilter filter = new PageFilter();
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -110,7 +119,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getId).contains("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(2);
@@ -123,13 +132,13 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listIdLanguages() {
 
-        persist(withLang("home", "en", "ru"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home", "en", "ru"));
+        manager.persistAndFlush(withLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -139,7 +148,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).contains("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).contains("home.en.title");
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -151,13 +160,13 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listIdNoLanguages() {
 
-        persist(withLang("home"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home"));
+        manager.persistAndFlush(withLang("sample"));
 
         PageFilter filter = new PageFilter();
         filter.setId("oM");
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -166,7 +175,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getId).contains("home");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).isEmpty();
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -178,13 +187,13 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listTitle() {
 
-        persist(withLang("home", "en", "ru"));
-        persist(withLang("sample", "en", "ru"));
+        manager.persistAndFlush(withLang("home", "en", "ru"));
+        manager.persistAndFlush(withLang("sample", "en", "ru"));
 
         PageFilter filter = new PageFilter();
         filter.setTitle("mE.R");
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -194,7 +203,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::keySet).contains("en");
         assertThat(content).extracting(RowPage::getTitle).flatExtracting(Map::values).contains("home.en.title");
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -206,12 +215,12 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listNoTags() {
 
-        persist(withTags("home"));
+        manager.persistAndFlush(withTags("home"));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(0);
@@ -223,13 +232,13 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void listAllTags() {
 
-        persist(withTags("home", tag("a"), tag("b")));
-        persist(withTags("sample", tag("c"), tag("d")));
+        manager.persistAndFlush(withTags("home", tag("a"), tag("b")));
+        manager.persistAndFlush(withTags("sample", tag("c"), tag("d")));
 
         PageFilter filter = new PageFilter();
         filter.setTags(new String[]{"a"});
 
-        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, page(0));
+        org.springframework.data.domain.Page<RowPage> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -238,7 +247,7 @@ public class PageRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowPage::getId).contains("home");
         assertThat(content).flatExtracting(RowTagged::getTags).extracting(RowTagged.Tag::getName).contains("a", "b");
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -250,8 +259,8 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneAllLanguages() {
 
-        persist(withLang("home", "en", "ru"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home", "en", "ru"));
+        manager.persistAndFlush(withLang("sample"));
 
         Optional<PropertyPage> result = subj.one("home", true);
 
@@ -268,7 +277,7 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneNone() {
 
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("sample"));
 
         Optional<PropertyPage> result = subj.one("home", true);
 
@@ -279,8 +288,8 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneNoLanguages() {
 
-        persist(withLang("home"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home"));
+        manager.persistAndFlush(withLang("sample"));
 
         Optional<PropertyPage> result = subj.one("home", true);
 
@@ -291,8 +300,8 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneLanguage() {
 
-        persist(withLang("home", "en"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home", "en"));
+        manager.persistAndFlush(withLang("sample"));
 
         Optional<PropertyPage> result = subj.one("home", true);
 
@@ -309,8 +318,8 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneAnotherLanguage() {
 
-        persist(withLang("home", "ru"));
-        persist(withLang("sample"));
+        manager.persistAndFlush(withLang("home", "ru"));
+        manager.persistAndFlush(withLang("sample"));
 
         Optional<PropertyPage> result = subj.one("home", true);
 
@@ -321,8 +330,8 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void onePublishedTag() {
 
-        persist(withTags("home", tag(PUBLISHED.name()), tag("b")));
-        persist(withTags("sample", tag("a"), tag("b")));
+        manager.persistAndFlush(withTags("home", tag(PUBLISHED.name()), tag("b")));
+        manager.persistAndFlush(withTags("sample", tag("a"), tag("b")));
 
         Optional<PropertyPage> result = subj.one("home", false);
 
@@ -339,7 +348,7 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void oneNoPublishedTag() {
 
-        persist(withTags("home", tag("a"), tag("b")));
+        manager.persistAndFlush(withTags("home", tag("a"), tag("b")));
 
         Optional<PropertyPage> result = subj.one("home", false);
 
@@ -350,7 +359,7 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void menuNoTag() {
 
-        persist(withTags("home", tag("a")));
+        manager.persistAndFlush(withTags("home", tag("a")));
 
         List<TitlePage> result = subj.menu();
 
@@ -361,7 +370,7 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void menuTag() {
 
-        persist(withTags("home", tag(MENU.name())));
+        manager.persistAndFlush(withTags("home", tag(MENU.name())));
 
         List<TitlePage> result = subj.menu();
 
@@ -373,11 +382,11 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void menuActiveTag() {
 
-        persist(withTags("home"));
-        persist(withTags("test", tag(MENU.name())));
-        persist(withTags("sample", tag(MENU.name())));
-        persist(withTags("sample1", delayedTag(MENU.name())));
-        persist(withTags("sample2", expiredTag(MENU.name())));
+        manager.persistAndFlush(withTags("home"));
+        manager.persistAndFlush(withTags("test", tag(MENU.name())));
+        manager.persistAndFlush(withTags("sample", tag(MENU.name())));
+        manager.persistAndFlush(withTags("sample1", delayedTag(MENU.name())));
+        manager.persistAndFlush(withTags("sample2", expiredTag(MENU.name())));
 
         List<TitlePage> result = subj.menu();
 
@@ -390,7 +399,7 @@ public class PageRepositoryIT extends RepositoryIT {
     @Test
     public void menuAnotherLanguage() {
 
-        persist(withLang("home", "ru"));
+        manager.persistAndFlush(withLang("home", "ru"));
 
         List<TitlePage> result = subj.menu();
 

@@ -2,7 +2,11 @@ package vzh.cms.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import vzh.cms.dto.UserFilter;
 import vzh.cms.model.Tag;
 import vzh.cms.model.User;
@@ -16,7 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static vzh.cms.fixture.TagFixture.*;
 import static vzh.cms.fixture.UserFixture.withTags;
 
-public class UserRepositoryIT extends RepositoryIT {
+@ActiveProfiles("dev")
+@DataJpaTest
+public class UserRepositoryIT {
+
+    @Autowired
+    private TestEntityManager manager;
 
     @Autowired
     private UserRepository subj;
@@ -24,12 +33,12 @@ public class UserRepositoryIT extends RepositoryIT {
     @Test
     public void listNoTags() {
 
-        persist(withTags("admin"));
+        manager.persistAndFlush(withTags("admin"));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<RowUser> result = subj.list(filter, page(0));
+        Page<RowUser> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(0);
@@ -41,13 +50,13 @@ public class UserRepositoryIT extends RepositoryIT {
     @Test
     public void listAllTags() {
 
-        persist(withTags("admin", tag("a"), tag("b")));
-        persist(withTags("manager", tag("c"), tag("d")));
+        manager.persistAndFlush(withTags("admin", tag("a"), tag("b")));
+        manager.persistAndFlush(withTags("manager", tag("c"), tag("d")));
 
         UserFilter filter = new UserFilter();
         filter.setTags(new String[]{"a"});
 
-        Page<RowUser> result = subj.list(filter, page(0));
+        Page<RowUser> result = subj.list(filter, PageRequest.of(0, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -56,7 +65,7 @@ public class UserRepositoryIT extends RepositoryIT {
         assertThat(content).extracting(RowUser::getId).contains("admin");
         assertThat(content).flatExtracting(RowTagged::getTags).extracting(RowTagged.Tag::getName).contains("a", "b");
 
-        result = subj.list(filter, page(1));
+        result = subj.list(filter, PageRequest.of(1, 1));
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalPages()).isEqualTo(1);
@@ -68,7 +77,7 @@ public class UserRepositoryIT extends RepositoryIT {
     @Test
     public void withActiveRolesNoTags() {
 
-        persist(withTags("admin"));
+        manager.persistAndFlush(withTags("admin"));
 
         Optional<User> result = subj.withActiveRoles("admin");
 
@@ -85,8 +94,8 @@ public class UserRepositoryIT extends RepositoryIT {
     @Test
     public void withActiveRolesAllTags() {
 
-        persist(withTags("admin", delayedTag("a"), tag("b"), expiredTag("c")));
-        persist(withTags("manager", tag("d")));
+        manager.persistAndFlush(withTags("admin", delayedTag("a"), tag("b"), expiredTag("c")));
+        manager.persistAndFlush(withTags("manager", tag("d")));
 
         Optional<User> result = subj.withActiveRoles("admin");
 

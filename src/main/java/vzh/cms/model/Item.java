@@ -8,9 +8,10 @@ import lombok.ToString;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.persistence.Version;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -39,10 +40,13 @@ abstract public class Item {
     }
 
     @Transient
-    private Set<Base64File> files = new HashSet<>();
+    private Collection<Base64File> files = new HashSet<>();
 
     @ExportIgnore
     public Object[] getParents() {
         return new Object[]{};
     }
+
+    @Version
+    private Long version;
 }
