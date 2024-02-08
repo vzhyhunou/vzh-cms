@@ -12,6 +12,9 @@ export default defineConfig({
             },
             '/login': {
                 target: 'http://localhost:8090'
+            },
+            '/static': {
+                target: 'http://localhost:8090'
             }
         }
     },
