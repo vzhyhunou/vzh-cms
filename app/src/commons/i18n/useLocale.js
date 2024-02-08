@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 
-import {useLocaleProvider} from '../AppContext';
+import {useContextProvider} from '../AppContext';
 
 export default () => {
 
     const [value, setValue] = useState();
-    const {getLocale} = useLocaleProvider();
+    const {localeProvider: {getLocale}} = useContextProvider();
 
     useEffect(() => {
         getLocale().then(setValue);

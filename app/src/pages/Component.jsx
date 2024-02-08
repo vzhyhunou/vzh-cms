@@ -2,12 +2,12 @@ import React from 'react';
 
 import Parser from '../commons/Parser';
 import useExchange from '../commons/data/useExchange';
-import {useFuncProvider} from '../commons/AppContext';
+import {useContextProvider} from '../commons/AppContext';
 
 const Component = ({id, external, ...props}) => {
 
     const {data, isLoading} = useExchange({path: `pages/search/one/${id}`});
-    const {originByData} = useFuncProvider();
+    const {funcProvider: {originByData}} = useContextProvider();
 
     if (isLoading) {
         return null;

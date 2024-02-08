@@ -1,6 +1,6 @@
 import back from './back';
 
-export default ({users}) => {
+export default ({resProvider: {users}}) => {
 
     const auth = back();
 

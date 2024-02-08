@@ -3,7 +3,7 @@ import {fetchUtils} from 'react-admin';
 
 const API_URL = '/api';
 
-export default (data, {getLocale}, {getToken}) => {
+export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
 
     const httpClient = (url, options = {}) => Promise.all([getLocale(), getToken()])
         .then(([locale, token]) => ({
