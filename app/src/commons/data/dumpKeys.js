@@ -4,7 +4,7 @@ const dump = (obj, s = '') => Object.entries(obj)
         if (Array.isArray(v)) {
             return product.concat(dump({[key]: Object.fromEntries(v.map((v, i) => [i, v]))}));
         }
-        return typeof v === 'object' ? product.concat(key).concat(dump(v, key)) : product.concat(key);
+        return v && typeof v === 'object' ? product.concat(key).concat(dump(v, key)) : product.concat(key);
     }, []);
 
 export default dump;

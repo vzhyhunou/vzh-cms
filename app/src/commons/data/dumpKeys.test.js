@@ -44,6 +44,13 @@ describe('dump', () => {
 
         const obj = {
             id: 'sample.1',
+            tags: [
+                {
+                    name: 'a',
+                    start: null,
+                    end: null
+                }
+            ],
             files: [
                 {
                     rawFile: {}
@@ -73,6 +80,11 @@ describe('dump', () => {
         }
         const result = [
             'id',
+            'tags',
+            'tags.0',
+            'tags.0.name',
+            'tags.0.start',
+            'tags.0.end',
             'files',
             'files.0',
             'files.0.rawFile',
