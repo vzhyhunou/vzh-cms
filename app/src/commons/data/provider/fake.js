@@ -1,46 +1,84 @@
 import fakeDataProvider from 'ra-data-fakerest';
 
-const log = (params, response) => {
+const log = (type, resource, params, response) => {
     if (console.group) {
-        console.groupCollapsed('exchange', JSON.stringify(params));
+        console.groupCollapsed(type, resource, JSON.stringify(params));
         console.log(response);
         console.groupEnd();
     } else {
-        console.log('FakeRest request ', 'exchange', params);
+        console.log('FakeRest request ', type, resource, params);
         console.log('FakeRest response', response);
     }
+    return response;
 };
 
-const getResponse = ({pages}, {PAGES_EDITOR}, locale, permissions, {path}) => {
+const getListResponse = ({getAll, getPage, isLocalesIncludes, isTagsActive}, resource, params) =>
 
-    const p = path.split('/');
+    getAll(resource, params).then(({data}) => {
 
-    switch (p[0]) {
+        const {filter} = params;
+
+        switch (resource) {
+            case 'pages':
+                if (filter.id) {
+                    data = data.filter(({id}) => id.includes(filter.id));
+                }
+                if (filter.title) {
+                    data = data.filter(({title}) => isLocalesIncludes(title, filter.title));
+                }
+                if (filter.content) {
+                    data = data.filter(({content}) => isLocalesIncludes(content, filter.content));
+                }
+                if (filter.tags) {
+                    data = data.filter(i => isTagsActive(i, filter.tags));
+                }
+                return getPage(data, params);
+            case 'users':
+                if (filter.id) {
+                    data = data.filter(({id}) => id.includes(filter.id));
+                }
+                if (filter.tags) {
+                    data = data.filter(i => isTagsActive(i, filter.tags));
+                }
+                return getPage(data, params);
+            default:
+                return false;
+        }
+    });
+
+const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {PAGES_EDITOR}, locale, permissions, params) => {
+
+    // eslint-disable-next-line no-unused-vars
+    const [resource, s, path, id] = getPath(params);
+
+    switch (resource) {
         case 'pages':
-            switch (p[2]) {
+            switch (path) {
                 case 'one':
-                    const page = pages.filter(({tags}) => tags.some(({name}) => name === 'PUBLISHED' || (permissions && permissions.includes(PAGES_EDITOR))))
-                        .find(({id}) => id === p[3]);
-                    if (!page) {
-                        return false;
-                    }
-                    const {id, title, content, files} = page;
-                    if (!content || !content[locale]) {
-                        return false;
-                    }
-                    return {data: {
-                        id,
-                        title: title && title[locale],
-                        content: content[locale],
-                        files: files && files.map(({name}) => name)
-                    }};
+                    return getOne(resource, {id}).then(({data}) => {
+                        if (!(isTagsActive(data, 'PUBLISHED') || (permissions && permissions.includes(PAGES_EDITOR)))) {
+                            return false;
+                        }
+                        const {title, content, files} = data;
+                        if (!content || !content[locale]) {
+                            return false;
+                        }
+                        return {
+                            data: {
+                                id,
+                                title: title && title[locale],
+                                content: content[locale],
+                                files: files && files.map(({name}) => name)
+                            }
+                        };
+                    }, () => false);
                 case 'menu':
-                    return {data: pages.filter(({tags}) => tags.some(({name}) => name === 'MENU'))
-                        .map(({id, title}) => ({
+                    return getAll(resource).then(({data}) => ({
+                        data: data.filter(p => isTagsActive(p, ['MENU'])).map(({id, title}) => ({
                             id,
                             title: title[locale]
                         }))
-                    };
+                    }));
                 default:
                     return false;
             }
@@ -49,18 +87,33 @@ const getResponse = ({pages}, {PAGES_EDITOR}, locale, permissions, {path}) => {
     }
 };
 
-export default ({resProvider, roles, localeProvider: {getLocale}, authProvider: {getPermissions}}) => {
+export default ({locales, resProvider, roles, localeProvider: {getLocale}, authProvider: {getPermissions}}) => {
 
-    const handle = params => Promise.all([getLocale(), getPermissions()])
-        .then(([locale, permissions]) => getResponse(resProvider, roles, locale, permissions, params))
-        .then(response => {
-            log(params, response);
-            return response;
-        });
+    const {getList, ...rest} = fakeDataProvider(resProvider, true);
+    const provider = {
+        ...rest,
+        getAll: (resource, {sort = {field: 'id', order: 'ASC'}} = {}) => getList(resource, {
+            pagination: {
+                page: 1,
+                perPage: Number.MAX_VALUE
+            },
+            sort
+        }),
+        getPath: ({path}) => path.split('/'),
+        getPage: (data, {pagination: {page, perPage}}) => ({data: data.slice((page - 1) * perPage, page * perPage), total: data.length}),
+        isLocalesIncludes: (src, val) => src && Object.keys(locales).some(l => src[l] && src[l].toLowerCase().includes(val.toLowerCase())),
+        isTagsActive: ({tags}, names) => tags && tags.some(({name, start, end}) =>
+            names.includes(name) && (!start || new Date() > new Date(start)) && (!end || new Date() < new Date(end)))
+    };
 
     return {
-        ...fakeDataProvider(resProvider, true),
-        exchange: params => handle(params),
+        ...provider,
+        getList: (resource, params) => getListResponse(provider, resource, params)
+            .then(response => response && log('getList', resource, params, response))
+            .then(response => response || getList(resource, params)),
+        exchange: params => Promise.all([getLocale(), getPermissions()])
+            .then(([locale, permissions]) => exchangeResponse(provider, roles, locale, permissions, params))
+            .then(response => log('exchange', undefined, params, response)),
         log
     };
 };
