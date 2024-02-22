@@ -1,14 +1,20 @@
 import Page from './pages/Component';
 
 export default (({REACT_APP_SRC, REACT_APP_BASE}) => ({
-    roles: {
-        ADMIN: 'ADMIN',
-        MANAGER: 'MANAGER',
-        PAGES_EDITOR: 'PAGES_EDITOR'
-    },
     locales: {
         en: 'English',
         ru: 'Русский'
+    },
+    tags: {
+        pages: {
+            MENU: 'MENU',
+            PUBLISHED: 'PUBLISHED'
+        },
+        users: {
+            ADMIN: 'ADMIN',
+            MANAGER: 'MANAGER',
+            PAGES_EDITOR: 'PAGES_EDITOR'
+        }
     },
     components: {
         Page

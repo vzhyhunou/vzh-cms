@@ -21,7 +21,7 @@ export default () => {
 
     const locales = useLocales();
     const {permissions} = usePermissions();
-    const {roles: {MANAGER}} = useContextProvider();
+    const {tags: {users: {MANAGER}}} = useContextProvider();
     const ref = useRef();
 
     return <Edit>

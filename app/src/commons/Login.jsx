@@ -14,7 +14,7 @@ export default () => {
     const {permissions} = usePermissions();
     const [loading, setLoading] = useState(true);
     const {id} = useParams();
-    const {roles: {PAGES_EDITOR, MANAGER}} = useContextProvider();
+    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = useContextProvider();
 
     useEffect(() => {
         refresh();

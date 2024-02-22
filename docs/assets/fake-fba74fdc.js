@@ -14,24 +14,24 @@ const t="none",n=[{name:"PUBLISHED"}],e={ru:"Не найдено",en:"Not found"
 	<h1>Пример страницы 1</h1>
 </div>`,en:`<div class="starter">
 	<h1>Sample page 1</h1>
-</div>`},$={id:p,tags:m,title:l,content:I},f="sample2",h=[{name:"MENU"},{name:"PUBLISHED"}],S={ru:"Пример страницы 2",en:"Sample page 2"},v={ru:`<div class="starter">
+</div>`},$={id:p,tags:m,title:l,content:I},f="sample2",h=[{name:"MENU"},{name:"PUBLISHED"}],S={ru:"Пример страницы 2",en:"Sample page 2"},u={ru:`<div class="starter">
 	<h1>Пример страницы 2</h1>
 	<Page id="fragment.1"/>
 </div>`,en:`<div class="starter">
 	<h1>Sample page 2</h1>
 	<Page id="fragment.1"/>
-</div>`},U={id:f,tags:h,title:S,content:v},u="sample3",E=[{name:"MENU"},{name:"PUBLISHED"}],P={ru:"Пример страницы 3",en:"Sample page 3"},J={ru:`<div class="starter">
+</div>`},v={id:f,tags:h,title:S,content:u},U="sample3",E=[{name:"MENU"},{name:"PUBLISHED"}],P={ru:"Пример страницы 3",en:"Sample page 3"},J={ru:`<div class="starter">
 	<h1>Пример страницы 3</h1>
 	<Page id="fragment.2"/>
 </div>`,en:`<div class="starter">
 	<h1>Sample page 3</h1>
 	<Page id="fragment.2"/>
-</div>`},b={id:u,tags:E,title:P,content:J},N="sample4",O=[{name:"MENU"},{name:"PUBLISHED"}],y={ru:"Пример страницы 4",en:"Sample page 4"},D={ru:`<div class="starter">
+</div>`},b={id:U,tags:E,title:P,content:J},N="sample4",O=[{name:"MENU"},{name:"PUBLISHED"}],y={ru:"Пример страницы 4",en:"Sample page 4"},D={ru:`<div class="starter">
 	<h1>Пример страницы 4</h1>
-	Контент для {permissions && permissions.includes(context.roles.PAGES_EDITOR) ? 'редактора' : 'всех кроме редактора'}
+	Контент для {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'редактора' : 'всех кроме редактора'}
 </div>`,en:`<div class="starter">
 	<h1>Sample page 4</h1>
-	Content for {permissions && permissions.includes(context.roles.PAGES_EDITOR) ? 'editor' : 'all except editor'}
+	Content for {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'editor' : 'all except editor'}
 </div>`},R={id:N,tags:O,title:y,content:D},B="sample5",G=[{name:"MENU"},{name:"PUBLISHED"}],H={ru:"Пример страницы 5",en:"Sample page 5"},L={ru:`<div class="starter">
 	<h1>Пример страницы 5</h1>
 	<Page id="fragment.3" p1="test" p2={123}/>
@@ -46,4 +46,4 @@ const t="none",n=[{name:"PUBLISHED"}],e={ru:"Не найдено",en:"Not found"
 <p>Контекст</p><code>{JSON.stringify(context)}</code>
 <p>Разрешения</p><code>{JSON.stringify(permissions)}</code>`,en:`<p>Properties</p><code>{JSON.stringify(props)}</code>
 <p>Context</p><code>{JSON.stringify(context)}</code>
-<p>Permissions</p><code>{JSON.stringify(permissions)}</code>`},Y={id:Z,tags:_,title:w,content:j},q=[a,g,$,U,b,R,k,M,W,Y],K="admin",tt=[{name:"ADMIN"},{name:"MANAGER"},{name:"PAGES_EDITOR"}],nt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiQURNSU4sTUFOQUdFUixQQUdFU19FRElUT1IifQ",et={id:K,tags:tt,token:nt},st="editor",at=[{name:"PAGES_EDITOR"}],ct="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZGl0b3IiLCJyb2xlcyI6IlBBR0VTX0VESVRPUiJ9",it={id:st,tags:at,token:ct},ot="manager",rt=[{name:"MANAGER"}],dt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYW5hZ2VyIiwicm9sZXMiOiJNQU5BR0VSIn0",gt={id:ot,tags:rt,token:dt},pt=[et,it,gt],mt={pages:q,users:pt};export{mt as default};
+<p>Permissions</p><code>{JSON.stringify(permissions)}</code>`},Y={id:Z,tags:_,title:w,content:j},q=[a,g,$,v,b,R,k,M,W,Y],K="admin",tt=[{name:"ADMIN"},{name:"MANAGER"},{name:"PAGES_EDITOR"}],nt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiQURNSU4sTUFOQUdFUixQQUdFU19FRElUT1IifQ",et={id:K,tags:tt,token:nt},st="editor",at=[{name:"PAGES_EDITOR"}],ct="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZGl0b3IiLCJyb2xlcyI6IlBBR0VTX0VESVRPUiJ9",it={id:st,tags:at,token:ct},ot="manager",rt=[{name:"MANAGER"}],dt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYW5hZ2VyIiwicm9sZXMiOiJNQU5BR0VSIn0",gt={id:ot,tags:rt,token:dt},pt=[et,it,gt],mt={pages:q,users:pt};export{mt as default};

@@ -11,7 +11,7 @@ import context from './context';
 
 export default () => {
 
-    const {roles: {PAGES_EDITOR, MANAGER}} = context;
+    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = context;
 
     return <App {...{context}}>
         <CustomRoutes noLayout>
