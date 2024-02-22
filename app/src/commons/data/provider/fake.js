@@ -46,49 +46,52 @@ const getListResponse = ({getAll, getPage, isLocalesIncludes, isTagsActive}, res
         }
     });
 
-const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {PAGES_EDITOR}, locale, permissions, params) => {
+const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {roles: {PAGES_EDITOR}, localeProvider: {getLocale}, authProvider: {getPermissions}}, params) =>
 
-    // eslint-disable-next-line no-unused-vars
-    const [resource, s, path, id] = getPath(params);
+    Promise.all([getLocale(), getPermissions()]).then(([locale, permissions]) => {
 
-    switch (resource) {
-        case 'pages':
-            switch (path) {
-                case 'one':
-                    return getOne(resource, {id}).then(({data}) => {
-                        if (!(isTagsActive(data, 'PUBLISHED') || (permissions && permissions.includes(PAGES_EDITOR)))) {
-                            return false;
-                        }
-                        const {title, content, files} = data;
-                        if (!content || !content[locale]) {
-                            return false;
-                        }
-                        return {
-                            data: {
-                                id,
-                                title: title && title[locale],
-                                content: content[locale],
-                                files: files && files.map(({name}) => name)
+        // eslint-disable-next-line no-unused-vars
+        const [resource, s, path, id] = getPath(params);
+
+        switch (resource) {
+            case 'pages':
+                switch (path) {
+                    case 'one':
+                        return getOne(resource, {id}).then(({data}) => {
+                            if (!(isTagsActive(data, 'PUBLISHED') || (permissions && permissions.includes(PAGES_EDITOR)))) {
+                                return false;
                             }
-                        };
-                    }, () => false);
-                case 'menu':
-                    return getAll(resource).then(({data}) => ({
-                        data: data.filter(p => isTagsActive(p, ['MENU'])).map(({id, title}) => ({
-                            id,
-                            title: title[locale]
-                        }))
-                    }));
-                default:
-                    return false;
-            }
-        default:
-            return false;
-    }
-};
+                            const {title, content, files} = data;
+                            if (!content || !content[locale]) {
+                                return false;
+                            }
+                            return {
+                                data: {
+                                    id,
+                                    title: title && title[locale],
+                                    content: content[locale],
+                                    files: files && files.map(({name}) => name)
+                                }
+                            };
+                        }, () => false);
+                    case 'menu':
+                        return getAll(resource).then(({data}) => ({
+                            data: data.filter(p => isTagsActive(p, ['MENU'])).map(({id, title}) => ({
+                                id,
+                                title: title[locale]
+                            }))
+                        }));
+                    default:
+                        return false;
+                }
+            default:
+                return false;
+        }
+    });
 
-export default ({locales, resProvider, roles, localeProvider: {getLocale}, authProvider: {getPermissions}}) => {
+export default props => {
 
+    const {locales, resProvider} = props;
     const {getList, ...rest} = fakeDataProvider(resProvider, true);
     const provider = {
         ...rest,
@@ -111,8 +114,7 @@ export default ({locales, resProvider, roles, localeProvider: {getLocale}, authP
         getList: (resource, params) => getListResponse(provider, resource, params)
             .then(response => response && log('getList', resource, params, response))
             .then(response => response || getList(resource, params)),
-        exchange: params => Promise.all([getLocale(), getPermissions()])
-            .then(([locale, permissions]) => exchangeResponse(provider, roles, locale, permissions, params))
+        exchange: params => exchangeResponse(provider, props, params)
             .then(response => log('exchange', undefined, params, response)),
         log
     };
