@@ -69,7 +69,7 @@ const exchangeResponse = (
                 switch (path) {
                     case 'one':
                         return getOne(resource, {id}).then(({data}) => {
-                            if (!(isTagsActive(data, PUBLISHED) || (permissions && permissions.includes(PAGES_EDITOR)))) {
+                            if (!(isTagsActive(data, [PUBLISHED]) || (permissions && permissions.includes(PAGES_EDITOR)))) {
                                 return false;
                             }
                             const {title, content, files} = data;
