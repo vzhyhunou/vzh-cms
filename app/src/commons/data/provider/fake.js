@@ -46,7 +46,18 @@ const getListResponse = ({getAll, getPage, isLocalesIncludes, isTagsActive}, res
         }
     });
 
-const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {roles: {PAGES_EDITOR}, localeProvider: {getLocale}, authProvider: {getPermissions}}, params) =>
+const exchangeResponse = (
+    {getOne, getAll, getPath, isTagsActive},
+    {
+        tags: {
+            pages: {MENU, PUBLISHED},
+            users: {PAGES_EDITOR}
+        },
+        localeProvider: {getLocale},
+        authProvider: {getPermissions}
+    },
+    params
+) =>
 
     Promise.all([getLocale(), getPermissions()]).then(([locale, permissions]) => {
 
@@ -58,7 +69,7 @@ const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {roles: {PAGE
                 switch (path) {
                     case 'one':
                         return getOne(resource, {id}).then(({data}) => {
-                            if (!(isTagsActive(data, 'PUBLISHED') || (permissions && permissions.includes(PAGES_EDITOR)))) {
+                            if (!(isTagsActive(data, PUBLISHED) || (permissions && permissions.includes(PAGES_EDITOR)))) {
                                 return false;
                             }
                             const {title, content, files} = data;
@@ -76,7 +87,7 @@ const exchangeResponse = ({getOne, getAll, getPath, isTagsActive}, {roles: {PAGE
                         }, () => false);
                     case 'menu':
                         return getAll(resource).then(({data}) => ({
-                            data: data.filter(p => isTagsActive(p, ['MENU'])).map(({id, title}) => ({
+                            data: data.filter(p => isTagsActive(p, [MENU])).map(({id, title}) => ({
                                 id,
                                 title: title[locale]
                             }))
