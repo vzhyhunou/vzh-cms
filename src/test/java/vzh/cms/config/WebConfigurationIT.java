@@ -21,9 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Viktar Zhyhunou
- */
 @WebMvcTest
 @Import(SecurityConfiguration.class)
 public class WebConfigurationIT {
@@ -50,12 +47,10 @@ public class WebConfigurationIT {
     private MockMvc mockMvc;
 
     @Test
-    public void page() throws Exception {
-
+    public void index() throws Exception {
         mockMvc.perform(get("/index.html"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("/assets/")))
-        ;
+                .andExpect(content().string(containsString("/assets/")));
     }
 }
