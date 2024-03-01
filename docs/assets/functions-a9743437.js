@@ -1,0 +1,1 @@
+const i=({parents:t,id:a})=>((t?t.join("/")+"/":"")+a).replace(/\./g,"/"),r=({basename:t=""}={})=>{const a=(n,o,c)=>`${t}/static/${n}/${o}/${i(c)}`;return{originByData:(n,o)=>a("origin",n,o),pathByData:a}};export{r as default};
