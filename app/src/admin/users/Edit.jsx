@@ -6,7 +6,6 @@ import {
     ReferenceField,
     TabbedForm,
     TextField,
-    required,
     minLength,
     PasswordInput,
     Labeled
@@ -35,7 +34,7 @@ export default () =>
                 </Labeled>
                 <PasswordInput
                     source="password"
-                    validate={[required(), minLength(5)]}
+                    validate={[minLength(5)]}
                 />
             </FormTab>
             <FormTab label="resources.users.fields.tags">

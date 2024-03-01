@@ -3,8 +3,8 @@ package vzh.cms.service;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import vzh.cms.model.Item;
 
@@ -17,14 +17,17 @@ import java.nio.file.Files;
  */
 @Service
 @Log4j2
-@RequiredArgsConstructor
 public class MapperService {
 
-    private final ObjectMapper exportObjectMapper;
+    private final ObjectMapper mapper;
+
+    public MapperService(@Qualifier("resourceObjectMapper") ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public Item read(File file) throws IOException {
         log.debug("Read: {}", file);
-        return exportObjectMapper.readValue(file, Wrapper.class).getItem();
+        return mapper.readValue(file, Wrapper.class).getItem();
     }
 
     public void write(File file, Item item) throws IOException {
@@ -32,7 +35,7 @@ public class MapperService {
         Files.createDirectories(file.getParentFile().toPath());
         Wrapper wrapper = new Wrapper();
         wrapper.setItem(item);
-        exportObjectMapper.writeValue(file, wrapper);
+        mapper.writeValue(file, wrapper);
     }
 
     @Data

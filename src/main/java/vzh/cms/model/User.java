@@ -31,5 +31,6 @@ public class User extends Tagged {
 
     @ToString.Exclude
     @Size(min = 5)
+    @JacksonIgnore
     private String password;
 }
