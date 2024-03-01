@@ -1,5 +1,7 @@
 package vzh.cms.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -9,21 +11,18 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.test.web.servlet.MockMvc;
+import vzh.cms.model.User;
 import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.security.TokenService;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.util.StringUtils.trimAllWhitespace;
 
 @WebMvcTest
-@Import(SecurityConfiguration.class)
-public class WebConfigurationIT {
+@Import({SecurityConfiguration.class, CmsConfiguration.class})
+public class CmsConfigurationIT {
 
     @MockBean
     private PasswordEncoder passwordEncoder;
@@ -44,13 +43,21 @@ public class WebConfigurationIT {
     private TokenService tokenService;
 
     @Autowired
-    private MockMvc mockMvc;
+    private ObjectMapper jacksonObjectMapper;
 
     @Test
-    public void index() throws Exception {
-        mockMvc.perform(get("/index.html"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("/assets/")));
+    public void read() throws JsonProcessingException {
+        User user = jacksonObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\"}", User.class);
+        assertThat(user.getId()).isEqualTo("a");
+        assertThat(user.getPassword()).isEqualTo("b");
+    }
+
+    @Test
+    public void write() throws JsonProcessingException {
+        User user = new User();
+        user.setId("a");
+        user.setPassword("b");
+        String result = jacksonObjectMapper.writeValueAsString(user);
+        assertThat(trimAllWhitespace(result)).isEqualTo("{\"id\":\"a\"}");
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
-import vzh.cms.repository.UserRepository;
+import vzh.cms.model.User;
 import vzh.cms.service.EntityService;
 import vzh.cms.service.FileService;
 import vzh.cms.service.LocationService;
@@ -39,8 +39,6 @@ public class ItemHandler {
     private final EntityService entityService;
 
     private final LocationService locationService;
-
-    private final UserRepository userRepository;
 
     @HandleBeforeCreate
     public void beforeCreate(Item item) {
@@ -87,6 +85,6 @@ public class ItemHandler {
 
     private void fill(Item item) {
         item.setDate(new Date());
-        userRepository.findById(getContext().getAuthentication().getName()).ifPresent(item::setUser);
+        item.setUser(entityService.find(User.class, getContext().getAuthentication().getName()));
     }
 }

@@ -3,7 +3,8 @@ import {IconButton} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditIcon from '@mui/icons-material/Edit';
-import {usePermissions, useRefresh} from 'react-admin';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {usePermissions, useRefresh, useLogout} from 'react-admin';
 import {Link, useParams} from 'react-router-dom';
 
 import {useContextProvider} from './AppContext';
@@ -13,6 +14,7 @@ export default () => {
     const refresh = useRefresh();
     const {permissions} = usePermissions();
     const [loading, setLoading] = useState(true);
+    const logout = useLogout();
     const {id} = useParams();
     const {tags: {users: {PAGES_EDITOR, MANAGER}}} = useContextProvider();
 
@@ -55,5 +57,10 @@ export default () => {
         </IconButton>;
     }
 
-    return null;
+    return <IconButton
+        color="inherit"
+        onClick={() => logout('/')}
+    >
+        <LogoutIcon/>
+    </IconButton>;
 };

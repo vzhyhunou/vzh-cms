@@ -27,9 +27,14 @@ public class EntityService {
 
     private final EntityManager em;
 
-    public Item find(Item item) {
+    @SuppressWarnings("unchecked")
+    public <T> T find(T item) {
+        return find((Class<T>) item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item));
+    }
+
+    public <T> T find(Class<T> type, Object id) {
         em.clear();
-        return em.find(item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item));
+        return em.find(type, id);
     }
 
     @Transactional

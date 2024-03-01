@@ -19,6 +19,8 @@ public class CmsProperties {
     @Data
     public static class Import {
 
+        private boolean init;
+
         private String path;
     }
 

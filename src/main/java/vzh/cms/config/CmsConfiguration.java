@@ -1,40 +1,55 @@
 package vzh.cms.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import vzh.cms.service.ExportService;
-import vzh.cms.service.ImportService;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import vzh.cms.model.ExportIgnore;
+import vzh.cms.model.JacksonIgnore;
 
-import java.io.IOException;
+import java.lang.annotation.Annotation;
+
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 /**
  * @author Viktar Zhyhunou
  */
 @Configuration
-@EnableScheduling
 @EnableConfigurationProperties(CmsProperties.class)
-@RequiredArgsConstructor
 public class CmsConfiguration {
 
-    private final ExportService exportService;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
-    public CommandLineRunner init(ImportService importService) {
-        return args -> importService.imp();
+    @Primary
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        return annotationIntrospector(builder, JacksonIgnore.class);
     }
 
-    @Scheduled(cron = "${cms.exp.full.cron}")
-    public void full() throws IOException {
-        exportService.export(false);
+    @Bean
+    public ObjectMapper resourceObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        return annotationIntrospector(builder, ExportIgnore.class);
     }
 
-    @Scheduled(cron = "${cms.exp.inc.cron}")
-    public void inc() throws IOException {
-        exportService.export(true);
+    private <A extends Annotation> ObjectMapper annotationIntrospector(Jackson2ObjectMapperBuilder builder, Class<A> type) {
+        return builder.annotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public JsonProperty.Access findPropertyAccess(Annotated m) {
+                if (_findAnnotation(m, type) != null) {
+                    return WRITE_ONLY;
+                }
+                return super.findPropertyAccess(m);
+            }
+        }).build();
     }
 }

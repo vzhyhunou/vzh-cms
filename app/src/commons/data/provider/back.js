@@ -70,10 +70,10 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
             })),
         updateMany: (resource, {data, options}) =>
             Promise.all(
-                data.map(json =>
-                    httpClient(`${API_URL}/${resource}/${json.id}`, {
+                data.map(({id, ...rest}) =>
+                    httpClient(`${API_URL}/${resource}/${id}`, {
                         method: 'PATCH',
-                        body: JSON.stringify(json),
+                        body: JSON.stringify(rest),
                         ...options
                     })
                 )

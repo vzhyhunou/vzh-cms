@@ -8,9 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import vzh.cms.model.User;
+import vzh.cms.service.EntityService;
 
 import javax.validation.Valid;
-import java.util.regex.Pattern;
 
 /**
  * @author Viktar Zhyhunou
@@ -21,15 +21,22 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserHandler {
 
-    private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
-
     private final PasswordEncoder encoder;
 
+    private final EntityService entityService;
+
     @HandleBeforeCreate
-    @HandleBeforeSave
-    public void apply(@Valid User user) {
+    public void beforeCreate(@Valid User user) {
         String password = user.getPassword();
-        if (!BCRYPT_PATTERN.matcher(password).matches()) {
+        user.setPassword(encoder.encode(password));
+    }
+
+    @HandleBeforeSave
+    public void beforeSave(@Valid User user) {
+        String password = user.getPassword();
+        if (password == null) {
+            user.setPassword(entityService.find(user).getPassword());
+        } else {
             user.setPassword(encoder.encode(password));
         }
     }
