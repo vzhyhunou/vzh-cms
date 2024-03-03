@@ -2,16 +2,17 @@ package vzh.cms.model;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
-import org.springframework.beans.BeanWrapperImpl;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Id;
-import java.lang.reflect.Field;
-import java.util.Arrays;
+import javax.persistence.EntityManager;
 
 /**
  * @author Viktar Zhyhunou
  */
+@RequiredArgsConstructor
 public class IdResolver implements ObjectIdResolver {
+
+    private final EntityManager em;
 
     @Override
     public void bindItem(ObjectIdGenerator.IdKey id, Object pojo) {
@@ -19,17 +20,7 @@ public class IdResolver implements ObjectIdResolver {
 
     @Override
     public Object resolveId(ObjectIdGenerator.IdKey id) {
-        try {
-            Object instance = id.scope.getDeclaredConstructor().newInstance();
-            BeanWrapperImpl dst = new BeanWrapperImpl(instance);
-            Arrays.stream(id.scope.getDeclaredFields())
-                    .filter(f -> Arrays.stream(f.getDeclaredAnnotations()).anyMatch(a -> a instanceof Id))
-                    .map(Field::getName)
-                    .forEach(n -> dst.setPropertyValue(n, id.key));
-            return instance;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return em.find(id.scope, id.key);
     }
 
     @Override

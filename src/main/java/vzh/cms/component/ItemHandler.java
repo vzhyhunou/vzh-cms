@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
 import vzh.cms.model.User;
-import vzh.cms.service.EntityService;
 import vzh.cms.service.FileService;
 import vzh.cms.service.LocationService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collection;
@@ -36,7 +37,9 @@ public class ItemHandler {
 
     private final FileService fileService;
 
-    private final EntityService entityService;
+    private final EntityManagerFactory emf;
+
+    private final EntityManager em;
 
     private final LocationService locationService;
 
@@ -60,7 +63,8 @@ public class ItemHandler {
         if (HttpMethod.PATCH.matches(request.getMethod())) {
             return;
         }
-        request.setAttribute(OLD_LOCATION, locationService.location(entityService.find(item)));
+        request.setAttribute(OLD_LOCATION,
+                locationService.location(em.find(item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item))));
         request.setAttribute(NEW_FILES, item.getFiles());
     }
 
@@ -85,6 +89,6 @@ public class ItemHandler {
 
     private void fill(Item item) {
         item.setDate(new Date());
-        item.setUser(entityService.find(User.class, getContext().getAuthentication().getName()));
+        item.setUser(em.find(User.class, getContext().getAuthentication().getName()));
     }
 }

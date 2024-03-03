@@ -19,15 +19,24 @@ import java.nio.file.Files;
 @Log4j2
 public class MapperService {
 
-    private final ObjectMapper mapper;
+    private final ObjectMapper resourceMapper;
 
-    public MapperService(@Qualifier("resourceObjectMapper") ObjectMapper mapper) {
-        this.mapper = mapper;
+    private final ObjectMapper unlinkedMapper;
+
+    public MapperService(@Qualifier("resourceObjectMapper") ObjectMapper resourceMapper,
+                         @Qualifier("unlinkedObjectMapper") ObjectMapper unlinkedMapper) {
+        this.resourceMapper = resourceMapper;
+        this.unlinkedMapper = unlinkedMapper;
     }
 
-    public Item read(File file) throws IOException {
+    public Item resource(File file) throws IOException {
         log.debug("Read: {}", file);
-        return mapper.readValue(file, Wrapper.class).getItem();
+        return resourceMapper.readValue(file, Wrapper.class).getItem();
+    }
+
+    public Item unlinked(File file) throws IOException {
+        log.debug("Read: {}", file);
+        return unlinkedMapper.readValue(file, Wrapper.class).getItem();
     }
 
     public void write(File file, Item item) throws IOException {
@@ -35,7 +44,7 @@ public class MapperService {
         Files.createDirectories(file.getParentFile().toPath());
         Wrapper wrapper = new Wrapper();
         wrapper.setItem(item);
-        mapper.writeValue(file, wrapper);
+        resourceMapper.writeValue(file, wrapper);
     }
 
     @Data

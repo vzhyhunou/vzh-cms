@@ -1,8 +1,10 @@
 package vzh.cms.config;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +41,16 @@ public class CmsConfiguration {
     @Bean
     public ObjectMapper resourceObjectMapper(Jackson2ObjectMapperBuilder builder) {
         return annotationIntrospector(builder, ExportIgnore.class);
+    }
+
+    @Bean
+    public ObjectMapper unlinkedObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        return builder.annotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public boolean hasIgnoreMarker(AnnotatedMember m) {
+                return super.hasIgnoreMarker(m) || _findAnnotation(m, JsonIdentityReference.class) != null;
+            }
+        }).build();
     }
 
     private <A extends Annotation> ObjectMapper annotationIntrospector(Jackson2ObjectMapperBuilder builder, Class<A> type) {

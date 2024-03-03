@@ -8,8 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import vzh.cms.model.User;
-import vzh.cms.service.EntityService;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 /**
@@ -23,7 +23,7 @@ public class UserHandler {
 
     private final PasswordEncoder encoder;
 
-    private final EntityService entityService;
+    private final EntityManager em;
 
     @HandleBeforeCreate
     public void beforeCreate(@Valid User user) {
@@ -35,7 +35,7 @@ public class UserHandler {
     public void beforeSave(@Valid User user) {
         String password = user.getPassword();
         if (password == null) {
-            user.setPassword(entityService.find(user).getPassword());
+            user.setPassword(em.find(User.class, user.getId()).getPassword());
         } else {
             user.setPassword(encoder.encode(password));
         }
