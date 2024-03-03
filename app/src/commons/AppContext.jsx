@@ -5,33 +5,22 @@ import React, {
     useContext
 } from 'react';
 
-import getLocaleProvider from './i18n/provider';
-
 const AppContext = createContext();
 
-export default ({resources, data, auth, functions, children, ...rest}) => {
+export default ({providers, children, ...rest}) => {
 
-    const [providers, setProviders] = useState();
+    const [state, setState] = useState();
 
     useEffect(() => {
-        Promise.all([resources, data, auth, functions]).then(s => s.map(r => r.default)).then(setProviders);
-    }, [resources, data, auth, functions]);
+        providers.then(r => r.default).then(p => p(rest)).then(setState);
+    }, [providers]);
 
-    if (!providers) {
+    if (!state) {
         return null;
     }
 
-    const [resProvider, getDataProvider, getAuthProvider, getFuncProvider] = providers;
-    const localeProvider = getLocaleProvider(rest);
-    const funcProvider = getFuncProvider(rest);
-    const authProvider = getAuthProvider({resProvider, ...rest});
-    const dataProvider = getDataProvider({resProvider, localeProvider, funcProvider, authProvider, ...rest});
-
     return <AppContext.Provider value={{
-        localeProvider,
-        funcProvider,
-        authProvider,
-        dataProvider,
+        ...state,
         ...rest
     }}>
         {children}

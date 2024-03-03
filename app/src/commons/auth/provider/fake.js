@@ -1,19 +1,16 @@
+import sign from 'jwt-encode';
+
 import back from './back';
 
-export default ({resProvider: {users}}) => {
+export default ({provider: {getOne}}) => {
 
-    const auth = back();
+    const {setToken, ...rest} = back();
 
     return {
-        ...auth,
-        login: ({username}) => Promise.resolve()
-            .then(() => users.find(({id}) => id === username))
-            .then(user => {
-                if (!user) {
-                    throw new Error('Unauthorized');
-                }
-                return user.token;
-            })
-            .then(auth.setToken)
+        ...rest,
+        login: ({username}) => getOne('users', {id: username})
+            .then(({data: {id, tags}}) => ({sub: id, roles: tags.map(({name}) => name)}))
+            .then(value => sign(value, ''))
+            .then(setToken)
     };
 };

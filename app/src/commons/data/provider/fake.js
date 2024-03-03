@@ -1,5 +1,3 @@
-import fakeDataProvider from 'ra-data-fakerest';
-
 const log = (type, resource, params, response) => {
     if (console.group) {
         console.groupCollapsed(type, resource, JSON.stringify(params));
@@ -102,8 +100,7 @@ const exchangeResponse = (
 
 export default props => {
 
-    const {locales, resProvider} = props;
-    const {getList, ...rest} = fakeDataProvider(resProvider, true);
+    const {locales, provider: {getList, ...rest}} = props;
     const provider = {
         ...rest,
         getAll: (resource, {sort = {field: 'id', order: 'ASC'}} = {}) => getList(resource, {

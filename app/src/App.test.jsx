@@ -3,10 +3,9 @@ import {render, screen} from '@testing-library/react'
 import {MemoryRouter} from 'react-router-dom'
 
 import App from './App'
-import resProvider from './commons/resources/fake'
-import getAuthProvider from './commons/auth/provider/fake'
+import getProviders from './commons/providers/fake'
 
-const authProvider = getAuthProvider({resProvider})
+const {authProvider} = getProviders()
 
 const renderWithHistory = (route = '/') => render(
     <MemoryRouter initialEntries={[route]}>
