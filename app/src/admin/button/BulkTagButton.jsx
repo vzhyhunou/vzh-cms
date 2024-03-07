@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
-import {Button, useResourceContext} from 'react-admin';
+import {Button, useResourceContext, useTranslate} from 'react-admin';
 import {Menu, MenuItem} from '@mui/material';
 
-import useMessages from '../../commons/i18n/useMessages';
+import {useContextProvider} from '../..';
 import useUpdateTag from './useUpdateTag';
 
 export default ({label, children, getData}) => {
 
+    const translate = useTranslate();
     const resource = useResourceContext();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(getData);
-    const messages = useMessages();
+    const {tags} = useContextProvider();
 
-    return messages && <>
+    return <>
         <Button
             label={label}
             aria-controls={anchorEl ? 'simple-menu' : undefined}
@@ -27,12 +28,12 @@ export default ({label, children, getData}) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
         >
-            {Object.entries(messages.resources[resource].tags).map(([key, value]) =>
+            {Object.keys(tags[resource]).map(key =>
                 <MenuItem
                     {...{key}}
                     onClick={() => updateTag(key)}
                 >
-                    {value}
+                    {translate(`resources.${resource}.tags.${key}`)}
                 </MenuItem>
             )}
         </Menu>

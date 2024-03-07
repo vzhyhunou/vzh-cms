@@ -5,17 +5,19 @@ import {
     SelectInput,
     SimpleFormIterator,
     required,
-    useResourceContext
+    useResourceContext,
+    useTranslate
 } from 'react-admin';
 
-import useMessages from '../../commons/i18n/useMessages';
+import {useContextProvider} from '../..';
 
 export default () => {
 
+    const translate = useTranslate();
     const resource = useResourceContext();
-    const messages = useMessages();
+    const {tags} = useContextProvider();
 
-    return messages && <ArrayInput
+    return <ArrayInput
         source="tags"
         label=""
     >
@@ -26,9 +28,9 @@ export default () => {
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
-                choices={Object.entries(messages.resources[resource].tags).map(([key, value]) => ({
-                    id: key,
-                    name: value
+                choices={Object.keys(tags[resource]).map(id => ({
+                    id,
+                    name: translate(`resources.${resource}.tags.${id}`)
                 }))}
                 validate={[required()]}
             />
