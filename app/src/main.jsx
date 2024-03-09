@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom';
 
 import App from './App';
-import context from './context';
+import config from './config';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <BrowserRouter basename={context.basename}>
+    <BrowserRouter basename={config.basename}>
         <App/>
     </BrowserRouter>
 );
+
+//import('.').then(i => console.log(i));
+//import('./provider/back').then(i => console.log(i));
+//import('./provider/fake').then(i => console.log(i));

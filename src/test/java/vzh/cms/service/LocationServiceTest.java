@@ -26,14 +26,14 @@ public class LocationServiceTest {
     private ResourceMappings mappings;
 
     @Mock
-    private EntityManagerFactory factory;
+    private EntityManagerFactory emf;
 
     @InjectMocks
     private LocationService subj;
 
     @AfterEach
     public void after() {
-        verifyNoMoreInteractions(mappings, factory);
+        verifyNoMoreInteractions(mappings, emf);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class LocationServiceTest {
         when(rel.value()).thenReturn("resource");
 
         PersistenceUnitUtil util = mock(PersistenceUnitUtil.class);
-        when(factory.getPersistenceUnitUtil()).thenReturn(util);
+        when(emf.getPersistenceUnitUtil()).thenReturn(util);
         when(util.getIdentifier(any())).thenReturn("a.b");
 
         Item item = new Item() {

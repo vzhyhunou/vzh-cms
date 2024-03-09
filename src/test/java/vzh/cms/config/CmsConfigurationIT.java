@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -17,7 +18,11 @@ import vzh.cms.security.TokenService;
 import vzh.cms.service.ExportService;
 import vzh.cms.service.ImportService;
 
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.util.StringUtils.trimAllWhitespace;
 
 @WebMvcTest
@@ -37,6 +42,9 @@ public class CmsConfigurationIT {
     private ImportService importService;
 
     @MockBean
+    private EntityManager em;
+
+    @MockBean
     private ExportService exportService;
 
     @MockBean
@@ -45,11 +53,19 @@ public class CmsConfigurationIT {
     @Autowired
     private ObjectMapper jacksonObjectMapper;
 
+    @Autowired
+    @Qualifier("resourceObjectMapper")
+    ObjectMapper resourceObjectMapper;
+
+    @Autowired
+    @Qualifier("unlinkedObjectMapper")
+    private ObjectMapper unlinkedObjectMapper;
+
     @Test
     public void read() throws JsonProcessingException {
-        User user = jacksonObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\"}", User.class);
-        assertThat(user.getId()).isEqualTo("a");
-        assertThat(user.getPassword()).isEqualTo("b");
+        User result = jacksonObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\"}", User.class);
+        assertThat(result.getId()).isEqualTo("a");
+        assertThat(result.getPassword()).isEqualTo("b");
     }
 
     @Test
@@ -59,5 +75,21 @@ public class CmsConfigurationIT {
         user.setPassword("b");
         String result = jacksonObjectMapper.writeValueAsString(user);
         assertThat(trimAllWhitespace(result)).isEqualTo("{\"id\":\"a\"}");
+    }
+
+    @Test
+    public void link() throws JsonProcessingException {
+        User user = new User();
+        when(em.find(User.class, "b")).thenReturn(user);
+        User result = resourceObjectMapper.readValue("{\"id\":\"a\",\"userId\":\"b\"}", User.class);
+        assertThat(result.getId()).isEqualTo("a");
+        assertThat(result.getUser()).isSameAs(user);
+    }
+
+    @Test
+    public void unlink() throws JsonProcessingException {
+        User result = unlinkedObjectMapper.readValue("{\"id\":\"a\",\"userId\":\"b\"}", User.class);
+        assertThat(result.getId()).isEqualTo("a");
+        verifyNoInteractions(em);
     }
 }

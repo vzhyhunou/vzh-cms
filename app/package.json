@@ -6,6 +6,7 @@
     "ra-language-russian": "^4.14.2",
     "ra-data-fakerest": "^4.16.3",
     "jwt-decode": "^3.1.2",
+    "jwt-encode": "^1.0.1",
     "js-md5": "^0.8.3",
     "react-jsx-parser": "^1.29.0"
   },
@@ -39,5 +40,11 @@
     "package.json",
     "lib"
   ],
-  "main": "lib/index.js"
+  "exports": {
+    ".": "./lib/index.js",
+    "./provider/builder/fake": "./lib/provider/builder/fake.js",
+    "./provider/builder/back": "./lib/provider/builder/back.js",
+    "./provider/messages/en": "./lib/provider/messages/en.js",
+    "./provider/messages/ru": "./lib/provider/messages/ru.js"
+  }
 }

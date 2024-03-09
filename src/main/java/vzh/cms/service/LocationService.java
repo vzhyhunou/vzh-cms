@@ -20,12 +20,12 @@ public class LocationService {
 
     private final ResourceMappings mappings;
 
-    private final EntityManagerFactory factory;
+    private final EntityManagerFactory emf;
 
     public String location(Item item) {
         String resource = mappings.getMetadataFor(item.getClass()).getRel().value();
         String path = Arrays.stream(item.getParents()).map(Object::toString).collect(Collectors.joining(separator));
-        String id = factory.getPersistenceUnitUtil().getIdentifier(item).toString();
+        String id = emf.getPersistenceUnitUtil().getIdentifier(item).toString();
         return (resource + separator + path + separator + id).replace(".", separator);
     }
 }

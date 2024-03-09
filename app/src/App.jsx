@@ -2,18 +2,15 @@ import React from 'react';
 import {Route, Navigate} from 'react-router-dom';
 import {CustomRoutes, Resource} from 'react-admin';
 
-import Layout from './commons/Layout';
-import App from './commons/App';
-import pages from './admin/pages';
-import users from './admin/users';
-import Page from './pages/App';
-import context from './context';
+import App, {pages, users, Page} from '.';
+import Layout from './cms/Layout';
+import config from './config';
 
 export default () => {
 
-    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = context;
+    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = config;
 
-    return <App {...{context}}>
+    return <App {...{config}}>
         <CustomRoutes noLayout>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
             <Route path="cms" element={<Layout/>}>

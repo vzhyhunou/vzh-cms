@@ -1,3 +1,7 @@
+import Core from './Core';
+
 export * from './admin';
-export * from './commons';
-export * from './pages';
+export * from './cms';
+export * from './context';
+
+export default Core;

@@ -29,12 +29,8 @@ public class EntityService {
 
     @SuppressWarnings("unchecked")
     public <T> T find(T item) {
-        return find((Class<T>) item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item));
-    }
-
-    public <T> T find(Class<T> type, Object id) {
         em.clear();
-        return em.find(type, id);
+        return em.find((Class<T>) item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item));
     }
 
     @Transactional

@@ -1,0 +1,14 @@
+{
+  "id": "admin",
+  "tags": [
+    {
+      "name": "ADMIN"
+    },
+    {
+      "name": "MANAGER"
+    },
+    {
+      "name": "PAGES_EDITOR"
+    }
+  ]
+}
