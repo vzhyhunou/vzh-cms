@@ -2,17 +2,20 @@ package vzh.cms.model;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
-import lombok.RequiredArgsConstructor;
+import vzh.cms.component.ApplicationContextProvider;
 
 import javax.persistence.EntityManager;
 
 /**
  * @author Viktar Zhyhunou
  */
-@RequiredArgsConstructor
 public class IdResolver implements ObjectIdResolver {
 
     private final EntityManager em;
+
+    public IdResolver() {
+        em = ApplicationContextProvider.getContext().getBean(EntityManager.class);
+    }
 
     @Override
     public void bindItem(ObjectIdGenerator.IdKey id, Object pojo) {
