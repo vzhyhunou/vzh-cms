@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import vzh.cms.component.ApplicationContextProvider;
 import vzh.cms.model.User;
 import vzh.cms.security.SecurityConfiguration;
 import vzh.cms.security.TokenService;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.util.StringUtils.trimAllWhitespace;
 
 @WebMvcTest
-@Import({SecurityConfiguration.class, CmsConfiguration.class})
+@Import({SecurityConfiguration.class, CmsConfiguration.class, ApplicationContextProvider.class})
 public class CmsConfigurationIT {
 
     @MockBean
