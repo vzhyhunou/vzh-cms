@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import vzh.cms.model.Base64File;
 import vzh.cms.model.Item;
-import vzh.cms.model.User;
 import vzh.cms.service.FileService;
 import vzh.cms.service.LocationService;
 
@@ -17,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
-
-import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 /**
  * @author Viktar Zhyhunou
@@ -43,11 +39,6 @@ public class ItemHandler {
 
     private final LocationService locationService;
 
-    @HandleBeforeCreate
-    public void beforeCreate(Item item) {
-        fill(item);
-    }
-
     @HandleAfterCreate
     public void afterCreate(Item item) throws IOException {
         if (HttpMethod.PATCH.matches(request.getMethod())) {
@@ -59,7 +50,6 @@ public class ItemHandler {
 
     @HandleBeforeSave
     public void beforeSave(Item item) throws IOException {
-        fill(item);
         if (HttpMethod.PATCH.matches(request.getMethod())) {
             return;
         }
@@ -85,10 +75,5 @@ public class ItemHandler {
     @HandleAfterDelete
     public void afterDelete(Item item) throws IOException {
         fileService.clean(locationService.location(item), Collections.emptySet());
-    }
-
-    private void fill(Item item) {
-        item.setDate(new Date());
-        item.setUser(em.find(User.class, getContext().getAuthentication().getName()));
     }
 }
