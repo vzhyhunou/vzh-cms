@@ -63,7 +63,6 @@ public class EntityService {
             @Override
             public T next() {
                 upd();
-                index++;
                 try {
                     return next;
                 } finally {
@@ -74,7 +73,7 @@ public class EntityService {
             private void upd() {
                 if (next == null) {
                     em.clear();
-                    next = query().setFirstResult(index).setMaxResults(1).getResultStream().findFirst().orElse(null);
+                    next = query().setFirstResult(index++).setMaxResults(1).getResultStream().findFirst().orElse(null);
                 }
             }
 
