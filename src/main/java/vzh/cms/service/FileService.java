@@ -117,7 +117,7 @@ public class FileService {
                 Path out = Paths.get(dir.toString(), file.getName());
                 log.debug("Write: {}", out);
                 byte[] data = DECODER.decode(file.getData());
-                Files.createDirectories(out.getParent());
+                Files.createDirectories(dir);
                 Files.write(out, data);
             }
         }
