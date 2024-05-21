@@ -13,8 +13,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * @author Viktar Zhyhunou
@@ -48,47 +48,31 @@ public class EntityService {
         em.clear();
     }
 
-    public <T extends Item> Iterable<T> findAll(Class<T> type, Date date) {
-        return () -> new Iterator<T>() {
+    @Transactional
+    public <T extends Item> boolean consume(Class<T> type, int index, Date date, Consumer<T> consumer) throws IOException {
+        em.clear();
+        T item = query(type, date).setFirstResult(index).setMaxResults(1).getResultStream().findFirst().orElse(null);
+        if (item == null) {
+            return false;
+        }
+        consumer.accept(item);
+        return true;
+    }
 
-            private int index = 0;
-            private T next;
+    private <T extends Item> TypedQuery<T> query(Class<T> type, Date date) {
+        CriteriaBuilder b = em.getCriteriaBuilder();
+        CriteriaQuery<T> q = b.createQuery(type);
+        Root<T> c = q.from(type);
+        q.select(c);
+        if (date == null) {
+            return em.createQuery(q);
+        }
+        ParameterExpression<Date> p = b.parameter(Date.class);
+        q.where(b.greaterThan(c.get(Item_.date), p));
+        return em.createQuery(q).setParameter(p, date);
+    }
 
-            @Override
-            public boolean hasNext() {
-                upd();
-                return next != null;
-            }
-
-            @Override
-            public T next() {
-                upd();
-                try {
-                    return next;
-                } finally {
-                    next = null;
-                }
-            }
-
-            private void upd() {
-                if (next == null) {
-                    em.clear();
-                    next = query().setFirstResult(index++).setMaxResults(1).getResultStream().findFirst().orElse(null);
-                }
-            }
-
-            private TypedQuery<T> query() {
-                CriteriaBuilder b = em.getCriteriaBuilder();
-                CriteriaQuery<T> q = b.createQuery(type);
-                Root<T> c = q.from(type);
-                q.select(c);
-                if (date == null) {
-                    return em.createQuery(q);
-                }
-                ParameterExpression<Date> p = b.parameter(Date.class);
-                q.where(b.greaterThan(c.get(Item_.date), p));
-                return em.createQuery(q).setParameter(p, date);
-            }
-        };
+    public interface Consumer<T> {
+        void accept(T item) throws IOException;
     }
 }

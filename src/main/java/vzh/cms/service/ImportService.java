@@ -47,34 +47,34 @@ public class ImportService {
             return;
         }
         log.info("Import not linked items with id only");
-        imp(p, f -> {
+        consume(p, f -> {
             Item item = mapperService.unlinked(f);
             if (!hasKey(item)) {
                 entityService.create(item);
             }
         });
         log.info("Import linked items with id only");
-        imp(p, f -> {
+        consume(p, f -> {
             Item item = mapperService.unlinked(f);
             if (hasKey(item)) {
                 entityService.create(item);
             }
         });
         log.info("Import items");
-        imp(p, f -> entityService.update(mapperService.resource(f)));
+        consume(p, f -> entityService.update(mapperService.resource(f)));
         log.info("Import files");
-        imp(p, f -> {
+        consume(p, f -> {
             Item item = mapperService.resource(f);
             fileService.create(locationService.location(entityService.find(item)), item.getFiles());
         });
         log.info("End import");
     }
 
-    private void imp(Path dir, Consumer consumer) throws IOException {
+    private void consume(Path dir, Consumer consumer) throws IOException {
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(dir)) {
             for (Path path : paths) {
                 if (path.toFile().isDirectory()) {
-                    imp(path, consumer);
+                    consume(path, consumer);
                 } else {
                     consumer.accept(path.toFile());
                 }

@@ -1,18 +1,25 @@
 package vzh.cms.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import vzh.cms.model.Page;
+import vzh.cms.model.Tag;
 
+import java.io.IOException;
 import java.util.Date;
-import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static vzh.cms.fixture.PageFixture.withDate;
+import static org.mockito.Mockito.*;
+import static vzh.cms.fixture.PageFixture.withDateAndTags;
+import static vzh.cms.fixture.TagFixture.tag;
+import static vzh.cms.service.EntityService.Consumer;
 
 @ActiveProfiles("dev")
 @DataJpaTest
@@ -25,44 +32,54 @@ public class EntityServiceIT {
     @Autowired
     private EntityService subj;
 
+    @Mock
+    private Consumer<Page> consumer;
+
+    @Captor
+    ArgumentCaptor<Page> captor;
+
     @Test
-    public void findAll() {
-        manager.persistAndFlush(withDate("a", null));
+    @SuppressWarnings("unchecked")
+    public void findAll() throws IOException {
+        manager.persistAndFlush(withDateAndTags("a", null, tag("b")));
 
-        Iterable<Page> result = subj.findAll(Page.class, null);
+        boolean result = subj.consume(Page.class, 0, null, consumer);
 
-        assertThat(result).isNotNull();
-        Iterator<Page> iterator = result.iterator();
-        assertThat(iterator).isNotNull();
-
-        assertThat(iterator.hasNext()).isTrue();
-        Page page = iterator.next();
+        assertThat(result).isTrue();
+        verify(consumer).accept(captor.capture());
+        Page page = captor.getValue();
         assertThat(page).isNotNull();
         assertThat(page.getId()).isEqualTo("a");
+        assertThat(page.getTags()).extracting(Tag::getName).contains("b");
 
-        assertThat(iterator.hasNext()).isFalse();
-        page = iterator.next();
-        assertThat(page).isNull();
+        reset(consumer);
+
+        result = subj.consume(Page.class, 1, null, consumer);
+
+        assertThat(result).isFalse();
+        verifyNoInteractions(consumer);
     }
 
     @Test
-    public void findAllByDate() {
-        manager.persistAndFlush(withDate("a", new Date(1)));
-        manager.persistAndFlush(withDate("b", new Date(2)));
+    @SuppressWarnings("unchecked")
+    public void findAllByDate() throws IOException {
+        manager.persistAndFlush(withDateAndTags("a", new Date(1), tag("b")));
+        manager.persistAndFlush(withDateAndTags("c", new Date(2), tag("d")));
 
-        Iterable<Page> result = subj.findAll(Page.class, new Date(1));
+        boolean result = subj.consume(Page.class, 0, new Date(1), consumer);
 
-        assertThat(result).isNotNull();
-        Iterator<Page> iterator = result.iterator();
-        assertThat(iterator).isNotNull();
-
-        assertThat(iterator.hasNext()).isTrue();
-        Page page = iterator.next();
+        assertThat(result).isTrue();
+        verify(consumer).accept(captor.capture());
+        Page page = captor.getValue();
         assertThat(page).isNotNull();
-        assertThat(page.getId()).isEqualTo("b");
+        assertThat(page.getId()).isEqualTo("c");
+        assertThat(page.getTags()).extracting(Tag::getName).contains("d");
 
-        assertThat(iterator.hasNext()).isFalse();
-        page = iterator.next();
-        assertThat(page).isNull();
+        reset(consumer);
+
+        result = subj.consume(Page.class, 1, new Date(1), consumer);
+
+        assertThat(result).isFalse();
+        verifyNoInteractions(consumer);
     }
 }
