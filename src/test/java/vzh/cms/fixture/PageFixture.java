@@ -23,9 +23,10 @@ public class PageFixture {
         return page;
     }
 
-    public static Page withDate(String id, Date date) {
+    public static Page withDateAndTags(String id, Date date, Tag... tags) {
         Page page = new Page();
         page.setId(id);
+        page.getTags().addAll(Arrays.asList(tags));
         page.setDate(date);
         return page;
     }

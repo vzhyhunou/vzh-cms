@@ -61,10 +61,13 @@ public class ExportService {
         Path dir = path(last.isPresent());
         log.info("Start export {} ...", dir);
         for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
-            for (Item item : entityService.findAll((Class<Item>) type, last.orElse(null))) {
-                String location = locationService.location(item);
-                item.getFiles().addAll(fileService.read(location, true));
-                mapperService.write(Paths.get(dir.toString(), String.format("%s.json", location)).toFile(), item);
+            boolean hasItem = true;
+            for (int i = 0; hasItem; i++) {
+                hasItem = entityService.consume((Class<Item>) type, i, last.orElse(null), item -> {
+                    String location = locationService.location(item);
+                    item.getFiles().addAll(fileService.read(location, true));
+                    mapperService.write(Paths.get(dir.toString(), String.format("%s.json", location)).toFile(), item);
+                });
             }
         }
         log.info("End export");
