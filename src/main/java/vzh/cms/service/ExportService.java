@@ -57,7 +57,7 @@ public class ExportService {
 
     @SuppressWarnings("unchecked")
     public void export(boolean incremental) throws IOException {
-        Optional<Date> last = last(incremental);
+        Optional<Date> last = incremental ? last() : Optional.empty();
         Path dir = path(last.isPresent());
         log.info("Start export {} ...", dir);
         for (Class<?> type : mappings.map(ResourceMetadata::getDomainType).filter(Item.class::isAssignableFrom)) {
@@ -111,10 +111,7 @@ public class ExportService {
         }
     }
 
-    private Optional<Date> last(boolean incremental) throws IOException {
-        if (!incremental) {
-            return Optional.empty();
-        }
+    private Optional<Date> last() throws IOException {
         return listFull().max(COMPARATOR).map(p -> {
             try {
                 return new SimpleDateFormat(properties.getPattern()).parse(p.getFileName().toString());
