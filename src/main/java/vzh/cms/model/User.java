@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
@@ -29,6 +30,7 @@ public class User extends Tagged {
     @EqualsAndHashCode.Include
     private String id;
 
+    @Column(nullable = false)
     @ToString.Exclude
     @Size(min = 5)
     @JacksonIgnore
