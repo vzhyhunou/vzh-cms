@@ -35,6 +35,7 @@ public class UserHandler {
     public void beforeSave(@Valid User user) {
         String password = user.getPassword();
         if (password == null) {
+            em.clear();
             user.setPassword(em.find(User.class, user.getId()).getPassword());
         } else {
             user.setPassword(encoder.encode(password));
