@@ -53,6 +53,7 @@ public class ItemHandler {
         if (HttpMethod.PATCH.matches(request.getMethod())) {
             return;
         }
+        em.clear();
         request.setAttribute(OLD_LOCATION,
                 locationService.location(em.find(item.getClass(), emf.getPersistenceUnitUtil().getIdentifier(item))));
         request.setAttribute(NEW_FILES, item.getFiles());
