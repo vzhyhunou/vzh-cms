@@ -4,12 +4,13 @@ import {MemoryRouter} from 'react-router-dom'
 
 import App from './App'
 import getProvider from './provider/fake'
+import config from './config';
 
 const {authProvider} = getProvider()
 
 const renderWithHistory = (route = '/') => render(
     <MemoryRouter initialEntries={[route]}>
-        <App/>
+        <App {...{config}}/>
     </MemoryRouter>
 )
 

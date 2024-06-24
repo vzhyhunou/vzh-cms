@@ -2,15 +2,14 @@ import React from 'react';
 import {Route, Navigate} from 'react-router-dom';
 import {CustomRoutes, Resource} from 'react-admin';
 
-import App, {pages, users, Page} from '.';
+import {Core, pages, users, Page} from '.';
 import Layout from './cms/Layout';
-import config from './config';
 
-export default () => {
+export default ({config}) => {
 
     const {tags: {users: {PAGES_EDITOR, MANAGER}}} = config;
 
-    return <App {...{config}}>
+    return <Core {...{config}}>
         <CustomRoutes noLayout>
             <Route path="/" element={<Navigate to="cms/pages/home"/>}/>
             <Route path="cms" element={<Layout/>}>
@@ -27,5 +26,5 @@ export default () => {
                 : null}
             </>
         }
-    </App>;
+    </Core>;
 };
