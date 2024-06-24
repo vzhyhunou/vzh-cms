@@ -1,4 +1,5 @@
 import fakeDataProvider from 'ra-data-fakerest';
+
 import builder from './builder/fake';
 import resources from './resources';
 

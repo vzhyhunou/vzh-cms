@@ -7,7 +7,7 @@ import config from './config';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter basename={config.basename}>
-        <App/>
+        <App {...{config}}/>
     </BrowserRouter>
 );
 

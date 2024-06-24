@@ -9,3 +9,4 @@ app/node_modules
 *.iws
 .shelf
 target
+.DS_Store
