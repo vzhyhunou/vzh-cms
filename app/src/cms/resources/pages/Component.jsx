@@ -23,7 +23,7 @@ const Component = ({id, external, ...props}) => {
 
     files && files.forEach(name => content = content.replace(
         new RegExp(name, 'g'),
-        `${originByData('pages', data)}/${name}`
+        originByData('pages', data, name)
     ));
 
     return <Parser {...{content}} bindings={{props}}/>;

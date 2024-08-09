@@ -63,21 +63,15 @@ const upd = (params, call) => {
         }));
 }
 
-const analyzeFields = (path, fields, data) => {
+const analyzeFields = (getFile, fields, data) => {
     const result = JSON.parse(JSON.stringify(data));
-    fields.forEach(({name, keys}) => keys.forEach(key => set(result, key, {
-        src: `${path}/${name}`,
-        title: name
-    })));
+    fields.forEach(({name, keys}) => keys.forEach(key => set(result, key, getFile(name))));
     return result;
 };
 
-const analyzeContents = (path, contents) => {
+const analyzeContents = (getFile, contents) => {
     const result = {};
-    contents.forEach(({key, names}) => set(result, key, names.map(name => ({
-        src: `${path}/${name}`,
-        title: name
-    }))));
+    contents.forEach(({key, names}) => set(result, key, names.map(getFile)));
     return result;
 };
 
@@ -142,14 +136,16 @@ export default ({dataProvider, funcProvider: {originByData}}) => {
                     .filter(name => value !== name)
             }))
             .filter(({names}) => names.length);
-        const path = originByData(resource, item);
-
-        const i = analyzeFields(path, fields, item);
+        const getFile = name => ({
+            src: originByData(resource, item, name),
+            title: name
+        });
+        const i = analyzeFields(getFile, fields, item);
 
         return {
             ...i,
             files: i.files.map(({name}) => name),
-            '@files': analyzeContents(path, contents)
+            '@files': analyzeContents(getFile, contents)
         };
     };
 
