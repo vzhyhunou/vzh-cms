@@ -1,6 +1,7 @@
 package vzh.cms.projection;
 
 import org.springframework.beans.factory.annotation.Value;
+import vzh.cms.model.Base64File;
 
 import java.util.Set;
 
@@ -17,6 +18,6 @@ public interface PropertyPage {
     @Value("#{target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language]}")
     String getContent();
 
-    @Value("#{@fileService.read(@locationService.location(target), false).?[#root.target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].contains(name)].![name]}")
-    Set<String> getFiles();
+    @Value("#{@fileService.read(@locationService.location(target), false).?[#root.target.content[T(org.springframework.context.i18n.LocaleContextHolder).locale.language].contains(name)]}")
+    Set<Base64File> getFiles();
 }

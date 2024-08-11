@@ -21,7 +21,7 @@ const Component = ({id, external, ...props}) => {
         document.title = title;
     }
 
-    files && files.forEach(name => content = content.replace(
+    files && files.forEach(({name}) => content = content.replace(
         new RegExp(name, 'g'),
         originByData('pages', data, name)
     ));

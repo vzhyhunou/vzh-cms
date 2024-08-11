@@ -79,7 +79,7 @@ const exchangeResponse = (
                                     id,
                                     title: title && title[locale],
                                     content: content[locale],
-                                    files: files && files.map(({name}) => name)
+                                    files
                                 }
                             };
                         }, () => false);
@@ -98,9 +98,25 @@ const exchangeResponse = (
         }
     });
 
+const getUpdateRequest = ({getOne}, resource, params) => {
+
+    const {data: {id, files}} = params;
+
+    return getOne(resource, {id}).then(({data: {files: oldFiles}}) => ({
+        ...params,
+        data: {
+            ...params.data,
+            files: files.map(({name, data}) => ({
+                name,
+                data: data || oldFiles.find(oldFile => oldFile.name === name).data
+            }))
+        },
+    }));
+};
+
 export default props => {
 
-    const {locales, provider: {getList, ...rest}} = props;
+    const {locales, provider: {getList, update, ...rest}} = props;
     const provider = {
         ...rest,
         getAll: (resource, {sort = {field: 'id', order: 'ASC'}} = {}) => getList(resource, {
@@ -122,6 +138,8 @@ export default props => {
         getList: (resource, params) => getListResponse(provider, resource, params)
             .then(response => response && log('getList', resource, params, response))
             .then(response => response || getList(resource, params)),
+        update: (resource, params) => getUpdateRequest(provider, resource, params)
+            .then(request => update(resource, request)),
         exchange: params => exchangeResponse(provider, props, params)
             .then(response => log('exchange', undefined, params, response)),
         log

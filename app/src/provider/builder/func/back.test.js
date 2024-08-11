@@ -1,4 +1,4 @@
-import getFuncProvider from './func'
+import getFuncProvider from './back'
 
 describe('functions', () => {
 
