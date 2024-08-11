@@ -17,7 +17,9 @@ export default () => {
             source="id"
             alwaysOn
         />,
-        <TagsFilter/>,
+        <TagsFilter
+            source="tags"
+        />,
         <TextInput
             source="title"
         />,
@@ -42,6 +44,7 @@ export default () => {
             />
             <TagsField
                 sortable={false}
+                source="tags"
             />
             <EditButton/>
         </Datagrid>

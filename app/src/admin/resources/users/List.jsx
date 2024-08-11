@@ -16,7 +16,9 @@ export default () => {
             source="id"
             alwaysOn
         />,
-        <TagsFilter/>
+        <TagsFilter
+            source="tags"
+        />
     ];
 
     return <List
@@ -29,6 +31,7 @@ export default () => {
             />
             <TagsField
                 sortable={false}
+                source="tags"
             />
             <EditButton/>
         </Datagrid>

@@ -7,7 +7,7 @@ import {useFormContext, useWatch} from 'react-hook-form';
 
 import {ContentImageInput} from '../..';
 
-const Input = ({contentRef, ...rest}) => {
+export default ({contentRef, ...rest}) => {
 
     const {setValue} = useFormContext();
     const val = useWatch({name: 'content'});
@@ -35,9 +35,3 @@ const Input = ({contentRef, ...rest}) => {
         />
     </ContentImageInput>;
 };
-
-Input.defaultProps = {
-    source: '@files.content'
-};
-
-export default Input;

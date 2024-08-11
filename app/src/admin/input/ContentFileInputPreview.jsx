@@ -45,10 +45,6 @@ export const FileInputPreview = props => {
     );
 };
 
-FileInputPreview.defaultProps = {
-    file: undefined,
-};
-
 const PREFIX = 'RaContentFileInputPreview';
 
 export const FileInputPreviewClasses = {

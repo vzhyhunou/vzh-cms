@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import {useTranslate, useRecordContext, useResourceContext} from 'react-admin';
 
-const TagsField = () => {
+export default () => {
 
     const translate = useTranslate();
     const record = useRecordContext();
@@ -23,9 +23,3 @@ const TagsField = () => {
         )}
     </Stack>;
 };
-
-TagsField.defaultProps = {
-    source: 'tags'
-};
-
-export default TagsField;
