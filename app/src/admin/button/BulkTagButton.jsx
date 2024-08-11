@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, useResourceContext, useTranslate} from 'react-admin';
-import {Menu, MenuItem} from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import {useContextProvider} from '../..';
 import useUpdateTag from './useUpdateTag';

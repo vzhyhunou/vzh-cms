@@ -1,20 +1,16 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Drawer, List, ListItem, ListItemText, Divider, IconButton} from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Link} from 'react-router-dom';
 
 import {useExchange} from '..';
-
-const drawerWidth = 240;
-
-const DrawerHeader = styled('div')(({theme}) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start'
-}));
 
 export default ({open, handleDrawerClose}) => {
 
@@ -25,35 +21,31 @@ export default ({open, handleDrawerClose}) => {
     }
 
     return <Drawer
-        sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-                width: drawerWidth
-            }
-        }}
-        variant="persistent"
+        sx={{ '& .MuiDrawer-paper': { width: 240 } }}
         anchor="right"
         open={open}
+        onClose={handleDrawerClose}
     >
-        <DrawerHeader>
+        <Toolbar>
             <IconButton onClick={handleDrawerClose}>
-                <ChevronLeftIcon/>
+                <ChevronRightIcon/>
             </IconButton>
-        </DrawerHeader>
+        </Toolbar>
         <Divider />
-        <List>
-            {data.map(({id, title}) =>
-                <ListItem
-                    key={id}
-                    component={Link}
-                    to={`pages/${id}`}
-                >
-                    <ListItemText
-                        primary={title}
-                    />
-                </ListItem>
-            )}
-        </List>
+        <Box onClick={handleDrawerClose}>
+            <List>
+                {data.map(({id, title}) =>
+                    <ListItem
+                        key={id}
+                        component={Link}
+                        to={`pages/${id}`}
+                    >
+                        <ListItemText
+                            primary={title}
+                        />
+                    </ListItem>
+                )}
+            </List>
+        </Box>
     </Drawer>;
 };

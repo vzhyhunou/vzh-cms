@@ -1,5 +1,6 @@
 import React from 'react';
-import {Stack, Chip} from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Chip from '@mui/material/Chip';
 import {useTranslate, useRecordContext, useResourceContext} from 'react-admin';
 
 const TagsField = () => {
