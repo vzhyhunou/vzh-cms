@@ -1,5 +1,5 @@
-resources/export
-resources/static
+resources/*
+!resources/import
 app/lib
 app/node
 app/node_modules

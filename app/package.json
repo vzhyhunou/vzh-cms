@@ -32,8 +32,8 @@
   "scripts": {
     "start": "cross-env REACT_APP_SRC=back vite",
     "start:fake": "cross-env REACT_APP_SRC=fake vite",
-    "build": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=back vite build && rimraf ../target/classes/static/static/origin",
-    "build:fake": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=fake vite build && rimraf ../docs && BUILD_PATH=../docs REACT_APP_SRC=fake REACT_APP_BASE=/vzh-cms vite build",
+    "build": "cross-env BUILD_PATH=../target/classes/public REACT_APP_SRC=back vite build",
+    "build:fake": "cross-env BUILD_PATH=../target/classes/public REACT_APP_SRC=fake vite build && rimraf ../docs && BUILD_PATH=../docs REACT_APP_SRC=fake REACT_APP_BASE=/vzh-cms vite build",
     "test": "cross-env REACT_APP_SRC=back jest",
     "transpile": "babel src -d lib --ignore 'src/main.jsx,src/config.js,src/provider/back.js,src/provider/fake.js,src/provider/resources,**/*.test.js,**/*.test.jsx,**/__mocks__'"
   },
