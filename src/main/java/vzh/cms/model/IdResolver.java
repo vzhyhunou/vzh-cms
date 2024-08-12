@@ -2,7 +2,6 @@ package vzh.cms.model;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
-import vzh.cms.component.ApplicationContextProvider;
 
 import javax.persistence.EntityManager;
 
@@ -13,8 +12,8 @@ public class IdResolver implements ObjectIdResolver {
 
     private final EntityManager em;
 
-    public IdResolver() {
-        em = ApplicationContextProvider.getContext().getBean(EntityManager.class);
+    public IdResolver(EntityManager em) {
+        this.em = em;
     }
 
     @Override
