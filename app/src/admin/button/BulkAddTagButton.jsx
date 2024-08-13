@@ -6,9 +6,9 @@ import BulkTagButton from './BulkTagButton';
 export default () =>
     <BulkTagButton
         label="resources.tags.actions.add"
-        getData={(record, tag) => ({
+        getData={(record, name) => ({
             id: record.id,
-            tags: record.tags ? [...record.tags, {name: tag}] : [{name: tag}]
+            tags: record.tags ? [...record.tags, {name}] : [{name}]
         })}
     >
         <AddCircleIcon/>
