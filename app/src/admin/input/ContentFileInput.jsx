@@ -1,6 +1,5 @@
 import React, {
     Children,
-    cloneElement,
     isValidElement
 } from 'react';
 import { styled } from '@mui/material/styles';
@@ -11,14 +10,17 @@ import {
     useInput,
     useTranslate,
     shallowEqual,
+    RecordContextProvider,
     Labeled,
     sanitizeInputRestProps,
     InputHelperText
 } from 'react-admin';
 
+import { useTheme } from '@mui/material/styles';
+
 import { FileInputPreview } from './ContentFileInputPreview';
 
-export const FileInput = props => {
+export const FileInput = (props) => {
     const {
         accept,
         children,
@@ -37,10 +39,14 @@ export const FileInput = props => {
         onRemove: onRemoveProp,
         parse,
         placeholder,
+        addIcon,
+        removeIcon,
         resource,
         source,
         validate,
         validateFileRemoval,
+        disabled,
+        readOnly,
         ...rest
     } = props;
     const { onDrop: onDropProp } = options;
@@ -52,22 +58,17 @@ export const FileInput = props => {
             return file;
         }
 
-        const { source, title } = Children.only(children).props;
-
         const preview = URL.createObjectURL(file);
         const transformedFile = {
             rawFile: file,
-            [source]: preview,
+            src: preview,
+            title: file.name,
         };
-
-        if (title) {
-            transformedFile[title] = file.name;
-        }
 
         return transformedFile;
     };
 
-    const transformFiles = files => {
+    const transformFiles = (files) => {
         if (!files) {
             return multiple ? [] : null;
         }
@@ -81,18 +82,19 @@ export const FileInput = props => {
 
     const {
         id,
-        field: { onChange, value },
+        field: { onChange, onBlur, value },
         fieldState,
-        formState: { isSubmitted },
         isRequired,
     } = useInput({
         format: format || transformFiles,
         parse: parse || transformFiles,
         source,
         validate,
+        disabled,
+        readOnly,
         ...rest,
     });
-    const { isTouched, error } = fieldState;
+    const { error, invalid } = fieldState;
     const files = value ? (Array.isArray(value) ? value : [value]) : [];
 
     const onDrop = (newFiles, rejectedFiles, event) => {
@@ -100,8 +102,10 @@ export const FileInput = props => {
 
         if (multiple) {
             onChange(updatedFiles);
+            onBlur();
         } else {
             onChange(updatedFiles[0]);
+            onBlur();
         }
 
         if (onDropProp) {
@@ -128,8 +132,10 @@ export const FileInput = props => {
                 stateFile => !shallowEqual(stateFile, file)
             );
             onChange(filteredFiles);
+            onBlur();
         } else {
             onChange(null);
+            onBlur();
         }
 
         if (onRemoveProp) {
@@ -147,9 +153,14 @@ export const FileInput = props => {
         maxSize,
         minSize,
         multiple,
+        disabled: disabled || readOnly,
         ...options,
         onDrop,
     });
+
+    const renderHelperText = helperText !== false || invalid;
+
+    const theme = useTheme();
 
     return (
         <StyledLabeled
@@ -159,6 +170,11 @@ export const FileInput = props => {
             source={source}
             resource={resource}
             isRequired={isRequired}
+            color={invalid ? 'error' : undefined}
+            sx={{
+                cursor: disabled || readOnly ? 'default' : 'pointer',
+                ...rest.sx,
+            }}
             {...sanitizeInputRestProps(rest)}
         >
             <>
@@ -166,6 +182,17 @@ export const FileInput = props => {
                     {...getRootProps({
                         className: FileInputClasses.dropZone,
                         'data-testid': 'dropzone',
+                        style: {
+                            color:
+                                disabled || readOnly
+                                    ? theme.palette.text.disabled
+                                    : inputPropsOptions?.color ||
+                                      theme.palette.text.primary,
+                            backgroundColor:
+                                disabled || readOnly
+                                    ? theme.palette.action.disabledBackground
+                                    : inputPropsOptions?.backgroundColor,
+                        },
                     })}
                 >
                     <input
@@ -183,13 +210,15 @@ export const FileInput = props => {
                         <p>{translate(labelSingle)}</p>
                     )}
                 </div>
-                <FormHelperText>
-                    <InputHelperText
-                        touched={isTouched || isSubmitted}
-                        error={error && error.message}
-                        helperText={helperText}
-                    />
-                </FormHelperText>
+                {renderHelperText ? (
+                    <FormHelperText error={invalid}>
+                        <InputHelperText
+                            error={error?.message}
+                            helperText={helperText}
+                        />
+                    </FormHelperText>
+                ) : null}
+
                 {children && (
                     <div className="previews">
                         {files.map((file, index) => (
@@ -198,12 +227,13 @@ export const FileInput = props => {
                                 file={file}
                                 onAdd={onAdd(file)}
                                 onRemove={onRemove(file)}
-                                className={FileInputClasses.button}
+                                className={FileInputClasses.removeButton}
+                                addIcon={addIcon}
+                                removeIcon={removeIcon}
                             >
-                                {cloneElement(childrenElement, {
-                                    record: file,
-                                    className: FileInputClasses.preview,
-                                })}
+                                <RecordContextProvider value={file}>
+                                    {childrenElement}
+                                </RecordContextProvider>
                             </FileInputPreview>
                         ))}
                     </div>
@@ -213,12 +243,11 @@ export const FileInput = props => {
     );
 };
 
-const PREFIX = 'RaContentFileInput';
+const PREFIX = 'RaFileInput';
 
 export const FileInputClasses = {
     dropZone: `${PREFIX}-dropZone`,
-    preview: `${PREFIX}-preview`,
-    button: `${PREFIX}-button`,
+    removeButton: `${PREFIX}-removeButton`,
 };
 
 const StyledLabeled = styled(Labeled, {
@@ -230,11 +259,9 @@ const StyledLabeled = styled(Labeled, {
         background: theme.palette.background.default,
         borderRadius: theme.shape.borderRadius,
         fontFamily: theme.typography.fontFamily,
-        cursor: 'pointer',
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.getContrastText(theme.palette.background.default),
     },
-    [`& .${FileInputClasses.preview}`]: {},
-    [`& .${FileInputClasses.button}`]: {},
+    [`& .${FileInputClasses.removeButton}`]: {},
 }));

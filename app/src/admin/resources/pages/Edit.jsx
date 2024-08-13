@@ -43,7 +43,7 @@ export default () => {
                         </ReferenceField>
                     </Labeled>
                 }
-                <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
+                <TranslatableInputs locales={locales.map(l => l.locale)}>
                     <TextInput source="title"/>
                     <TextInput
                         multiline

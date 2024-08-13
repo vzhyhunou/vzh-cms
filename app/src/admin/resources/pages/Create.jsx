@@ -25,7 +25,7 @@ export default () => {
                     source="id"
                     validate={[required(), validateId]}
                 />
-                <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
+                <TranslatableInputs locales={locales.map(l => l.locale)}>
                     <TextInput source="title"/>
                     <TextInput
                         multiline

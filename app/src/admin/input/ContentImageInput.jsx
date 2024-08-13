@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { FileInput, FileInputClasses } from './ContentFileInput';
 import { FileInputPreviewClasses } from './ContentFileInputPreview';
 
-export default props => (
+export default (props) => (
     <StyledFileInput
         labelMultiple="ra.input.image.upload_several"
         labelSingle="ra.input.image.upload_single"
@@ -12,7 +12,7 @@ export default props => (
     />
 );
 
-const PREFIX = 'RaContentImageInput';
+const PREFIX = 'RaImageInput';
 
 const StyledFileInput = styled(FileInput, {
     name: PREFIX,
@@ -24,17 +24,11 @@ const StyledFileInput = styled(FileInput, {
         background: theme.palette.background.default,
         borderRadius: theme.shape.borderRadius,
         fontFamily: theme.typography.fontFamily,
-        cursor: 'pointer',
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.getContrastText(theme.palette.background.default),
     },
-
-    [`& .${FileInputClasses.preview}`]: {
-        display: 'inline-block',
-    },
-
-    [`& .${FileInputClasses.button}`]: {
+    [`& .${FileInputClasses.removeButton}`]: {
         display: 'inline-block',
         position: 'relative',
         '& button': {

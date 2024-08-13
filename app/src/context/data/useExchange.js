@@ -1,13 +1,13 @@
-import {useQuery} from 'react-query';
+import {useQuery} from '@tanstack/react-query';
 import {useDataProvider} from 'react-admin';
 
 export default props => {
 
     const {exchange} = useDataProvider();
 
-    return useQuery(
-        ['exchange', props],
-        () => exchange(props).then(({data}) => data),
-        {refetchOnWindowFocus: false}
-    );
+    return useQuery({
+        queryKey: ['exchange', props],
+        queryFn: () => exchange(props).then(({data}) => data),
+        refetchOnWindowFocus: false
+    });
 };

@@ -26,7 +26,7 @@ export default ({contentRef, ...rest}) => {
 
     return <ContentImageInput
         multiple
-        accept="image/*"
+        accept={{'image/*': []}}
         {...{...rest, onAdd}}
     >
         <ImageField
