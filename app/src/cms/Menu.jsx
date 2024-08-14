@@ -39,6 +39,7 @@ export default ({open, handleDrawerClose}) => {
                         key={id}
                         component={Link}
                         to={`pages/${id}`}
+                        sx={{color: 'text.primary'}}
                     >
                         <ListItemText
                             primary={title}

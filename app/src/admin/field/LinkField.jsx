@@ -1,11 +1,11 @@
 import React from 'react';
-import get from 'lodash/get';
-import {Link, useRecordContext, useResourceContext} from 'react-admin';
+import { useRecordContext, useResourceContext } from 'react-admin';
+import { Link } from 'react-router-dom';
 
 export default ({source}) => {
 
     const record = useRecordContext();
     const resource = useResourceContext();
 
-    return <Link to={`/cms/${resource}/${get(record, 'id')}`}>{get(record, source)}</Link>
+    return <Link to={`/cms/${resource}/${record.id}`}>{record[source]}</Link>;
 };
