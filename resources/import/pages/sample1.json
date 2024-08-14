@@ -15,8 +15,8 @@
       "en": "Sample page 1"
     },
     "content": {
-      "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 1</h1>\n</div>",
-      "en": "<div class=\"starter\">\n\t<h1>Sample page 1</h1>\n</div>"
+      "ru": "<h1>Пример страницы 1</h1>",
+      "en": "<h1>Sample page 1</h1>"
     }
   }
 }

@@ -13,7 +13,7 @@
     "en": "Sample page 4"
   },
   "content": {
-    "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 4</h1>\n\tКонтент для {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'редактора' : 'всех кроме редактора'}\n</div>",
-    "en": "<div class=\"starter\">\n\t<h1>Sample page 4</h1>\n\tContent for {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'editor' : 'all except editor'}\n</div>"
+    "ru": "<h1>Пример страницы 4</h1>\nКонтент для {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'редактора' : 'всех кроме редактора'}",
+    "en": "<h1>Sample page 4</h1>\nContent for {permissions && permissions.includes(context.tags.users.PAGES_EDITOR) ? 'editor' : 'all except editor'}"
   }
 }

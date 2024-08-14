@@ -6,9 +6,9 @@ import BulkTagButton from './BulkTagButton';
 export default () =>
     <BulkTagButton
         label="resources.tags.actions.remove"
-        getData={(record, tag) => ({
+        getData={(record, name) => ({
             id: record.id,
-            tags: record.tags ? record.tags.filter(({name}) => name !== tag) : []
+            tags: record.tags ? record.tags.filter(t => t.name !== name) : []
         })}
     >
         <RemoveCircleIcon/>

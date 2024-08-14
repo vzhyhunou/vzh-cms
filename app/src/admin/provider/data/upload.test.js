@@ -43,25 +43,25 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f71.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f71.png"
                     },
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     },
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
-                    src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "sample",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 collection: [
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     }
                 ],
@@ -73,7 +73,7 @@ describe('upload', () => {
                     content: {
                         en: [
                             {
-                                src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                                src: "sample",
                                 title: "900150983cd24fb0d6963f7d28e17f73.png"
                             }
                         ]
@@ -196,7 +196,7 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f71.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f71.png"
                     },
                     {
@@ -306,16 +306,16 @@ describe('upload', () => {
             data: {
                 files: [
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     },
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
-                    src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "sample",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
@@ -325,7 +325,7 @@ describe('upload', () => {
                     content: {
                         en: [
                             {
-                                src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                                src: "sample",
                                 title: "900150983cd24fb0d6963f7d28e17f73.png"
                             }
                         ]
@@ -370,16 +370,16 @@ describe('upload', () => {
             data: [{
                 files: [
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f72.png"
                     },
                     {
-                        src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                        src: "sample",
                         title: "900150983cd24fb0d6963f7d28e17f73.png"
                     }
                 ],
                 file: {
-                    src: "sample/900150983cd24fb0d6963f7d28e17f72.png",
+                    src: "sample",
                     title: "900150983cd24fb0d6963f7d28e17f72.png"
                 },
                 content: {
@@ -389,7 +389,7 @@ describe('upload', () => {
                     content: {
                         en: [
                             {
-                                src: "sample/900150983cd24fb0d6963f7d28e17f73.png",
+                                src: "sample",
                                 title: "900150983cd24fb0d6963f7d28e17f73.png"
                             }
                         ]

@@ -43,7 +43,7 @@ export default () => {
                         </ReferenceField>
                     </Labeled>
                 }
-                <TranslatableInputs locales={locales.map(l => l.locale)} fullWidth>
+                <TranslatableInputs locales={locales.map(l => l.locale)}>
                     <TextInput source="title"/>
                     <TextInput
                         multiline
@@ -51,7 +51,7 @@ export default () => {
                         sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
                         inputProps={{ref}}
                     />
-                    <Input contentRef={ref}/>
+                    <Input contentRef={ref} source="@files.content"/>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">

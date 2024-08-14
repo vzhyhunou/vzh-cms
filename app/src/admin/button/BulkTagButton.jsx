@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, useResourceContext, useTranslate} from 'react-admin';
-import {Menu, MenuItem} from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import {useContextProvider} from '../..';
 import useUpdateTag from './useUpdateTag';
@@ -28,12 +29,12 @@ export default ({label, children, getData}) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
         >
-            {Object.keys(tags[resource]).map(key =>
+            {Object.keys(tags[resource]).map(name =>
                 <MenuItem
-                    {...{key}}
-                    onClick={() => updateTag(key)}
+                    key={name}
+                    onClick={() => updateTag(name)}
                 >
-                    {translate(`resources.${resource}.tags.${key}`)}
+                    {translate(`resources.${resource}.tags.${name}`)}
                 </MenuItem>
             )}
         </Menu>

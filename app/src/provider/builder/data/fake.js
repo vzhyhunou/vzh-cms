@@ -79,7 +79,7 @@ const exchangeResponse = (
                                     id,
                                     title: title && title[locale],
                                     content: content[locale],
-                                    files: files && files.map(({name}) => name)
+                                    files
                                 }
                             };
                         }, () => false);
@@ -98,9 +98,46 @@ const exchangeResponse = (
         }
     });
 
+const getUpdateRequest = ({getOne}, resource, params) => {
+
+    const {data} = params;
+    const {id, files} = data;
+
+    return getOne(resource, {id}).then(({data: oldData}) => ({
+        ...params,
+        data: {
+            ...data,
+            files: files?.map(file => ({
+                name: file.name,
+                data: file.data || oldData.files.find(({name}) => name === file.name).data
+            }))
+        },
+    }));
+};
+
+const getUpdateManyRequests = ({getOne}, resource, {ids, ...params}) =>
+
+    Promise.all(params.data.map(data => {
+
+        const {id, files} = data;
+
+        return getOne(resource, {id}).then(({data: oldData}) => ({
+            ...params,
+            ...{id},
+            data: {
+                ...oldData,
+                ...data,
+                files: files?.map(file => ({
+                    name: file.name,
+                    data: file.data || oldData.files.find(({name}) => name === file.name).data
+                }))
+            },
+        }));
+    }));
+
 export default props => {
 
-    const {locales, provider: {getList, ...rest}} = props;
+    const {locales, provider: {getList, update, updateMany, ...rest}} = props;
     const provider = {
         ...rest,
         getAll: (resource, {sort = {field: 'id', order: 'ASC'}} = {}) => getList(resource, {
@@ -122,6 +159,12 @@ export default props => {
         getList: (resource, params) => getListResponse(provider, resource, params)
             .then(response => response && log('getList', resource, params, response))
             .then(response => response || getList(resource, params)),
+        update: (resource, params) => getUpdateRequest(provider, resource, params)
+            .then(request => update(resource, request)),
+        updateMany: (resource, params) => getUpdateManyRequests(provider, resource, params)
+            .then(requests => Promise.all(requests.map(request => update(resource, request))))
+            .then(responses => responses.map(({data: id}) => id))
+            .then(ids => ({data: ids})),
         exchange: params => exchangeResponse(provider, props, params)
             .then(response => log('exchange', undefined, params, response)),
         log

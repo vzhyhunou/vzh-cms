@@ -12,8 +12,8 @@
       "en": "Home page"
     },
     "content": {
-      "ru": "<div class=\"starter\">\n\t<h1>Домашняя страница</h1>\n\t<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n\t<p>Используйте этот документ для создания нового проекта.</p>\n</div>",
-      "en": "<div class=\"starter\">\n\t<h1>Home page</h1>\n\t<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n\t<p>Use this document as a way to start new project.</p>\n</div>"
+      "ru": "<h1>Домашняя страница</h1>\n<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Используйте этот документ для создания нового проекта.</p>",
+      "en": "<h1>Home page</h1>\n<img src=\"a5440060877315a0027f2bed7b7c9cc6.png\"/>\n<p>Use this document as a way to start new project.</p>"
     },
     "files": [
       {

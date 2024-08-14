@@ -13,7 +13,7 @@
     "en": "Sample page 5"
   },
   "content": {
-    "ru": "<div class=\"starter\">\n\t<h1>Пример страницы 5</h1>\n\t<Page id=\"fragment.3\" p1=\"test\" p2={123}/>\n</div>",
-    "en": "<div class=\"starter\">\n\t<h1>Sample page 5</h1>\n\t<Page id=\"fragment.3\" p1=\"test\" p2={123}/>\n</div>"
+    "ru": "<h1>Пример страницы 5</h1>\n<Page id=\"fragment.3\" p1=\"test\" p2={123}/>",
+    "en": "<h1>Sample page 5</h1>\n<Page id=\"fragment.3\" p1=\"test\" p2={123}/>"
   }
 }

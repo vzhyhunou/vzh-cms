@@ -5,8 +5,17 @@ import RemoveCircle from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
 import { useTranslate } from 'react-admin';
 
-export const FileInputPreview = props => {
-    const { children, className, onAdd, onRemove, file, ...rest } = props;
+export const FileInputPreview = (props) => {
+    const {
+        children,
+        className,
+        onAdd,
+        onRemove,
+        file,
+        addIcon: AddIcon = AddCircle,
+        removeIcon: RemoveIcon = RemoveCircle,
+        ...rest
+    } = props;
 
     const translate = useTranslate();
 
@@ -27,34 +36,30 @@ export const FileInputPreview = props => {
                 onClick={onAdd}
                 aria-label={translate('ra.action.add')}
                 title={translate('ra.action.add')}
-                size="large"
+                size="small"
             >
-                <AddCircle className={FileInputPreviewClasses.addIcon} />
+                <AddIcon className={FileInputPreviewClasses.addIcon} />
             </IconButton>
             <IconButton
                 className={FileInputPreviewClasses.removeButton}
                 onClick={onRemove}
                 aria-label={translate('ra.action.delete')}
                 title={translate('ra.action.delete')}
-                size="large"
+                size="small"
             >
-                <RemoveCircle className={FileInputPreviewClasses.removeIcon} />
+                <RemoveIcon className={FileInputPreviewClasses.removeIcon} />
             </IconButton>
             {children}
         </Root>
     );
 };
 
-FileInputPreview.defaultProps = {
-    file: undefined,
-};
-
-const PREFIX = 'RaContentFileInputPreview';
+const PREFIX = 'RaFileInputPreview';
 
 export const FileInputPreviewClasses = {
     addButton: `${PREFIX}-addButton`,
-    addIcon: `${PREFIX}-addIcon`,
     removeButton: `${PREFIX}-removeButton`,
+    addIcon: `${PREFIX}-addIcon`,
     removeIcon: `${PREFIX}-removeIcon`,
 };
 
@@ -63,13 +68,11 @@ const Root = styled('div', {
     overridesResolver: (props, styles) => styles.root,
 })(({ theme }) => ({
     [`& .${FileInputPreviewClasses.addButton}`]: {},
-
-    [`& .${FileInputPreviewClasses.addIcon}`]: {
-        color: theme.palette.error.main,
-    },
-
     [`& .${FileInputPreviewClasses.removeButton}`]: {},
 
+    [`& .${FileInputPreviewClasses.addIcon}`]: {
+        color: theme.palette.primary.main,
+    },
     [`& .${FileInputPreviewClasses.removeIcon}`]: {
         color: theme.palette.error.main,
     },

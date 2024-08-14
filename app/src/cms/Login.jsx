@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {IconButton} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditIcon from '@mui/icons-material/Edit';

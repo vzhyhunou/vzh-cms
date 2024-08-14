@@ -2,13 +2,14 @@
   "name": "@vzhyhunou/vzh-cms",
   "version": "0.0.1",
   "dependencies": {
-    "react-admin": "^4.16.3",
+    "react-admin": "^5.1.1",
     "ra-language-russian": "^4.14.2",
-    "ra-data-fakerest": "^4.16.3",
+    "ra-data-fakerest": "^5.1.1",
     "jwt-decode": "^3.1.2",
     "jwt-encode": "^1.0.1",
     "js-md5": "^0.8.3",
-    "react-jsx-parser": "^1.29.0"
+    "react-jsx-parser": "^1.29.0",
+    "ext-list": "^4.0.0"
   },
   "devDependencies": {
     "vite": "^4.5.3",
@@ -23,16 +24,14 @@
     "@babel/cli": "^7.23.4"
   },
   "peerDependencies": {
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-hook-form": "~7.43.9",
-    "react-router-dom": "^6.1.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "scripts": {
     "start": "cross-env REACT_APP_SRC=back vite",
     "start:fake": "cross-env REACT_APP_SRC=fake vite",
-    "build": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=back vite build && rimraf ../target/classes/static/static/origin",
-    "build:fake": "cross-env BUILD_PATH=../target/classes/static REACT_APP_SRC=fake vite build && rimraf ../docs && BUILD_PATH=../docs REACT_APP_SRC=fake REACT_APP_BASE=/vzh-cms vite build",
+    "build": "cross-env BUILD_PATH=../target/classes/public REACT_APP_SRC=back vite build",
+    "build:fake": "cross-env BUILD_PATH=../target/classes/public REACT_APP_SRC=fake vite build && rimraf ../docs && BUILD_PATH=../docs REACT_APP_SRC=fake REACT_APP_BASE=/vzh-cms vite build",
     "test": "cross-env REACT_APP_SRC=back jest",
     "transpile": "babel src -d lib --ignore 'src/main.jsx,src/config.js,src/provider/back.js,src/provider/fake.js,src/provider/resources,**/*.test.js,**/*.test.jsx,**/__mocks__'"
   },

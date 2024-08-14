@@ -3,7 +3,7 @@ import {SelectArrayInput, useResourceContext, useTranslate} from 'react-admin';
 
 import {useContextProvider} from '../..';
 
-const TagsFilter = () => {
+export default () => {
 
     const translate = useTranslate();
     const resource = useResourceContext();
@@ -18,9 +18,3 @@ const TagsFilter = () => {
         label={`resources.${resource}.fields.tags`}
     />;
 };
-
-TagsFilter.defaultProps = {
-    source: 'tags'
-};
-
-export default TagsFilter;

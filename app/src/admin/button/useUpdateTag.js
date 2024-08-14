@@ -19,11 +19,11 @@ export default getData => {
     const unselectAll = useUnselectAll(resource);
     const [updateMany] = useUpdateMany();
 
-    return tag => updateMany(
+    return name => updateMany(
         resource,
         {
             ids: selectedIds,
-            data: data.map(r => getData(r, tag))
+            data: data.map(r => getData(r, name))
         },
         {
             onSuccess: () => {
