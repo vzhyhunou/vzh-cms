@@ -25,7 +25,7 @@ export default () => {
         {...{filters}}
         exporter={false}
     >
-        <Datagrid bulkActionButtons={<BulkActionButtons/>}>
+        <Datagrid bulkActionButtons={<BulkActionButtons/>} rowClick={false}>
             <TextField
                 source="id"
             />
