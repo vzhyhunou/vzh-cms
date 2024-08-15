@@ -2,26 +2,20 @@ package vzh.cms.config;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.SpringHandlerInstantiator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import vzh.cms.model.ExportIgnore;
-import vzh.cms.model.IdResolver;
 import vzh.cms.model.JacksonIgnore;
 
-import javax.persistence.EntityManager;
 import java.lang.annotation.Annotation;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
@@ -40,16 +34,8 @@ public class CmsConfiguration {
 
     @Bean
     @Primary
-    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder, AutowireCapableBeanFactory factory, EntityManager em) {
-        return annotationIntrospector(builder, JacksonIgnore.class).handlerInstantiator(new SpringHandlerInstantiator(factory) {
-            @Override
-            public ObjectIdResolver resolverIdGeneratorInstance(MapperConfig<?> config, Annotated annotated, Class<?> implClass) {
-                if (implClass == IdResolver.class) {
-                    return new IdResolver(em);
-                }
-                return super.resolverIdGeneratorInstance(config, annotated, implClass);
-            }
-        }).build();
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        return annotationIntrospector(builder, JacksonIgnore.class).build();
     }
 
     @Bean
