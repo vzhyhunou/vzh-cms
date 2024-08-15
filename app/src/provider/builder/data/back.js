@@ -32,7 +32,7 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
                 ...filter
             };
             return httpClient(`${API_URL}/${resource}/search/list?${stringify(query)}`, options).then(({json}) => ({
-                data: json._embedded ? json._embedded[resource] : [],
+                data: json.content || [],
                 total: json.page.totalElements
             }));
         },
@@ -42,7 +42,7 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
             })),
         getMany: (resource, {ids, options}) =>
             httpClient(`${API_URL}/${resource}/search/findByIdIn?${stringify({ids})}`, options).then(({json}) => ({
-                data: json._embedded ? json._embedded[resource] : []
+                data: json.content || []
             })),
         getManyReference: (resource, {pagination, sort, filter, target, id, options}) => {
             const {page, perPage} = pagination;
@@ -56,7 +56,7 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
                 })
             };
             return httpClient(`${API_URL}/${resource}?${stringify(query)}`, options).then(({json}) => ({
-                data: json._embedded ? json._embedded[resource] : [],
+                data: json.content || [],
                 total: json.page.totalElements
             }));
         },
@@ -111,7 +111,7 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
                 body: JSON.stringify(data),
                 ...options
             }).then(({json}) => ({
-                data: json && json._embedded ? json._embedded[path.split('/')[0]] : json
+                data: json
             }))
     };
 };

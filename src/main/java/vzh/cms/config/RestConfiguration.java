@@ -20,5 +20,6 @@ public class RestConfiguration implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         em.getMetamodel().getEntities().forEach(e -> config.exposeIdsFor(e.getJavaType()));
+        config.useHalAsDefaultJsonMediaType(false);
     }
 }
