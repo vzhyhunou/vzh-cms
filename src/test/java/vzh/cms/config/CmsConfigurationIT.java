@@ -62,34 +62,64 @@ public class CmsConfigurationIT {
     private ObjectMapper unlinkedObjectMapper;
 
     @Test
-    public void read() throws JsonProcessingException {
-        User result = jacksonObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\"}", User.class);
+    public void jacksonRead() throws JsonProcessingException {
+        User user = new User();
+        when(em.find(User.class, "c")).thenReturn(user);
+        User result = jacksonObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\",\"userId\":\"c\"}", User.class);
         assertThat(result.getId()).isEqualTo("a");
         assertThat(result.getPassword()).isEqualTo("b");
-    }
-
-    @Test
-    public void write() throws JsonProcessingException {
-        User user = new User();
-        user.setId("a");
-        user.setPassword("b");
-        String result = jacksonObjectMapper.writeValueAsString(user);
-        assertThat(trimAllWhitespace(result)).isEqualTo("{\"id\":\"a\"}");
-    }
-
-    @Test
-    public void link() throws JsonProcessingException {
-        User user = new User();
-        when(em.find(User.class, "b")).thenReturn(user);
-        User result = resourceObjectMapper.readValue("{\"id\":\"a\",\"userId\":\"b\"}", User.class);
-        assertThat(result.getId()).isEqualTo("a");
         assertThat(result.getUser()).isSameAs(user);
     }
 
     @Test
-    public void unlink() throws JsonProcessingException {
-        User result = unlinkedObjectMapper.readValue("{\"id\":\"a\",\"userId\":\"b\"}", User.class);
+    public void jacksonWrite() throws JsonProcessingException {
+        User user = new User() {
+            @Override
+            public Object[] getParents() {
+                return new Object[]{1, 2};
+            }
+        };
+        user.setId("a");
+        user.setPassword("b");
+        User u = new User();
+        u.setId("c");
+        user.setUser(u);
+        String result = jacksonObjectMapper.writeValueAsString(user);
+        assertThat(trimAllWhitespace(result)).isEqualTo("{\"id\":\"a\",\"parents\":[1,2],\"userId\":\"c\"}");
+    }
+
+    @Test
+    public void resourceRead() throws JsonProcessingException {
+        User user = new User();
+        when(em.find(User.class, "c")).thenReturn(user);
+        User result = resourceObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\",\"userId\":\"c\"}", User.class);
         assertThat(result.getId()).isEqualTo("a");
+        assertThat(result.getPassword()).isEqualTo("b");
+        assertThat(result.getUser()).isSameAs(user);
+    }
+
+    @Test
+    public void resourceWrite() throws JsonProcessingException {
+        User user = new User() {
+            @Override
+            public Object[] getParents() {
+                return new Object[]{1, 2};
+            }
+        };
+        user.setId("a");
+        user.setPassword("b");
+        User u = new User();
+        u.setId("c");
+        user.setUser(u);
+        String result = resourceObjectMapper.writeValueAsString(user);
+        assertThat(trimAllWhitespace(result)).isEqualTo("{\"id\":\"a\",\"password\":\"b\",\"userId\":\"c\"}");
+    }
+
+    @Test
+    public void unlinkedRead() throws JsonProcessingException {
+        User result = unlinkedObjectMapper.readValue("{\"id\":\"a\",\"password\":\"b\",\"userId\":\"c\"}", User.class);
+        assertThat(result.getId()).isEqualTo("a");
+        assertThat(result.getPassword()).isEqualTo("b");
         verifyNoInteractions(em);
     }
 }
