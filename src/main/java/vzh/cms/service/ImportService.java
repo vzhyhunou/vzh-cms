@@ -75,7 +75,7 @@ public class ImportService {
             for (Path path : paths) {
                 if (path.toFile().isDirectory()) {
                     consume(path, consumer);
-                } else {
+                } else if (path.toString().endsWith(".json")) {
                     consumer.accept(path.toFile());
                 }
             }

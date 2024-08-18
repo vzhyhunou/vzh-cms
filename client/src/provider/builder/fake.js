@@ -1,3 +1,5 @@
+import fakeDataProvider from 'ra-data-fakerest';
+
 import getLocaleProvider from './i18n';
 import getFuncProvider from './func/fake';
 import getAuthProvider from './auth/fake';
@@ -7,5 +9,7 @@ export default {
     getLocaleProvider,
     getFuncProvider,
     getAuthProvider,
-    getDataProvider
+    getDataProvider,
+    getFakeDataProvider: resources =>
+        fakeDataProvider(Object.fromEntries(Object.entries(resources).map(([k, v]) => [k, v.map(({item}) => item)])), true)
 };

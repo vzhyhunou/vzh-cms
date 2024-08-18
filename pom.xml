@@ -86,7 +86,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>app/lib</directory>
+							<directory>client/lib</directory>
 						</fileset>
 					</filesets>
 				</configuration>
@@ -112,7 +112,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<workingDirectory>app</workingDirectory>
+					<workingDirectory>client</workingDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -184,7 +184,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<workingDirectory>app</workingDirectory>
+							<workingDirectory>client</workingDirectory>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -228,7 +228,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<workingDirectory>app</workingDirectory>
+							<workingDirectory>client</workingDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -264,7 +264,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<workingDirectory>app</workingDirectory>
+							<workingDirectory>client</workingDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -291,7 +291,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<workingDirectory>app</workingDirectory>
+							<workingDirectory>client</workingDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
