@@ -1,8 +1,8 @@
 resources/*
 !resources/import
-app/lib
-app/node
-app/node_modules
+client/lib
+client/node
+client/node_modules
 .idea
 *.ipr
 *.iml
