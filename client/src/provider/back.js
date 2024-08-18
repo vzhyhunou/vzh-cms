@@ -1,15 +1,14 @@
 import builder from './builder/back';
 
-const getLocaleMessages = locale => import(`./messages/${locale}.js`).then(r => r.default);
-const {
-    getLocaleProvider,
-    getFuncProvider,
-    getAuthProvider,
-    getDataProvider
-} = builder;
-
 export default props => {
 
+    const {
+        getLocaleProvider,
+        getFuncProvider,
+        getAuthProvider,
+        getDataProvider
+    } = builder;
+    const getLocaleMessages = locale => import(`./messages/${locale}.js`).then(r => r.default);
     const localeProvider = getLocaleProvider({getLocaleMessages, ...props});
     const funcProvider = getFuncProvider(props);
     const authProvider = getAuthProvider(props);

@@ -1,14 +1,18 @@
 {
-  "id": "admin",
-  "tags": [
-    {
-      "name": "ADMIN"
-    },
-    {
-      "name": "MANAGER"
-    },
-    {
-      "name": "PAGES_EDITOR"
-    }
-  ]
+  "@class": "vzh.cms.model.User",
+  "item": {
+    "id": "admin",
+    "password": "$2a$10$FRCM42aZbWohdyauQ.UwNuJysW/qSuT1B0S5HtlFQlcWsqMC0SPZ2",
+    "tags": [
+      {
+        "name": "ADMIN"
+      },
+      {
+        "name": "MANAGER"
+      },
+      {
+        "name": "PAGES_EDITOR"
+      }
+    ]
+  }
 }

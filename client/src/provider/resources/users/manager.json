@@ -1,8 +1,12 @@
 {
-  "id": "manager",
-  "tags": [
-    {
-      "name": "MANAGER"
-    }
-  ]
+  "@class": "vzh.cms.model.User",
+  "item": {
+    "id": "manager",
+    "password": "$2a$10$SwFp37RWQgOpF9W8fs9sv.kSlFbYfovwZO3tsPLcJRqxmn/gmj2Oy",
+    "tags": [
+      {
+        "name": "MANAGER"
+      }
+    ]
+  }
 }

@@ -1,19 +1,22 @@
 {
-  "id": "sample1",
-  "tags": [
-    {
-      "name": "MENU"
+  "@class": "vzh.cms.model.Page",
+  "item": {
+    "id": "sample1",
+    "tags": [
+      {
+        "name": "MENU"
+      },
+      {
+        "name": "PUBLISHED"
+      }
+    ],
+    "title": {
+      "ru": "Пример страницы 1",
+      "en": "Sample page 1"
     },
-    {
-      "name": "PUBLISHED"
+    "content": {
+      "ru": "<h1>Пример страницы 1</h1>",
+      "en": "<h1>Sample page 1</h1>"
     }
-  ],
-  "title": {
-    "ru": "Пример страницы 1",
-    "en": "Sample page 1"
-  },
-  "content": {
-    "ru": "<h1>Пример страницы 1</h1>",
-    "en": "<h1>Sample page 1</h1>"
   }
 }

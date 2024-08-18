@@ -1,16 +1,19 @@
 {
-  "id": "none",
-  "tags": [
-    {
-      "name": "PUBLISHED"
+  "@class": "vzh.cms.model.Page",
+  "item": {
+    "id": "none",
+    "tags": [
+      {
+        "name": "PUBLISHED"
+      }
+    ],
+    "title": {
+      "ru": "Не найдено",
+      "en": "Not found"
+    },
+    "content": {
+      "ru": "<h1>Страница не найдена</h1>",
+      "en": "<h1>Page not found</h1>"
     }
-  ],
-  "title": {
-    "ru": "Не найдено",
-    "en": "Not found"
-  },
-  "content": {
-    "ru": "<h1>Страница не найдена</h1>",
-    "en": "<h1>Page not found</h1>"
   }
 }
