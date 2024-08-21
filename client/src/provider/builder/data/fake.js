@@ -10,7 +10,7 @@ const log = (type, resource, params, response) => {
     return response;
 };
 
-const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, {filter, ...params}) => {
+const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, {filter, ...params} = {}) => {
 
     if (!filter) {
         return false;
@@ -144,8 +144,7 @@ export default props => {
     const {locales, provider: {getList, getManyReference, update, updateMany, ...rest}} = props;
     const options = {
         pagination: {page: 1, perPage: Number.MAX_VALUE},
-        sort: {field: 'id', order: 'ASC'},
-        filter: {}
+        sort: {field: 'id', order: 'ASC'}
     };
     const provider = {
         ...rest,
