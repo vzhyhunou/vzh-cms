@@ -10,9 +10,11 @@ const log = (type, resource, params, response) => {
     return response;
 };
 
-const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, params) => {
+const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, {filter, ...params}) => {
 
-    const {filter} = params;
+    if (!filter) {
+        return false;
+    }
 
     switch (resource) {
         case 'pages':
