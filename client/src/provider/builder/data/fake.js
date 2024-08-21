@@ -10,9 +10,9 @@ const log = (type, resource, params, response) => {
     return response;
 };
 
-const getListResponse = ({getAll, getPage, isLocalesIncludes, isTagsActive}, resource, params) =>
+const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, params) =>
 
-    getAll(resource, params).then(({data}) => {
+    getList(resource, params).then(({data}) => {
 
         const {filter} = params;
 
@@ -45,7 +45,7 @@ const getListResponse = ({getAll, getPage, isLocalesIncludes, isTagsActive}, res
     });
 
 const exchangeResponse = (
-    {getOne, getAll, getPath, isTagsActive},
+    {getOne, getList, getPath, isTagsActive},
     {
         tags: {
             pages: {MENU, PUBLISHED},
@@ -84,7 +84,7 @@ const exchangeResponse = (
                             };
                         }, () => false);
                     case 'menu':
-                        return getAll(resource).then(({data}) => ({
+                        return getList(resource).then(({data}) => ({
                             data: data.filter(p => isTagsActive(p, [MENU])).map(({id, title}) => ({
                                 id,
                                 title: title[locale]
@@ -137,16 +137,15 @@ const getUpdateManyRequests = ({getOne}, resource, {ids, ...params}) =>
 
 export default props => {
 
-    const {locales, provider: {getList, update, updateMany, ...rest}} = props;
+    const {locales, provider: {getList, getManyReference, update, updateMany, ...rest}} = props;
+    const pageable = {
+        pagination: {page: 1, perPage: Number.MAX_VALUE},
+        sort: {field: 'id', order: 'ASC'}
+    };
     const provider = {
         ...rest,
-        getAll: (resource, {sort = {field: 'id', order: 'ASC'}} = {}) => getList(resource, {
-            pagination: {
-                page: 1,
-                perPage: Number.MAX_VALUE
-            },
-            sort
-        }),
+        getList: (resource, params = {}) => getList(resource, {...pageable, ...params}),
+        getManyReference: (resource, params) => getManyReference(resource, {...pageable, ...params}),
         getPath: ({path}) => path.split('/'),
         getPage: (data, {pagination: {page, perPage}}) => ({data: data.slice((page - 1) * perPage, page * perPage), total: data.length}),
         isLocalesIncludes: (src, val) => src && Object.keys(locales).some(l => src[l] && src[l].toLowerCase().includes(val.toLowerCase())),
@@ -157,8 +156,7 @@ export default props => {
     return {
         ...provider,
         getList: (resource, params) => getListResponse(provider, resource, params)
-            .then(response => response && log('getList', resource, params, response))
-            .then(response => response || getList(resource, params)),
+            .then(response => response || provider.getList(resource, params)),
         update: (resource, params) => getUpdateRequest(provider, resource, params)
             .then(request => update(resource, request)),
         updateMany: (resource, params) => getUpdateManyRequests(provider, resource, params)
