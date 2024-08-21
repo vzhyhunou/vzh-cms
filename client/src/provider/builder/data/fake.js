@@ -10,14 +10,13 @@ const log = (type, resource, params, response) => {
     return response;
 };
 
-const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, params) =>
+const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, params) => {
 
-    getList(resource, params).then(({data}) => {
+    const {filter} = params;
 
-        const {filter} = params;
-
-        switch (resource) {
-            case 'pages':
+    switch (resource) {
+        case 'pages':
+            return getList(resource, params).then(({data}) => {
                 if (filter.id) {
                     data = data.filter(({id}) => id.includes(filter.id));
                 }
@@ -31,7 +30,9 @@ const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, re
                     data = data.filter(i => isTagsActive(i, filter.tags));
                 }
                 return getPage(data, params);
-            case 'users':
+            });
+        case 'users':
+            return getList(resource, params).then(({data}) => {
                 if (filter.id) {
                     data = data.filter(({id}) => id.includes(filter.id));
                 }
@@ -39,10 +40,11 @@ const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, re
                     data = data.filter(i => isTagsActive(i, filter.tags));
                 }
                 return getPage(data, params);
-            default:
-                return false;
-        }
-    });
+            });
+        default:
+            return false;
+    }
+};
 
 const exchangeResponse = (
     {getOne, getList, getPath, isTagsActive},
@@ -138,14 +140,15 @@ const getUpdateManyRequests = ({getOne}, resource, {ids, ...params}) =>
 export default props => {
 
     const {locales, provider: {getList, getManyReference, update, updateMany, ...rest}} = props;
-    const pageable = {
+    const options = {
         pagination: {page: 1, perPage: Number.MAX_VALUE},
-        sort: {field: 'id', order: 'ASC'}
+        sort: {field: 'id', order: 'ASC'},
+        filter: {}
     };
     const provider = {
         ...rest,
-        getList: (resource, params = {}) => getList(resource, {...pageable, ...params}),
-        getManyReference: (resource, params) => getManyReference(resource, {...pageable, ...params}),
+        getList: (resource, params = {}) => getList(resource, {...options, ...params}),
+        getManyReference: (resource, params) => getManyReference(resource, {...options, ...params}),
         getPath: ({path}) => path.split('/'),
         getPage: (data, {pagination: {page, perPage}}) => ({data: data.slice((page - 1) * perPage, page * perPage), total: data.length}),
         isLocalesIncludes: (src, val) => src && Object.keys(locales).some(l => src[l] && src[l].toLowerCase().includes(val.toLowerCase())),
