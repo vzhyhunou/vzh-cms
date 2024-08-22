@@ -10,7 +10,11 @@ const log = (type, resource, params, response) => {
     return response;
 };
 
-const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, resource, {filter, ...params} = {}) => {
+const getListResponse = async (
+    {getList, getPage, isLocalesIncludes, isTagsActive},
+    resource,
+    {filter, ...params} = {}
+) => {
 
     if (!filter) {
         return false;
@@ -49,8 +53,8 @@ const getListResponse = ({getList, getPage, isLocalesIncludes, isTagsActive}, re
 };
 
 const exchangeResponse = (
-    {getOne, getList, getPath, isTagsActive},
     {
+        provider: {getOne, getList, getPath, isTagsActive},
         tags: {
             pages: {MENU, PUBLISHED},
             users: {PAGES_EDITOR}
@@ -167,7 +171,7 @@ export default props => {
             .then(requests => Promise.all(requests.map(request => update(resource, request))))
             .then(responses => responses.map(({data: id}) => id))
             .then(ids => ({data: ids})),
-        exchange: params => exchangeResponse(provider, props, params)
+        exchange: params => exchangeResponse({...props, provider}, params)
             .then(response => log('exchange', undefined, params, response)),
         log
     };
