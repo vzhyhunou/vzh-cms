@@ -20,9 +20,11 @@ const getListResponse = async (
         return false;
     }
 
+    const {pagination, ...rest} = params;
+
     switch (resource) {
         case 'pages':
-            return getList(resource, params).then(({data}) => {
+            return getList(resource, rest).then(({data}) => {
                 if (filter.id) {
                     data = data.filter(({id}) => id.includes(filter.id));
                 }
@@ -38,7 +40,7 @@ const getListResponse = async (
                 return getPage(data, params);
             });
         case 'users':
-            return getList(resource, params).then(({data}) => {
+            return getList(resource, rest).then(({data}) => {
                 if (filter.id) {
                     data = data.filter(({id}) => id.includes(filter.id));
                 }
