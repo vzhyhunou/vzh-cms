@@ -51,7 +51,7 @@ const upd = ({previousData, ...params}, call) => {
             data: {
                 ...replaceFiles(params.data, transformedNewFiles),
                 ...replaceFormFiles(params.data, formFiles),
-                ...replaceSrc(params.data, transformedNewFiles, formFiles),
+                ...replaceSrc(params.data, transformedNewFiles),
                 files: [
                     ...transformedNewFiles.map(({data, name}) => ({data, name})),
                     ...formFiles.map(({title}) => ({name: title}))
@@ -86,16 +86,12 @@ const replaceFormFiles = (data, formFiles) => {
     return data;
 };
 
-const replaceSrc = (data, files, formFiles) => {
+const replaceSrc = (data, files) => {
     let s = JSON.stringify(data);
     files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
         new RegExp(preview, 'g'),
         name
     ))));
-    formFiles.forEach(({src, title}) => s = s.replace(
-        new RegExp(src, 'g'),
-        title
-    ));
     return JSON.parse(s);
 };
 
