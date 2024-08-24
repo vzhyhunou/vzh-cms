@@ -28,6 +28,7 @@ export default ({contentRef, ...rest}) => {
         multiple
         accept={{'image/*': []}}
         {...{...rest, onAdd}}
+        source="@files.content"
     >
         <ImageField
             source="src"
