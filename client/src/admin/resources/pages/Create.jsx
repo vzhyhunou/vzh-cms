@@ -33,7 +33,7 @@ export default () => {
                         sx={{'.MuiInputBase-input': {fontFamily: 'Courier New'}}}
                         inputProps={{ref}}
                     />
-                    <Input contentRef={ref} source="@files.content"/>
+                    <Input contentRef={ref}/>
                 </TranslatableInputs>
             </FormTab>
             <FormTab label="resources.pages.fields.tags">

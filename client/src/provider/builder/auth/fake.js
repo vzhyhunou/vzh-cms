@@ -2,7 +2,7 @@ import sign from 'jwt-encode';
 
 import back from './back';
 
-export default ({provider: {getOne}}) => {
+export default ({dataProvider: {getOne}}) => {
 
     const {setToken, ...rest} = back();
 

@@ -13,9 +13,9 @@ export default props => {
     const getLocaleMessages = locale => import(`./messages/${locale}.js`).then(r => r.default);
     const localeProvider = getLocaleProvider({getLocaleMessages, ...props});
     const funcProvider = getFuncProvider(props);
-    const provider = getFakeDataProvider(resources);
-    const authProvider = getAuthProvider({provider, ...props});
-    const dataProvider = getDataProvider({provider, localeProvider, authProvider, ...props});
+    let dataProvider = getFakeDataProvider(resources);
+    const authProvider = getAuthProvider({dataProvider, ...props});
+    dataProvider = getDataProvider({dataProvider, localeProvider, authProvider, ...props});
 
     return {
         localeProvider,

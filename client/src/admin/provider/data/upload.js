@@ -11,20 +11,18 @@ const convertFileToBase64 = f => new Promise((resolve, reject) => {
     reader.readAsDataURL(f);
 });
 
-const upd = (params, call) => {
+const upd = ({previousData, ...params}, call) => {
 
     const sanitized = {
         ...params.data,
         files: [],
         '@files': []
     };
-    const sanitizedData = JSON.stringify({
-        ...sanitized,
-        names: dump(sanitized)
-            .map(key => get(sanitized, `${key}.rawFile`))
-            .filter(f => f)
-            .map(({name}) => name)
-    });
+    dump(sanitized)
+        .map(key => ({key, v: get(sanitized, key)}))
+        .filter(({v}) => v?.rawFile)
+        .forEach(({key, v: {rawFile: {name}}}) => set(sanitized, key, name));
+    const sanitizedData = JSON.stringify(sanitized);
     const formFiles = params.data.files ? params.data.files
         .filter(({rawFile}) => !rawFile)
         .filter(({title}) => sanitizedData.includes(title)) : [];
@@ -53,7 +51,7 @@ const upd = (params, call) => {
             data: {
                 ...replaceFiles(params.data, transformedNewFiles),
                 ...replaceFormFiles(params.data, formFiles),
-                ...replaceSrc(params.data, transformedNewFiles, formFiles),
+                ...replaceSrc(params.data, transformedNewFiles),
                 files: [
                     ...transformedNewFiles.map(({data, name}) => ({data, name})),
                     ...formFiles.map(({title}) => ({name: title}))
@@ -88,16 +86,12 @@ const replaceFormFiles = (data, formFiles) => {
     return data;
 };
 
-const replaceSrc = (data, files, formFiles) => {
+const replaceSrc = (data, files) => {
     let s = JSON.stringify(data);
     files.forEach(({name, previews}) => previews.forEach(preview => preview && (s = s.replace(
         new RegExp(preview, 'g'),
         name
     ))));
-    formFiles.forEach(({src, title}) => s = s.replace(
-        new RegExp(src, 'g'),
-        title
-    ));
     return JSON.parse(s);
 };
 

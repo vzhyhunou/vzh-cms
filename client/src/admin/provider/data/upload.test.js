@@ -40,6 +40,7 @@ describe('upload', () => {
         expect.assertions(2)
 
         const request = {
+            previousData: {},
             data: {
                 files: [
                     {
@@ -242,6 +243,48 @@ describe('upload', () => {
                     "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
                     "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>"
                 }
+            }
+        }
+
+        const response = {}
+
+        return getDataProvider({
+            create: (resource, params) =>
+                new Promise(resolve => {
+                    expect(params).toEqual(expectedRequest)
+                    resolve(response)
+                })
+        }).create('items', request).then(r => {
+            expect(r).toEqual(response)
+        })
+    })
+
+    it('should exclude file from request if it has the same name for new one', () => {
+        expect.assertions(2)
+
+        const request = {
+            data: {
+                file:                     {
+                    rawFile: new File([], "abc", {type: 'abc'}),
+                    title: "2164c9abcd4088b31bbf5e7cf62f79c6.jpg"
+                },
+                files: [
+                    {
+                        src: "sample",
+                        title: "2164c9abcd4088b31bbf5e7cf62f79c6.jpg"
+                    }
+                ]
+            }
+        }
+        const expectedRequest = {
+            data: {
+                files: [
+                    {
+                        data: "abc",
+                        name: "900150983cd24fb0d6963f7d28e17f72.png"
+                    }
+                ],
+                file: "900150983cd24fb0d6963f7d28e17f72.png"
             }
         }
 

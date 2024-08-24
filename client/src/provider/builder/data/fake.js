@@ -56,7 +56,7 @@ const getListResponse = async (
 
 const exchangeResponse = (
     {
-        provider: {getOne, getList, getPath, isTagsActive},
+        dataProvider: {getOne, getList, getPath, isTagsActive},
         tags: {
             pages: {MENU, PUBLISHED},
             users: {PAGES_EDITOR}
@@ -99,7 +99,7 @@ const exchangeResponse = (
                                 id,
                                 title: title[locale]
                             }))
-                        }));
+                        }), () => false);
                     default:
                         return false;
                 }
@@ -147,33 +147,33 @@ const getUpdateManyRequests = ({getOne}, resource, {ids, ...params}) =>
 
 export default props => {
 
-    const {locales, provider: {getList, getManyReference, update, updateMany, ...rest}} = props;
+    const {dataProvider: {getList, getManyReference, update, updateMany, ...rest}} = props;
     const options = {
         pagination: {page: 1, perPage: Number.MAX_VALUE},
         sort: {field: 'id', order: 'ASC'}
     };
-    const provider = {
+    const dataProvider = {
         ...rest,
         getList: (resource, params = {}) => getList(resource, {...options, ...params}),
         getManyReference: (resource, params) => getManyReference(resource, {...options, ...params}),
         getPath: ({path}) => path.split('/'),
         getPage: (data, {pagination: {page, perPage}}) => ({data: data.slice((page - 1) * perPage, page * perPage), total: data.length}),
-        isLocalesIncludes: (src, val) => src && Object.keys(locales).some(l => src[l] && src[l].toLowerCase().includes(val.toLowerCase())),
+        isLocalesIncludes: (src, value) => src && Object.values(src).some(v => v && v.toLowerCase().includes(value.toLowerCase())),
         isTagsActive: ({tags}, names) => tags && tags.some(({name, start, end}) =>
             names.includes(name) && (!start || new Date() > new Date(start)) && (!end || new Date() < new Date(end)))
     };
 
     return {
-        ...provider,
-        getList: (resource, params) => getListResponse(provider, resource, params)
-            .then(response => response || provider.getList(resource, params)),
-        update: (resource, params) => getUpdateRequest(provider, resource, params)
+        ...dataProvider,
+        getList: (resource, params) => getListResponse(dataProvider, resource, params)
+            .then(response => response || dataProvider.getList(resource, params)),
+        update: (resource, params) => getUpdateRequest(dataProvider, resource, params)
             .then(request => update(resource, request)),
-        updateMany: (resource, params) => getUpdateManyRequests(provider, resource, params)
+        updateMany: (resource, params) => getUpdateManyRequests(dataProvider, resource, params)
             .then(requests => Promise.all(requests.map(request => update(resource, request))))
             .then(responses => responses.map(({data: id}) => id))
             .then(ids => ({data: ids})),
-        exchange: params => exchangeResponse({...props, provider}, params)
+        exchange: params => exchangeResponse({...props, dataProvider}, params)
             .then(response => log('exchange', undefined, params, response)),
         log
     };
