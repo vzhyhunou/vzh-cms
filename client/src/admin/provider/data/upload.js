@@ -11,20 +11,18 @@ const convertFileToBase64 = f => new Promise((resolve, reject) => {
     reader.readAsDataURL(f);
 });
 
-const upd = (params, call) => {
+const upd = ({previousData, ...params}, call) => {
 
     const sanitized = {
         ...params.data,
         files: [],
         '@files': []
     };
-    const sanitizedData = JSON.stringify({
-        ...sanitized,
-        names: dump(sanitized)
-            .map(key => get(sanitized, `${key}.rawFile`))
-            .filter(f => f)
-            .map(({name}) => name)
-    });
+    dump(sanitized)
+        .map(key => ({key, v: get(sanitized, key)}))
+        .filter(({v}) => v?.rawFile)
+        .forEach(({key, v: {rawFile: {name}}}) => set(sanitized, key, name));
+    const sanitizedData = JSON.stringify(sanitized);
     const formFiles = params.data.files ? params.data.files
         .filter(({rawFile}) => !rawFile)
         .filter(({title}) => sanitizedData.includes(title)) : [];
