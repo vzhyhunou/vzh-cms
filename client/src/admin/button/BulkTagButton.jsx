@@ -12,7 +12,7 @@ export default ({label, children, getData}) => {
     const resource = useResourceContext();
     const [anchorEl, setAnchorEl] = useState(null);
     const updateTag = useUpdateTag(getData);
-    const {tags} = useContextProvider();
+    const {resources} = useContextProvider();
 
     return <>
         <Button
@@ -29,7 +29,7 @@ export default ({label, children, getData}) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
         >
-            {Object.keys(tags[resource]).map(name =>
+            {Object.keys(resources[resource].tags).map(name =>
                 <MenuItem
                     key={name}
                     onClick={() => updateTag(name)}

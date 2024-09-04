@@ -7,7 +7,7 @@ import Layout from './cms/Layout';
 
 export default ({config}) => {
 
-    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = config;
+    const {resources: {users: {tags: {PAGES_EDITOR, MANAGER}}}} = config;
 
     return <Core {...{config}}>
         <CustomRoutes noLayout>

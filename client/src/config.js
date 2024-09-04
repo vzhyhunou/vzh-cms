@@ -5,15 +5,19 @@ export default (({REACT_APP_SRC, REACT_APP_BASE}) => ({
         en: 'English',
         ru: 'Русский'
     },
-    tags: {
+    resources: {
         pages: {
-            MENU: 'MENU',
-            PUBLISHED: 'PUBLISHED'
+            tags: {
+                MENU: 'MENU',
+                PUBLISHED: 'PUBLISHED'
+            }
         },
         users: {
-            ADMIN: 'ADMIN',
-            MANAGER: 'MANAGER',
-            PAGES_EDITOR: 'PAGES_EDITOR'
+            tags: {
+                ADMIN: 'ADMIN',
+                MANAGER: 'MANAGER',
+                PAGES_EDITOR: 'PAGES_EDITOR'
+            }
         }
     },
     components: {
