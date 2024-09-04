@@ -15,7 +15,7 @@ export default () => {
 
     const translate = useTranslate();
     const resource = useResourceContext();
-    const {tags} = useContextProvider();
+    const {resources} = useContextProvider();
 
     return <ArrayInput
         source="tags"
@@ -28,7 +28,7 @@ export default () => {
             <SelectInput
                 source="name"
                 label={`resources.tags.fields.name`}
-                choices={Object.keys(tags[resource]).map(id => ({
+                choices={Object.keys(resources[resource].tags).map(id => ({
                     id,
                     name: translate(`resources.${resource}.tags.${id}`)
                 }))}

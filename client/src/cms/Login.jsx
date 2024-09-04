@@ -16,7 +16,7 @@ export default () => {
     const [loading, setLoading] = useState(true);
     const logout = useLogout();
     const {id} = useParams();
-    const {tags: {users: {PAGES_EDITOR, MANAGER}}} = useContextProvider();
+    const {resources: {users: {tags: {PAGES_EDITOR, MANAGER}}}} = useContextProvider();
 
     useEffect(() => {
         refresh();

@@ -57,10 +57,7 @@ const getListResponse = async (
 const exchangeResponse = (
     {
         dataProvider: {getOne, getList, getPath, isTagsActive},
-        tags: {
-            pages: {MENU, PUBLISHED},
-            users: {PAGES_EDITOR}
-        },
+        resources: {pages, users},
         localeProvider: {getLocale},
         authProvider: {getPermissions}
     },
@@ -77,7 +74,7 @@ const exchangeResponse = (
                 switch (path) {
                     case 'one':
                         return getOne(resource, {id}).then(({data}) => {
-                            if (!(isTagsActive(data, [PUBLISHED]) || (permissions && permissions.includes(PAGES_EDITOR)))) {
+                            if (!(isTagsActive(data, [pages.tags.PUBLISHED]) || (permissions && permissions.includes(users.tags.PAGES_EDITOR)))) {
                                 return false;
                             }
                             const {title, content, files} = data;
@@ -95,7 +92,7 @@ const exchangeResponse = (
                         }, () => false);
                     case 'menu':
                         return getList(resource).then(({data}) => ({
-                            data: data.filter(p => isTagsActive(p, [MENU])).map(({id, title}) => ({
+                            data: data.filter(p => isTagsActive(p, [pages.tags.MENU])).map(({id, title}) => ({
                                 id,
                                 title: title[locale]
                             }))
