@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import set from 'lodash/set';
+import cloneDeep from 'lodash/cloneDeep';
 import md5 from 'js-md5';
 
 import dump from './dump';
@@ -14,7 +15,7 @@ const convertFileToBase64 = f => new Promise((resolve, reject) => {
 const upd = ({previousData, ...params}, call) => {
 
     const sanitized = {
-        ...params.data,
+        ...cloneDeep(params.data),
         files: [],
         '@files': []
     };
@@ -62,7 +63,7 @@ const upd = ({previousData, ...params}, call) => {
 }
 
 const analyzeFields = (getFile, fields, data) => {
-    const result = JSON.parse(JSON.stringify(data));
+    const result = cloneDeep(data);
     fields.forEach(({name, keys}) => keys.forEach(key => set(result, key, getFile(name))));
     return result;
 };

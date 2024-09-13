@@ -134,6 +134,11 @@ describe('upload', () => {
                 file: {
                     rawFile: new File([], "abf", {type: 'abf'})
                 },
+                collection: [
+                    {
+                        rawFile: new File([], "abh", {type: 'abh'})
+                    }
+                ],
                 content: {
                     en: "<img src=\"abc\"/>" +
                     "<img src=\"abd\"/>" +
@@ -163,11 +168,18 @@ describe('upload', () => {
                         name: "ff905c528ce7ce9e64c0758b54855b50.png"
                     },
                     {
+                        data: "abh",
+                        name: "61d4d3b3c416faedb390a5a61d062cb5.png"
+                    },
+                    {
                         data: "abg",
                         name: "894852696ee75656ba33c03041b1fa7f.png"
                     }
                 ],
                 file: "ff905c528ce7ce9e64c0758b54855b50.png",
+                collection: [
+                    "61d4d3b3c416faedb390a5a61d062cb5.png"
+                ],
                 content: {
                     en: "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
                     "<img src=\"900150983cd24fb0d6963f7d28e17f72.png\"/>" +
