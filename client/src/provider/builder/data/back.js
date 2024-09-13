@@ -48,14 +48,13 @@ export default ({localeProvider: {getLocale}, authProvider: {getToken}}) => {
             const {page, perPage} = pagination;
             const {field, order} = sort;
             const query = {
-                sort: JSON.stringify([field, order]),
-                range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-                filter: JSON.stringify({
-                    ...filter,
-                    [target]: id
-                })
+                page: page - 1,
+                size: perPage,
+                sort: `${field},${order}`,
+                ...filter,
+                [target]: id
             };
-            return httpClient(`${API_URL}/${resource}?${stringify(query)}`, options).then(({json}) => ({
+            return httpClient(`${API_URL}/${resource}/search/list?${stringify(query)}`, options).then(({json}) => ({
                 data: json.content || [],
                 total: json.page.totalElements
             }));
