@@ -7,5 +7,5 @@ export default ({source}) => {
     const record = useRecordContext();
     const resource = useResourceContext();
 
-    return <Link to={`/cms/${resource}/${record.id}`}>{record[source]}</Link>;
+    return <Link to={`${resource === 'pages' ? '' : `/${resource}`}/${record.id}`}>{record[source]}</Link>;
 };

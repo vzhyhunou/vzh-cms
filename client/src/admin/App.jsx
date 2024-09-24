@@ -6,7 +6,6 @@ import useLocale from './context/i18n/useLocale';
 import useMessages from './context/i18n/useMessages';
 import getI18nProvider from './provider/i18n';
 import addUploadFeature from './provider/data/upload';
-import Layout from './Layout';
 
 export default ({children, ...rest}) => {
 
@@ -18,7 +17,6 @@ export default ({children, ...rest}) => {
         dataProvider={addUploadFeature(contextProvider)}
         i18nProvider={getI18nProvider({...contextProvider, locale, messages})}
         authProvider={contextProvider.authProvider}
-        layout={Layout}
         {...rest}
     >
         {children}

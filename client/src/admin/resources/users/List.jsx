@@ -3,11 +3,12 @@ import {
     Datagrid,
     EditButton,
     List,
+    SelectArrayInput,
     TextField,
     TextInput
 } from 'react-admin';
 
-import {TagsField, TagsFilter, BulkActionButtons} from '../..';
+import {ConstantField, ConstantInput, BulkActionButtons} from '../..';
 
 export default () => {
 
@@ -16,8 +17,10 @@ export default () => {
             source="id"
             alwaysOn
         />,
-        <TagsFilter
+        <ConstantInput
             source="tags"
+            sources="tags"
+            component={SelectArrayInput}
         />
     ];
 
@@ -29,9 +32,10 @@ export default () => {
             <TextField
                 source="id"
             />
-            <TagsField
+            <ConstantField
                 sortable={false}
                 source="tags"
+                property="name"
             />
             <EditButton/>
         </Datagrid>
