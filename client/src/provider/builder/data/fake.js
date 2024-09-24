@@ -114,31 +114,26 @@ const getUpdateRequest = ({getOne}, resource, params) => {
         ...params,
         data: {
             ...data,
-            files: files?.map(file => ({
+            files: files.map(file => ({
                 name: file.name,
                 data: file.data || oldData.files.find(({name}) => name === file.name).data
             }))
-        },
+        }
     }));
 };
 
-const getUpdateManyRequests = ({getOne}, resource, {ids, ...params}) =>
+const getUpdateManyRequests = ({getOne}, resource, params) =>
 
     Promise.all(params.data.map(data => {
 
-        const {id, files} = data;
+        const {id} = data;
 
         return getOne(resource, {id}).then(({data: oldData}) => ({
-            ...params,
             ...{id},
             data: {
                 ...oldData,
-                ...data,
-                files: files?.map(file => ({
-                    name: file.name,
-                    data: file.data || oldData.files.find(({name}) => name === file.name).data
-                }))
-            },
+                ...data
+            }
         }));
     }));
 
