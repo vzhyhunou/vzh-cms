@@ -1,4 +1,4 @@
 import LinkField from './LinkField';
-import TagsField from './TagsField';
+import ConstantField from './ConstantField';
 
-export {LinkField, TagsField};
+export {LinkField, ConstantField};
