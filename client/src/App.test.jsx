@@ -28,26 +28,26 @@ describe('App', () => {
     })
 
     it('should render none page', async () => {
-        renderWithHistory('/cms/pages/no-exist')
+        renderWithHistory('/no-exist')
         expect(await screen.findByText('Page not found')).toBeDefined()
         expect(document.title).toEqual('Not found')
     })
 
     it('should render sample page', async () => {
-        renderWithHistory('/cms/pages/sample1')
+        renderWithHistory('/sample1')
         expect(await screen.findByText('Sample page 1')).toBeDefined()
         expect(document.title).toEqual('Sample page 1')
     })
 
     it('should render sample page with fragment', async () => {
-        renderWithHistory('/cms/pages/sample2')
+        renderWithHistory('/sample2')
         expect(await screen.findByText('Sample page 2')).toBeDefined()
         expect(await screen.findByText('Fragment 1')).toBeDefined()
         expect(document.title).toEqual('Sample page 2')
     })
 
     it('should render sample page with two fragments', async () => {
-        renderWithHistory('/cms/pages/sample3')
+        renderWithHistory('/sample3')
         expect(await screen.findByText('Sample page 3')).toBeDefined()
         expect(await screen.findByText('Fragment 1')).toBeDefined()
         expect(await screen.findByText('Fragment 2')).toBeDefined()
@@ -56,7 +56,7 @@ describe('App', () => {
 
     it('should render sample page with auth content for editor', async () => {
         authProvider.login({username: 'editor'})
-        renderWithHistory('/cms/pages/sample4')
+        renderWithHistory('/sample4')
         expect(await screen.findByText('Sample page 4')).toBeDefined()
         expect(await screen.findByText('Content for editor')).toBeDefined()
         expect(document.title).toEqual('Sample page 4')
@@ -64,14 +64,14 @@ describe('App', () => {
 
     it('should render sample page with auth content for all except editor', async () => {
         authProvider.logout()
-        renderWithHistory('/cms/pages/sample4')
+        renderWithHistory('/sample4')
         expect(await screen.findByText('Sample page 4')).toBeDefined()
         expect(await screen.findByText('Content for all except editor')).toBeDefined()
         expect(document.title).toEqual('Sample page 4')
     })
 
     it('should render sample page with properties', async () => {
-        renderWithHistory('/cms/pages/sample5')
+        renderWithHistory('/sample5')
         expect(await screen.findByText('Sample page 5')).toBeDefined()
         expect(await screen.findByText('Properties')).toBeDefined()
         expect(document.title).toEqual('Sample page 5')

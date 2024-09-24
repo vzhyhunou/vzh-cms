@@ -3,18 +3,16 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditIcon from '@mui/icons-material/Edit';
-import LogoutIcon from '@mui/icons-material/Logout';
-import {usePermissions, useRefresh, useLogout} from 'react-admin';
-import {Link, useParams} from 'react-router-dom';
+import { usePermissions, useRefresh } from 'react-admin';
+import { Link, useParams } from 'react-router-dom';
 
-import {useContextProvider} from '..';
+import { useContextProvider } from '..';
 
 export default () => {
 
     const refresh = useRefresh();
     const {permissions} = usePermissions();
     const [loading, setLoading] = useState(true);
-    const logout = useLogout();
     const {id} = useParams();
     const {resources: {users: {tags: {PAGES_EDITOR, MANAGER}}}} = useContextProvider();
 
@@ -41,7 +39,7 @@ export default () => {
         return <IconButton
             color="inherit"
             component={Link}
-            to={`/pages/${id}`}
+            to={`/admin/pages/${id || ''}`}
         >
             <EditIcon/>
         </IconButton>;
@@ -51,7 +49,7 @@ export default () => {
         return <IconButton
             color="inherit"
             component={Link}
-            to="/users"
+            to="/admin/users"
         >
             <SettingsIcon/>
         </IconButton>;
@@ -59,8 +57,9 @@ export default () => {
 
     return <IconButton
         color="inherit"
-        onClick={() => logout('/')}
+        component={Link}
+        to="/admin"
     >
-        <LogoutIcon/>
+        <SettingsIcon/>
     </IconButton>;
 };
