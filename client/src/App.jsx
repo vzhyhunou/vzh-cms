@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { CustomRoutes } from 'react-admin';
 
 import {AdminLayout, Core, Page, PageComponent} from '.';
@@ -13,20 +13,31 @@ export default ({config}) => {
     const {resources: {users: {tags: {PAGES_EDITOR, MANAGER}}}} = config;
 
     return <Core {...{config}} basename="/admin">
-        <CustomRoutes noLayout>
-            <Route path="admin">
-                <Route path="" element={<AdminLayout/>}/>
-                {Object.entries(resources).map(([k, v]) => <Route key={k} path={`${k}/*`} element={<AdminLayout>{v}</AdminLayout>}/>)}
-            </Route>
-            <Route element={<Layout/>}>
-                <Route path="" element={<PageComponent id="home" external/>}/>
-                <Route path=":id" element={<Page/>}/>
-            </Route>
-        </CustomRoutes>
-        {permissions => permissions &&
+        {permissions =>
             <>
-                {permissions.includes(PAGES_EDITOR) && pages}
-                {permissions.includes(MANAGER) && users}
+                <CustomRoutes noLayout>
+                    <Route path="admin">
+                        {permissions ?
+                            <>
+                                <Route path="" element={<AdminLayout/>}/>
+                                {permissions.includes(PAGES_EDITOR) && <Route path="pages/*" element={<AdminLayout>{pages}</AdminLayout>}/>}
+                                {permissions.includes(MANAGER) && <Route path="users/*" element={<AdminLayout>{users}</AdminLayout>}/>}
+                            </>
+                            :
+                            <Route path="*?" element={<Navigate to="/login"/>}/>
+                        }
+                    </Route>
+                    <Route element={<Layout/>}>
+                        <Route path="" element={<PageComponent id="home" external/>}/>
+                        <Route path=":id" element={<Page/>}/>
+                    </Route>
+                </CustomRoutes>
+                {permissions &&
+                    <>
+                        {permissions.includes(PAGES_EDITOR) && pages}
+                        {permissions.includes(MANAGER) && users}
+                    </>
+                }
             </>
         }
     </Core>;
