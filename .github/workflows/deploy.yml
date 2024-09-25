@@ -27,7 +27,6 @@ jobs:
       with: 
         package-name: vzhyhunou.vzh-cms
         package-type: maven
-        min-versions-to-keep: 0
     - name: Build with Maven
       run: mvn -B deploy
       env:
