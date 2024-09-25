@@ -17,6 +17,7 @@ export default ({config}) => {
         <Route element={<Layout/>}>
             <Route path="" element={<PageComponent id="home" external/>}/>
             <Route path=":id" element={<Page/>}/>
+            <Route path="*" element={<PageComponent id="none" external/>}/>
         </Route>
     </Core>;
 };
