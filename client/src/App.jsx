@@ -9,8 +9,8 @@ export default ({config}) => {
 
     const {resources: {users: {tags: {PAGES_EDITOR, MANAGER}}}} = config;
     const resources = {
-        [PAGES_EDITOR]: [{pages}],
-        [MANAGER]: [{users}]
+        [PAGES_EDITOR]: {pages},
+        [MANAGER]: {users}
     };
 
     return <Core {...{config, resources}}>

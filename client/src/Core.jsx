@@ -13,8 +13,7 @@ export default ({config, resources, children, ...rest}) =>
 
                 const access = permissions ? Object.entries(resources)
                     .filter(([k]) => permissions.includes(k))
-                    .flatMap(([k, v]) => v)
-                    .flatMap(v => Object.entries(v).map(([k, v]) => [k, <Resource key={k} name={k} {...v} />])) : [];
+                    .flatMap(([k, v]) => Object.entries(v).map(([k, v]) => [k, <Resource key={k} name={k} {...v} />])) : [];
 
                 return <>
                     <CustomRoutes noLayout>

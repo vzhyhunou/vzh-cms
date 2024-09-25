@@ -16,6 +16,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java_version }}
+    - name: Delete npm package
+      run: |
+        curl -X DELETE -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/vzhyhunou/packages/npm/vzh-cms
+    - name: Delete maven package
+      run: |
+        curl -X DELETE -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/vzhyhunou/packages/maven/vzhyhunou.vzh-cms
     - name: Build with Maven
       run: mvn -B deploy
       env:
