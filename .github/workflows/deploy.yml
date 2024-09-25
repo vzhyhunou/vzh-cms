@@ -21,11 +21,13 @@ jobs:
       with: 
         package-name: vzh-cms
         package-type: npm
+        min-versions-to-keep: 0
     - name: Delete maven package
       uses: actions/delete-package-versions@v5
       with: 
         package-name: vzhyhunou.vzh-cms
         package-type: maven
+        min-versions-to-keep: 0
     - name: Build with Maven
       run: mvn -B deploy
       env:
