@@ -16,6 +16,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java_version }}
+    - name: Delete npm package
+      uses: actions/delete-package-versions@v5
+      with: 
+        package-name: vzh-cms
+        package-type: npm
+    - name: Delete maven package
+      uses: actions/delete-package-versions@v5
+      with: 
+        package-name: vzhyhunou.vzh-cms
+        package-type: maven
     - name: Build with Maven
       run: mvn -B deploy
       env:
