@@ -1,10 +1,9 @@
 import React from 'react';
-import { CustomRoutes, Resource } from 'react-admin';
+import { CustomRoutes, Resource, Layout } from 'react-admin';
 import { Route, Navigate } from 'react-router-dom';
 
 import Admin from './admin/App';
 import Context from './context/App';
-import Layout from './admin/Layout';
 
 export default ({config, resources, children, ...rest}) =>
     <Context {...config}>
