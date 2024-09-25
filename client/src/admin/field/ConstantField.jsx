@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import { useTranslate, useRecordContext, useResourceContext } from 'react-admin';
 
-export default ({source, property}) => {
+export default ({source, sources, property}) => {
 
     const translate = useTranslate();
     const record = useRecordContext();
@@ -16,7 +16,7 @@ export default ({source, property}) => {
     const Field = ({value}) =>
         <Chip
             size="small"
-            label={translate(`resources.${resource}.${source}.${property ? value[property] : value}`)}
+            label={translate(`resources.${resource}.${sources}.${property ? value[property] : value}`)}
         />
     ;
 

@@ -35,6 +35,7 @@ export default () => {
             <ConstantField
                 sortable={false}
                 source="tags"
+                sources="tags"
                 property="name"
             />
             <EditButton/>
