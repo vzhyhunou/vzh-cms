@@ -20,13 +20,17 @@ jobs:
       run: mvn -B install
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ github.event_name == 'pull_request' }}
     - name: Delete npm package
       run: |
         curl -X DELETE -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/vzhyhunou/packages/npm/vzh-cms
+      if: ${{ github.event_name != 'pull_request' }}
     - name: Delete maven package
       run: |
         curl -X DELETE -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/vzhyhunou/packages/maven/vzhyhunou.vzh-cms
+      if: ${{ github.event_name != 'pull_request' }}
     - name: Deploy with Maven
       run: mvn -B deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ github.event_name != 'pull_request' }}
