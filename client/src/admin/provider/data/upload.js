@@ -21,7 +21,7 @@ const upd = ({previousData, ...params}, call) => {
     };
     dump(sanitized)
         .map(key => ({key, v: get(sanitized, key)}))
-        .filter(({v}) => v?.rawFile)
+        .filter(({v}) => v?.rawFile?.name)
         .forEach(({key, v: {rawFile: {name}}}) => set(sanitized, key, name));
     const sanitizedData = JSON.stringify(sanitized);
     const formFiles = params.data.files ? params.data.files
