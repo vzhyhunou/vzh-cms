@@ -1,6 +1,6 @@
 import extList from 'ext-list';
 
-export default ({basename = ''} = {}) => {
+export default () => {
 
     const map = extList();
     const dataByName = ({files}, name) => files.find(file => file.name === name).data;
