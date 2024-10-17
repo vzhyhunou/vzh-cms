@@ -1,6 +1,6 @@
 import { PageComponent } from '.';
 
-export default {
+export default ((REACT_APP_SRC, REACT_APP_BASE) => ({
     locales: {
         en: 'English',
         ru: 'Русский'
@@ -23,6 +23,6 @@ export default {
     components: {
         Page: PageComponent
     },
-    provider: import(`./provider/${process.env.REACT_APP_SRC}.js`),
-    basename: process.env.REACT_APP_BASE
-};
+    provider: import(`./provider/${REACT_APP_SRC}.js`),
+    basename: REACT_APP_BASE
+}))(process.env.REACT_APP_SRC, process.env.REACT_APP_BASE);
