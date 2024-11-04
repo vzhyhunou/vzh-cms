@@ -1,11 +1,12 @@
-import {defineConfig} from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
 
-// eslint-disable-next-line no-unused-vars
-const {REACT_APP_SRC, REACT_APP_BASE, ...rest} = process.env;
-
-const config = {
+const config = ({
+    REACT_APP_SRC,
+    REACT_APP_BASE,
+    BUILD_PATH
+}) => ({
     plugins: [react(), eslint()],
     server: {
         port: 3010
@@ -17,30 +18,34 @@ const config = {
         }
     },
     build: {
-        outDir: process.env.BUILD_PATH
+        outDir: BUILD_PATH
     },
-    base: process.env.REACT_APP_BASE
-};
+    base: REACT_APP_BASE
+});
 
 const srcConfig = {
-    back: {
+    back: params => (config => ({
         ...config,
         server: {
             ...config.server,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:8090'
+                    target: 'http://localhost:8094'
                 },
                 '/login': {
-                    target: 'http://localhost:8090'
+                    target: 'http://localhost:8094'
                 },
                 '/static': {
-                    target: 'http://localhost:8090'
+                    target: 'http://localhost:8094'
                 }
             }
         }
-    },
+    }))(config(params)),
     fake: config
 };
 
-export default defineConfig(srcConfig[process.env.REACT_APP_SRC]);
+export default defineConfig(
+    ({mode}) => (
+        params => srcConfig[params.REACT_APP_SRC](params)
+    )(loadEnv(mode, process.cwd(), ''))
+);
