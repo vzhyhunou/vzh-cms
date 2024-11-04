@@ -30,13 +30,13 @@ const srcConfig = {
             ...config.server,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:8094'
+                    target: 'http://localhost:8090'
                 },
                 '/login': {
-                    target: 'http://localhost:8094'
+                    target: 'http://localhost:8090'
                 },
                 '/static': {
-                    target: 'http://localhost:8094'
+                    target: 'http://localhost:8090'
                 }
             }
         }
